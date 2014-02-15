@@ -1,0 +1,17 @@
+{    
+    "dependencies": {
+        "Newtonsoft.Json" : "5.0.6"
+    },
+    "compilationOptions" : { "allowUnsafe": true },
+    "configurations": {
+        "net45": { 
+            "dependencies": {
+                "Microsoft.Owin" : "2.0.1",
+                "Microsoft.Owin.Security" : "2.0.1",
+                "Owin" : "1.0",
+                "System.Security" : ""
+            }
+        },
+        "k10": { }
+    }
+}

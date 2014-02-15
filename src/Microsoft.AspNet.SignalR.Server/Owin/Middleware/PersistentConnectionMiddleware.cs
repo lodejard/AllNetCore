@@ -4,10 +4,13 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Json;
+#if NET45
 using Microsoft.Owin;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Owin.Middleware
 {
+#if NET45
     public class PersistentConnectionMiddleware : OwinMiddleware
     {
         private readonly Type _connectionType;
@@ -42,4 +45,5 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
             return connection.ProcessRequest(context.Environment);
         }
     }
+#endif
 }

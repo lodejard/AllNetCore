@@ -13,15 +13,18 @@ using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Owin.Middleware;
 using Microsoft.AspNet.SignalR.Tracing;
+#if NET45
 using Microsoft.Owin.Infrastructure;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Extensions;
+#endif
 
 namespace Owin
 {
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Owin", Justification = "The owin namespace is for consistentcy.")]
     public static class OwinExtensions
     {
+        #if NET45
         /// <summary>
         /// Maps SignalR hubs to the app builder pipeline at "/signalr".
         /// </summary>
@@ -244,5 +247,6 @@ namespace Owin
 
             return builder;
         }
+#endif
     }
 }

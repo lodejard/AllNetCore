@@ -2,7 +2,9 @@
 
 using System;
 using System.Diagnostics;
+#if NET45
 using System.Net.WebSockets;
+#endif
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -13,6 +15,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
 {
     public class WebSocketHandler
     {
+#if NET45
         // Wait 250 ms before giving up on a Close
         private static readonly TimeSpan _closeTimeout = TimeSpan.FromMilliseconds(250);
 
@@ -295,5 +298,6 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                 BufferSize = bufferSize;
             }
         }
+#endif
     }
 }

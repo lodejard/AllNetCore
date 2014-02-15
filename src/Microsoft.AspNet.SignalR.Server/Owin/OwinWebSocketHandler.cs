@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+#if NET45
 using System.Net.WebSockets;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
@@ -105,6 +107,7 @@ namespace Microsoft.AspNet.SignalR.Owin
             });
         }
 
+#if NET45
         private class OwinWebSocket : WebSocket
         {
             private readonly WebSocketSendAsync _sendAsync;
@@ -203,5 +206,6 @@ namespace Microsoft.AspNet.SignalR.Owin
                 }
             }
         }
+#endif
     }
 }

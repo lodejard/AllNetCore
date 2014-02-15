@@ -16,7 +16,9 @@ using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Owin;
 using Microsoft.AspNet.SignalR.Tracing;
 using Microsoft.AspNet.SignalR.Transports;
+#if NET45
 using Microsoft.Owin;
+#endif
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR

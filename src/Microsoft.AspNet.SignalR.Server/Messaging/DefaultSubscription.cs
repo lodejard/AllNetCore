@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+#if NET45
 using System.Security.Cryptography;
+#endif
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
 

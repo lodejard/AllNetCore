@@ -2,14 +2,16 @@
 
 using System;
 using System.Text;
+#if NET45
 using Microsoft.Owin.Security.DataProtection;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
     public class DataProtectionProviderProtectedData : IProtectedData
     {
         private static readonly UTF8Encoding _encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
-
+#if NET45
         private readonly IDataProtectionProvider _provider;
 
         // Known protected data providers
@@ -27,7 +29,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _connectionTokenProtector = provider.Create(Purposes.ConnectionToken);
             _groupsProtector = provider.Create(Purposes.Groups);
         }
-
+#endif
         public string Protect(string data, string purpose)
         {
             IDataProtector protector = GetDataProtector(purpose);
@@ -50,6 +52,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             return _encoding.GetString(unprotectedBytes);
         }
 
+#if NET45
         private IDataProtector GetDataProtector(string purpose)
         {
             switch (purpose)
@@ -62,5 +65,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
             return _provider.Create(purpose);
         }
+#endif
+
     }
 }

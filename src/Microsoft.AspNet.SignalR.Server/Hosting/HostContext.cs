@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Owin;
+#if NET45
 using Microsoft.Owin;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {
@@ -25,6 +27,7 @@ namespace Microsoft.AspNet.SignalR.Hosting
             Environment = new Dictionary<string, object>();
         }
 
+#if NET45
         public HostContext(IDictionary<string, object> environment)
         {
             Request = new ServerRequest(environment);
@@ -32,5 +35,6 @@ namespace Microsoft.AspNet.SignalR.Hosting
 
             Environment = environment;
         }
+#endif
     }
 }

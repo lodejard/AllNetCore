@@ -8,6 +8,7 @@ namespace Owin
 {
     public static class ObsoleteOwinExtensions
     {
+#if NET45
         [Obsolete("Use IAppBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
         public static IAppBuilder MapHubs(this IAppBuilder builder)
         {
@@ -81,5 +82,6 @@ namespace Owin
         {
             return path == String.Empty || path == "/";
         }
+#endif
     }
 }

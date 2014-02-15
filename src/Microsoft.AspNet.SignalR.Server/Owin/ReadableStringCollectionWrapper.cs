@@ -3,12 +3,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Hosting;
+#if NET45
 using Microsoft.Owin;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Owin
 {
     internal class ReadableStringCollectionWrapper : INameValueCollection
     {
+#if NET45
         private readonly IReadableStringCollection _readableStringCollection;
 
         public ReadableStringCollectionWrapper(IReadableStringCollection readableStringCollection)
@@ -52,6 +55,6 @@ namespace Microsoft.AspNet.SignalR.Owin
                 yield return new KeyValuePair<string, string>(pair.Key, _readableStringCollection.Get(pair.Key));
             }
         }
-
+#endif
     }
 }

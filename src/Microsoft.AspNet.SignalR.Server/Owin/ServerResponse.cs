@@ -6,7 +6,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
+#if NET45
 using Microsoft.Owin;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Owin
 {

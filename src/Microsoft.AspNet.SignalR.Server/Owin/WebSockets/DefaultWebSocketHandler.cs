@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+#if NET45
 using System.Net.WebSockets;
+#endif
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
 

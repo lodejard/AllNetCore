@@ -113,7 +113,6 @@ namespace Microsoft.AspNet.SignalR
             return Catch(task, ex => { });
         }
 
-#if PERFCOUNTERS
         public static TTask Catch<TTask>(this TTask task, params IPerformanceCounter[] counters) where TTask : Task
         {
             return Catch(task, _ =>
@@ -128,7 +127,6 @@ namespace Microsoft.AspNet.SignalR
                     }
                 });
         }
-#endif
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "This is a shared file")]
         public static TTask Catch<TTask>(this TTask task, Action<AggregateException, object> handler, object state) where TTask : Task

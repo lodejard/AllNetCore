@@ -4,12 +4,15 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Json;
+#if NET45
 using Microsoft.Owin;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Owin.Middleware
 {
     public class HubDispatcherMiddleware : OwinMiddleware
     {
+#if NET45
         private readonly HubConfiguration _configuration;
 
         public HubDispatcherMiddleware(OwinMiddleware next, HubConfiguration configuration)
@@ -36,5 +39,6 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
 
             return dispatcher.ProcessRequest(context.Environment);
         }
+#endif
     }
 }

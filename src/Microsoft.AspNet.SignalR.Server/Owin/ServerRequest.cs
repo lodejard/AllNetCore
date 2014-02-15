@@ -6,17 +6,21 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
+#if NET45
 using Microsoft.Owin;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Owin
 {
     public class ServerRequest : IRequest
     {
+
         private INameValueCollection _queryString;
         private INameValueCollection _headers;
         private IDictionary<string, Cookie> _cookies;
         private IPrincipal _user;
 
+#if NET45
         private readonly OwinRequest _request;
 
         public ServerRequest(IDictionary<string, object> environment)
@@ -108,5 +112,7 @@ namespace Microsoft.AspNet.SignalR.Owin
             IFormCollection form = await _request.ReadFormAsync();
             return new ReadableStringCollectionWrapper(form);
         }
+#endif
+
     }
 }

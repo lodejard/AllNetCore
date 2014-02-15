@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+#if NET45
 using System.Security.Cryptography;
+#endif
 using System.Text;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
@@ -15,12 +17,10 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             byte[] purposeBytes = _encoding.GetBytes(purpose);
 
             byte[] unprotectedBytes = _encoding.GetBytes(data);
-
             byte[] protectedBytes = ProtectedData.Protect(unprotectedBytes, purposeBytes, DataProtectionScope.CurrentUser);
 
             return Convert.ToBase64String(protectedBytes);
         }
-
         public string Unprotect(string protectedValue, string purpose)
         {
             byte[] purposeBytes = _encoding.GetBytes(purpose);
@@ -31,5 +31,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
             return _encoding.GetString(unprotectedBytes);
         }
+
     }
 }
