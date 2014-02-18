@@ -4,11 +4,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
+#if NET45
 namespace Microsoft.AspNet.SignalR.Tracing
 {
     public class TraceManager : ITraceManager
     {
-#if NET45
         private readonly ConcurrentDictionary<string, TraceSource> _sources = new ConcurrentDictionary<string, TraceSource>(StringComparer.OrdinalIgnoreCase);
         private readonly TextWriterTraceListener _hostTraceListener;
 
@@ -53,6 +53,7 @@ namespace Microsoft.AspNet.SignalR.Tracing
 
             return traceSource;
         }
-#endif
     }
 }
+#endif
+

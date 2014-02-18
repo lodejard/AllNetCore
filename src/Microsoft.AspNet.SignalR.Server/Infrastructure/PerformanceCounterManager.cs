@@ -30,7 +30,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private volatile bool _initialized;
         private object _initLocker = new object();
 
-#if !UTILS
+#if NET45 && !UTILS
         private readonly TraceSource _trace;
 
         public PerformanceCounterManager(DefaultDependencyResolver resolver)
@@ -393,7 +393,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             catch (UnauthorizedAccessException) { return null; }
             catch (Win32Exception) { return null; }
             catch (PlatformNotSupportedException) { return null; }
-#else
+#elif NET45
             catch (InvalidOperationException ex)
             {
                 _trace.TraceEvent(TraceEventType.Error, 0, "Performance counter failed to load: " + ex.GetBaseException());

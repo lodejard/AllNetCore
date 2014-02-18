@@ -45,9 +45,11 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             
         }
 
+#if NET45
         public CounterSample NextSample()
         {
             return CounterSample.Empty;
         }
+#endif
     }
 }

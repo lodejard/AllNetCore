@@ -2,12 +2,11 @@
 
 using System;
 using System.Diagnostics;
-
+#if NET45
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
     internal class PerformanceCounterWrapper : IPerformanceCounter
     {
-#if NET45
         private readonly PerformanceCounter _counter;
 
         public PerformanceCounterWrapper(PerformanceCounter counter)
@@ -65,6 +64,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         {
             return _counter.NextSample();
         }
-#endif
     }
 }
+#endif

@@ -14,8 +14,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
     {
         private readonly Lazy<IDictionary<string, HubDescriptor>> _hubs;
         private readonly Lazy<IAssemblyLocator> _locator;
+#if NET45
         private readonly TraceSource _trace;
-
+#endif
         public ReflectedHubDescriptorProvider(IDependencyResolver resolver)
         {
             _locator = new Lazy<IAssemblyLocator>(resolver.Resolve<IAssemblyLocator>);
@@ -23,7 +24,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
 
             var traceManager = resolver.Resolve<ITraceManager>();
+#if NET45
             _trace = traceManager["SignalR." + typeof(ReflectedHubDescriptorProvider).Name];
+#endif
         }
 
         public IList<HubDescriptor> GetHubs()

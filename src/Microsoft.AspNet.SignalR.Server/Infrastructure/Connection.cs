@@ -31,11 +31,14 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private bool _disconnected;
         private bool _aborted;
         private bool _initializing;
+#if NET45
         private readonly TraceSource _traceSource;
+#endif
         private readonly IAckHandler _ackHandler;
         private readonly IProtectedData _protectedData;
         private readonly Func<Message, bool> _excludeMessage;
 
+#if NET45
         public Connection(IMessageBus newMessageBus,
                           JsonSerializer jsonSerializer,
                           string baseSignal,
@@ -64,6 +67,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _protectedData = protectedData;
             _excludeMessage = m => ExcludeMessage(m);
         }
+#endif
 
         public string DefaultSignal
         {
@@ -95,6 +99,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
         }
 
+#if NET45
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used for debugging purposes.")]
         private TraceSource Trace
         {
@@ -103,6 +108,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                 return _traceSource;
             }
         }
+#endif
 
         public Subscription Subscription
         {

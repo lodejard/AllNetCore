@@ -10,6 +10,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
     {
         public string Name { get; set; }
         public string Description { get; set; }
+#if NET45
         public PerformanceCounterType CounterType { get; set; }
+#endif
     }
 }

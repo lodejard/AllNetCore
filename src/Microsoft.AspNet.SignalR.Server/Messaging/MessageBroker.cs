@@ -23,11 +23,13 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _counters = performanceCounterManager;
         }
 
+#if NET45
         public TraceSource Trace
         {
             get;
             set;
         }
+#endif
 
         public void Schedule(ISubscription subscription)
         {

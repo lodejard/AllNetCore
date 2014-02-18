@@ -22,7 +22,9 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly Timer _timer;
         private readonly IConfigurationManager _configurationManager;
         private readonly IServerCommandHandler _serverCommandHandler;
+#if NET45
         private readonly TraceSource _trace;
+#endif
         private readonly string _serverId;
         private readonly IPerformanceCounterManager _counters;
         private readonly object _counterLock = new object();
@@ -53,6 +55,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                                _configurationManager.HeartbeatInterval());
         }
 
+#if NET45
         private TraceSource Trace
         {
             get
@@ -60,6 +63,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 return _trace;
             }
         }
+#endif
 
         private void ProcessServerCommand(ServerCommand command)
         {
@@ -359,10 +363,12 @@ namespace Microsoft.AspNet.SignalR.Transports
             Dispose(true);
         }
 
+#if NET45
         private static void OnKeepAliveError(AggregateException ex, object state)
         {
             ((TraceSource)state).TraceEvent(TraceEventType.Error, 0, "Failed to send keep alive: " + ex.GetBaseException());
         }
+#endif
 
         private class ConnectionMetadata
         {

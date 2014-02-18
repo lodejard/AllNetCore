@@ -34,6 +34,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         }
 
+#if NET45
         public LongPollingTransport(HostContext context,
                                     JsonSerializer jsonSerializer,
                                     ITransportHeartbeat heartbeat,
@@ -41,6 +42,14 @@ namespace Microsoft.AspNet.SignalR.Transports
                                     ITraceManager traceManager,
                                     IConfigurationManager configurationManager)
             : base(context, heartbeat, performanceCounterManager, traceManager)
+#else
+            public LongPollingTransport(HostContext context,
+                                    JsonSerializer jsonSerializer,
+                                    ITransportHeartbeat heartbeat,
+                                    IPerformanceCounterManager performanceCounterManager,
+                                    IConfigurationManager configurationManager)
+            : base(context, heartbeat, performanceCounterManager)
+#endif
         {
             _jsonSerializer = jsonSerializer;
             _counters = performanceCounterManager;

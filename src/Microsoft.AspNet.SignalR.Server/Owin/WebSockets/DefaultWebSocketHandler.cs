@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
 
+#if NET45
 namespace Microsoft.AspNet.SignalR.WebSockets
 {
     public class DefaultWebSocketHandler : WebSocketHandler, IWebSocket
@@ -120,3 +121,4 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         }
     }
 }
+#endif

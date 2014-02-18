@@ -53,6 +53,7 @@ namespace Microsoft.AspNet.SignalR
             }
         }
 
+#if NET45
         /// <summary>
         /// Gets the default <see cref="ITraceManager"/>
         /// </summary>
@@ -63,6 +64,7 @@ namespace Microsoft.AspNet.SignalR
                 return DependencyResolver.Resolve<ITraceManager>();
             }
         }
+#endif
 
         /// <summary>
         /// 

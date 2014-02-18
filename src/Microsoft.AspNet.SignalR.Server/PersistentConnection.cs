@@ -69,6 +69,7 @@ namespace Microsoft.AspNet.SignalR
             return AuthorizeRequest(request);
         }
 
+#if NET45
         protected virtual TraceSource Trace
         {
             get
@@ -76,6 +77,7 @@ namespace Microsoft.AspNet.SignalR
                 return TraceManager["SignalR.PersistentConnection"];
             }
         }
+#endif
 
         protected IProtectedData ProtectedData { get; private set; }
 
@@ -85,7 +87,9 @@ namespace Microsoft.AspNet.SignalR
 
         protected IAckHandler AckHandler { get; private set; }
 
+#if NET45
         protected ITraceManager TraceManager { get; private set; }
+#endif
 
         protected IPerformanceCounterManager Counters { get; private set; }
 

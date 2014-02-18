@@ -17,8 +17,10 @@ namespace Microsoft.AspNet.SignalR.Messaging
     /// </summary>
     public abstract class ScaleoutMessageBus : MessageBus
     {
+#if NET45
         private readonly SipHashBasedStringEqualityComparer _sipHashBasedComparer = new SipHashBasedStringEqualityComparer(0, 0);
         private readonly TraceSource _trace;
+#endif
         private readonly Lazy<ScaleoutStreamManager> _streamManager;
         private readonly IPerformanceCounterManager _perfCounters;
 
@@ -111,6 +113,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             throw new NotImplementedException();
         }
 
+#if NET45
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "We return a faulted tcs")]
         private void SendImpl(IEnumerator<IGrouping<string, Message>> enumerator, TaskCompletionSource<object> taskCompletionSource)
         {
@@ -152,7 +155,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 }
             }
         }
-
+#endif
         /// <summary>
         /// Invoked when a payload is received from the backplane. There should only be one active call at any time.
         /// </summary>

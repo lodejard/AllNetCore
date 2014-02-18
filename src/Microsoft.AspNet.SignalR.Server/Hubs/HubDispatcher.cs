@@ -57,6 +57,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             _enableDetailedErrors = configuration.EnableDetailedErrors;
         }
 
+#if NET45
         protected override TraceSource Trace
         {
             get
@@ -64,6 +65,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 return TraceManager["SignalR.HubDispatcher"];
             }
         }
+#endif
 
         internal override string GroupPrefix
         {

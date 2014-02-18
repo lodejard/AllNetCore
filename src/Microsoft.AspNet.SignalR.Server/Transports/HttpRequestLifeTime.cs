@@ -12,10 +12,16 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly TaskCompletionSource<object> _lifetimeTcs = new TaskCompletionSource<object>();
         private readonly TransportDisconnectBase _transport;
         private readonly TaskQueue _writeQueue;
+#if NET45
         private readonly TraceSource _trace;
+#endif
         private readonly string _connectionId;
 
+#if NET45
         public HttpRequestLifeTime(TransportDisconnectBase transport, TaskQueue writeQueue, TraceSource trace, string connectionId)
+#else
+        public HttpRequestLifeTime(TransportDisconnectBase transport, TaskQueue writeQueue, string connectionId)
+#endif
         {
             _transport = transport;
             _trace = trace;

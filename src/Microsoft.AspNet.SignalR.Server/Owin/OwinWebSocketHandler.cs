@@ -46,6 +46,7 @@ namespace Microsoft.AspNet.SignalR.Owin
                                Task
                            >;
 
+#if NET45
     internal class OwinWebSocketHandler
     {
         private readonly Func<IWebSocket, Task> _callback;
@@ -107,7 +108,6 @@ namespace Microsoft.AspNet.SignalR.Owin
             });
         }
 
-#if NET45
         private class OwinWebSocket : WebSocket
         {
             private readonly WebSocketSendAsync _sendAsync;
@@ -206,6 +206,6 @@ namespace Microsoft.AspNet.SignalR.Owin
                 }
             }
         }
-#endif
     }
+#endif
 }

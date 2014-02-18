@@ -16,20 +16,28 @@ namespace Microsoft.AspNet.SignalR.Messaging
         private Exception _error;
 
         private readonly int _size;
+#if NET45
         private readonly TraceSource _trace;
+#endif
         private readonly string _tracePrefix;
         private readonly IPerformanceCounterManager _perfCounters;
 
         private readonly object _lockObj = new object();
 
+#if NET45
         public ScaleoutStream(TraceSource trace, string tracePrefix, int size, IPerformanceCounterManager performanceCounters)
+#else
+         public ScaleoutStream(string tracePrefix, int size, IPerformanceCounterManager performanceCounters)
+#endif
         {
             if (trace == null)
             {
                 throw new ArgumentNullException("trace");
             }
 
+#if NET45
             _trace = trace;
+#endif
             _tracePrefix = tracePrefix;
             _size = size;
             _perfCounters = performanceCounters;
@@ -104,15 +112,16 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 return Send(context).Finally(counter =>
                 {
                     ((IPerformanceCounter)counter).Decrement();
-                }, 
+                },
                 _perfCounters.ScaleoutSendQueueLength);
             }
         }
 
         public void SetError(Exception error)
         {
+#if NET45
             Trace(TraceEventType.Error, "Error has happened with the following exception: {0}.", error);
-
+#endif
             lock (_lockObj)
             {
                 _perfCounters.ScaleoutErrorsTotal.Increment();
@@ -166,9 +175,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
             .Catch((ex, obj) =>
             {
                 var ctx = (SendContext)obj;
-
+#if NET45
                 ctx.Stream.Trace(TraceEventType.Error, "Send failed: {0}", ex);
-
+#endif
                 lock (ctx.Stream._lockObj)
                 {
                     // Set the queue into buffering state
@@ -244,8 +253,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             if (_state != newState)
             {
+#if NET45
                 Trace(TraceEventType.Information, "Changed state from {0} to {1}", _state, newState);
-
+#endif
                 _state = newState;
                 return true;
             }
@@ -270,10 +280,12 @@ namespace Microsoft.AspNet.SignalR.Messaging
             return tcs.Task;
         }
 
+#if NET45
         private void Trace(TraceEventType traceEventType, string value, params object[] args)
         {
             _trace.TraceEvent(traceEventType, 0, _tracePrefix + " - " + value, args);
         }
+#endif
 
         private class SendContext
         {

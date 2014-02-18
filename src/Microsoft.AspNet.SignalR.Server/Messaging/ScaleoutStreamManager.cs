@@ -16,6 +16,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         private readonly Action<int, ulong, ScaleoutMessage> _receive;
         private readonly ScaleoutStream[] _streams;
 
+#if NET45
         public ScaleoutStreamManager(Func<int, IList<Message>, Task> send,
                                      Action<int, ulong, ScaleoutMessage> receive,
                                      int streamCount,
@@ -41,6 +42,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             Streams = new ReadOnlyCollection<ScaleoutMappingStore>(receiveMapping);
         }
+#endif
 
         public IList<ScaleoutMappingStore> Streams { get; private set; }
 

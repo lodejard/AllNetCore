@@ -33,6 +33,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
         }
 
+#if NET45
         protected ForeverTransport(HostContext context,
                                    JsonSerializer jsonSerializer,
                                    ITransportHeartbeat heartbeat,
@@ -43,6 +44,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             _jsonSerializer = jsonSerializer;
             _counters = performanceCounterWriter;
         }
+#endif
 
         protected string LastMessageId
         {

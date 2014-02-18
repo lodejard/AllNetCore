@@ -19,7 +19,9 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly ITransportHeartbeat _heartbeat;
         private TextWriter _outputWriter;
 
+#if NET45
         private TraceSource _trace;
+#endif
 
         private int _timedOut;
         private readonly IPerformanceCounterManager _counters;
@@ -44,7 +46,11 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         internal HttpRequestLifeTime _requestLifeTime;
 
+#if NET45
         protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, ITraceManager traceManager)
+#else
+        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager)
+#endif
         {
             if (context == null)
             {
@@ -61,21 +67,24 @@ namespace Microsoft.AspNet.SignalR.Transports
                 throw new ArgumentNullException("performanceCounterManager");
             }
 
+#if NET45
             if (traceManager == null)
             {
                 throw new ArgumentNullException("traceManager");
             }
-
+#endif
             _context = context;
             _heartbeat = heartbeat;
             _counters = performanceCounterManager;
 
             // Queue to protect against overlapping writes to the underlying response stream
             WriteQueue = new TaskQueue();
-
+#if NET45
             _trace = traceManager["SignalR.Transports." + GetType().Name];
+#endif
         }
 
+#if NET45
         protected TraceSource Trace
         {
             get
@@ -83,6 +92,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 return _trace;
             }
         }
+#endif
 
         public string ConnectionId
         {
@@ -361,9 +371,11 @@ namespace Microsoft.AspNet.SignalR.Transports
             _requestLifeTime);
         }
 
+#if NET45
         private static void OnDisconnectError(AggregateException ex, object state)
         {
             ((TraceSource)state).TraceEvent(TraceEventType.Error, 0, "Failed to raise disconnect: " + ex.GetBaseException());
         }
+#endif
     }
 }

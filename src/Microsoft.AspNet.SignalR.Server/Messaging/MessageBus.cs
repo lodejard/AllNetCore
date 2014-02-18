@@ -31,8 +31,10 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         private readonly IStringMinifier _stringMinifier;
 
+#if NET45
         private readonly ITraceManager _traceManager;
         private readonly TraceSource _trace;
+#endif
 
         private Timer _gcTimer;
         private int _gcRunning;
@@ -77,21 +79,30 @@ namespace Microsoft.AspNet.SignalR.Messaging
         /// <param name="configurationManager"></param>
         /// <param name="maxTopicsWithNoSubscriptions"></param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The message broker is disposed when the bus is disposed.")]
+#if NET45
         public MessageBus(IStringMinifier stringMinifier,
                           ITraceManager traceManager,
                           IPerformanceCounterManager performanceCounterManager,
                           IConfigurationManager configurationManager,
                           int maxTopicsWithNoSubscriptions)
+#else
+        public MessageBus(IStringMinifier stringMinifier,
+                          IPerformanceCounterManager performanceCounterManager,
+                          IConfigurationManager configurationManager,
+                          int maxTopicsWithNoSubscriptions)
+#endif
         {
             if (stringMinifier == null)
             {
                 throw new ArgumentNullException("stringMinifier");
             }
 
+#if NET45
             if (traceManager == null)
             {
                 throw new ArgumentNullException("traceManager");
             }
+#endif
 
             if (performanceCounterManager == null)
             {
@@ -109,9 +120,13 @@ namespace Microsoft.AspNet.SignalR.Messaging
             }
 
             _stringMinifier = stringMinifier;
+#if NET45
             _traceManager = traceManager;
+#endif
             Counters = performanceCounterManager;
+#if NET45
             _trace = _traceManager["SignalR." + typeof(MessageBus).Name];
+#endif
             _maxTopicsWithNoSubscriptions = maxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);
@@ -133,6 +148,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             Topics = new TopicLookup();
         }
 
+#if NET45
         protected virtual TraceSource Trace
         {
             get
@@ -140,6 +156,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 return _trace;
             }
         }
+#endif
 
         protected internal TopicLookup Topics { get; private set; }
         protected IPerformanceCounterManager Counters { get; private set; }

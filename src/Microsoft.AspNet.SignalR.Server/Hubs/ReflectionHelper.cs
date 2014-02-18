@@ -42,6 +42,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return type.GetInterfaceMap(iface).TargetMethods;
         }
 
+#if NET45
         public static TResult GetAttributeValue<TAttribute, TResult>(ICustomAttributeProvider source, Func<TAttribute, TResult> valueGetter)
             where TAttribute : Attribute
         {
@@ -64,6 +65,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             return default(TResult);
         }
+#endif
 
     }
 }

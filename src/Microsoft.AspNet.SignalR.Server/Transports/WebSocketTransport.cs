@@ -14,6 +14,7 @@ using Microsoft.AspNet.SignalR.Owin;
 using Microsoft.AspNet.SignalR.Tracing;
 using Newtonsoft.Json;
 
+#if NET45
 namespace Microsoft.AspNet.SignalR.Transports
 {
     using WebSocketFunc = Func<IDictionary<string, object>, Task>;
@@ -194,3 +195,4 @@ namespace Microsoft.AspNet.SignalR.Transports
         }
     }
 }
+#endif
