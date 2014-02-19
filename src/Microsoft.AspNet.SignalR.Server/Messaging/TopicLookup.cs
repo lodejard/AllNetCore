@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.SignalR.Infrastructure;
+#if NET45
 
 namespace Microsoft.AspNet.SignalR.Messaging
 {
@@ -96,3 +97,4 @@ namespace Microsoft.AspNet.SignalR.Messaging
         }
     }
 }
+#endif

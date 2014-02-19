@@ -16,10 +16,8 @@ using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Owin;
 using Microsoft.AspNet.SignalR.Tracing;
 using Microsoft.AspNet.SignalR.Transports;
-#if NET45
-using Microsoft.Owin;
-#endif
 using Newtonsoft.Json;
+using Microsoft.AspNet.Abstractions;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -144,18 +142,20 @@ namespace Microsoft.AspNet.SignalR
         /// </summary>
         /// <param name="environment"></param>
         /// <returns></returns>
-        public Task ProcessRequest(IDictionary<string, object> environment)
+        public Task ProcessRequest(HttpContext httpContext)
         {
-            var context = new HostContext(environment);
+            // TODO: This
+            var context = new HostContext(httpContext);
 
-            // Disable request compression and buffering on IIS
-            environment.DisableRequestCompression();
-            environment.DisableResponseBuffering();
+            //// Disable request compression and buffering on IIS
+            //environment.DisableRequestCompression();
+            //environment.DisableResponseBuffering();
 
-            var response = new OwinResponse(environment);
+            var response = context.Response;
 
+            // TODO
             // Add the nosniff header for all responses to prevent IE from trying to sniff mime type from contents
-            response.Headers.Set("X-Content-Type-Options", "nosniff");
+            //response.Headers.Set("X-Content-Type-Options", "nosniff");
 
             if (Authorize(context.Request))
             {

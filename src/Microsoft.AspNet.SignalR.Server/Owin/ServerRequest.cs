@@ -6,8 +6,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
-#if NET45
-using Microsoft.Owin;
+using Microsoft.AspNet.Abstractions;
 
 namespace Microsoft.AspNet.SignalR.Owin
 {
@@ -19,21 +18,25 @@ namespace Microsoft.AspNet.SignalR.Owin
         private IDictionary<string, Cookie> _cookies;
         private IPrincipal _user;
 
-        private readonly OwinRequest _request;
+        private readonly HttpRequest _request;
 
-        public ServerRequest(IDictionary<string, object> environment)
+        public ServerRequest(HttpRequest request)
         {
-            _request = new OwinRequest(environment);
+            _request = request;
 
             // Cache user because AspNetWebSocket.CloseOutputAsync clears it. We need it during Hub.OnDisconnected
-            _user = _request.User;
+            // TODO: user
+            // _user = _request.User;
         }
 
+        // TODO
         public Uri Url
         {
             get
             {
-                return _request.Uri;
+                return null;
+                // TODO
+                //return _request.Uri;
             }
         }
 
@@ -81,7 +84,8 @@ namespace Microsoft.AspNet.SignalR.Owin
                         {
                             if (!cookies.ContainsKey(kv.Key))
                             {
-                                cookies.Add(kv.Key, new Cookie(kv.Key, kv.Value));
+                                // ??? Value is an array instead of a string
+                                cookies.Add(kv.Key, new Cookie(kv.Key, kv.Value[0]));
                             }
                         }
                         return cookies;
@@ -97,20 +101,15 @@ namespace Microsoft.AspNet.SignalR.Owin
             }
         }
 
-        public IDictionary<string, object> Environment
-        {
-            get
-            {
-                return _request.Environment;
-            }
-        }
 
-        public async Task<INameValueCollection> ReadForm()
+        // TODO
+        public Task<INameValueCollection> ReadForm()
         {
-            IFormCollection form = await _request.ReadFormAsync();
-            return new ReadableStringCollectionWrapper(form);
+            // TODO
+            //IFormCollection form = await _request.ReadFormAsync();
+            //return new ReadableStringCollectionWrapper(form);
+            return TaskAsyncHelper.FromResult<INameValueCollection>(null);
         }
     }
 }
-#endif
 

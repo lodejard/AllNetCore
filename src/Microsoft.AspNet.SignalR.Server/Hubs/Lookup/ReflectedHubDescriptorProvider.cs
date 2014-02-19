@@ -22,9 +22,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
             _locator = new Lazy<IAssemblyLocator>(resolver.Resolve<IAssemblyLocator>);
             _hubs = new Lazy<IDictionary<string, HubDescriptor>>(BuildHubsCache);
 
-
-            var traceManager = resolver.Resolve<ITraceManager>();
 #if NET45
+            var traceManager = resolver.Resolve<ITraceManager>();
             _trace = traceManager["SignalR." + typeof(ReflectedHubDescriptorProvider).Name];
 #endif
         }

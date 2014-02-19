@@ -36,9 +36,10 @@ namespace Microsoft.AspNet.SignalR
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The resolver disposes dependencies on Dispose.")]
         private void RegisterDefaultServices()
         {
+#if NET45
             var traceManager = new Lazy<TraceManager>(() => new TraceManager());
             Register(typeof(ITraceManager), () => traceManager.Value);
-
+#endif
             var serverIdManager = new ServerIdManager();
             Register(typeof(IServerIdManager), () => serverIdManager);
 

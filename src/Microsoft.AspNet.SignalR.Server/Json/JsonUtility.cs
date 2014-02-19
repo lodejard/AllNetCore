@@ -6,10 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-#if NET45
-using Microsoft.Owin;
-#endif
 using Newtonsoft.Json;
+using Microsoft.AspNet.Abstractions;
 
 namespace Microsoft.AspNet.SignalR.Json
 {
@@ -132,9 +130,8 @@ namespace Microsoft.AspNet.SignalR.Json
             return true;
         }
 
-#if NET45
         internal static bool TryRejectJSONPRequest(ConnectionConfiguration config,
-                                                   IOwinContext context)
+                                                   HttpContext context)
         {
             // If JSONP is enabled then do nothing
             if (config.EnableJSONP)
@@ -152,10 +149,11 @@ namespace Microsoft.AspNet.SignalR.Json
 
             // Disable the JSONP request with a 403
             context.Response.StatusCode = 403;
-            context.Response.ReasonPhrase = Resources.Forbidden_JSONPDisabled;
+            
+            // TODO
+            //context.Response.ReasonPhrase = Resources.Forbidden_JSONPDisabled;
             return true;
         }
-#endif
         private static bool IsValidJavaScriptIdentifierStartChar(char startChar)
         {
             return Char.IsLetter(startChar) || startChar == '$' || startChar == '_';

@@ -2,24 +2,22 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Json;
-#if NET45
-using Microsoft.Owin;
 
 namespace Microsoft.AspNet.SignalR.Owin.Middleware
 {
-    public class HubDispatcherMiddleware : OwinMiddleware
+    public class HubDispatcherMiddleware
     {
         private readonly HubConfiguration _configuration;
 
-        public HubDispatcherMiddleware(OwinMiddleware next, HubConfiguration configuration)
-            : base(next)
+        public HubDispatcherMiddleware(RequestDelegate next, HubConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public override Task Invoke(IOwinContext context)
+        public Task Invoke(HttpContext context)
         {
             if (context == null)
             {
@@ -35,9 +33,7 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
 
             dispatcher.Initialize(_configuration.Resolver);
 
-            return dispatcher.ProcessRequest(context.Environment);
+            return dispatcher.ProcessRequest(context);
         }
     }
 }
-#endif
-

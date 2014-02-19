@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Tracing;
-
+#if NET45
 namespace Microsoft.AspNet.SignalR.Messaging
 {
     /// <summary>
@@ -31,10 +31,8 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         private readonly IStringMinifier _stringMinifier;
 
-#if NET45
         private readonly ITraceManager _traceManager;
         private readonly TraceSource _trace;
-#endif
 
         private Timer _gcTimer;
         private int _gcRunning;
@@ -587,3 +585,4 @@ namespace Microsoft.AspNet.SignalR.Messaging
         }
     }
 }
+#endif

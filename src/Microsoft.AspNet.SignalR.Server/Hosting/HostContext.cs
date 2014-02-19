@@ -3,9 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Owin;
-#if NET45
-using Microsoft.Owin;
-#endif
+using Microsoft.AspNet.Abstractions;
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {
@@ -27,14 +25,10 @@ namespace Microsoft.AspNet.SignalR.Hosting
             Environment = new Dictionary<string, object>();
         }
 
-#if NET45
-        public HostContext(IDictionary<string, object> environment)
+        public HostContext(HttpContext context)
         {
-            Request = new ServerRequest(environment);
-            Response = new ServerResponse(environment);
-
-            Environment = environment;
+            Request = new ServerRequest(context.Request);
+            Response = new ServerResponse(context.Response);
         }
-#endif
     }
 }

@@ -6,21 +6,21 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
-#if NET45
-using Microsoft.Owin;
+using Microsoft.AspNet.Abstractions;
 
 namespace Microsoft.AspNet.SignalR.Owin
 {
     public class ServerResponse : IResponse
     {
         private readonly CancellationToken _callCancelled;
-        private readonly OwinResponse _response;
+        private readonly HttpResponse _response;
         private readonly Stream _responseBody;
 
-        public ServerResponse(IDictionary<string, object> environment)
+        public ServerResponse(HttpResponse response)
         {
-            _response = new OwinResponse(environment);
-            _callCancelled = _response.Get<CancellationToken>(OwinConstants.CallCancelled);
+            _response = response;
+            // TODO: Call cancelled
+            // _callCancelled = _response.Get<CancellationToken>(OwinConstants.CallCancelled);
             _responseBody = _response.Body;
         }
 
@@ -52,4 +52,3 @@ namespace Microsoft.AspNet.SignalR.Owin
         }
     }
 }
-#endif

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Tracing;
 
+#if NET45
 namespace Microsoft.AspNet.SignalR.Messaging
 {
     /// <summary>
@@ -234,3 +235,4 @@ namespace Microsoft.AspNet.SignalR.Messaging
         }
     }
 }
+#endif

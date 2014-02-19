@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
+#if NET45
 namespace Microsoft.AspNet.SignalR.Messaging
 {
     internal class DefaultSubscription : Subscription
@@ -257,3 +258,4 @@ namespace Microsoft.AspNet.SignalR.Messaging
         }
     }
 }
+#endif

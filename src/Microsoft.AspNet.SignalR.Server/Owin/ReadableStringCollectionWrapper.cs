@@ -2,9 +2,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR.Hosting;
-#if NET45
-using Microsoft.Owin;
 
 namespace Microsoft.AspNet.SignalR.Owin
 {
@@ -55,4 +54,3 @@ namespace Microsoft.AspNet.SignalR.Owin
         }
     }
 }
-#endif

@@ -4,28 +4,26 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Json;
-#if NET45
-using Microsoft.Owin;
-#endif
+using Microsoft.AspNet.Abstractions;
 
 namespace Microsoft.AspNet.SignalR.Owin.Middleware
 {
-#if NET45
-    public class PersistentConnectionMiddleware : OwinMiddleware
+    public class PersistentConnectionMiddleware
     {
         private readonly Type _connectionType;
         private readonly ConnectionConfiguration _configuration;
+        private readonly RequestDelegate _next;
 
-        public PersistentConnectionMiddleware(OwinMiddleware next,
+        public PersistentConnectionMiddleware(RequestDelegate next,
                                               Type connectionType,
                                               ConnectionConfiguration configuration)
-            : base(next)
         {
+            _next = next;
             _connectionType = connectionType;
             _configuration = configuration;
         }
 
-        public override Task Invoke(IOwinContext context)
+        public Task Invoke(HttpContext context)
         {
             if (context == null)
             {
@@ -42,8 +40,7 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
 
             connection.Initialize(_configuration.Resolver);
 
-            return connection.ProcessRequest(context.Environment);
+            return connection.ProcessRequest(context);
         }
     }
-#endif
 }

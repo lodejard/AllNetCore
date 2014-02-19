@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-#if NET45
-using Microsoft.Owin;
-#endif
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {

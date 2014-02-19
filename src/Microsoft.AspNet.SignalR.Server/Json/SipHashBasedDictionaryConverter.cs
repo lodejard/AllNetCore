@@ -6,7 +6,7 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Json
-{   
+{
     /// <summary>
     /// A converter for dictionaries that uses a SipHash comparer
     /// </summary>
@@ -74,6 +74,7 @@ namespace Microsoft.AspNet.SignalR.Json
             throw new JsonSerializationException(Resources.Error_ParseObjectFailed);
         }
 
+#if NET45
         private object ReadObject(JsonReader reader)
         {
             var obj = new Dictionary<string, object>(new SipHashBasedStringEqualityComparer());
@@ -98,12 +99,13 @@ namespace Microsoft.AspNet.SignalR.Json
                         return obj;
                     default:
                         throw new JsonSerializationException(Resources.Error_ParseObjectFailed);
-                        
+
                 }
             }
 
             throw new JsonSerializationException(Resources.Error_ParseObjectFailed);
         }
+#endif
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

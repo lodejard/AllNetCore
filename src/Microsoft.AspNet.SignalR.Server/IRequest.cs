@@ -45,11 +45,6 @@ namespace Microsoft.AspNet.SignalR
         IPrincipal User { get; }
 
         /// <summary>
-        /// Gets the owin enviornment
-        /// </summary>
-        IDictionary<string, object> Environment { get; }
-
-        /// <summary>
         /// Reads the form of the http request
         /// </summary>
         /// <returns></returns>

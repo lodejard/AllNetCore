@@ -14,22 +14,26 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
         public string Protect(string data, string purpose)
         {
-            byte[] purposeBytes = _encoding.GetBytes(purpose);
+            //byte[] purposeBytes = _encoding.GetBytes(purpose);
 
-            byte[] unprotectedBytes = _encoding.GetBytes(data);
-            byte[] protectedBytes = ProtectedData.Protect(unprotectedBytes, purposeBytes, DataProtectionScope.CurrentUser);
+            //byte[] unprotectedBytes = _encoding.GetBytes(data);
+            //byte[] protectedBytes = ProtectedData.Protect(unprotectedBytes, purposeBytes, DataProtectionScope.CurrentUser);
 
-            return Convert.ToBase64String(protectedBytes);
+            //return Convert.ToBase64String(protectedBytes);
+
+            return String.Empty;
         }
         public string Unprotect(string protectedValue, string purpose)
         {
-            byte[] purposeBytes = _encoding.GetBytes(purpose);
+            //byte[] purposeBytes = _encoding.GetBytes(purpose);
 
-            byte[] protectedBytes = Convert.FromBase64String(protectedValue);
+            //byte[] protectedBytes = Convert.FromBase64String(protectedValue);
 
-            byte[] unprotectedBytes = ProtectedData.Unprotect(protectedBytes, purposeBytes, DataProtectionScope.CurrentUser);
+            //byte[] unprotectedBytes = ProtectedData.Unprotect(protectedBytes, purposeBytes, DataProtectionScope.CurrentUser);
 
-            return _encoding.GetString(unprotectedBytes);
+            //return _encoding.GetString(unprotectedBytes);
+
+            return String.Empty;
         }
 
     }

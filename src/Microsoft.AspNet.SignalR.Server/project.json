@@ -1,17 +1,11 @@
 {    
     "dependencies": {
-        "Newtonsoft.Json" : "5.0.6"
+        "Newtonsoft.Json" : "5.0.6",
+        "Microsoft.AspNet.Abstractions" : "0.1-alpha-*"
     },
     "compilationOptions" : { "allowUnsafe": true },
     "configurations": {
-        "net45": { 
-            "dependencies": {
-                "Microsoft.Owin" : "2.0.1",
-                "Microsoft.Owin.Security" : "2.0.1",
-                "Owin" : "1.0",
-                "System.Security" : ""
-            }
-        },
+        "net45": { },
         "k10": { }
     }
 }

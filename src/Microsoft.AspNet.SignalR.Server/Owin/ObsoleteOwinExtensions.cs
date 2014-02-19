@@ -2,27 +2,27 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR;
 
 namespace Owin
 {
     public static class ObsoleteOwinExtensions
     {
-#if NET45
-        [Obsolete("Use IAppBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
-        public static IAppBuilder MapHubs(this IAppBuilder builder)
+        [Obsolete("Use IBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
+        public static IBuilder MapHubs(this IBuilder builder)
         {
             return builder.MapSignalR();
         }
 
-        [Obsolete("Use IAppBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
-        public static IAppBuilder MapHubs(this IAppBuilder builder, HubConfiguration configuration)
+        [Obsolete("Use IBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
+        public static IBuilder MapHubs(this IBuilder builder, HubConfiguration configuration)
         {
             return builder.MapSignalR(configuration);
         }
 
-        [Obsolete("Use IAppBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
-        public static IAppBuilder MapHubs(this IAppBuilder builder, string path, HubConfiguration configuration)
+        [Obsolete("Use IBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
+        public static IBuilder MapHubs(this IBuilder builder, string path, HubConfiguration configuration)
         {
             if (IsEmptyOrForwardSlash(path))
             {
@@ -35,8 +35,8 @@ namespace Owin
             }
         }
 
-        [Obsolete("Use IAppBuilder.MapSignalR<TConnection> in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
-        public static IAppBuilder MapConnection<T>(this IAppBuilder builder, string path) where T : PersistentConnection
+        [Obsolete("Use IBuilder.MapSignalR<TConnection> in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
+        public static IBuilder MapConnection<T>(this IBuilder builder, string path) where T : PersistentConnection
         {
             if (IsEmptyOrForwardSlash(path))
             {
@@ -49,8 +49,8 @@ namespace Owin
             }
         }
 
-        [Obsolete("Use IAppBuilder.MapSignalR<TConnection> in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
-        public static IAppBuilder MapConnection<T>(this IAppBuilder builder, string path, ConnectionConfiguration configuration) where T : PersistentConnection
+        [Obsolete("Use IBuilder.MapSignalR<TConnection> in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
+        public static IBuilder MapConnection<T>(this IBuilder builder, string path, ConnectionConfiguration configuration) where T : PersistentConnection
         {
             if (IsEmptyOrForwardSlash(path))
             {
@@ -63,8 +63,8 @@ namespace Owin
             }
         }
 
-        [Obsolete("Use IAppBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
-        public static IAppBuilder MapConnection(this IAppBuilder builder, string path, Type connectionType, ConnectionConfiguration configuration)
+        [Obsolete("Use IBuilder.MapSignalR in an Owin Startup class. See http://go.microsoft.com/fwlink/?LinkId=320578 for more details.")]
+        public static IBuilder MapConnection(this IBuilder builder, string path, Type connectionType, ConnectionConfiguration configuration)
         {
             if (IsEmptyOrForwardSlash(path))
             {
@@ -82,6 +82,5 @@ namespace Owin
         {
             return path == String.Empty || path == "/";
         }
-#endif
     }
 }
