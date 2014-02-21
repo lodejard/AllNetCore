@@ -113,9 +113,8 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         public void SetError(Exception error)
         {
-#if NET45
-            Logger(TraceType.Error, "Error has happened with the following exception: {0}.", error);
-#endif
+            Log(TraceType.Error, "Error has happened with the following exception: {0}.", error);
+
             lock (_lockObj)
             {
                 _perfCounters.ScaleoutErrorsTotal.Increment();
@@ -170,7 +169,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             {
                 var ctx = (SendContext)obj;
 #if NET45
-                ctx.Stream.Logger(TraceType.Error, "Send failed: {0}", ex);
+                ctx.Stream.Log(TraceType.Error, "Send failed: {0}", ex);
 #endif
                 lock (ctx.Stream._lockObj)
                 {
@@ -247,7 +246,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             if (_state != newState)
             {
-                Logger(TraceType.Information, "Changed state from {0} to {1}", _state, newState);
+                Log(TraceType.Information, "Changed state from {0} to {1}", _state, newState);
                 _state = newState;
                 return true;
             }
@@ -272,7 +271,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             return tcs.Task;
         }
 
-        private void Logger(TraceType TraceType, string value, params object[] args)
+        private void Log(TraceType TraceType, string value, params object[] args)
         {
             // TODO
             // ???

@@ -6,18 +6,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Owin;
-
 using Newtonsoft.Json;
 
 #if NET45
 namespace Microsoft.AspNet.SignalR.Transports
 {
-    using Microsoft.AspNet.Logging;
     using WebSocketFunc = Func<IDictionary<string, object>, Task>;
 
     public class WebSocketTransport : ForeverTransport

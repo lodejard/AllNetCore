@@ -69,10 +69,6 @@ namespace Microsoft.AspNet.SignalR
             var ackHandler = new Lazy<AckHandler>();
             Register(typeof(IAckHandler), () => ackHandler.Value);
 
-#if PERFCOUNTERS
-            var perfCounterWriter = new Lazy<PerformanceCounterManager>(() => new PerformanceCounterManager(this));
-            Register(typeof(IPerformanceCounterManager), () => perfCounterWriter.Value);
-#endif
             var userIdProvider = new PrincipalUserIdProvider();
             Register(typeof(IUserIdProvider), () => userIdProvider);
         }
