@@ -168,9 +168,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
             .Catch((ex, obj) =>
             {
                 var ctx = (SendContext)obj;
-#if NET45
+
                 ctx.Stream.Log(TraceType.Error, "Send failed: {0}", ex);
-#endif
+
                 lock (ctx.Stream._lockObj)
                 {
                     // Set the queue into buffering state
@@ -271,10 +271,28 @@ namespace Microsoft.AspNet.SignalR.Messaging
             return tcs.Task;
         }
 
-        private void Log(TraceType TraceType, string value, params object[] args)
+        private void Log(TraceType traceType, string value, params object[] args)
         {
-            // TODO
-            // ???
+            switch (traceType)
+            {
+                case TraceType.Critical:
+                    _logger.WriteCritical(String.Format(value, args));
+                    break;
+                case TraceType.Error:
+                    _logger.WriteError(String.Format(value, args));
+                    break;
+                case TraceType.Information:
+                    _logger.WriteInformation(String.Format(value, args));
+                    break;
+                case TraceType.Verbose:
+                    _logger.WriteVerbose(String.Format(value, args));
+                    break;
+                case TraceType.Warning:
+                    _logger.WriteWarning(String.Format(value, args));
+                    break;
+                default:
+                    break;
+            }
         }
 
         private class SendContext

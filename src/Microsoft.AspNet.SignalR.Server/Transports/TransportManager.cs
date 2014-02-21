@@ -29,9 +29,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             Register("foreverFrame", context => new ForeverFrameTransport(context, serviceProvider));
             Register("serverSentEvents", context => new ServerSentEventsTransport(context, serviceProvider));
             Register("longPolling", context => new LongPollingTransport(context, serviceProvider));
-#if NET45
             Register("webSockets", context => new WebSocketTransport(context, serviceProvider));
-#endif
         }
 
         /// <summary>

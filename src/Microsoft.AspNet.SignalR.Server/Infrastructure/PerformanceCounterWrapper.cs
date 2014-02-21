@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
-
+#if NET45
 using System;
 using System.Diagnostics;
-#if NET45
+
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
     internal class PerformanceCounterWrapper : IPerformanceCounter
@@ -58,11 +58,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             {
             	// This happens on mono
             }
-        }
-
-        public CounterSample NextSample()
-        {
-            return _counter.NextSample();
         }
     }
 }

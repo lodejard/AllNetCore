@@ -10,9 +10,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         long Decrement();
         long Increment();
         long IncrementBy(long value);
-#if NET45
-        CounterSample NextSample();
-#endif
         long RawValue { get; set; }
         void Close();
         void RemoveInstance();

@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
-#if NET45
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +15,6 @@ using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
-
     public class WebSocketTransport : ForeverTransport
     {
         private readonly HostContext _context;
@@ -124,7 +123,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private Task AcceptWebSocketRequest(Func<IWebSocket, Task> callback)
         {
-            // TODO: Websockets
+            // TODO: Websockets Accept
             //var accept = _context.Environment.Get<Action<IDictionary<string, object>, WebSocketFunc>>(OwinConstants.WebSocketAccept);
 
             //if (accept == null)
@@ -194,5 +193,3 @@ namespace Microsoft.AspNet.SignalR.Transports
         }
     }
 }
-
-#endif
