@@ -360,12 +360,10 @@ namespace Microsoft.AspNet.SignalR.Transports
             Dispose(true);
         }
 
-#if NET45
         private static void OnKeepAliveError(AggregateException ex, object state)
         {
             ((ILogger)state).WriteError("Failed to send keep alive: " + ex.GetBaseException());
         }
-#endif
 
         private class ConnectionMetadata
         {

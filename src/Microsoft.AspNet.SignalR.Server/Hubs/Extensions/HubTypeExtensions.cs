@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+using System.Reflection;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -8,7 +9,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
     {
         internal static string GetHubName(this Type type)
         {
-            if (!typeof(IHub).IsAssignableFrom(type))
+            if (!typeof(IHub).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
             {
                 return null;
             }
@@ -18,13 +19,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         internal static string GetHubAttributeName(this Type type)
         {
-            if (!typeof(IHub).IsAssignableFrom(type))
+            if (!typeof(IHub).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
             {
                 return null;
             }
 
             // We can still return null if there is no attribute name
-            return ReflectionHelper.GetAttributeValue<HubNameAttribute, string>(type, attr => attr.HubName);
+            return ReflectionHelper.GetAttributeValue<HubNameAttribute, string>(type.GetTypeInfo(), attr => attr.HubName);
         }
 
         private static string GetHubTypeName(Type type)

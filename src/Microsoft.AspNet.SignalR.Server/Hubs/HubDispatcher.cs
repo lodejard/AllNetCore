@@ -317,7 +317,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 if (typeof(Task).IsAssignableFrom(returnType))
                 {
                     var task = (Task)result;
-                    if (!returnType.IsGenericType)
+                    if (!returnType.GetTypeInfo().IsGenericType)
                     {
                         task.ContinueWith(tcs);
                     }

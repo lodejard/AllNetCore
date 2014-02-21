@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -159,7 +160,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private static string MapToJavaScriptType(Type type)
         {
-            if (!type.IsPrimitive && !(type == typeof(string)))
+            if (!type.GetTypeInfo().IsPrimitive && !(type == typeof(string)))
             {
                 return "Object";
             }
@@ -171,7 +172,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             {
                 return "Number";
             }
-            if (typeof(IEnumerable).IsAssignableFrom(type))
+            if (typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
             {
                 return "Array";
             }
@@ -194,7 +195,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private static string GetTemplateFromResource()
         {
-            using (Stream resourceStream = typeof(DefaultJavaScriptProxyGenerator).Assembly.GetManifestResourceStream(ScriptResource))
+            using (Stream resourceStream = typeof(DefaultJavaScriptProxyGenerator).GetTypeInfo().Assembly.GetManifestResourceStream(ScriptResource))
             {
                 var reader = new StreamReader(resourceStream);
                 return reader.ReadToEnd();

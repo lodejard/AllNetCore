@@ -39,16 +39,27 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 return Enumerable.Empty<MethodInfo>();
             }
 
-            return type.GetInterfaceMap(iface).TargetMethods;
+            return type.GetTypeInfo().GetRuntimeInterfaceMap(iface).TargetMethods;
         }
 
-#if NET45
-        public static TResult GetAttributeValue<TAttribute, TResult>(ICustomAttributeProvider source, Func<TAttribute, TResult> valueGetter)
+        public static TResult GetAttributeValue<TAttribute, TResult>(MethodInfo methodInfo, Func<TAttribute, TResult> valueGetter)
             where TAttribute : Attribute
         {
-            if (source == null)
+            return GetAttributeValue<TAttribute, TResult>(() => methodInfo.GetCustomAttribute<TAttribute>(), valueGetter);
+        }
+
+        public static TResult GetAttributeValue<TAttribute, TResult>(TypeInfo source, Func<TAttribute, TResult> valueGetter)
+            where TAttribute : Attribute
+        {
+            return GetAttributeValue<TAttribute, TResult>(() => source.GetCustomAttribute<TAttribute>(), valueGetter);
+        }
+
+        public static TResult GetAttributeValue<TAttribute, TResult>(Func<TAttribute> attributeProvider, Func<TAttribute, TResult> valueGetter)
+            where TAttribute : Attribute
+        {
+            if (attributeProvider == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("attributeProvider");
             }
 
             if (valueGetter == null)
@@ -56,16 +67,14 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 throw new ArgumentNullException("valueGetter");
             }
 
-            var attributes = source.GetCustomAttributes(typeof(TAttribute), false)
-                .Cast<TAttribute>()
-                .ToList();
-            if (attributes.Any())
+            var attribute = attributeProvider();
+
+            if (attribute != null)
             {
-                return valueGetter(attributes[0]);
+                return valueGetter(attribute);
             }
+
             return default(TResult);
         }
-#endif
-
     }
 }

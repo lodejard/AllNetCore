@@ -46,7 +46,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
             byte[] unprotectedBytes = protector.Unprotect(protectedBytes);
 
-            return _encoding.GetString(unprotectedBytes);
+            return _encoding.GetString(unprotectedBytes, 0, unprotectedBytes.Length);
         }
 
         private IDataProtector GetDataProtector(string purpose)

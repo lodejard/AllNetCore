@@ -35,7 +35,7 @@ namespace Microsoft.AspNet.SignalR.Json
                 throw new ArgumentNullException("name");
             }
 
-            return String.Join(".", name.Split('.').Select(n => Char.ToLower(n[0], CultureInfo.InvariantCulture) + n.Substring(1)));
+            return String.Join(".", name.Split('.').Select(n => Char.ToLower(n[0]) + n.Substring(1)));
         }
 
         /// <summary>

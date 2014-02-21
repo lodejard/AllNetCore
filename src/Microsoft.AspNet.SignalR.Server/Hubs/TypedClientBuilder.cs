@@ -32,14 +32,20 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private static Func<IClientProxy, T> GenerateClientBuilder()
         {
+#if NET45
             VerifyInterface();
 
             var assemblyName = new AssemblyName(clientModule);
+
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
             ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(clientModule);
             Type clientType = GenerateInterfaceImplementation(moduleBuilder);
 
             return proxy => (T)Activator.CreateInstance(clientType, proxy);
+#else
+            // TODO: Ref emit
+            throw new NotSupportedException();
+#endif
         }
 
         private static Type GenerateInterfaceImplementation(ModuleBuilder moduleBuilder)
@@ -56,15 +62,14 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 BuildMethod(type, method, proxyField);
             }
 
-            return type.CreateType();
+            return type.CreateTypeInfo().AsType();
         }
 
         private static void BuildConstructor(TypeBuilder type, FieldInfo proxyField)
         {
             MethodBuilder method = type.DefineMethod(".ctor", System.Reflection.MethodAttributes.Public | System.Reflection.MethodAttributes.HideBySig);
 
-            ConstructorInfo ctor = typeof(object).GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-                null, new Type[] { }, null);
+            ConstructorInfo ctor = typeof(object).GetTypeInfo().DeclaredConstructors.First(c => c.GetParameters().Length == 0);
 
             method.SetReturnType(typeof(void));
             method.SetParameters(typeof(IClientProxy));
@@ -96,10 +101,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
             MethodBuilder methodBuilder = type.DefineMethod(interfaceMethodInfo.Name, methodAttributes, typeof(void), paramTypes);
 
-            MethodInfo invokeMethod = typeof(IClientProxy).GetMethod(
-                "Invoke", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null,
-                new Type[] { typeof(string), typeof(object[]) }, null);
-
+            MethodInfo invokeMethod = typeof(IClientProxy).GetRuntimeMethod("Invoke", new Type[] { typeof(string), typeof(object[]) });
 
             methodBuilder.SetReturnType(interfaceMethodInfo.ReturnType);
             methodBuilder.SetParameters(paramTypes);
@@ -148,7 +150,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             var interfaceType = typeof(T);
 
-            if (!interfaceType.IsInterface)
+            if (!interfaceType.GetTypeInfo().IsInterface)
             {
                 throw new InvalidOperationException(
                     String.Format(CultureInfo.CurrentCulture, Resources.Error_TypeMustBeInterface, interfaceType.Name));
@@ -193,7 +195,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             if (parameter.IsOut)
             {
                 throw new InvalidOperationException(
-                    String.Format(CultureInfo.CurrentCulture, Resources.Error_MethodMustNotTakeOutParameter, 
+                    String.Format(CultureInfo.CurrentCulture, Resources.Error_MethodMustNotTakeOutParameter,
                         parameter.Name,
                         interfaceType.Name,
                         interfaceMethod.Name));

@@ -416,7 +416,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             Counters.MessageBusTopicsCurrent.Decrement();
 
-            Trace.TraceInformation("RemoveTopic(" + key + ")");
+            Logger.WriteInformation("RemoveTopic(" + key + ")");
 
             if (AfterTopicGarbageCollected != null)
             {

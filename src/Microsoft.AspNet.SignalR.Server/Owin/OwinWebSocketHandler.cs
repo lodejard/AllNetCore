@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
-
+#if NET45
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-#if NET45
 using System.Net.WebSockets;
-#endif
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
@@ -46,7 +44,6 @@ namespace Microsoft.AspNet.SignalR.Owin
                                Task
                            >;
 
-#if NET45
     internal class OwinWebSocketHandler
     {
         private readonly Func<IWebSocket, Task> _callback;
@@ -207,5 +204,5 @@ namespace Microsoft.AspNet.SignalR.Owin
             }
         }
     }
-#endif
 }
+#endif

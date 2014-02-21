@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-#if NET45
 using System.Security.Cryptography;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
@@ -241,4 +240,3 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         }
     }
 }
-#endif

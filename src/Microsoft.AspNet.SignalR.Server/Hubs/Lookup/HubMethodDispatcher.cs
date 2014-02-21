@@ -46,8 +46,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 parameters.Add(valueCast);
             }
 
+            // TODO: CORECLR reflected type?
+#if NET45
             // Call method
             UnaryExpression instanceCast = (!methodInfo.IsStatic) ? Expression.Convert(hubParameter, methodInfo.ReflectedType) : null;
+#else
+            UnaryExpression instanceCast = (!methodInfo.IsStatic) ? Expression.Convert(hubParameter, methodInfo.DeclaringType) : null;
+#endif
             MethodCallExpression methodCall = Expression.Call(instanceCast, methodInfo, parameters);
 
             // methodCall is "((TController) hub) method((T0) parameters[0], (T1) parameters[1], ...)"

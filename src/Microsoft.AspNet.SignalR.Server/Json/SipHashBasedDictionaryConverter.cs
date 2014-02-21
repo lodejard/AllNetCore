@@ -74,7 +74,6 @@ namespace Microsoft.AspNet.SignalR.Json
             throw new JsonSerializationException(Resources.Error_ParseObjectFailed);
         }
 
-#if NET45
         private object ReadObject(JsonReader reader)
         {
             var obj = new Dictionary<string, object>(new SipHashBasedStringEqualityComparer());
@@ -105,7 +104,6 @@ namespace Microsoft.AspNet.SignalR.Json
 
             throw new JsonSerializationException(Resources.Error_ParseObjectFailed);
         }
-#endif
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

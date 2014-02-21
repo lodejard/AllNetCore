@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+using System.Reflection;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
@@ -72,7 +73,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 // Get hub attributes implementing IAuthorizeHubConnection from the cache
                 // If the attributes do not exist in the cache, retrieve them using reflection and add them to the cache
                 var attributeAuthorizers = _connectionAuthorizersCache.GetOrAdd(hubDescriptor.HubType,
-                    hubType => hubType.GetCustomAttributes(typeof(IAuthorizeHubConnection), inherit: true).Cast<IAuthorizeHubConnection>());
+                    hubType => hubType.GetTypeInfo().GetCustomAttributes(typeof(IAuthorizeHubConnection), inherit: true).Cast<IAuthorizeHubConnection>());
 
                 // Every attribute (if any) implementing IAuthorizeHubConnection attached to the relevant hub MUST allow the connection
                 return attributeAuthorizers.All(a => a.AuthorizeHubConnection(hubDescriptor, request));
@@ -89,7 +90,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                     // Get hub attributes implementing IAuthorizeHubMethodInvocation from the cache
                     // If the attributes do not exist in the cache, retrieve them using reflection and add them to the cache
                     var classLevelAuthorizers = _classInvocationAuthorizersCache.GetOrAdd(context.Hub.GetType(),
-                        hubType => hubType.GetCustomAttributes(typeof(IAuthorizeHubMethodInvocation), inherit: true).Cast<IAuthorizeHubMethodInvocation>());
+                        hubType => hubType.GetTypeInfo().GetCustomAttributes(typeof(IAuthorizeHubMethodInvocation), inherit: true).Cast<IAuthorizeHubMethodInvocation>());
 
                     // Execute all hub level authorizers and short circuit if ANY deny authorization.
                     if (classLevelAuthorizers.All(a => a.AuthorizeHubMethodInvocation(context, appliesToMethod: false)))
@@ -105,7 +106,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                         // If the attributes do not exist in the cache, retrieve them from the MethodDescriptor and add them to the cache
                         var methodLevelAuthorizers = _methodInvocationAuthorizersCache.GetOrAdd(context.MethodDescriptor,
                             methodDescriptor => methodDescriptor.Attributes.OfType<IAuthorizeHubMethodInvocation>());
-                        
+
                         // Execute all method level authorizers. If ALL provide authorization, continue executing the invocation pipeline.
                         if (methodLevelAuthorizers.All(a => a.AuthorizeHubMethodInvocation(context, appliesToMethod: true)))
                         {
@@ -113,7 +114,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                         }
                     }
                 }
-                
+
                 // Send error back to the client
                 return TaskAsyncHelper.FromError<object>(
                     new NotAuthorizedException(String.Format(CultureInfo.CurrentCulture, Resources.Error_CallerNotAuthorizedToInvokeMethodOn,

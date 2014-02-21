@@ -362,11 +362,9 @@ namespace Microsoft.AspNet.SignalR.Transports
             _requestLifeTime);
         }
 
-#if NET45
         private static void OnDisconnectError(AggregateException ex, object state)
         {
             ((ILogger)state).WriteError("Failed to raise disconnect: " + ex.GetBaseException());
         }
-#endif
     }
 }

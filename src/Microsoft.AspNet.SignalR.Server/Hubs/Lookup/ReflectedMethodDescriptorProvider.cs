@@ -102,7 +102,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private static bool IsProgressType(ParameterInfo parameter)
         {
             return parameter != null
-                && parameter.ParameterType.IsGenericType
+                && parameter.ParameterType.GetTypeInfo().IsGenericType
                 && parameter.ParameterType.GetGenericTypeDefinition() == typeof(IProgress<>);
         }
 

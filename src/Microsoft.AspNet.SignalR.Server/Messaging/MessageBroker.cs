@@ -54,7 +54,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         {
             var workContext = new WorkContext(subscription, this);
 
-            ThreadPool.UnsafeQueueUserWorkItem(state =>
+            ThreadPool.QueueUserWorkItem(state =>
             {
                 var context = (WorkContext)state;
 
@@ -63,7 +63,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 DoWork(context);
 
                 context.Broker._counters.MessageBusAllocatedWorkers.Decrement();
-            }, 
+            },
             workContext);
         }
 

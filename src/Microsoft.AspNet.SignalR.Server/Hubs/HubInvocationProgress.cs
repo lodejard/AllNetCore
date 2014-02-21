@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+using System.Reflection;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             if (!_progressCreateCache.TryGetValue(progressGenericType, out createDelegate))
             {
                 var createMethodInfo = typeof(HubInvocationProgress)
-                    .GetMethod("Create", new[] { typeof(Func<object, Task>) })
+                    .GetRuntimeMethod("Create", new[] { typeof(Func<object, Task>) })
                     .MakeGenericMethod(progressGenericType);
 
                 createDelegate = (Func<Func<object, Task>, HubInvocationProgress>)createMethodInfo.CreateDelegate(typeof(Func<Func<object, Task>, HubInvocationProgress>));
