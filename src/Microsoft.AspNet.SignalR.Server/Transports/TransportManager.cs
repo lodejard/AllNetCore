@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {

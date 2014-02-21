@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR.Hosting;
 
 namespace Microsoft.AspNet.SignalR
@@ -27,17 +28,17 @@ namespace Microsoft.AspNet.SignalR
         /// <summary>
         /// Gets the querystring for this request.
         /// </summary>
-        INameValueCollection QueryString { get; }
+        IReadableStringCollection QueryString { get; }
 
         /// <summary>
         /// Gets the headers for this request.
         /// </summary>
-        INameValueCollection Headers { get; }
+        IReadableStringCollection Headers { get; }
 
         /// <summary>
         /// Gets the cookies for this request.
         /// </summary>
-        IDictionary<string, Cookie> Cookies { get; }
+        IReadableStringCollection Cookies { get; }
 
         /// <summary>
         /// Gets security information for the current HTTP request.
@@ -48,6 +49,6 @@ namespace Microsoft.AspNet.SignalR
         /// Reads the form of the http request
         /// </summary>
         /// <returns></returns>
-        Task<INameValueCollection> ReadForm();
+        Task<IReadableStringCollection> ReadForm();
     }
 }

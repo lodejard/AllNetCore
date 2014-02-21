@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports

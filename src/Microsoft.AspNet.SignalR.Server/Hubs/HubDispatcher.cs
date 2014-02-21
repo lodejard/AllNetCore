@@ -1,22 +1,19 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
-using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Newtonsoft.Json;
-using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {

@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
-{    
+{
     // Similar to MemoryStream, but tries to allocate as few objects as possible on the LOH
 
     internal sealed class ByteBuffer
     {
-
         private int _currentLength;
         private readonly int? _maxLength;
         private readonly List<byte[]> _segments = new List<byte[]>();

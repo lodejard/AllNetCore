@@ -3,9 +3,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Newtonsoft.Json;
@@ -173,7 +175,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private async Task ProcessSendRequest()
         {
-            INameValueCollection form = await Context.Request.ReadForm();
+            IReadableStringCollection form = await Context.Request.ReadForm();
             string data = form["data"];
 
             if (Received != null)

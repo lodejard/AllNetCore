@@ -6,7 +6,7 @@ using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Json;
 
-namespace Microsoft.AspNet.SignalR.Owin.Middleware
+namespace Microsoft.AspNet.SignalR.Hosting
 {
     public class HubDispatcherMiddleware
     {

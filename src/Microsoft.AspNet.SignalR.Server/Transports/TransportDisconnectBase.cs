@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
 

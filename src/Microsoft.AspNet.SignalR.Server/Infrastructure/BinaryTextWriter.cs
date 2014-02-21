@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.SignalR.WebSockets;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {

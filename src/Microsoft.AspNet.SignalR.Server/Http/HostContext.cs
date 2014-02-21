@@ -2,10 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Owin;
 using Microsoft.AspNet.Abstractions;
 
-namespace Microsoft.AspNet.SignalR.Hosting
+namespace Microsoft.AspNet.SignalR.Http
 {
     public class HostContext
     {

@@ -7,9 +7,8 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.WebSockets;
 
-namespace Microsoft.AspNet.SignalR.Owin
+namespace Microsoft.AspNet.SignalR.WebSockets
 {
     using WebSocketCloseAsync =
                 Func
@@ -201,6 +200,22 @@ namespace Microsoft.AspNet.SignalR.Owin
                     default:
                         throw new ArgumentOutOfRangeException("webSocketMessageType", webSocketMessageType, String.Empty);
                 }
+            }
+
+            private static class WebSocketConstants
+            {
+                internal const string WebSocketSubProtocolKey = "websocket.SubProtocol";
+                internal const string WebSocketSendAsyncKey = "websocket.SendAsync";
+                internal const string WebSocketReceiveAyncKey = "websocket.ReceiveAsync";
+                internal const string WebSocketCloseAsyncKey = "websocket.CloseAsync";
+                internal const string WebSocketCallCancelledKey = "websocket.CallCancelled";
+                internal const string WebSocketVersionKey = "websocket.Version";
+                internal const string WebSocketVersion = "1.0";
+                internal const string WebSocketCloseStatusKey = "websocket.ClientCloseStatus";
+                internal const string WebSocketCloseDescriptionKey = "websocket.ClientCloseDescription";
+
+                internal const string AspNetServerVariableWebSocketVersion = "WEBSOCKET_VERSION";
+                internal const string SecWebSocketProtocol = "Sec-WebSocket-Protocol";
             }
         }
     }

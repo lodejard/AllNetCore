@@ -11,6 +11,7 @@ using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
@@ -125,7 +126,7 @@ namespace Microsoft.AspNet.SignalR
         /// <returns></returns>
         public Task ProcessRequest(HttpContext httpContext)
         {
-            // TODO:
+            // TODO: Reconcile HttpContext and HostContext
             var context = new HostContext(httpContext);
 
             //// Disable request compression and buffering on IIS
@@ -136,7 +137,7 @@ namespace Microsoft.AspNet.SignalR
 
             // TODO
             // Add the nosniff header for all responses to prevent IE from trying to sniff mime type from contents
-            // response.Headers.Set("X-Content-Type-Options", "nosniff");
+            httpContext.Response.Headers.Set("X-Content-Type-Options", "nosniff");
 
             if (Authorize(context.Request))
             {

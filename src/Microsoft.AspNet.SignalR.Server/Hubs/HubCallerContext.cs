@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Principal;
+using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR.Hosting;
 
 namespace Microsoft.AspNet.SignalR.Hubs
@@ -17,7 +18,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Gets the cookies for the request.
         /// </summary>
-        public IDictionary<string, Cookie> RequestCookies
+        public IReadableStringCollection RequestCookies
         {
             get
             {
@@ -28,7 +29,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Gets the headers for the request.
         /// </summary>
-        public INameValueCollection Headers
+        public IReadableStringCollection Headers
         {
             get
             {
@@ -39,7 +40,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Gets the querystring for the request.
         /// </summary>
-        public INameValueCollection QueryString
+        public IReadableStringCollection QueryString
         {
             get
             {

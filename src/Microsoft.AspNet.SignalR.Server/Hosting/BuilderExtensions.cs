@@ -11,13 +11,11 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Owin.Middleware;
 using Microsoft.AspNet.Abstractions;
 
-namespace Owin
+namespace Microsoft.AspNet.SignalR
 {
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Owin", Justification = "The owin namespace is for consistentcy.")]
-    public static class OwinExtensions
+    public static class BuilderExtensions
     {
         /// <summary>
         /// Maps SignalR hubs to the app builder pipeline at "/signalr".
@@ -51,8 +49,9 @@ namespace Owin
                 throw new ArgumentNullException("configuration");
             }
 
-            return builder;
+            // TODO: Map
             //return builder.Map(path, subApp => subApp.RunSignalR(configuration));
+            return builder;
         }
 
         /// <summary>
@@ -117,8 +116,9 @@ namespace Owin
                 throw new ArgumentNullException("configuration");
             }
 
-            return builder;
+            // TODO: Map
             //return builder.Map(path, subApp => subApp.RunSignalR(connectionType, configuration));
+            return builder;
         }
 
         /// <summary>
@@ -161,12 +161,6 @@ namespace Owin
         private static IBuilder UseSignalRMiddleware<T>(this IBuilder builder, params object[] args)
         {
             // ConnectionConfiguration configuration = null;
-
-            //// Ensure we have the conversions for MS.Owin so that
-            //// the app builder respects the OwinMiddleware base class
-
-            //// ???
-            //SignatureConversions.AddConversions(builder);
 
             //if (args.Length > 0)
             //{

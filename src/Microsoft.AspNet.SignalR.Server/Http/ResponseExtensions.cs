@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hosting
+namespace Microsoft.AspNet.SignalR.Http
 {
     /// <summary>
     /// Extension methods for <see cref="IResponse"/>.

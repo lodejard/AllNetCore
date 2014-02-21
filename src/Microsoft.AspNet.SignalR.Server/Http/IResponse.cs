@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hosting
+namespace Microsoft.AspNet.SignalR.Http
 {
     /// <summary>
     /// Represents a connection to the client.

@@ -3,7 +3,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hosting
+namespace Microsoft.AspNet.SignalR.WebSockets
 {
     /// <summary>
     /// Represents a web socket.
