@@ -16,6 +16,7 @@ using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Newtonsoft.Json;
+using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -74,24 +75,24 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
         }
 
-        public override void Initialize(IDependencyResolver resolver)
+        public override void Initialize(IServiceProvider serviceProvider)
         {
-            if (resolver == null)
+            if (serviceProvider == null)
             {
                 throw new ArgumentNullException("resolver");
             }
 
-            _proxyGenerator = _enableJavaScriptProxies ? resolver.Resolve<IJavaScriptProxyGenerator>()
+            _proxyGenerator = _enableJavaScriptProxies ? serviceProvider.GetService<IJavaScriptProxyGenerator>()
                                                        : new EmptyJavaScriptProxyGenerator();
 
-            _manager = resolver.Resolve<IHubManager>();
-            _binder = resolver.Resolve<IParameterResolver>();
-            _requestParser = resolver.Resolve<IHubRequestParser>();
-            _serializer = resolver.Resolve<JsonSerializer>();
-            _pipelineInvoker = resolver.Resolve<IHubPipelineInvoker>();
-            _counters = resolver.Resolve<IPerformanceCounterManager>();
+            _manager = serviceProvider.GetService<IHubManager>();
+            _binder = serviceProvider.GetService<IParameterResolver>();
+            _requestParser = serviceProvider.GetService<IHubRequestParser>();
+            _serializer = serviceProvider.GetService<JsonSerializer>();
+            _pipelineInvoker = serviceProvider.GetService<IHubPipelineInvoker>();
+            _counters = serviceProvider.GetService<IPerformanceCounterManager>();
 
-            base.Initialize(resolver);
+            base.Initialize(serviceProvider);
         }
 
         protected override bool AuthorizeRequest(IRequest request)
@@ -194,7 +195,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             // TODO: Make adding parameters here pluggable? IValueProvider? ;)
             HubInvocationProgress progress = GetProgressInstance(methodDescriptor, value => SendProgressUpdate(hub.Context.ConnectionId, tracker, value, hubRequest));
-            
+
             Task<object> piplineInvocation;
             try
             {
@@ -204,7 +205,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 // itself looks for overload matches based on the incoming arg values
                 if (progress != null)
                 {
-                    args = args.Concat(new [] { progress }).ToList();
+                    args = args.Concat(new[] { progress }).ToList();
                 }
 
                 var context = new HubInvokerContext(hub, tracker, methodDescriptor, args);
@@ -282,7 +283,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 return context.Response.End(_proxyGenerator.GenerateProxy(hubUrl));
             }
 
-            _isDebuggingEnabled = context.Environment.IsDebugEnabled();
+            // TODO: Is debugging enabled
+            // _isDebuggingEnabled = context.Environment.IsDebugEnabled();
 
             return base.ProcessRequest(context);
         }

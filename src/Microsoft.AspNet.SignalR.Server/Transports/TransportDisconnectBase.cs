@@ -335,7 +335,8 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected virtual void InitializePersistentState()
         {
-            _hostShutdownToken = _context.Environment.GetShutdownToken();
+            // TODO: Host shutdown token
+            _hostShutdownToken = CancellationToken.None; //_context.Environment.GetShutdownToken();
 
             _requestLifeTime = new HttpRequestLifeTime(this, WriteQueue, Logger, ConnectionId);
 

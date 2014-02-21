@@ -31,7 +31,8 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
 
             var dispatcher = new HubDispatcher(_configuration);
 
-            dispatcher.Initialize(_configuration.Resolver);
+            // TODO: Create the dispatcher with all required services
+            // dispatcher.Initialize(_configuration.Resolver);
 
             return dispatcher.ProcessRequest(context);
         }

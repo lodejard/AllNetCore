@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNet.Logging;
+using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -16,12 +17,12 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private readonly Lazy<IAssemblyLocator> _locator;
         private readonly ILogger _logger;
 
-        public ReflectedHubDescriptorProvider(IDependencyResolver resolver)
+        public ReflectedHubDescriptorProvider(IServiceProvider serviceProvidr)
         {
-            _locator = new Lazy<IAssemblyLocator>(resolver.Resolve<IAssemblyLocator>);
+            _locator = new Lazy<IAssemblyLocator>(serviceProvidr.GetService<IAssemblyLocator>);
             _hubs = new Lazy<IDictionary<string, HubDescriptor>>(BuildHubsCache);
 
-            var loggerFactory = resolver.Resolve<ILoggerFactory>();
+            var loggerFactory = serviceProvidr.GetService<ILoggerFactory>();
             _logger = loggerFactory.Create("SignalR." + typeof(ReflectedHubDescriptorProvider).Name);
         }
 

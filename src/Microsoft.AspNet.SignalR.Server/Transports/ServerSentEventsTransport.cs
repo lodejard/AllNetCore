@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Json;
@@ -8,8 +9,8 @@ namespace Microsoft.AspNet.SignalR.Transports
 {
     public class ServerSentEventsTransport : ForeverTransport
     {
-        public ServerSentEventsTransport(HostContext context, IDependencyResolver resolver)
-            : base(context, resolver)
+        public ServerSentEventsTransport(HostContext context, IServiceProvider serviceProvider)
+            : base(context, serviceProvider)
         {
         }
 

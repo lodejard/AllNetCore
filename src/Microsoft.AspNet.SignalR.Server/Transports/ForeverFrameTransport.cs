@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -32,8 +31,8 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private HTMLTextWriter _htmlOutputWriter;
 
-        public ForeverFrameTransport(HostContext context, IDependencyResolver resolver)
-            : base(context, resolver)
+        public ForeverFrameTransport(HostContext context, IServiceProvider serviceProvider)
+            : base(context, serviceProvider)
         {
         }
 

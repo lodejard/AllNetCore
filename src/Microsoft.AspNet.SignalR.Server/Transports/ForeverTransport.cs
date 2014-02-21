@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -24,12 +23,12 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private const int MaxMessages = 10;
 
-        protected ForeverTransport(HostContext context, IDependencyResolver resolver)
+        protected ForeverTransport(HostContext context, IServiceProvider serviceProvider)
             : this(context,
-                   resolver.Resolve<JsonSerializer>(),
-                   resolver.Resolve<ITransportHeartbeat>(),
-                   resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<ILoggerFactory>())
+                   serviceProvider.GetService<JsonSerializer>(),
+                   serviceProvider.GetService<ITransportHeartbeat>(),
+                   serviceProvider.GetService<IPerformanceCounterManager>(),
+                   serviceProvider.GetService<ILoggerFactory>())
         {
         }
 
@@ -160,7 +159,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             return TaskAsyncHelper.Empty;
         }
 
-        
+
         protected void OnError(Exception ex)
         {
             IncrementErrors();

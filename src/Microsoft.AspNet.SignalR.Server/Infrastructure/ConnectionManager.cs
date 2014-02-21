@@ -11,6 +11,7 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Newtonsoft.Json;
+using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
@@ -19,17 +20,17 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
     /// </summary>
     public class ConnectionManager : IConnectionManager
     {
-        private readonly IDependencyResolver _resolver;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IPerformanceCounterManager _counters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionManager"/> class.
         /// </summary>
-        /// <param name="resolver">The <see cref="IDependencyResolver"/>.</param>
-        public ConnectionManager(IDependencyResolver resolver)
+        /// <param name="serviceProvider">The <see cref="IDependencyResolver"/>.</param>
+        public ConnectionManager(IServiceProvider serviceProvider)
         {
-            _resolver = resolver;
-            _counters = _resolver.Resolve<IPerformanceCounterManager>();
+            _serviceProvider = serviceProvider;
+            _counters = _serviceProvider.GetService<IPerformanceCounterManager>();
         }
 
         /// <summary>
@@ -79,8 +80,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         public IHubContext GetHubContext(string hubName)
         {
             var connection = GetConnectionCore(connectionName: null);
-            var hubManager = _resolver.Resolve<IHubManager>();
-            var pipelineInvoker = _resolver.Resolve<IHubPipelineInvoker>();
+            var hubManager = _serviceProvider.GetService<IHubManager>();
+            var pipelineInvoker = _serviceProvider.GetService<IHubPipelineInvoker>();
 
             hubManager.EnsureHub(hubName,
                 _counters.ErrorsHubResolutionTotal,
@@ -122,16 +123,16 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
             // Give this a unique id
             var connectionId = Guid.NewGuid().ToString();
-            return new Connection(_resolver.Resolve<IMessageBus>(),
-                                  _resolver.Resolve<JsonSerializer>(),
+            return new Connection(_serviceProvider.GetService<IMessageBus>(),
+                                  _serviceProvider.GetService<JsonSerializer>(),
                                   connectionName,
                                   connectionId,
                                   signals,
                                   ListHelper<string>.Empty,
-                                  _resolver.Resolve<ILoggerFactory>(),
-                                  _resolver.Resolve<IAckHandler>(),
-                                  _resolver.Resolve<IPerformanceCounterManager>(),
-                                  _resolver.Resolve<IProtectedData>());
+                                  _serviceProvider.GetService<ILoggerFactory>(),
+                                  _serviceProvider.GetService<IAckHandler>(),
+                                  _serviceProvider.GetService<IPerformanceCounterManager>(),
+                                  _serviceProvider.GetService<IProtectedData>());
         }
     }
 }

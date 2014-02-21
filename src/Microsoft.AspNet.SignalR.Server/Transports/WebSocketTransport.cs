@@ -1,23 +1,20 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
-
+#if NET45
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Owin;
 using Newtonsoft.Json;
 
-#if NET45
 namespace Microsoft.AspNet.SignalR.Transports
 {
-    using WebSocketFunc = Func<IDictionary<string, object>, Task>;
 
     public class WebSocketTransport : ForeverTransport
     {
@@ -32,13 +29,13 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly Action<Exception> _error;
 
         public WebSocketTransport(HostContext context,
-                                  IDependencyResolver resolver)
+                                  IServiceProvider serviceProvider)
             : this(context,
-                   resolver.Resolve<JsonSerializer>(),
-                   resolver.Resolve<ITransportHeartbeat>(),
-                   resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<ILoggerFactory>(),
-                   resolver.Resolve<IConfigurationManager>().MaxIncomingWebSocketMessageSize)
+                   serviceProvider.GetService<JsonSerializer>(),
+                   serviceProvider.GetService<ITransportHeartbeat>(),
+                   serviceProvider.GetService<IPerformanceCounterManager>(),
+                   serviceProvider.GetService<ILoggerFactory>(),
+                   serviceProvider.GetService<IConfigurationManager>().MaxIncomingWebSocketMessageSize)
         {
         }
 
@@ -127,17 +124,19 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private Task AcceptWebSocketRequest(Func<IWebSocket, Task> callback)
         {
-            var accept = _context.Environment.Get<Action<IDictionary<string, object>, WebSocketFunc>>(OwinConstants.WebSocketAccept);
+            // TODO: Websockets
+            //var accept = _context.Environment.Get<Action<IDictionary<string, object>, WebSocketFunc>>(OwinConstants.WebSocketAccept);
 
-            if (accept == null)
-            {
-                // Bad Request
-                _context.Response.StatusCode = 400;
-                return _context.Response.End(Resources.Error_NotWebSocketRequest);
-            }
+            //if (accept == null)
+            //{
+            //    // Bad Request
+            //    _context.Response.StatusCode = 400;
+            //    return _context.Response.End(Resources.Error_NotWebSocketRequest);
+            //}
 
-            var handler = new OwinWebSocketHandler(callback, _maxIncomingMessageSize);
-            accept(null, handler.ProcessRequest);
+            //var handler = new OwinWebSocketHandler(callback, _maxIncomingMessageSize);
+            //accept(null, handler.ProcessRequest);
+            //return TaskAsyncHelper.Empty;
             return TaskAsyncHelper.Empty;
         }
 
@@ -195,4 +194,5 @@ namespace Microsoft.AspNet.SignalR.Transports
         }
     }
 }
+
 #endif

@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
-
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
@@ -24,13 +23,13 @@ namespace Microsoft.AspNet.SignalR.Transports
         // so we won't bloat memory
         private const int MaxMessages = 5000;
 
-        public LongPollingTransport(HostContext context, IDependencyResolver resolver)
+        public LongPollingTransport(HostContext context, IServiceProvider serviceProvider)
             : this(context,
-                   resolver.Resolve<JsonSerializer>(),
-                   resolver.Resolve<ITransportHeartbeat>(),
-                   resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<ILoggerFactory>(),
-                   resolver.Resolve<IConfigurationManager>())
+                   serviceProvider.GetService<JsonSerializer>(),
+                   serviceProvider.GetService<ITransportHeartbeat>(),
+                   serviceProvider.GetService<IPerformanceCounterManager>(),
+                   serviceProvider.GetService<ILoggerFactory>(),
+                   serviceProvider.GetService<IConfigurationManager>())
         {
 
         }
@@ -313,7 +312,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 return TaskAsyncHelper.Empty;
             }
 
-            context.Transport.Context.Response.ContentType = context.Transport.IsJsonp ? JsonUtility.JavaScriptMimeType : JsonUtility.JsonMimeType; 
+            context.Transport.Context.Response.ContentType = context.Transport.IsJsonp ? JsonUtility.JavaScriptMimeType : JsonUtility.JsonMimeType;
 
             if (context.Transport.IsJsonp)
             {

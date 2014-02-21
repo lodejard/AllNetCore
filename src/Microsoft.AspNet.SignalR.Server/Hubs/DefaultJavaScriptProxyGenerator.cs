@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.SignalR.Json;
 using Newtonsoft.Json;
 
@@ -25,9 +26,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private readonly IJavaScriptMinifier _javaScriptMinifier;
         private readonly Lazy<string> _generatedTemplate;
 
-        public DefaultJavaScriptProxyGenerator(IDependencyResolver resolver) :
-            this(resolver.Resolve<IHubManager>(),
-                 resolver.Resolve<IJavaScriptMinifier>())
+        public DefaultJavaScriptProxyGenerator(IServiceProvider serviceProvider) :
+            this(serviceProvider.GetService<IHubManager>(),
+                 serviceProvider.GetService<IJavaScriptMinifier>())
         {
         }
 

@@ -160,7 +160,7 @@ namespace Owin
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This class wires up new dependencies from the host")]
         private static IBuilder UseSignalRMiddleware<T>(this IBuilder builder, params object[] args)
         {
-            ConnectionConfiguration configuration = null;
+            // ConnectionConfiguration configuration = null;
 
             //// Ensure we have the conversions for MS.Owin so that
             //// the app builder respects the OwinMiddleware base class

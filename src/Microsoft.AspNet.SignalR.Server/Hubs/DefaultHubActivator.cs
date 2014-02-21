@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
     public class DefaultHubActivator : IHubActivator
     {
-        private readonly IDependencyResolver _resolver;
+        private readonly IServiceProvider _serviceProvider;
 
-        public DefaultHubActivator(IDependencyResolver resolver)
+        public DefaultHubActivator(IServiceProvider serviceProvider)
         {
-            _resolver = resolver;
+            _serviceProvider = serviceProvider;
         }
 
         public IHub Create(HubDescriptor descriptor)
@@ -20,13 +21,12 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 throw new ArgumentNullException("descriptor");
             }
 
-            if(descriptor.HubType == null)
+            if (descriptor.HubType == null)
             {
                 return null;
             }
 
-            object hub = _resolver.Resolve(descriptor.HubType) ?? Activator.CreateInstance(descriptor.HubType);
-            return hub as IHub;
+            return ActivatorUtilities.CreateInstance(_serviceProvider, descriptor.HubType) as IHub;
         }
     }
 }

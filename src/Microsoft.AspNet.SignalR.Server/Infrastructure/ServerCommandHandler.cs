@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Newtonsoft.Json;
+using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
@@ -26,10 +27,10 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private const string ServerSignal = "__SIGNALR__SERVER__";
         private static readonly string[] ServerSignals = new[] { ServerSignal };
 
-        public ServerCommandHandler(IDependencyResolver resolver) :
-            this(resolver.Resolve<IMessageBus>(),
-                 resolver.Resolve<IServerIdManager>(),
-                 resolver.Resolve<JsonSerializer>())
+        public ServerCommandHandler(IServiceProvider serviceProvider) :
+            this(serviceProvider.GetService<IMessageBus>(),
+                 serviceProvider.GetService<IServerIdManager>(),
+                 serviceProvider.GetService<JsonSerializer>())
         {
 
         }
@@ -87,7 +88,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                 return _serverIdManager.ServerId;
             }
         }
-        
+
         public Subscription Subscription
         {
             get;

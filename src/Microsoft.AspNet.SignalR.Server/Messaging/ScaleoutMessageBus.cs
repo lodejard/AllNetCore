@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
 
-#if NET45
 namespace Microsoft.AspNet.SignalR.Messaging
 {
     /// <summary>
@@ -25,17 +24,17 @@ namespace Microsoft.AspNet.SignalR.Messaging
         private readonly Lazy<ScaleoutStreamManager> _streamManager;
         private readonly IPerformanceCounterManager _perfCounters;
 
-        protected ScaleoutMessageBus(IDependencyResolver resolver, ScaleoutConfiguration configuration)
-            : base(resolver)
+        protected ScaleoutMessageBus(IServiceProvider serviceProvider, ScaleoutConfiguration configuration)
+            : base(serviceProvider)
         {
             if (configuration == null)
             {
                 throw new ArgumentNullException("configuration");
             }
 
-            var loggerFactory = resolver.Resolve<ILoggerFactory>();
+            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
             _logger = loggerFactory.Create("SignalR." + typeof(ScaleoutMessageBus).Name);
-            _perfCounters = resolver.Resolve<IPerformanceCounterManager>();
+            _perfCounters = serviceProvider.GetService<IPerformanceCounterManager>();
             _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, configuration));
         }
 
@@ -234,4 +233,3 @@ namespace Microsoft.AspNet.SignalR.Messaging
         }
     }
 }
-#endif

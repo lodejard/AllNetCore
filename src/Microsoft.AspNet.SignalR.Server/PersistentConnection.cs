@@ -7,8 +7,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
-using Microsoft.AspNet.Security.DataProtection;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -16,8 +16,6 @@ using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
-using Microsoft.AspNet.Abstractions;
-using Microsoft.AspNet.Logging;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -32,34 +30,21 @@ namespace Microsoft.AspNet.SignalR
 
         private IConfigurationManager _configurationManager;
         private ITransportManager _transportManager;
-        private bool _initialized;
         private IServerCommandHandler _serverMessageHandler;
 
-        public virtual void Initialize(IDependencyResolver resolver)
+        public virtual void Initialize(IServiceProvider serviceProvider)
         {
-            if (resolver == null)
-            {
-                throw new ArgumentNullException("resolver");
-            }
+            MessageBus = serviceProvider.GetService<IMessageBus>();
+            JsonSerializer = serviceProvider.GetService<JsonSerializer>();
+            LoggerFactory = serviceProvider.GetService<ILoggerFactory>();
+            Counters = serviceProvider.GetService<IPerformanceCounterManager>();
+            AckHandler = serviceProvider.GetService<IAckHandler>();
+            ProtectedData = serviceProvider.GetService<IProtectedData>();
+            UserIdProvider = serviceProvider.GetService<IUserIdProvider>();
 
-            if (_initialized)
-            {
-                return;
-            }
-
-            MessageBus = resolver.Resolve<IMessageBus>();
-            JsonSerializer = resolver.Resolve<JsonSerializer>();
-            LoggerFactory = resolver.Resolve<ILoggerFactory>();
-            Counters = resolver.Resolve<IPerformanceCounterManager>();
-            AckHandler = resolver.Resolve<IAckHandler>();
-            ProtectedData = resolver.Resolve<IProtectedData>();
-            UserIdProvider = resolver.Resolve<IUserIdProvider>();
-
-            _configurationManager = resolver.Resolve<IConfigurationManager>();
-            _transportManager = resolver.Resolve<ITransportManager>();
-            _serverMessageHandler = resolver.Resolve<IServerCommandHandler>();
-
-            _initialized = true;
+            _configurationManager = serviceProvider.GetService<IConfigurationManager>();
+            _transportManager = serviceProvider.GetService<ITransportManager>();
+            _serverMessageHandler = serviceProvider.GetService<IServerCommandHandler>();
         }
 
         public bool Authorize(IRequest request)
@@ -140,7 +125,7 @@ namespace Microsoft.AspNet.SignalR
         /// <returns></returns>
         public Task ProcessRequest(HttpContext httpContext)
         {
-            // TODO: This
+            // TODO:
             var context = new HostContext(httpContext);
 
             //// Disable request compression and buffering on IIS
@@ -151,7 +136,7 @@ namespace Microsoft.AspNet.SignalR
 
             // TODO
             // Add the nosniff header for all responses to prevent IE from trying to sniff mime type from contents
-            //response.Headers.Set("X-Content-Type-Options", "nosniff");
+            // response.Headers.Set("X-Content-Type-Options", "nosniff");
 
             if (Authorize(context.Request))
             {
@@ -190,11 +175,6 @@ namespace Microsoft.AspNet.SignalR
                 throw new ArgumentNullException("context");
             }
 
-            if (!_initialized)
-            {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.Error_ConnectionNotInitialized));
-            }
-
             if (IsNegotiationRequest(context.Request))
             {
                 return ProcessNegotiationRequest(context);
@@ -222,7 +202,7 @@ namespace Microsoft.AspNet.SignalR
             string connectionId;
             string message;
             int statusCode;
-            
+
             if (!TryGetConnectionId(context, connectionToken, out connectionId, out message, out statusCode))
             {
                 return FailResponse(context.Response, message, statusCode);
@@ -281,10 +261,10 @@ namespace Microsoft.AspNet.SignalR
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "We want to catch any exception when unprotecting data.")]
         internal bool TryGetConnectionId(HostContext context,
-                                           string connectionToken,
-                                           out string connectionId,
-                                           out string message,
-                                           out int statusCode)
+                                         string connectionToken,
+                                         out string connectionId,
+                                         out string message,
+                                         out int statusCode)
         {
             string unprotectedConnectionToken = null;
 
@@ -508,7 +488,9 @@ namespace Microsoft.AspNet.SignalR
                 ConnectionId = connectionId,
                 KeepAliveTimeout = keepAliveTimeout != null ? keepAliveTimeout.Value.TotalSeconds : (double?)null,
                 DisconnectTimeout = _configurationManager.DisconnectTimeout.TotalSeconds,
-                TryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.Environment.SupportsWebSockets(),
+                // TODO: Supports websockets
+                // TryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.Environment.SupportsWebSockets(),
+                TryWebSockets = false,
                 ProtocolVersion = _protocolResolver.Resolve(context.Request).ToString(),
                 TransportConnectTimeout = _configurationManager.TransportConnectTimeout.TotalSeconds
             };

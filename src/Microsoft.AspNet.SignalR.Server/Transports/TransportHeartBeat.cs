@@ -3,14 +3,13 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
-
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
@@ -34,15 +33,15 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// <summary>
         /// Initializes and instance of the <see cref="TransportHeartbeat"/> class.
         /// </summary>
-        /// <param name="resolver">The <see cref="IDependencyResolver"/>.</param>
-        public TransportHeartbeat(IDependencyResolver resolver)
+        /// <param name="serviceProvider">The <see cref="IDependencyResolver"/>.</param>
+        public TransportHeartbeat(IServiceProvider serviceProvider)
         {
-            _configurationManager = resolver.Resolve<IConfigurationManager>();
-            _serverCommandHandler = resolver.Resolve<IServerCommandHandler>();
-            _serverId = resolver.Resolve<IServerIdManager>().ServerId;
-            _counters = resolver.Resolve<IPerformanceCounterManager>();
+            _configurationManager = serviceProvider.GetService<IConfigurationManager>();
+            _serverCommandHandler = serviceProvider.GetService<IServerCommandHandler>();
+            _serverId = serviceProvider.GetService<IServerIdManager>().ServerId;
+            _counters = serviceProvider.GetService<IPerformanceCounterManager>();
 
-            var loggerFactory = resolver.Resolve<ILoggerFactory>();
+            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
             _logger = loggerFactory.Create("SignalR.Transports.TransportHeartBeat");
 
             _serverCommandHandler.Command = ProcessServerCommand;

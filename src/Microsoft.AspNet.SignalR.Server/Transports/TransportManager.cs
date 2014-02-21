@@ -17,20 +17,20 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// <summary>
         /// Initializes a new instance of <see cref="TransportManager"/> class.
         /// </summary>
-        /// <param name="resolver">The default <see cref="IDependencyResolver"/>.</param>
+        /// <param name="serviceProvider">The default <see cref="IDependencyResolver"/>.</param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Those are factory methods")]
-        public TransportManager(IDependencyResolver resolver)
+        public TransportManager(IServiceProvider serviceProvider)
         {
-            if (resolver == null)
+            if (serviceProvider == null)
             {
-                throw new ArgumentNullException("resolver");
+                throw new ArgumentNullException("serviceProvider");
             }
 
-            Register("foreverFrame", context => new ForeverFrameTransport(context, resolver));
-            Register("serverSentEvents", context => new ServerSentEventsTransport(context, resolver));
-            Register("longPolling", context => new LongPollingTransport(context, resolver));
+            Register("foreverFrame", context => new ForeverFrameTransport(context, serviceProvider));
+            Register("serverSentEvents", context => new ServerSentEventsTransport(context, serviceProvider));
+            Register("longPolling", context => new LongPollingTransport(context, serviceProvider));
 #if NET45
-            Register("webSockets", context => new WebSocketTransport(context, resolver));
+            Register("webSockets", context => new WebSocketTransport(context, serviceProvider));
 #endif
         }
 

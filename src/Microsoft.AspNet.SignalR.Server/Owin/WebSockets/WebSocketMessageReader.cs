@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
-
-using System;
 #if NET45
+using System;
 using System.Net.WebSockets;
-#endif
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +25,6 @@ namespace Microsoft.AspNet.SignalR.WebSockets
             return Encoding.UTF8.GetString(buffer, 0, count);
         }
 
-#if NET45
         public static async Task<WebSocketMessage> ReadMessageAsync(WebSocket webSocket, int bufferSize, int? maxMessageSize, CancellationToken disconnectToken)
         {
             WebSocketMessage message;
@@ -133,6 +130,6 @@ namespace Microsoft.AspNet.SignalR.WebSockets
 
             return message != null;
         }
-#endif
     }
 }
+#endif

@@ -14,15 +14,10 @@ namespace Microsoft.AspNet.SignalR.Hosting
 
         public IResponse Response { get; private set; }
 
-        // Owin environment dictionary
-        public IDictionary<string, object> Environment { get; private set; }
-
         public HostContext(IRequest request, IResponse response)
         {
             Request = request;
             Response = response;
-
-            Environment = new Dictionary<string, object>();
         }
 
         public HostContext(HttpContext context)

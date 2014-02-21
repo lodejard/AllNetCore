@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.DependencyInjection;
+using Microsoft.AspNet.SignalR.Json;
 
 namespace Microsoft.AspNet.SignalR.Owin.Middleware
 {
@@ -13,12 +13,15 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
         private readonly Type _connectionType;
         private readonly ConnectionConfiguration _configuration;
         private readonly RequestDelegate _next;
+        private readonly IServiceProvider _serviceProvider;
 
         public PersistentConnectionMiddleware(RequestDelegate next,
+                                              IServiceProvider serviceProvider,
                                               Type connectionType,
                                               ConnectionConfiguration configuration)
         {
             _next = next;
+            _serviceProvider = serviceProvider;
             _connectionType = connectionType;
             _configuration = configuration;
         }
@@ -35,10 +38,11 @@ namespace Microsoft.AspNet.SignalR.Owin.Middleware
                 return TaskAsyncHelper.Empty;
             }
 
-            var connectionFactory = new PersistentConnectionFactory(_configuration.Resolver);
-            PersistentConnection connection = connectionFactory.CreateInstance(_connectionType);
+            // TODO: Initialize persistent connection with ActivatorUtilities
+            //var connectionFactory = new PersistentConnectionFactory(_configuration.Resolver);
+            PersistentConnection connection = ActivatorUtilities.CreateInstance(_serviceProvider, _connectionType) as PersistentConnection;
 
-            connection.Initialize(_configuration.Resolver);
+            //connection.Initialize(_configuration.Resolver);
 
             return connection.ProcessRequest(context);
         }

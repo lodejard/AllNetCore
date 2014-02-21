@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.SignalR.Hosting;
 
 namespace Microsoft.AspNet.SignalR.Owin
 {
@@ -19,6 +19,7 @@ namespace Microsoft.AspNet.SignalR.Owin
         public ServerResponse(HttpResponse response)
         {
             _response = response;
+
             // TODO: Call cancelled
             // _callCancelled = _response.Get<CancellationToken>(OwinConstants.CallCancelled);
             _responseBody = _response.Body;

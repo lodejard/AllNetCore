@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -58,12 +59,12 @@ namespace Microsoft.AspNet.SignalR.Messaging
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="resolver"></param>
-        public MessageBus(IDependencyResolver resolver)
-            : this(resolver.Resolve<IStringMinifier>(),
-                   resolver.Resolve<ILoggerFactory>(),
-                   resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<IConfigurationManager>(),
+        /// <param name="serviceProvider"></param>
+        public MessageBus(IServiceProvider serviceProvider)
+            : this(serviceProvider.GetService<IStringMinifier>(),
+                   serviceProvider.GetService<ILoggerFactory>(),
+                   serviceProvider.GetService<IPerformanceCounterManager>(),
+                   serviceProvider.GetService<IConfigurationManager>(),
                    DefaultMaxTopicsWithNoSubscriptions)
         {
         }
