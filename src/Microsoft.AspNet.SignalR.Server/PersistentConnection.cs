@@ -2,19 +2,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.Logging;
+using Microsoft.AspNet.Security.DataProtection;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Owin;
-
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Abstractions;

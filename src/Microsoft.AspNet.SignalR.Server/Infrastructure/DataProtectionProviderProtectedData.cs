@@ -2,63 +2,64 @@
 
 using System;
 using System.Text;
+using Microsoft.AspNet.Security.DataProtection;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
-    // TODO
-    //public class DataProtectionProviderProtectedData : IProtectedData
-    //{
-    //    private static readonly UTF8Encoding _encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
-    //    private readonly IDataProtectionProvider _provider;
+    public class DataProtectionProviderProtectedData : IProtectedData
+    {
+        private static readonly UTF8Encoding _encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+        private readonly IDataProtectionProvider _provider;
 
-    //    // Known protected data providers
-    //    private readonly IDataProtector _connectionTokenProtector;
-    //    private readonly IDataProtector _groupsProtector;
+        // Known protected data providers
+        private readonly IDataProtector _connectionTokenProtector;
+        private readonly IDataProtector _groupsProtector;
 
-    //    public DataProtectionProviderProtectedData(IDataProtectionProvider provider)
-    //    {
-    //        if (provider == null)
-    //        {
-    //            throw new ArgumentNullException("provider");
-    //        }
+        public DataProtectionProviderProtectedData(IDataProtectionProvider provider)
+        {
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
 
-    //        _provider = provider;
-    //        _connectionTokenProtector = provider.Create(Purposes.ConnectionToken);
-    //        _groupsProtector = provider.Create(Purposes.Groups);
-    //    }
-    //    public string Protect(string data, string purpose)
-    //    {
-    //        IDataProtector protector = GetDataProtector(purpose);
+            _provider = provider;
+            _connectionTokenProtector = provider.CreateProtector(Purposes.ConnectionToken);
+            _groupsProtector = provider.CreateProtector(Purposes.Groups);
+        }
 
-    //        byte[] unprotectedBytes = _encoding.GetBytes(data);
+        public string Protect(string data, string purpose)
+        {
+            IDataProtector protector = GetDataProtector(purpose);
 
-    //        byte[] protectedBytes = protector.Protect(unprotectedBytes);
+            byte[] unprotectedBytes = _encoding.GetBytes(data);
 
-    //        return Convert.ToBase64String(protectedBytes);
-    //    }
+            byte[] protectedBytes = protector.Protect(unprotectedBytes);
 
-    //    public string Unprotect(string protectedValue, string purpose)
-    //    {
-    //        IDataProtector protector = GetDataProtector(purpose);
+            return Convert.ToBase64String(protectedBytes);
+        }
 
-    //        byte[] protectedBytes = Convert.FromBase64String(protectedValue);
+        public string Unprotect(string protectedValue, string purpose)
+        {
+            IDataProtector protector = GetDataProtector(purpose);
 
-    //        byte[] unprotectedBytes = protector.Unprotect(protectedBytes);
+            byte[] protectedBytes = Convert.FromBase64String(protectedValue);
 
-    //        return _encoding.GetString(unprotectedBytes);
-    //    }
+            byte[] unprotectedBytes = protector.Unprotect(protectedBytes);
 
-    //    private IDataProtector GetDataProtector(string purpose)
-    //    {
-    //        switch (purpose)
-    //        {
-    //            case Purposes.ConnectionToken:
-    //                return _connectionTokenProtector;
-    //            case Purposes.Groups:
-    //                return _groupsProtector;
-    //        }
+            return _encoding.GetString(unprotectedBytes);
+        }
 
-    //        return _provider.Create(purpose);
-    //    }
-    //}
+        private IDataProtector GetDataProtector(string purpose)
+        {
+            switch (purpose)
+            {
+                case Purposes.ConnectionToken:
+                    return _connectionTokenProtector;
+                case Purposes.Groups:
+                    return _groupsProtector;
+            }
+
+            return _provider.CreateProtector(purpose);
+        }
+    }
 }
