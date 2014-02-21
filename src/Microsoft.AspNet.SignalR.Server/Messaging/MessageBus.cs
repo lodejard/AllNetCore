@@ -6,10 +6,10 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Tracing;
-#if NET45
+
 namespace Microsoft.AspNet.SignalR.Messaging
 {
     /// <summary>
@@ -31,8 +31,8 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         private readonly IStringMinifier _stringMinifier;
 
-        private readonly ITraceManager _traceManager;
-        private readonly TraceSource _trace;
+        private readonly ILogger _logger;
+        private readonly ILoggerFactory _loggerFactory;
 
         private Timer _gcTimer;
         private int _gcRunning;
@@ -61,7 +61,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         /// <param name="resolver"></param>
         public MessageBus(IDependencyResolver resolver)
             : this(resolver.Resolve<IStringMinifier>(),
-                   resolver.Resolve<ITraceManager>(),
+                   resolver.Resolve<ILoggerFactory>(),
                    resolver.Resolve<IPerformanceCounterManager>(),
                    resolver.Resolve<IConfigurationManager>(),
                    DefaultMaxTopicsWithNoSubscriptions)
@@ -77,30 +77,21 @@ namespace Microsoft.AspNet.SignalR.Messaging
         /// <param name="configurationManager"></param>
         /// <param name="maxTopicsWithNoSubscriptions"></param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The message broker is disposed when the bus is disposed.")]
-#if NET45
         public MessageBus(IStringMinifier stringMinifier,
-                          ITraceManager traceManager,
+                          ILoggerFactory loggerFactory,
                           IPerformanceCounterManager performanceCounterManager,
                           IConfigurationManager configurationManager,
                           int maxTopicsWithNoSubscriptions)
-#else
-        public MessageBus(IStringMinifier stringMinifier,
-                          IPerformanceCounterManager performanceCounterManager,
-                          IConfigurationManager configurationManager,
-                          int maxTopicsWithNoSubscriptions)
-#endif
         {
             if (stringMinifier == null)
             {
                 throw new ArgumentNullException("stringMinifier");
             }
 
-#if NET45
-            if (traceManager == null)
+            if (loggerFactory == null)
             {
                 throw new ArgumentNullException("traceManager");
             }
-#endif
 
             if (performanceCounterManager == null)
             {
@@ -118,20 +109,16 @@ namespace Microsoft.AspNet.SignalR.Messaging
             }
 
             _stringMinifier = stringMinifier;
-#if NET45
-            _traceManager = traceManager;
-#endif
+            _loggerFactory = loggerFactory;
             Counters = performanceCounterManager;
-#if NET45
-            _trace = _traceManager["SignalR." + typeof(MessageBus).Name];
-#endif
+            _logger = _loggerFactory.Create("SignalR." + typeof(MessageBus).Name);
             _maxTopicsWithNoSubscriptions = maxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);
 
             _broker = new MessageBroker(Counters)
             {
-                Trace = _trace
+                Logger = _logger
             };
 
             // The default message store size
@@ -146,15 +133,13 @@ namespace Microsoft.AspNet.SignalR.Messaging
             Topics = new TopicLookup();
         }
 
-#if NET45
-        protected virtual TraceSource Trace
+        protected virtual ILogger Logger
         {
             get
             {
-                return _trace;
+                return _logger;
             }
         }
-#endif
 
         protected internal TopicLookup Topics { get; private set; }
         protected IPerformanceCounterManager Counters { get; private set; }
@@ -585,4 +570,3 @@ namespace Microsoft.AspNet.SignalR.Messaging
         }
     }
 }
-#endif

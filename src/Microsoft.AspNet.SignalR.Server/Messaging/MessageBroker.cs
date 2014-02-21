@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR.Messaging
@@ -23,13 +24,11 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _counters = performanceCounterManager;
         }
 
-#if NET45
-        public TraceSource Trace
+        public ILogger Logger
         {
             get;
             set;
         }
-#endif
 
         public void Schedule(ISubscription subscription)
         {
@@ -80,7 +79,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 }
                 catch (Exception ex)
                 {
-                    context.Broker.Trace.TraceError("Failed to process work - " + ex.GetBaseException());
+                    context.Broker.Logger.WriteError("Failed to process work - " + ex.GetBaseException());
                     break;
                 }
                 finally

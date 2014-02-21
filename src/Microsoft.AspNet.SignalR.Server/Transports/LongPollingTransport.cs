@@ -4,11 +4,12 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Tracing;
+
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
@@ -28,28 +29,19 @@ namespace Microsoft.AspNet.SignalR.Transports
                    resolver.Resolve<JsonSerializer>(),
                    resolver.Resolve<ITransportHeartbeat>(),
                    resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<ITraceManager>(),
+                   resolver.Resolve<ILoggerFactory>(),
                    resolver.Resolve<IConfigurationManager>())
         {
 
         }
 
-#if NET45
         public LongPollingTransport(HostContext context,
                                     JsonSerializer jsonSerializer,
                                     ITransportHeartbeat heartbeat,
                                     IPerformanceCounterManager performanceCounterManager,
-                                    ITraceManager traceManager,
+                                    ILoggerFactory loggerFactory,
                                     IConfigurationManager configurationManager)
-            : base(context, heartbeat, performanceCounterManager, traceManager)
-#else
-            public LongPollingTransport(HostContext context,
-                                    JsonSerializer jsonSerializer,
-                                    ITransportHeartbeat heartbeat,
-                                    IPerformanceCounterManager performanceCounterManager,
-                                    IConfigurationManager configurationManager)
-            : base(context, heartbeat, performanceCounterManager)
-#endif
+            : base(context, heartbeat, performanceCounterManager, loggerFactory)
         {
             _jsonSerializer = jsonSerializer;
             _counters = performanceCounterManager;
@@ -260,7 +252,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var context = (LongPollingTransportContext)state;
 
-            context.Transport.Trace.TraceEvent(TraceEventType.Verbose, 0, "Cancel(" + context.Transport.ConnectionId + ")");
+            context.Transport.Logger.WriteVerbose("Cancel(" + context.Transport.ConnectionId + ")");
 
             ((IDisposable)context.State).Dispose();
         }

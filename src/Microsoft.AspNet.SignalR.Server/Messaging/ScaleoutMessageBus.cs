@@ -7,8 +7,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Tracing;
+
 
 #if NET45
 namespace Microsoft.AspNet.SignalR.Messaging
@@ -18,10 +19,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
     /// </summary>
     public abstract class ScaleoutMessageBus : MessageBus
     {
-#if NET45
         private readonly SipHashBasedStringEqualityComparer _sipHashBasedComparer = new SipHashBasedStringEqualityComparer(0, 0);
-        private readonly TraceSource _trace;
-#endif
+
+        private readonly ILogger _logger;
         private readonly Lazy<ScaleoutStreamManager> _streamManager;
         private readonly IPerformanceCounterManager _perfCounters;
 
@@ -33,10 +33,10 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 throw new ArgumentNullException("configuration");
             }
 
-            var traceManager = resolver.Resolve<ITraceManager>();
-            _trace = traceManager["SignalR." + typeof(ScaleoutMessageBus).Name];
+            var loggerFactory = resolver.Resolve<ILoggerFactory>();
+            _logger = loggerFactory.Create("SignalR." + typeof(ScaleoutMessageBus).Name);
             _perfCounters = resolver.Resolve<IPerformanceCounterManager>();
-            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _trace, _perfCounters, configuration));
+            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, configuration));
         }
 
         /// <summary>
@@ -114,7 +114,6 @@ namespace Microsoft.AspNet.SignalR.Messaging
             throw new NotImplementedException();
         }
 
-#if NET45
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "We return a faulted tcs")]
         private void SendImpl(IEnumerator<IGrouping<string, Message>> enumerator, TaskCompletionSource<object> taskCompletionSource)
         {
@@ -156,7 +155,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 }
             }
         }
-#endif
+
         /// <summary>
         /// Invoked when a payload is received from the backplane. There should only be one active call at any time.
         /// </summary>
@@ -175,7 +174,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         {
             Counters.ScaleoutMessageBusMessagesReceivedPerSec.IncrementBy(scaleoutMessage.Messages.Count);
 
-            _trace.TraceInformation("OnReceived({0}, {1}, {2})", streamIndex, id, scaleoutMessage.Messages.Count);
+            _logger.WriteInformation(String.Format("OnReceived({0}, {1}, {2})", streamIndex, id, scaleoutMessage.Messages.Count));
 
             var localMapping = new LocalEventKeyInfo[scaleoutMessage.Messages.Count];
             var keys = new HashSet<string>();

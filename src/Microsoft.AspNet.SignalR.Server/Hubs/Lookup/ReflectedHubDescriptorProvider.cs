@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNet.SignalR.Tracing;
+using Microsoft.AspNet.Logging;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -14,18 +14,15 @@ namespace Microsoft.AspNet.SignalR.Hubs
     {
         private readonly Lazy<IDictionary<string, HubDescriptor>> _hubs;
         private readonly Lazy<IAssemblyLocator> _locator;
-#if NET45
-        private readonly TraceSource _trace;
-#endif
+        private readonly ILogger _logger;
+
         public ReflectedHubDescriptorProvider(IDependencyResolver resolver)
         {
             _locator = new Lazy<IAssemblyLocator>(resolver.Resolve<IAssemblyLocator>);
             _hubs = new Lazy<IDictionary<string, HubDescriptor>>(BuildHubsCache);
 
-#if NET45
-            var traceManager = resolver.Resolve<ITraceManager>();
-            _trace = traceManager["SignalR." + typeof(ReflectedHubDescriptorProvider).Name];
-#endif
+            var loggerFactory = resolver.Resolve<ILoggerFactory>();
+            _logger = loggerFactory.Create("SignalR." + typeof(ReflectedHubDescriptorProvider).Name);
         }
 
         public IList<HubDescriptor> GetHubs()
@@ -107,7 +104,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             catch (Exception ex)
             {
-                _trace.TraceWarning(Resources.Warning_AssemblyGetTypesException,
+                _logger.WriteWarning(Resources.Warning_AssemblyGetTypesException,
                                     a.FullName,
                                     a.Location,
                                     ex.GetType().Name,

@@ -12,7 +12,6 @@ using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Owin.Middleware;
-using Microsoft.AspNet.SignalR.Tracing;
 using Microsoft.AspNet.Abstractions;
 
 namespace Owin
@@ -216,13 +215,13 @@ namespace Owin
 
             ////    resolver.Register(typeof(IProtectedData), () => protectedData);
 
-            ////    // If the host provides trace output then add a default trace listener
-            ////    TextWriter traceOutput = env.GetTraceOutput();
-            ////    if (traceOutput != null)
+            ////    // If the host provides logger output then add a default logger listener
+            ////    TextWriter loggerOutput = env.GetloggerOutput();
+            ////    if (loggerOutput != null)
             ////    {
-            ////        var hostTraceListener = new TextWriterTraceListener(traceOutput);
-            ////        var traceManager = new TraceManager(hostTraceListener);
-            ////        resolver.Register(typeof(ITraceManager), () => traceManager);
+            ////        var hostloggerListener = new TextWriterloggerListener(loggerOutput);
+            ////        var loggerFactory = new loggerFactory(hostloggerListener);
+            ////        resolver.Register(typeof(ILogger), () => loggerFactory);
             ////    }
 
             ////    // Try to get the list of reference assemblies from the host

@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNet.Logging;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -161,7 +162,8 @@ namespace Microsoft.AspNet.SignalR
         {
             // observe Exception
 #if !PORTABLE && !NETFX_CORE && !__ANDROID__ && !IOS
-            Trace.TraceWarning("SignalR exception thrown by Task: {0}", exception);
+            // TODO
+            // Trace.TraceWarning("SignalR exception thrown by Task: {0}", exception);
 #endif
             handler(exception, state);
         }
@@ -892,7 +894,8 @@ namespace Microsoft.AspNet.SignalR
 
         internal static Task ContinueWithPreservedCulture(this Task task, Action<Task> continuationAction, TaskContinuationOptions continuationOptions)
         {
-#if NETFX_CORE
+// TODO
+#if K10 && NETFX_CORE
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else

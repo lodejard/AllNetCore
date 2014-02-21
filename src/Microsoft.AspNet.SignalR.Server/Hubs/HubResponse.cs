@@ -49,7 +49,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         public string Error { get; set; }
 
         /// <summary>
-        /// The stack trace of the exception that occurs as a result of invoking the hub method.
+        /// The stack logger of the exception that occurs as a result of invoking the hub method.
         /// </summary>
         [JsonProperty("T", NullValueHandling = NullValueHandling.Ignore)]
         public string StackTrace { get; set; }

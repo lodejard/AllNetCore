@@ -6,9 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Tracing;
+
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
@@ -19,9 +20,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly ITransportHeartbeat _heartbeat;
         private TextWriter _outputWriter;
 
-#if NET45
-        private TraceSource _trace;
-#endif
+        private ILogger _logger;
 
         private int _timedOut;
         private readonly IPerformanceCounterManager _counters;
@@ -46,11 +45,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         internal HttpRequestLifeTime _requestLifeTime;
 
-#if NET45
-        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, ITraceManager traceManager)
-#else
-        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager)
-#endif
+        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, ILoggerFactory loggerFactory)
         {
             if (context == null)
             {
@@ -67,32 +62,27 @@ namespace Microsoft.AspNet.SignalR.Transports
                 throw new ArgumentNullException("performanceCounterManager");
             }
 
-#if NET45
-            if (traceManager == null)
+            if (loggerFactory == null)
             {
-                throw new ArgumentNullException("traceManager");
+                throw new ArgumentNullException("loggerFactory");
             }
-#endif
+
             _context = context;
             _heartbeat = heartbeat;
             _counters = performanceCounterManager;
 
             // Queue to protect against overlapping writes to the underlying response stream
             WriteQueue = new TaskQueue();
-#if NET45
-            _trace = traceManager["SignalR.Transports." + GetType().Name];
-#endif
+            _logger = loggerFactory.Create("SignalR.Transports." + GetType().Name);
         }
 
-#if NET45
-        protected TraceSource Trace
+        protected ILogger Logger
         {
             get
             {
-                return _trace;
+                return _logger;
             }
         }
-#endif
 
         public string ConnectionId
         {
@@ -257,7 +247,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 ApplyState(TransportConnectionStates.Disconnected);
             }
 
-            Trace.TraceInformation("Abort(" + ConnectionId + ")");
+            Logger.WriteInformation("Abort(" + ConnectionId + ")");
 
             // When a connection is aborted (graceful disconnect) we send a command to it
             // telling to to disconnect. At that moment, we raise the disconnect event and
@@ -270,7 +260,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             var disconnected = Disconnected ?? _emptyTaskFunc;
 
             // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
-            return disconnected().Catch((ex, state) => OnDisconnectError(ex, state), Trace)
+            return disconnected().Catch((ex, state) => OnDisconnectError(ex, state), Logger)
                                  .Then(counters => counters.ConnectionsDisconnected.Increment(), _counters);
         }
 
@@ -283,7 +273,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Interlocked.Exchange(ref _timedOut, 1) == 0)
             {
-                Trace.TraceInformation("Timeout(" + ConnectionId + ")");
+                Logger.WriteInformation("Timeout(" + ConnectionId + ")");
 
                 End();
             }
@@ -298,7 +288,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Interlocked.Exchange(ref _ended, 1) == 0)
             {
-                Trace.TraceInformation("End(" + ConnectionId + ")");
+                Logger.WriteInformation("End(" + ConnectionId + ")");
 
                 if (_connectionEndTokenSource != null)
                 {
@@ -347,7 +337,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             _hostShutdownToken = _context.Environment.GetShutdownToken();
 
-            _requestLifeTime = new HttpRequestLifeTime(this, WriteQueue, Trace, ConnectionId);
+            _requestLifeTime = new HttpRequestLifeTime(this, WriteQueue, Logger, ConnectionId);
 
             // Create the TCS that completes when the task returned by PersistentConnection.OnConnected does.
             _connectTcs = new TaskCompletionSource<object>();
@@ -374,7 +364,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 #if NET45
         private static void OnDisconnectError(AggregateException ex, object state)
         {
-            ((TraceSource)state).TraceEvent(TraceEventType.Error, 0, "Failed to raise disconnect: " + ex.GetBaseException());
+            ((ILogger)state).WriteError("Failed to raise disconnect: " + ex.GetBaseException());
         }
 #endif
     }

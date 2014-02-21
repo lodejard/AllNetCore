@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Tracing;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -53,18 +53,16 @@ namespace Microsoft.AspNet.SignalR
             }
         }
 
-#if NET45
         /// <summary>
-        /// Gets the default <see cref="ITraceManager"/>
+        /// Gets the default <see cref="ILogger"/>
         /// </summary>
-        public static ITraceManager TraceManager
+        public static ILoggerFactory LoggerFactory
         {
             get
             {
-                return DependencyResolver.Resolve<ITraceManager>();
+                return DependencyResolver.Resolve<ILoggerFactory>();
             }
         }
-#endif
 
         /// <summary>
         /// 

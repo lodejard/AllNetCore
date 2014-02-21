@@ -1,7 +1,8 @@
 {    
     "dependencies": {
         "Newtonsoft.Json" : "5.0.6",
-        "Microsoft.AspNet.Abstractions" : "0.1-alpha-*"
+        "Microsoft.AspNet.Abstractions" : "0.1-alpha-*",
+        "Microsoft.AspNet.Logging" : "0.1-alpha-*"
     },
     "compilationOptions" : { "allowUnsafe": true },
     "configurations": {

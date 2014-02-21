@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Tracing;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
@@ -128,7 +128,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                                   connectionId,
                                   signals,
                                   ListHelper<string>.Empty,
-                                  _resolver.Resolve<ITraceManager>(),
+                                  _resolver.Resolve<ILoggerFactory>(),
                                   _resolver.Resolve<IAckHandler>(),
                                   _resolver.Resolve<IPerformanceCounterManager>(),
                                   _resolver.Resolve<IProtectedData>());

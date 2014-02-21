@@ -14,10 +14,11 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Owin;
-using Microsoft.AspNet.SignalR.Tracing;
+
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.Logging;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -49,7 +50,7 @@ namespace Microsoft.AspNet.SignalR
 
             MessageBus = resolver.Resolve<IMessageBus>();
             JsonSerializer = resolver.Resolve<JsonSerializer>();
-            TraceManager = resolver.Resolve<ITraceManager>();
+            LoggerFactory = resolver.Resolve<ILoggerFactory>();
             Counters = resolver.Resolve<IPerformanceCounterManager>();
             AckHandler = resolver.Resolve<IAckHandler>();
             ProtectedData = resolver.Resolve<IProtectedData>();
@@ -67,15 +68,13 @@ namespace Microsoft.AspNet.SignalR
             return AuthorizeRequest(request);
         }
 
-#if NET45
-        protected virtual TraceSource Trace
+        protected virtual ILogger Logger
         {
             get
             {
-                return TraceManager["SignalR.PersistentConnection"];
+                return LoggerFactory.Create("SignalR.PersistentConnection");
             }
         }
-#endif
 
         protected IProtectedData ProtectedData { get; private set; }
 
@@ -85,9 +84,7 @@ namespace Microsoft.AspNet.SignalR
 
         protected IAckHandler AckHandler { get; private set; }
 
-#if NET45
-        protected ITraceManager TraceManager { get; private set; }
-#endif
+        protected ILoggerFactory LoggerFactory { get; private set; }
 
         protected IPerformanceCounterManager Counters { get; private set; }
 
@@ -305,7 +302,7 @@ namespace Microsoft.AspNet.SignalR
             }
             catch (Exception ex)
             {
-                Trace.TraceInformation("Failed to process connectionToken {0}: {1}", connectionToken, ex);
+                Logger.WriteInformation(String.Format("Failed to process connectionToken {0}: {1}", connectionToken, ex));
             }
 
             if (String.IsNullOrEmpty(unprotectedConnectionToken))
@@ -348,7 +345,7 @@ namespace Microsoft.AspNet.SignalR
             }
             catch (Exception ex)
             {
-                Trace.TraceInformation("Failed to process groupsToken {0}: {1}", groupsToken, ex);
+                Logger.WriteInformation(String.Format("Failed to process groupsToken {0}: {1}", groupsToken, ex));
             }
 
             if (String.IsNullOrEmpty(unprotectedGroupsToken))
@@ -383,7 +380,7 @@ namespace Microsoft.AspNet.SignalR
                                   connectionId,
                                   signals,
                                   groups,
-                                  TraceManager,
+                                  LoggerFactory,
                                   AckHandler,
                                   Counters,
                                   ProtectedData);

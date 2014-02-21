@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR.Transports
@@ -12,19 +13,15 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly TaskCompletionSource<object> _lifetimeTcs = new TaskCompletionSource<object>();
         private readonly TransportDisconnectBase _transport;
         private readonly TaskQueue _writeQueue;
-#if NET45
-        private readonly TraceSource _trace;
-#endif
+
+        private readonly ILogger _logger;
+
         private readonly string _connectionId;
 
-#if NET45
-        public HttpRequestLifeTime(TransportDisconnectBase transport, TaskQueue writeQueue, TraceSource trace, string connectionId)
-#else
-        public HttpRequestLifeTime(TransportDisconnectBase transport, TaskQueue writeQueue, string connectionId)
-#endif
+        public HttpRequestLifeTime(TransportDisconnectBase transport, TaskQueue writeQueue, ILogger logger, string connectionId)
         {
             _transport = transport;
-            _trace = trace;
+            _logger = logger;
             _connectionId = connectionId;
             _writeQueue = writeQueue;
         }
@@ -44,7 +41,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         public void Complete(Exception error)
         {
-            _trace.TraceEvent(TraceEventType.Verbose, 0, "DrainWrites(" + _connectionId + ")");
+            _logger.WriteVerbose("DrainWrites(" + _connectionId + ")");
 
             var context = new LifetimeContext(_transport, _lifetimeTcs, error);
 
@@ -61,11 +58,11 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             if (error != null)
             {
-                _trace.TraceEvent(TraceEventType.Error, 0, "CompleteRequest (" + _connectionId + ") failed: " + error.GetBaseException());
+                _logger.WriteError("CompleteRequest (" + _connectionId + ") failed: " + error.GetBaseException());
             }
             else
             {
-                _trace.TraceInformation("CompleteRequest (" + _connectionId + ")");
+                _logger.WriteInformation("CompleteRequest (" + _connectionId + ")");
             }
         }
 

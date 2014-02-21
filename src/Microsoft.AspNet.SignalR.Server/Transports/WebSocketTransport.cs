@@ -11,12 +11,13 @@ using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Owin;
-using Microsoft.AspNet.SignalR.Tracing;
+
 using Newtonsoft.Json;
 
 #if NET45
 namespace Microsoft.AspNet.SignalR.Transports
 {
+    using Microsoft.AspNet.Logging;
     using WebSocketFunc = Func<IDictionary<string, object>, Task>;
 
     public class WebSocketTransport : ForeverTransport
@@ -37,7 +38,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                    resolver.Resolve<JsonSerializer>(),
                    resolver.Resolve<ITransportHeartbeat>(),
                    resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<ITraceManager>(),
+                   resolver.Resolve<ILoggerFactory>(),
                    resolver.Resolve<IConfigurationManager>().MaxIncomingWebSocketMessageSize)
         {
         }
@@ -46,9 +47,9 @@ namespace Microsoft.AspNet.SignalR.Transports
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
                                   IPerformanceCounterManager performanceCounterWriter,
-                                  ITraceManager traceManager,
+                                  ILoggerFactory loggerFactory,
                                   int? maxIncomingMessageSize)
-            : base(context, serializer, heartbeat, performanceCounterWriter, traceManager)
+            : base(context, serializer, heartbeat, performanceCounterWriter, loggerFactory)
         {
             _context = context;
             _maxIncomingMessageSize = maxIncomingMessageSize;
@@ -171,7 +172,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private void OnClosed()
         {
-            Trace.TraceInformation("CloseSocket({0})", ConnectionId);
+            Logger.WriteInformation(String.Format("CloseSocket({0})", ConnectionId));
 
             // Require a request to /abort to stop tracking the connection. #2195
             _isAlive = false;
@@ -179,7 +180,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private void OnSocketError(Exception error)
         {
-            Trace.TraceError("OnError({0}, {1})", ConnectionId, error);
+            Logger.WriteError(String.Format("OnError({0}, {1})", ConnectionId, error));
         }
 
         private class WebSocketTransportContext

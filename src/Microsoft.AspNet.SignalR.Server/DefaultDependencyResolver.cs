@@ -6,12 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Tracing;
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
 
@@ -36,10 +36,9 @@ namespace Microsoft.AspNet.SignalR
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The resolver disposes dependencies on Dispose.")]
         private void RegisterDefaultServices()
         {
-#if NET45
-            var traceManager = new Lazy<TraceManager>(() => new TraceManager());
-            Register(typeof(ITraceManager), () => traceManager.Value);
-#endif
+            var loggerFactory = new Lazy<ILoggerFactory>(() => new DiagnosticsLoggerFactory());
+            Register(typeof(ILogger), () => loggerFactory.Value);
+
             var serverIdManager = new ServerIdManager();
             Register(typeof(IServerIdManager), () => serverIdManager);
 
@@ -70,9 +69,10 @@ namespace Microsoft.AspNet.SignalR
             var ackHandler = new Lazy<AckHandler>();
             Register(typeof(IAckHandler), () => ackHandler.Value);
 
+#if PERFCOUNTERS
             var perfCounterWriter = new Lazy<PerformanceCounterManager>(() => new PerformanceCounterManager(this));
             Register(typeof(IPerformanceCounterManager), () => perfCounterWriter.Value);
-
+#endif
             var userIdProvider = new PrincipalUserIdProvider();
             Register(typeof(IUserIdProvider), () => userIdProvider);
         }

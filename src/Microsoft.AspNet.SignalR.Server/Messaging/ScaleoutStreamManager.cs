@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR.Messaging
@@ -16,11 +17,10 @@ namespace Microsoft.AspNet.SignalR.Messaging
         private readonly Action<int, ulong, ScaleoutMessage> _receive;
         private readonly ScaleoutStream[] _streams;
 
-#if NET45
         public ScaleoutStreamManager(Func<int, IList<Message>, Task> send,
                                      Action<int, ulong, ScaleoutMessage> receive,
                                      int streamCount,
-                                     TraceSource trace,
+                                     ILogger logger,
                                      IPerformanceCounterManager performanceCounters,
                                      ScaleoutConfiguration configuration)
         {
@@ -36,13 +36,12 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             for (int i = 0; i < streamCount; i++)
             {
-                _streams[i] = new ScaleoutStream(trace, "Stream(" + i + ")", configuration.MaxQueueLength, performanceCounters);
+                _streams[i] = new ScaleoutStream(logger, "Stream(" + i + ")", configuration.MaxQueueLength, performanceCounters);
                 receiveMapping[i] = new ScaleoutMappingStore();
             }
 
             Streams = new ReadOnlyCollection<ScaleoutMappingStore>(receiveMapping);
         }
-#endif
 
         public IList<ScaleoutMappingStore> Streams { get; private set; }
 

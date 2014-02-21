@@ -5,10 +5,10 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Tracing;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
@@ -29,22 +29,20 @@ namespace Microsoft.AspNet.SignalR.Transports
                    resolver.Resolve<JsonSerializer>(),
                    resolver.Resolve<ITransportHeartbeat>(),
                    resolver.Resolve<IPerformanceCounterManager>(),
-                   resolver.Resolve<ITraceManager>())
+                   resolver.Resolve<ILoggerFactory>())
         {
         }
 
-#if NET45
         protected ForeverTransport(HostContext context,
                                    JsonSerializer jsonSerializer,
                                    ITransportHeartbeat heartbeat,
                                    IPerformanceCounterManager performanceCounterWriter,
-                                   ITraceManager traceManager)
-            : base(context, heartbeat, performanceCounterWriter, traceManager)
+                                   ILoggerFactory loggerFactory)
+            : base(context, heartbeat, performanceCounterWriter, loggerFactory)
         {
             _jsonSerializer = jsonSerializer;
             _counters = performanceCounterWriter;
         }
-#endif
 
         protected string LastMessageId
         {
@@ -300,7 +298,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var context = (ForeverTransportContext)state;
 
-            context.Transport.Trace.TraceEvent(TraceEventType.Verbose, 0, "Cancel(" + context.Transport.ConnectionId + ")");
+            context.Transport.Logger.WriteVerbose("Cancel(" + context.Transport.ConnectionId + ")");
 
             ((IDisposable)context.State).Dispose();
         }

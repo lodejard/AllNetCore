@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
@@ -57,15 +58,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
             _enableDetailedErrors = configuration.EnableDetailedErrors;
         }
 
-#if NET45
-        protected override TraceSource Trace
+        protected override ILogger Logger
         {
             get
             {
-                return TraceManager["SignalR.HubDispatcher"];
+                return LoggerFactory.Create("SignalR.HubDispatcher");
             }
         }
-#endif
 
         internal override string GroupPrefix
         {
@@ -471,7 +470,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             catch (Exception ex)
             {
-                Trace.TraceInformation(String.Format(CultureInfo.CurrentCulture, Resources.Error_ErrorCreatingHub + ex.Message, descriptor.Name));
+                Logger.WriteInformation(String.Format(CultureInfo.CurrentCulture, Resources.Error_ErrorCreatingHub + ex.Message, descriptor.Name));
 
                 if (throwIfFailedToCreate)
                 {

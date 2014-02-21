@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
+#if PERCOUNTER
+
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -8,10 +10,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 
-#if !UTILS
-using Microsoft.AspNet.SignalR.Tracing;
-#endif
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
@@ -30,11 +30,10 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private volatile bool _initialized;
         private object _initLocker = new object();
 
-#if NET45 && !UTILS
-        private readonly TraceSource _trace;
+        private readonly ILogger _logger;
 
         public PerformanceCounterManager(DefaultDependencyResolver resolver)
-            : this(resolver.Resolve<ITraceManager>())
+            : this(resolver.Resolve<ILogger>())
         {
 
         }
@@ -42,17 +41,16 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public PerformanceCounterManager(ITraceManager traceManager)
+        public PerformanceCounterManager(ILoggerFactory loggerFactory)
             : this()
         {
-            if (traceManager == null)
+            if (loggerFactory == null)
             {
-                throw new ArgumentNullException("traceManager");
+                throw new ArgumentNullException("loggerFactory");
             }
 
-            _trace = traceManager["SignalR.PerformanceCounterManager"];
+            _logger = loggerFactory.Create("SignalR.PerformanceCounterManager");
         }
-#endif
 
         public PerformanceCounterManager()
         {
@@ -388,33 +386,29 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
                 return new PerformanceCounterWrapper(counter);
             }
-#if UTILS
-            catch (InvalidOperationException) { return null; }
-            catch (UnauthorizedAccessException) { return null; }
-            catch (Win32Exception) { return null; }
-            catch (PlatformNotSupportedException) { return null; }
-#elif NET45
             catch (InvalidOperationException ex)
             {
-                _trace.TraceEvent(TraceEventType.Error, 0, "Performance counter failed to load: " + ex.GetBaseException());
+                _logger.WriteError("Performance counter failed to load: " + ex.GetBaseException());
                 return null;
             }
             catch (UnauthorizedAccessException ex)
             {
-                _trace.TraceEvent(TraceEventType.Error, 0, "Performance counter failed to load: " + ex.GetBaseException());
+                _logger.WriteError("Performance counter failed to load: " + ex.GetBaseException());
                 return null;
             }
             catch (Win32Exception ex)
             {
-                _trace.TraceEvent(TraceEventType.Error, 0, "Performance counter failed to load: " + ex.GetBaseException());
+                _logger.WriteError("Performance counter failed to load: " + ex.GetBaseException());
                 return null;
             }
             catch (PlatformNotSupportedException ex)
             {
-                _trace.TraceEvent(TraceEventType.Error, 0, "Performance counter failed to load: " + ex.GetBaseException());
+                _logger.WriteError("Performance counter failed to load: " + ex.GetBaseException());
                 return null;
             }
-#endif
+
         }
     }
 }
+
+#endif

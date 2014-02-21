@@ -10,9 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Tracing;
+
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
 
@@ -31,28 +32,26 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private bool _disconnected;
         private bool _aborted;
         private bool _initializing;
-#if NET45
-        private readonly TraceSource _traceSource;
-#endif
+        private readonly ILogger _logger;
+
         private readonly IAckHandler _ackHandler;
         private readonly IProtectedData _protectedData;
         private readonly Func<Message, bool> _excludeMessage;
 
-#if NET45
         public Connection(IMessageBus newMessageBus,
                           JsonSerializer jsonSerializer,
                           string baseSignal,
                           string connectionId,
                           IList<string> signals,
                           IList<string> groups,
-                          ITraceManager traceManager,
+                          ILoggerFactory loggerFactory,
                           IAckHandler ackHandler,
                           IPerformanceCounterManager performanceCounterManager,
                           IProtectedData protectedData)
         {
-            if (traceManager == null)
+            if (loggerFactory == null)
             {
-                throw new ArgumentNullException("traceManager");
+                throw new ArgumentNullException("loggerFactory");
             }
 
             _bus = newMessageBus;
@@ -61,13 +60,12 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _connectionId = connectionId;
             _signals = new List<string>(signals.Concat(groups));
             _groups = new DiffSet<string>(groups);
-            _traceSource = traceManager["SignalR.Connection"];
+            _logger = loggerFactory.Create("SignalR.Connection");
             _ackHandler = ackHandler;
             _counters = performanceCounterManager;
             _protectedData = protectedData;
             _excludeMessage = m => ExcludeMessage(m);
         }
-#endif
 
         public string DefaultSignal
         {
@@ -99,16 +97,15 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
         }
 
-#if NET45
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used for debugging purposes.")]
-        private TraceSource Trace
+        private ILogger Logger
         {
             get
             {
-                return _traceSource;
+                return _logger;
             }
         }
-#endif
+
 
         public Subscription Subscription
         {
