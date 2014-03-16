@@ -14,15 +14,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
     public class ReflectedHubDescriptorProvider : IHubDescriptorProvider
     {
         private readonly Lazy<IDictionary<string, HubDescriptor>> _hubs;
-        private readonly Lazy<IAssemblyLocator> _locator;
+        private readonly IAssemblyLocator _locator;
         private readonly ILogger _logger;
 
-        public ReflectedHubDescriptorProvider(IServiceProvider serviceProvidr)
+        public ReflectedHubDescriptorProvider(IAssemblyLocator locator, ILoggerFactory loggerFactory)
         {
-            _locator = new Lazy<IAssemblyLocator>(serviceProvidr.GetService<IAssemblyLocator>);
+            _locator = locator;
             _hubs = new Lazy<IDictionary<string, HubDescriptor>>(BuildHubsCache);
-
-            var loggerFactory = serviceProvidr.GetService<ILoggerFactory>();
             _logger = loggerFactory.Create("SignalR." + typeof(ReflectedHubDescriptorProvider).Name);
         }
 
@@ -42,9 +40,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
         protected IDictionary<string, HubDescriptor> BuildHubsCache()
         {
             // Getting all IHub-implementing types that apply
-            var types = _locator.Value.GetAssemblies()
-                                      .SelectMany(GetTypesSafe)
-                                      .Where(IsHubType);
+            var types = _locator.GetAssemblies()
+                                .SelectMany(GetTypesSafe)
+                                .Where(IsHubType);
 
             // Building cache entries for each descriptor
             // Each descriptor is stored in dictionary under a key

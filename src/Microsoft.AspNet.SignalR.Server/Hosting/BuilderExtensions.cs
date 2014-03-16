@@ -1,17 +1,12 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Threading;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.DependencyInjection;
+using Microsoft.AspNet.SignalR.Hosting;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -70,7 +65,7 @@ namespace Microsoft.AspNet.SignalR
         /// <param name="configuration">The <see cref="HubConfiguration"/> to use</param>
         public static void RunSignalR(this IBuilder builder, HubConfiguration configuration)
         {
-            builder.UseSignalRMiddleware<HubDispatcherMiddleware>(configuration);
+            builder.UseMiddleware<HubDispatcherMiddleware>(configuration);
         }
 
         /// <summary>
@@ -154,92 +149,19 @@ namespace Microsoft.AspNet.SignalR
         /// <returns></returns>
         public static void RunSignalR(this IBuilder builder, Type connectionType, ConnectionConfiguration configuration)
         {
-            builder.UseSignalRMiddleware<PersistentConnectionMiddleware>(connectionType, configuration);
+            builder.UseMiddleware<PersistentConnectionMiddleware>(connectionType, configuration);
         }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This class wires up new dependencies from the host")]
-        private static IBuilder UseSignalRMiddleware<T>(this IBuilder builder, params object[] args)
+        private static IBuilder UseMiddleware<T>(this IBuilder builder, params object[] args)
         {
-            // ConnectionConfiguration configuration = null;
-
-            //if (args.Length > 0)
-            //{
-            //    configuration = args[args.Length - 1] as ConnectionConfiguration;
-
-            //    if (configuration == null)
-            //    {
-            //        throw new ArgumentException(Resources.Error_NoConfiguration);
-            //    }
-
-            //    var resolver = configuration.Resolver;
-
-            //    if (resolver == null)
-            //    {
-            //        throw new ArgumentException(Resources.Error_NoDepenendeyResolver);
-            //    }
-
-            //    // ???
-            //    //var env = builder.Properties;
-            //    //CancellationToken token = env.GetShutdownToken();
-
-            //    // If we don't get a valid instance name then generate a random one
-            //    //string instanceName = env.GetAppInstanceName() ?? Guid.NewGuid().ToString();
-
-            //    // ???
-            //    // Use the data protection provider from app builder and fallback to the
-            //    // Dpapi provider
-            //    //IDataProtectionProvider provider = builder.GetDataProtectionProvider();
-            //    IProtectedData protectedData;
-
-            //    // If we're using DPAPI then fallback to the default protected data if running
-            //    // on mono since it doesn't support any of this
-            ////    if (provider == null && MonoUtility.IsRunningMono)
-            ////    {
-            ////        protectedData = new DefaultProtectedData();
-            ////    }
-            ////    else
-            ////    {
-            ////        if (provider == null)
-            ////        {
-            ////            provider = new DpapiDataProtectionProvider(instanceName);
-            ////        }
-
-            ////        protectedData = new DataProtectionProviderProtectedData(provider);
-            ////    }
-
-            ////    resolver.Register(typeof(IProtectedData), () => protectedData);
-
-            ////    // If the host provides logger output then add a default logger listener
-            ////    TextWriter loggerOutput = env.GetloggerOutput();
-            ////    if (loggerOutput != null)
-            ////    {
-            ////        var hostloggerListener = new TextWriterloggerListener(loggerOutput);
-            ////        var loggerFactory = new loggerFactory(hostloggerListener);
-            ////        resolver.Register(typeof(ILogger), () => loggerFactory);
-            ////    }
-
-            ////    // Try to get the list of reference assemblies from the host
-            ////    IEnumerable<Assembly> referenceAssemblies = env.GetReferenceAssemblies();
-            ////    if (referenceAssemblies != null)
-            ////    {
-            ////        // Use this list as the assembly locator
-            ////        var assemblyLocator = new EnumerableOfAssemblyLocator(referenceAssemblies);
-            ////        resolver.Register(typeof(IAssemblyLocator), () => assemblyLocator);
-            ////    }
-
-            ////    resolver.InitializeHost(instanceName, token);
-            //}
-
-            ////builder.Use(typeof(T), args);
-
-            ////// BUG 2306: We need to make that SignalR runs before any handlers are
-            ////// mapped in the IIS pipeline so that we avoid side effects like
-            ////// session being enabled. The session behavior can be
-            ////// manually overridden if user calls SetSessionStateBehavior but that shouldn't
-            ////// be a problem most of the time.
-            ////builder.UseStageMarker(PipelineStage.PostAuthorize);
-
-            return builder;
+            return builder.Use(next =>
+            {
+                var typeActivator = builder.ServiceProvider.GetService<ITypeActivator>();
+                var instance = typeActivator.CreateInstance(typeof(T), new[] { next }.Concat(args).ToArray());
+                var invoke = typeof(T).GetTypeInfo().GetDeclaredMethod("Invoke");
+                return (RequestDelegate)invoke.CreateDelegate(typeof(RequestDelegate), instance);
+            });
         }
     }
 }

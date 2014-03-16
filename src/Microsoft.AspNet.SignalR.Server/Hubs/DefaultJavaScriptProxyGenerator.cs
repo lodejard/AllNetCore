@@ -21,17 +21,11 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private static readonly Type[] _numberTypes = new[] { typeof(byte), typeof(short), typeof(int), typeof(long), typeof(float), typeof(decimal), typeof(double) };
         private static readonly Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTimeOffset) };
 
-        private const string ScriptResource = "Microsoft.AspNet.SignalR.Scripts.hubs.js";
+        private const string ScriptResource = "hubs.js";
 
         private readonly IHubManager _manager;
         private readonly IJavaScriptMinifier _javaScriptMinifier;
         private readonly Lazy<string> _generatedTemplate;
-
-        public DefaultJavaScriptProxyGenerator(IServiceProvider serviceProvider) :
-            this(serviceProvider.GetService<IHubManager>(),
-                 serviceProvider.GetService<IJavaScriptMinifier>())
-        {
-        }
 
         public DefaultJavaScriptProxyGenerator(IHubManager manager, IJavaScriptMinifier javaScriptMinifier)
         {

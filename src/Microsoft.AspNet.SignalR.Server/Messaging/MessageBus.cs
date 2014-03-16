@@ -64,8 +64,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             : this(serviceProvider.GetService<IStringMinifier>(),
                    serviceProvider.GetService<ILoggerFactory>(),
                    serviceProvider.GetService<IPerformanceCounterManager>(),
-                   serviceProvider.GetService<IConfigurationManager>(),
-                   DefaultMaxTopicsWithNoSubscriptions)
+                   serviceProvider.GetService<IConfigurationManager>())
         {
         }
 
@@ -78,11 +77,10 @@ namespace Microsoft.AspNet.SignalR.Messaging
         /// <param name="configurationManager"></param>
         /// <param name="maxTopicsWithNoSubscriptions"></param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The message broker is disposed when the bus is disposed.")]
-        public MessageBus(IStringMinifier stringMinifier,
-                          ILoggerFactory loggerFactory,
-                          IPerformanceCounterManager performanceCounterManager,
-                          IConfigurationManager configurationManager,
-                          int maxTopicsWithNoSubscriptions)
+        private MessageBus(IStringMinifier stringMinifier,
+                           ILoggerFactory loggerFactory,
+                           IPerformanceCounterManager performanceCounterManager,
+                           IConfigurationManager configurationManager)
         {
             if (stringMinifier == null)
             {
@@ -113,7 +111,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _loggerFactory = loggerFactory;
             Counters = performanceCounterManager;
             _logger = _loggerFactory.Create("SignalR." + typeof(MessageBus).Name);
-            _maxTopicsWithNoSubscriptions = maxTopicsWithNoSubscriptions;
+            _maxTopicsWithNoSubscriptions = configurationManager.DefaultMaxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);
 

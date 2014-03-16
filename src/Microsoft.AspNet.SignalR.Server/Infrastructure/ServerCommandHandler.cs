@@ -27,14 +27,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private const string ServerSignal = "__SIGNALR__SERVER__";
         private static readonly string[] ServerSignals = new[] { ServerSignal };
 
-        public ServerCommandHandler(IServiceProvider serviceProvider) :
-            this(serviceProvider.GetService<IMessageBus>(),
-                 serviceProvider.GetService<IServerIdManager>(),
-                 serviceProvider.GetService<JsonSerializer>())
-        {
-
-        }
-
         public ServerCommandHandler(IMessageBus messageBus, IServerIdManager serverIdManager, JsonSerializer serializer)
         {
             _messageBus = messageBus;

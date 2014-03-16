@@ -25,6 +25,7 @@ namespace Microsoft.AspNet.SignalR.Configuration
             ConnectionTimeout = TimeSpan.FromSeconds(110);
             DisconnectTimeout = TimeSpan.FromSeconds(30);
             DefaultMessageBufferSize = 1000;
+            DefaultMaxTopicsWithNoSubscriptions = 1000;
             MaxIncomingWebSocketMessageSize = 64 * 1024; // 64 KB
             TransportConnectTimeout = TimeSpan.FromSeconds(5);
             LongPollDelay = TimeSpan.Zero;
@@ -59,7 +60,7 @@ namespace Microsoft.AspNet.SignalR.Configuration
                 _keepAlive = TimeSpan.FromTicks(_disconnectTimeout.Ticks / _minimumKeepAlivesPerDisconnectTimeout);
             }
         }
-        
+
         public TimeSpan? KeepAlive
         {
             get
@@ -84,6 +85,12 @@ namespace Microsoft.AspNet.SignalR.Configuration
         }
 
         public int DefaultMessageBufferSize
+        {
+            get;
+            set;
+        }
+
+        public int DefaultMaxTopicsWithNoSubscriptions
         {
             get;
             set;

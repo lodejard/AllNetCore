@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
-#if PERCOUNTER
-
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -15,6 +12,7 @@ using Microsoft.AspNet.Logging;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
+    // TODO: Figure out performance counters
     /// <summary>
     /// Manages performance counters using Windows performance counters.
     /// </summary>
@@ -27,22 +25,16 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
         private readonly static PropertyInfo[] _counterProperties = GetCounterPropertyInfo();
         private readonly static IPerformanceCounter _noOpCounter = new NoOpPerformanceCounter();
-        private volatile bool _initialized;
-        private object _initLocker = new object();
+
+        // private volatile bool _initialized;
+        // private object _initLocker = new object();
 
         private readonly ILogger _logger;
-
-        public PerformanceCounterManager(DefaultDependencyResolver resolver)
-            : this(resolver.Resolve<ILogger>())
-        {
-
-        }
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         public PerformanceCounterManager(ILoggerFactory loggerFactory)
-            : this()
         {
             if (loggerFactory == null)
             {
@@ -50,10 +42,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
 
             _logger = loggerFactory.Create("SignalR.PerformanceCounterManager");
-        }
-
-        public PerformanceCounterManager()
-        {
             InitNoOpCounters();
         }
 
@@ -257,6 +245,32 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         [PerformanceCounter(Name = "Scaleout Send Queue Length", Description = "The current scaleout send queue length.", CounterType = PerformanceCounterType.NumberOfItems32)]
         public IPerformanceCounter ScaleoutSendQueueLength { get; private set; }
 
+        private void InitNoOpCounters()
+        {
+            // Set all the counter properties to no-op by default.
+            // These will get reset to real counters when/if the Initialize method is called.
+            foreach (var property in _counterProperties)
+            {
+                property.SetValue(this, new NoOpPerformanceCounter(), null);
+            }
+        }
+
+        internal static PropertyInfo[] GetCounterPropertyInfo()
+        {
+            return typeof(PerformanceCounterManager)
+                .GetProperties()
+                .Where(p => p.PropertyType == typeof(IPerformanceCounter))
+                .ToArray();
+        }
+
+        internal static PerformanceCounterAttribute GetPerformanceCounterAttribute(PropertyInfo property)
+        {
+            return property.GetCustomAttributes(typeof(PerformanceCounterAttribute), false)
+                    .Cast<PerformanceCounterAttribute>()
+                    .SingleOrDefault();
+        }
+
+#if PERFCOUNTER
         /// <summary>
         /// Initializes the performance counters.
         /// </summary>
@@ -314,16 +328,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
         }
 
-        private void InitNoOpCounters()
-        {
-            // Set all the counter properties to no-op by default.
-            // These will get reset to real counters when/if the Initialize method is called.
-            foreach (var property in _counterProperties)
-            {
-                property.SetValue(this, new NoOpPerformanceCounter(), null);
-            }
-        }
-
         private void SetCounterProperties(string instanceName)
         {
             var loadCounters = true;
@@ -341,7 +345,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
                 if (loadCounters)
                 {
-                    counter = LoadCounter(CategoryName, attribute.Name, instanceName, isReadOnly:false);
+                    counter = LoadCounter(CategoryName, attribute.Name, instanceName, isReadOnly: false);
 
                     if (counter == null)
                     {
@@ -354,21 +358,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
                 property.SetValue(this, counter, null);
             }
-        }
-
-        internal static PropertyInfo[] GetCounterPropertyInfo()
-        {
-            return typeof(PerformanceCounterManager)
-                .GetProperties()
-                .Where(p => p.PropertyType == typeof(IPerformanceCounter))
-                .ToArray();
-        }
-
-        internal static PerformanceCounterAttribute GetPerformanceCounterAttribute(PropertyInfo property)
-        {
-            return property.GetCustomAttributes(typeof(PerformanceCounterAttribute), false)
-                    .Cast<PerformanceCounterAttribute>()
-                    .SingleOrDefault();
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This file is shared")]
@@ -406,9 +395,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                 _logger.WriteError("Performance counter failed to load: " + ex.GetBaseException());
                 return null;
             }
-
         }
+#endif
     }
 }
-
-#endif

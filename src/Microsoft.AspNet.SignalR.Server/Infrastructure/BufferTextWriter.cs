@@ -15,7 +15,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
     /// we don't need to write to a long lived buffer. This saves massive amounts of memory
     /// as the number of connections grows.
     /// </summary>
-    internal abstract unsafe class BufferTextWriter : TextWriter
+    internal abstract class BufferTextWriter : TextWriter
     {
         private readonly Encoding _encoding;
 

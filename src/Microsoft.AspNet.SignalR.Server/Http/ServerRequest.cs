@@ -77,10 +77,7 @@ namespace Microsoft.AspNet.SignalR.Http
 
         public Task<IReadableStringCollection> ReadForm()
         {
-            // TODO: Form
-            //IFormCollection form = await _request.ReadFormAsync();
-            //return new ReadableStringCollectionWrapper(form);
-            return TaskAsyncHelper.FromResult<IReadableStringCollection>(null);
+            return _request.GetFormAsync();
         }
     }
 }

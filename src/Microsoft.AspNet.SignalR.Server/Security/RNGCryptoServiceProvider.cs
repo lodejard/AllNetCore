@@ -5,7 +5,7 @@ namespace System.Security.Cryptography
     {
         public void Dispose()
         {
-            
+
         }
 
         public void GetBytes(byte[] bytes)

@@ -16,9 +16,9 @@ namespace Microsoft.AspNet.SignalR.Hosting
         private readonly IServiceProvider _serviceProvider;
 
         public PersistentConnectionMiddleware(RequestDelegate next,
-                                              IServiceProvider serviceProvider,
                                               Type connectionType,
-                                              ConnectionConfiguration configuration)
+                                              ConnectionConfiguration configuration,
+                                              IServiceProvider serviceProvider)
         {
             _next = next;
             _serviceProvider = serviceProvider;
@@ -38,11 +38,9 @@ namespace Microsoft.AspNet.SignalR.Hosting
                 return TaskAsyncHelper.Empty;
             }
 
-            // TODO: Initialize persistent connection with ActivatorUtilities
-            //var connectionFactory = new PersistentConnectionFactory(_configuration.Resolver);
-            PersistentConnection connection = ActivatorUtilities.CreateInstance(_serviceProvider, _connectionType) as PersistentConnection;
+            var connection = ActivatorUtilities.CreateInstance(_serviceProvider, _connectionType) as PersistentConnection;
 
-            //connection.Initialize(_configuration.Resolver);
+            connection.Initialize(_serviceProvider);
 
             return connection.ProcessRequest(context);
         }

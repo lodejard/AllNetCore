@@ -43,6 +43,11 @@ namespace Microsoft.AspNet.SignalR.Configuration
         int DefaultMessageBufferSize { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of topics to allow with no subscriptions
+        /// </summary>
+        int DefaultMaxTopicsWithNoSubscriptions { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum size in bytes of messages sent from client to the server via WebSockets.
         /// Set to null to disable this limit.
         /// The default value is 65536 or 64 KB.

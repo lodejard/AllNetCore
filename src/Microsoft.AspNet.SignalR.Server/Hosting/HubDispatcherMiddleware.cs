@@ -11,10 +11,14 @@ namespace Microsoft.AspNet.SignalR.Hosting
     public class HubDispatcherMiddleware
     {
         private readonly HubConfiguration _configuration;
+        private readonly IServiceProvider _serviceProvider;
 
-        public HubDispatcherMiddleware(RequestDelegate next, HubConfiguration configuration)
+        public HubDispatcherMiddleware(RequestDelegate next,
+                                       HubConfiguration configuration,
+                                       IServiceProvider serviceProvider)
         {
             _configuration = configuration;
+            _serviceProvider = serviceProvider;
         }
 
         public Task Invoke(HttpContext context)
@@ -31,8 +35,7 @@ namespace Microsoft.AspNet.SignalR.Hosting
 
             var dispatcher = new HubDispatcher(_configuration);
 
-            // TODO: Create the dispatcher with all required services
-            // dispatcher.Initialize(_configuration.Resolver);
+            dispatcher.Initialize(_serviceProvider);
 
             return dispatcher.ProcessRequest(context);
         }

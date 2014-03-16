@@ -15,11 +15,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private readonly IHubActivator _activator;
         private readonly IEnumerable<IHubDescriptorProvider> _hubProviders;
 
-        public DefaultHubManager(IServiceProvider serviceProvider)
+        public DefaultHubManager(IEnumerable<IHubDescriptorProvider> hubProviders,
+                                 IEnumerable<IMethodDescriptorProvider> methodProviders,
+                                 IHubActivator activator)
         {
-            _hubProviders = serviceProvider.GetService<IEnumerable<IHubDescriptorProvider>>();
-            _methodProviders = serviceProvider.GetService<IEnumerable<IMethodDescriptorProvider>>();
-            _activator = serviceProvider.GetService<IHubActivator>();
+            _hubProviders = hubProviders;
+            _methodProviders = methodProviders;
+            _activator = activator;
         }
 
         public HubDescriptor GetHub(string hubName)
