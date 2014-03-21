@@ -3,50 +3,49 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30313.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.SignalR.Server.net45", "src\Microsoft.AspNet.SignalR.Server\Microsoft.AspNet.SignalR.Server.net45.csproj", "{54E8F2DD-A81E-477C-8FAA-D6B77DA9BB22}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{34D5CA7F-AA6E-45AF-87B8-13DC970D68C9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k10", "k10", "{E3C90C01-66D5-4264-88A0-CDD04FE20267}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net45", "net45", "{8F025459-E896-440D-8D13-CDFA3D43FBB4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.SignalR.Server.k10", "src\Microsoft.AspNet.SignalR.Server\Microsoft.AspNet.SignalR.Server.k10.csproj", "{86F3A095-8BC1-46E0-BEF6-A8AF912C411E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{862490FB-DD41-4BB8-9BBA-AC300F331BA8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net45", "net45", "{CE053532-FC57-4356-8A3E-EBD332F91217}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Server", "src\Microsoft.AspNet.SignalR.Server\Microsoft.AspNet.SignalR.Server.kproj", "{1E7F548C-CB60-46A1-B431-D67825A32698}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRSample.Web.net45", "samples\SignalRSample.Web\SignalRSample.Web.net45.csproj", "{8A7B18DB-A4B4-4F1B-A9A0-6DAC7C6D8293}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SignalRSample.Web", "samples\SignalRSample.Web\SignalRSample.Web.kproj", "{6EC0A923-B20F-419F-9561-EFE873C38B59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{54E8F2DD-A81E-477C-8FAA-D6B77DA9BB22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54E8F2DD-A81E-477C-8FAA-D6B77DA9BB22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54E8F2DD-A81E-477C-8FAA-D6B77DA9BB22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54E8F2DD-A81E-477C-8FAA-D6B77DA9BB22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86F3A095-8BC1-46E0-BEF6-A8AF912C411E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86F3A095-8BC1-46E0-BEF6-A8AF912C411E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86F3A095-8BC1-46E0-BEF6-A8AF912C411E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86F3A095-8BC1-46E0-BEF6-A8AF912C411E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A7B18DB-A4B4-4F1B-A9A0-6DAC7C6D8293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A7B18DB-A4B4-4F1B-A9A0-6DAC7C6D8293}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A7B18DB-A4B4-4F1B-A9A0-6DAC7C6D8293}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A7B18DB-A4B4-4F1B-A9A0-6DAC7C6D8293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Debug|x86.ActiveCfg = Debug|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Debug|x86.Build.0 = Debug|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Release|Any CPU.ActiveCfg = Release|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Release|Mixed Platforms.Build.0 = Release|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Release|x86.ActiveCfg = Release|x86
+		{1E7F548C-CB60-46A1-B431-D67825A32698}.Release|x86.Build.0 = Release|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Debug|x86.ActiveCfg = Debug|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Debug|x86.Build.0 = Debug|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Release|Any CPU.ActiveCfg = Release|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Release|Mixed Platforms.Build.0 = Release|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Release|x86.ActiveCfg = Release|x86
+		{6EC0A923-B20F-419F-9561-EFE873C38B59}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{54E8F2DD-A81E-477C-8FAA-D6B77DA9BB22} = {8F025459-E896-440D-8D13-CDFA3D43FBB4}
-		{E3C90C01-66D5-4264-88A0-CDD04FE20267} = {34D5CA7F-AA6E-45AF-87B8-13DC970D68C9}
-		{8F025459-E896-440D-8D13-CDFA3D43FBB4} = {34D5CA7F-AA6E-45AF-87B8-13DC970D68C9}
-		{86F3A095-8BC1-46E0-BEF6-A8AF912C411E} = {E3C90C01-66D5-4264-88A0-CDD04FE20267}
-		{CE053532-FC57-4356-8A3E-EBD332F91217} = {862490FB-DD41-4BB8-9BBA-AC300F331BA8}
-		{8A7B18DB-A4B4-4F1B-A9A0-6DAC7C6D8293} = {CE053532-FC57-4356-8A3E-EBD332F91217}
+		{1E7F548C-CB60-46A1-B431-D67825A32698} = {34D5CA7F-AA6E-45AF-87B8-13DC970D68C9}
+		{6EC0A923-B20F-419F-9561-EFE873C38B59} = {862490FB-DD41-4BB8-9BBA-AC300F331BA8}
 	EndGlobalSection
 EndGlobal

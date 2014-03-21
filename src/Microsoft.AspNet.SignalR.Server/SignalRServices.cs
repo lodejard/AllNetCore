@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.ConfigurationModel;
 using Microsoft.AspNet.DependencyInjection;
+using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNet.SignalR.Server.Infrastructure;
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
 
@@ -25,6 +28,8 @@ namespace Microsoft.AspNet.SignalR
 
             // REVIEW: All singletons can't be right but we're just doing this because
             // we had this before
+
+            yield return serviceDescriber.Transient<IInitialized, Initialized>();
 
             yield return serviceDescriber.Singleton<IMessageBus, MessageBus>();
             yield return serviceDescriber.Singleton<IServerIdManager, ServerIdManager>();
@@ -47,15 +52,57 @@ namespace Microsoft.AspNet.SignalR
             yield return serviceDescriber.Singleton<IJavaScriptProxyGenerator, DefaultJavaScriptProxyGenerator>();
             yield return serviceDescriber.Singleton<IHubRequestParser, HubRequestParser>();
 
-            // TODO: Just use the new IDataProtectionProvider abstraction directly here
-            yield return serviceDescriber.Singleton<IProtectedData, DataProtectionProviderProtectedData>();
-
             // REVIEW: This used to be lazy
             var pipeline = new HubPipeline();
             pipeline.AddModule(new AuthorizeModule());
 
             yield return serviceDescriber.Instance<IHubPipeline>(pipeline);
             yield return serviceDescriber.Instance<IHubPipelineInvoker>(pipeline);
+
+            // TODO: Remove these when everything is flowing from the host
+#if NET45
+            yield return serviceDescriber.Singleton<ILoggerFactory, DiagnosticsLoggerFactory>();
+#else
+            yield return serviceDescriber.Singleton<ILoggerFactory, NoopLoggerFactory>();
+#endif
+
+            // TODO: Just use the new IDataProtectionProvider abstraction directly here
+            // yield return serviceDescriber.Singleton<IProtectedData, DataProtectionProviderProtectedData>();
+            yield return serviceDescriber.Singleton<IProtectedData, EmptyProtectedData>();
+
+        }
+
+        // Host concern not being plumbed through right now
+        private class NoopLoggerFactory : ILoggerFactory
+        {
+            private static readonly NoopLogger _logger = new NoopLogger();
+
+            public ILogger Create(string name)
+            {
+                return _logger;
+            }
+
+            private class NoopLogger : ILogger
+            {
+                public bool WriteCore(TraceType eventType, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
+                {
+                    return true;
+                }
+            }
+        }
+
+        // Workaround for the compiler bug that's causes data protection to fail
+        private class EmptyProtectedData : IProtectedData
+        {
+            public string Protect(string data, string purpose)
+            {
+                return data;
+            }
+
+            public string Unprotect(string protectedValue, string purpose)
+            {
+                return protectedValue;
+            }
         }
     }
 }

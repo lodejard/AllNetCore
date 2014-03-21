@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using Microsoft.AspNet.Abstractions;
+﻿using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.DependencyInjection.Fallback;
 using Microsoft.AspNet.Logging;
-using Microsoft.AspNet.Security.DataProtection;
 using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Infrastructure;
 
 namespace SignalRSample.Web
 {
@@ -13,21 +10,46 @@ namespace SignalRSample.Web
     {
         public void Configuration(IBuilder builder)
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.Add(SignalRServices.GetServices());
+            var sc = new ServiceCollection()
+                         .Add(SignalRServices.GetServices())
+                         .AddSingleton<ILoggerFactory, ConsoleLoggerFactory>()
+                         .AddTransient<ITypeActivator, TypeActivator>();
 
-            // Workaround for ITypeActivator coming from the host and using the wrong IServiceProvider
-            serviceCollection.AddTransient<ITypeActivator, TypeActivator>();
-            serviceCollection.AddSingleton<ILoggerFactory, DiagnosticsLoggerFactory>();
+            builder.ServiceProvider = sc.BuildServiceProvider(builder.ServiceProvider);
 
-            // The host will add one of these soon
-            serviceCollection.AddInstance<IDataProtectionProvider>(DataProtectionProvider.CreateFromDpapi());
+            builder.MapSignalR();
+        }
+    }
 
-            serviceCollection.FallbackServices = builder.ServiceProvider;
-            var sp = serviceCollection.BuildServiceProvider();
-            builder.ServiceProvider = sp;
+    public class Chat : Hub
+    {
+        public void Send(string message)
+        {
+            Clients.All.send(message);
+        }
+    }
 
-            builder.RunSignalR();
+    public class ConsoleLoggerFactory : ILoggerFactory
+    {
+        public ILogger Create(string name)
+        {
+            return new ConsoleLogger(name);
+        }
+
+        private class ConsoleLogger : ILogger
+        {
+            private readonly string _name;
+
+            public ConsoleLogger(string name)
+            {
+                _name = name;
+            }
+
+            public bool WriteCore(TraceType eventType, int eventId, object state, System.Exception exception, System.Func<object, System.Exception, string> formatter)
+            {
+                System.Console.WriteLine("[{0}]: {1}", _name, formatter(state, exception));
+                return true;
+            }
         }
     }
 }

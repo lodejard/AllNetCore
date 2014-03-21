@@ -26,6 +26,8 @@ namespace Microsoft.AspNet.SignalR.Transports
             {
                 throw new ArgumentNullException("serviceProvider");
             }
+            
+            // TODO: Use type activator here
 
             Register("foreverFrame", context => new ForeverFrameTransport(context, serviceProvider));
             Register("serverSentEvents", context => new ServerSentEventsTransport(context, serviceProvider));

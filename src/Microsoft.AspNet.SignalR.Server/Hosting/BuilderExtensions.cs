@@ -4,9 +4,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.DependencyInjection;
+using Microsoft.AspNet.DependencyInjection.Fallback;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNet.SignalR.Server.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -44,9 +47,7 @@ namespace Microsoft.AspNet.SignalR
                 throw new ArgumentNullException("configuration");
             }
 
-            // TODO: Map
-            //return builder.Map(path, subApp => subApp.RunSignalR(configuration));
-            return builder;
+            return builder.Map(path, subApp => subApp.RunSignalR(configuration));
         }
 
         /// <summary>
@@ -111,9 +112,7 @@ namespace Microsoft.AspNet.SignalR
                 throw new ArgumentNullException("configuration");
             }
 
-            // TODO: Map
-            //return builder.Map(path, subApp => subApp.RunSignalR(connectionType, configuration));
-            return builder;
+            return builder.Map(path, subApp => subApp.RunSignalR(connectionType, configuration));
         }
 
         /// <summary>
@@ -157,11 +156,73 @@ namespace Microsoft.AspNet.SignalR
         {
             return builder.Use(next =>
             {
+                // If the services being handed in are already composed then use them
+                var initialized = builder.ServiceProvider.GetService<IInitialized>();
                 var typeActivator = builder.ServiceProvider.GetService<ITypeActivator>();
+
+                // SignalR services weren't configured so configure it for the user
+                if (initialized == null)
+                {
+                    var serviceCollection = new ServiceCollection()
+                                                .Add(SignalRServices.GetServices())
+                                                .AddTransient<ITypeActivator, TypeActivator>();
+
+                    var serviceProvider = serviceCollection.BuildServiceProvider(builder.ServiceProvider);
+
+                    typeActivator = serviceProvider.GetService<ITypeActivator>();
+                }
+
                 var instance = typeActivator.CreateInstance(typeof(T), new[] { next }.Concat(args).ToArray());
                 var invoke = typeof(T).GetTypeInfo().GetDeclaredMethod("Invoke");
                 return (RequestDelegate)invoke.CreateDelegate(typeof(RequestDelegate), instance);
             });
+        }
+
+        // Temporary until we get map middleware
+        private static IBuilder Map(this IBuilder app, string pathMatch, Action<IBuilder> configuration)
+        {
+            // put middleware in pipeline before creating branch
+            var options = new MapOptions { PathMatch = new PathString(pathMatch) };
+            IBuilder result = app.Use(next => MapMiddleware(next, options));
+
+            // create branch and assign to options
+            IBuilder branch = app.New();
+            configuration(branch);
+            options.Branch = branch.Build();
+
+            return result;
+        }
+
+        private static RequestDelegate MapMiddleware(RequestDelegate next, MapOptions options)
+        {
+            return async context =>
+            {
+                PathString path = context.Request.Path;
+
+                PathString remainingPath;
+                if (path.StartsWithSegments(options.PathMatch, out remainingPath))
+                {
+                    // Update the path
+                    PathString pathBase = context.Request.PathBase;
+                    context.Request.PathBase = pathBase + options.PathMatch;
+                    context.Request.Path = remainingPath;
+
+                    await options.Branch(context);
+
+                    context.Request.PathBase = pathBase;
+                    context.Request.Path = path;
+                }
+                else
+                {
+                    await next(context);
+                }
+            };
+        }
+
+        private class MapOptions
+        {
+            public PathString PathMatch { get; set; }
+            public RequestDelegate Branch { get; set; }
         }
     }
 }

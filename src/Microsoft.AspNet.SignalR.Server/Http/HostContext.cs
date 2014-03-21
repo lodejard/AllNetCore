@@ -21,8 +21,8 @@ namespace Microsoft.AspNet.SignalR.Http
 
         public HostContext(HttpContext context)
         {
-            Request = new ServerRequest(context.Request);
-            Response = new ServerResponse(context.Response);
+            Request = new ServerRequest(context);
+            Response = new ServerResponse(context);
         }
     }
 }

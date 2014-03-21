@@ -15,12 +15,11 @@ namespace Microsoft.AspNet.SignalR.Http
         private readonly HttpResponse _response;
         private readonly Stream _responseBody;
 
-        public ServerResponse(HttpResponse response)
+        public ServerResponse(HttpContext context)
         {
-            _response = response;
+            _response = context.Response;
 
-            // TODO: Call cancelled
-            // _callCancelled = _response.Get<CancellationToken>(OwinConstants.CallCancelled);
+            _callCancelled = context.Request.CallCanceled;
             _responseBody = _response.Body;
         }
 

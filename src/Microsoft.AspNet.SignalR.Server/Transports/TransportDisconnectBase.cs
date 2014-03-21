@@ -127,11 +127,11 @@ namespace Microsoft.AspNet.SignalR.Transports
             {
                 // If the CTS is tripped or the request has ended then the connection isn't alive
                 return !(
-                    CancellationToken.IsCancellationRequested || 
-                    (_requestLifeTime != null && _requestLifeTime.Task.IsCompleted) ||
-                    _lastWriteTask.IsCanceled ||
-                    _lastWriteTask.IsFaulted
-                );
+                     CancellationToken.IsCancellationRequested ||
+                     (_requestLifeTime != null && _requestLifeTime.Task.IsCompleted) ||
+                     _lastWriteTask.IsCanceled ||
+                     _lastWriteTask.IsFaulted
+                 );
             }
         }
 
@@ -206,11 +206,6 @@ namespace Microsoft.AspNet.SignalR.Transports
         protected ITransportHeartbeat Heartbeat
         {
             get { return _heartbeat; }
-        }
-
-        public Uri Url
-        {
-            get { return _context.Request.Url; }
         }
 
         protected virtual TextWriter CreateResponseWriter()

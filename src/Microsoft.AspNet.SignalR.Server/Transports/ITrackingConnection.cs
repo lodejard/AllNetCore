@@ -48,11 +48,6 @@ namespace Microsoft.AspNet.SignalR.Transports
         TimeSpan DisconnectThreshold { get; }
 
         /// <summary>
-        /// Gets the uri of the connection.
-        /// </summary>
-        Uri Url { get; }
-
-        /// <summary>
         /// Applies a new state to the connection.
         /// </summary>
         void ApplyState(TransportConnectionStates states);

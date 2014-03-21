@@ -15,24 +15,13 @@ namespace Microsoft.AspNet.SignalR.Http
 
         private readonly HttpRequest _request;
 
-        public ServerRequest(HttpRequest request)
+        public ServerRequest(HttpContext context)
         {
-            _request = request;
+            _request = context.Request;
 
             // Cache user because AspNetWebSocket.CloseOutputAsync clears it. We need it during Hub.OnDisconnected
             // TODO: user
             // _user = _request.User;
-        }
-
-        // TODO
-        public Uri Url
-        {
-            get
-            {
-                return null;
-                // TODO
-                //return _request.Uri;
-            }
         }
 
         public string LocalPath

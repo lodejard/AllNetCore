@@ -15,11 +15,6 @@ namespace Microsoft.AspNet.SignalR
     public interface IRequest
     {
         /// <summary>
-        /// Gets the url for this request.
-        /// </summary>
-        Uri Url { get; }
-
-        /// <summary>
         /// The local path part of the url
         /// </summary>
         string LocalPath { get; }
