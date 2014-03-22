@@ -165,10 +165,8 @@ namespace Microsoft.AspNet.SignalR
                 // SignalR services weren't configured so configure it for the user
                 if (initialized == null)
                 {
-                    var serviceCollection = new ServiceCollection()
-                                                .Add(SignalRServices.GetServices());
-
-                    sp = serviceCollection.BuildServiceProvider(builder.ServiceProvider);
+                    sp = SignalRServices.GetServices()
+                                        .BuildServiceProvider(builder.ServiceProvider);
                 }
 
                 var instance = typeActivator.CreateInstance(sp, typeof(T), new[] { next }.Concat(args).ToArray());

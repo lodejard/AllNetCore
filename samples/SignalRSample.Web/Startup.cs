@@ -5,9 +5,9 @@ namespace SignalRSample.Web
 {
     public class Startup
     {
-        public void Configuration(IBuilder builder)
+        public void Configuration(IBuilder app)
         {
-            builder.MapSignalR();
+            app.MapSignalR();
         }
     }
 
