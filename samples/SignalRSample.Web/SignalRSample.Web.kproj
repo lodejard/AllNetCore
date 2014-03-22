@@ -8,7 +8,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>6ec0a923-b20f-419f-9561-efe873c38b59</ProjectGuid>
     <OutputType>Web</OutputType>
-    <ActiveTargetFramework>net45</ActiveTargetFramework>
+    <ActiveTargetFramework>k10</ActiveTargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
   </PropertyGroup>

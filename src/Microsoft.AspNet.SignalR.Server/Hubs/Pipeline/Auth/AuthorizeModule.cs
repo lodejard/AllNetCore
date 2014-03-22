@@ -73,7 +73,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 // Get hub attributes implementing IAuthorizeHubConnection from the cache
                 // If the attributes do not exist in the cache, retrieve them using reflection and add them to the cache
                 var attributeAuthorizers = _connectionAuthorizersCache.GetOrAdd(hubDescriptor.HubType,
-                    hubType => hubType.GetTypeInfo().GetCustomAttributes(typeof(IAuthorizeHubConnection), inherit: true).Cast<IAuthorizeHubConnection>());
+                    hubType => hubType.GetTypeInfo().GetCustomAttributes().OfType<IAuthorizeHubConnection>());
 
                 // Every attribute (if any) implementing IAuthorizeHubConnection attached to the relevant hub MUST allow the connection
                 return attributeAuthorizers.All(a => a.AuthorizeHubConnection(hubDescriptor, request));
@@ -90,7 +90,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                     // Get hub attributes implementing IAuthorizeHubMethodInvocation from the cache
                     // If the attributes do not exist in the cache, retrieve them using reflection and add them to the cache
                     var classLevelAuthorizers = _classInvocationAuthorizersCache.GetOrAdd(context.Hub.GetType(),
-                        hubType => hubType.GetTypeInfo().GetCustomAttributes(typeof(IAuthorizeHubMethodInvocation), inherit: true).Cast<IAuthorizeHubMethodInvocation>());
+                        hubType => hubType.GetTypeInfo().GetCustomAttributes().OfType<IAuthorizeHubMethodInvocation>());
 
                     // Execute all hub level authorizers and short circuit if ANY deny authorization.
                     if (classLevelAuthorizers.All(a => a.AuthorizeHubMethodInvocation(context, appliesToMethod: false)))

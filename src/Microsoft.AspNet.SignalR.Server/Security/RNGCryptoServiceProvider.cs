@@ -10,7 +10,8 @@ namespace System.Security.Cryptography
 
         public void GetBytes(byte[] bytes)
         {
-            throw new NotImplementedException();
+            var random = new Random((int)DateTime.UtcNow.Ticks);
+            random.NextBytes(bytes);
         }
     }
 }

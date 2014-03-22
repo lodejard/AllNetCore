@@ -156,23 +156,22 @@ namespace Microsoft.AspNet.SignalR
         {
             return builder.Use(next =>
             {
+                IServiceProvider sp = builder.ServiceProvider;
+
                 // If the services being handed in are already composed then use them
-                var initialized = builder.ServiceProvider.GetService<IInitialized>();
-                var typeActivator = builder.ServiceProvider.GetService<ITypeActivator>();
+                var initialized = sp.GetService<IInitialized>();
+                var typeActivator = sp.GetService<ITypeActivator>();
 
                 // SignalR services weren't configured so configure it for the user
                 if (initialized == null)
                 {
                     var serviceCollection = new ServiceCollection()
-                                                .Add(SignalRServices.GetServices())
-                                                .AddTransient<ITypeActivator, TypeActivator>();
+                                                .Add(SignalRServices.GetServices());
 
-                    var serviceProvider = serviceCollection.BuildServiceProvider(builder.ServiceProvider);
-
-                    typeActivator = serviceProvider.GetService<ITypeActivator>();
+                    sp = serviceCollection.BuildServiceProvider(builder.ServiceProvider);
                 }
 
-                var instance = typeActivator.CreateInstance(typeof(T), new[] { next }.Concat(args).ToArray());
+                var instance = typeActivator.CreateInstance(sp, typeof(T), new[] { next }.Concat(args).ToArray());
                 var invoke = typeof(T).GetTypeInfo().GetDeclaredMethod("Invoke");
                 return (RequestDelegate)invoke.CreateDelegate(typeof(RequestDelegate), instance);
             });
