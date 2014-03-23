@@ -67,8 +67,7 @@ namespace Microsoft.AspNet.SignalR
 #endif
 
             // TODO: Just use the new IDataProtectionProvider abstraction directly here
-            // yield return serviceDescriber.Singleton<IProtectedData, DataProtectionProviderProtectedData>();
-            yield return serviceDescriber.Singleton<IProtectedData, EmptyProtectedData>();
+            yield return serviceDescriber.Singleton<IProtectedData, DataProtectionProviderProtectedData>();
 
         }
 
@@ -88,20 +87,6 @@ namespace Microsoft.AspNet.SignalR
                 {
                     return true;
                 }
-            }
-        }
-
-        // Workaround for the compiler bug that's causes data protection to fail
-        private class EmptyProtectedData : IProtectedData
-        {
-            public string Protect(string data, string purpose)
-            {
-                return data;
-            }
-
-            public string Unprotect(string protectedValue, string purpose)
-            {
-                return protectedValue;
             }
         }
     }
