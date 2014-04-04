@@ -7,7 +7,8 @@
     "Microsoft.AspNet.DependencyInjection": "0.1-alpha-*",
     "Microsoft.AspNet.ConfigurationModel": "0.1-alpha-*",
     "Microsoft.AspNet.Security.DataProtection": "0.1-alpha-*",
-    "Microsoft.Net.Runtime.Interfaces" : "0.1-alpha-*"
+    "Microsoft.Net.Runtime.Interfaces" : "0.1-alpha-*",
+    "System.Security.Claims":  "0.1-alpha-*"
   },
   "compilationOptions": {
     "allowUnsafe": true

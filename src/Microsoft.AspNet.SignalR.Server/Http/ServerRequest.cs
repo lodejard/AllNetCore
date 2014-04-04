@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,17 +12,13 @@ namespace Microsoft.AspNet.SignalR.Http
 {
     public class ServerRequest : IRequest
     {
-        private IPrincipal _user;
-
+        private readonly ClaimsPrincipal _user;
         private readonly HttpRequest _request;
 
         public ServerRequest(HttpContext context)
         {
             _request = context.Request;
-
-            // Cache user because AspNetWebSocket.CloseOutputAsync clears it. We need it during Hub.OnDisconnected
-            // TODO: user
-            // _user = _request.User;
+            _user = context.User;
         }
 
         public string LocalPath
@@ -56,7 +53,7 @@ namespace Microsoft.AspNet.SignalR.Http
             }
         }
 
-        public IPrincipal User
+        public ClaimsPrincipal User
         {
             get
             {

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Abstractions;
@@ -37,7 +38,7 @@ namespace Microsoft.AspNet.SignalR
         /// <summary>
         /// Gets security information for the current HTTP request.
         /// </summary>
-        IPrincipal User { get; }
+        ClaimsPrincipal User { get; }
 
         /// <summary>
         /// Reads the form of the http request
