@@ -51,6 +51,11 @@ namespace Microsoft.AspNet.SignalR
             _transportManager = serviceProvider.GetService<ITransportManager>();
         }
 
+        public bool Authorize(HttpRequest request)
+        {
+            return AuthorizeRequest(request);
+        }
+
         protected virtual ILogger Logger
         {
             get

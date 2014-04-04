@@ -1,0 +1,19 @@
+{
+    "dependencies": {
+        "SignalRSample.Web":  "",
+        "Microsoft.AspNet.SignalR.Server":  "",
+        "Xunit.KRunner": "1.0.0-*",
+        "Moq": "4.2.1312.1622"
+    },
+    "configurations": {
+      "net45": {
+        "dependencies": {
+          "System.Reflection": "",
+          "System.Runtime": ""
+        }
+      }
+    },
+    "commands": {
+        "test": "Xunit.KRunner"
+    }
+}

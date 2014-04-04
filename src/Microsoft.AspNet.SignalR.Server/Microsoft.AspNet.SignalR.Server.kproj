@@ -23,6 +23,7 @@
     <Content Include="Scripts\hubs.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AuthorizeAttribute.cs" />
     <Compile Include="Configuration\TransportOptionsExtensions.cs" />
     <Compile Include="Configuration\LongPollingOptions.cs" />
