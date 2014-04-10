@@ -1,7 +1,6 @@
 {
     "dependencies": {
         "Helios": "0.1-alpha-*",
-        "System.Collections.Concurrent": "4.0.0.0",
         "Microsoft.AspNet.SignalR.Server": ""
     },
     "configurations":  {
