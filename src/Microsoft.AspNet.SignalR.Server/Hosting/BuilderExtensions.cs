@@ -165,7 +165,7 @@ namespace Microsoft.AspNet.SignalR
                 // SignalR services weren't configured so configure it for the user
                 if (initialized == null)
                 {
-                    sp = SignalRServices.GetServices()
+                    sp = SignalRServices.GetDefaultServices()
                                         .BuildServiceProvider(builder.ServiceProvider);
                 }
 
