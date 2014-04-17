@@ -15,7 +15,7 @@
                 $('#messages').append('<li>' + val + '</li>');
             };
 
-            $.connection.hub.start({ transport: 'longPolling' })
+            $.connection.hub.start()
                 .done(function () {
                     $('#send').click(function () {
                         chat.server.send($('#msg').val());
