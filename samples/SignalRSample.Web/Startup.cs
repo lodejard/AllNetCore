@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.RequestContainer;
 
 namespace SignalRSample.Web
 {
@@ -7,6 +8,11 @@ namespace SignalRSample.Web
     {
         public void Configuration(IBuilder app)
         {
+            app.UseContainer(services =>
+            {
+                services.AddSignalR();
+            });
+
             app.MapSignalR();
         }
     }

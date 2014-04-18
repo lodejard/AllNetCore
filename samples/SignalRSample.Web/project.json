@@ -1,6 +1,7 @@
 {
     "dependencies": {
         "Helios": "0.1-alpha-*",
+        "Microsoft.AspNet.RequestContainer":  "0.1-alpha-*",
         "Microsoft.AspNet.SignalR.Server": ""
     },
     "configurations":  {

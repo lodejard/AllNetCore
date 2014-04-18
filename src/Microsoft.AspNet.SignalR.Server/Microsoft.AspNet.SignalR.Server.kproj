@@ -144,7 +144,6 @@
     <Compile Include="Infrastructure\IAckHandler.cs" />
     <Compile Include="Infrastructure\IBinaryWriter.cs" />
     <Compile Include="Infrastructure\IConnectionManager.cs" />
-    <Compile Include="Infrastructure\IInitialized.cs" />
     <Compile Include="Infrastructure\InterlockedHelper.cs" />
     <Compile Include="Infrastructure\IPerformanceCounter.cs" />
     <Compile Include="Infrastructure\IPerformanceCounterManager.cs" />

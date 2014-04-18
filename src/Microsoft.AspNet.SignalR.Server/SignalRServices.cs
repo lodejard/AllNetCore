@@ -9,7 +9,6 @@ using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Server.Infrastructure;
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;
 
@@ -28,8 +27,6 @@ namespace Microsoft.AspNet.SignalR
 
             // REVIEW: All singletons can't be right but we're just doing this because
             // we had this before
-
-            yield return serviceDescriber.Transient<IInitialized, Initialized>();
 
             yield return serviceDescriber.Singleton<IMessageBus, MessageBus>();
             yield return serviceDescriber.Singleton<IServerIdManager, ServerIdManager>();

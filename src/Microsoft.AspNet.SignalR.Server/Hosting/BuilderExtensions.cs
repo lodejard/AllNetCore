@@ -9,7 +9,6 @@ using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.DependencyInjection.Fallback;
 using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Server.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR
 {
@@ -157,17 +156,9 @@ namespace Microsoft.AspNet.SignalR
             return builder.Use(next =>
             {
                 IServiceProvider sp = builder.ServiceProvider;
-
-                // If the services being handed in are already composed then use them
-                var initialized = sp.GetService<IInitialized>();
                 var typeActivator = sp.GetService<ITypeActivator>();
 
-                // SignalR services weren't configured so configure it for the user
-                if (initialized == null)
-                {
-                    sp = SignalRServices.GetDefaultServices()
-                                        .BuildServiceProvider(builder.ServiceProvider);
-                }
+                // TODO: Handle errors when requires services haven't been registered
 
                 var instance = typeActivator.CreateInstance(sp, typeof(T), new[] { next }.Concat(args).ToArray());
                 var invoke = typeof(T).GetTypeInfo().GetDeclaredMethod("Invoke");
