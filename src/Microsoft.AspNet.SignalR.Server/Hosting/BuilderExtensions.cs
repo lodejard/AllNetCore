@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.DependencyInjection.Fallback;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNet
 {
     public static class BuilderExtensions
     {

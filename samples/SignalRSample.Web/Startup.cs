@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.RequestContainer;
+using Microsoft.AspNet;
 
 namespace SignalRSample.Web
 {
