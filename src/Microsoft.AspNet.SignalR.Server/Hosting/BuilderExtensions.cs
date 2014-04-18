@@ -155,7 +155,7 @@ namespace Microsoft.AspNet.SignalR
         {
             return builder.Use(next =>
             {
-                IServiceProvider sp = builder.ServiceProvider;
+                IServiceProvider sp = builder.ApplicationServices;
                 var typeActivator = sp.GetService<ITypeActivator>();
 
                 // TODO: Handle errors when requires services haven't been registered
