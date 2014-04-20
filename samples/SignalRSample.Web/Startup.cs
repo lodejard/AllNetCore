@@ -13,7 +13,7 @@ namespace SignalRSample.Web
                 services.AddSignalR();
             });
 
-            app.MapSignalR();
+            app.UseSignalR();
         }
     }
 

@@ -19,9 +19,9 @@ namespace Microsoft.AspNet
         /// Maps SignalR hubs to the app builder pipeline at "/signalr".
         /// </summary>
         /// <param name="builder">The app builder</param>
-        public static IBuilder MapSignalR(this IBuilder builder)
+        public static IBuilder UseSignalR(this IBuilder builder)
         {
-            return builder.MapSignalR(new HubConfiguration());
+            return builder.UseSignalR(new HubConfiguration());
         }
 
         /// <summary>
@@ -29,9 +29,9 @@ namespace Microsoft.AspNet
         /// </summary>
         /// <param name="builder">The app builder</param>
         /// <param name="configuration">The <see cref="HubConfiguration"/> to use</param>
-        public static IBuilder MapSignalR(this IBuilder builder, HubConfiguration configuration)
+        public static IBuilder UseSignalR(this IBuilder builder, HubConfiguration configuration)
         {
-            return builder.MapSignalR("/signalr", configuration);
+            return builder.UseSignalR("/signalr", configuration);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Microsoft.AspNet
         /// <param name="builder">The app builder</param>
         /// <param name="path">The path to map signalr hubs</param>
         /// <param name="configuration">The <see cref="HubConfiguration"/> to use</param>
-        public static IBuilder MapSignalR(this IBuilder builder, string path, HubConfiguration configuration)
+        public static IBuilder UseSignalR(this IBuilder builder, string path, HubConfiguration configuration)
         {
             if (configuration == null)
             {
@@ -77,9 +77,9 @@ namespace Microsoft.AspNet
         /// <param name="builder">The app builder</param>
         /// <param name="path">The path to map the <see cref="PersistentConnection"/></param>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The type parameter is syntactic sugar")]
-        public static IBuilder MapSignalR<TConnection>(this IBuilder builder, string path) where TConnection : PersistentConnection
+        public static IBuilder UseSignalR<TConnection>(this IBuilder builder, string path) where TConnection : PersistentConnection
         {
-            return builder.MapSignalR(path, typeof(TConnection), new ConnectionConfiguration());
+            return builder.UseSignalR(path, typeof(TConnection), new ConnectionConfiguration());
         }
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace Microsoft.AspNet
         /// <param name="configuration">The <see cref="ConnectionConfiguration"/> to use</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The type parameter is syntactic sugar")]
-        public static IBuilder MapSignalR<TConnection>(this IBuilder builder, string path, ConnectionConfiguration configuration) where TConnection : PersistentConnection
+        public static IBuilder UseSignalR<TConnection>(this IBuilder builder, string path, ConnectionConfiguration configuration) where TConnection : PersistentConnection
         {
-            return builder.MapSignalR(path, typeof(TConnection), configuration);
+            return builder.UseSignalR(path, typeof(TConnection), configuration);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Microsoft.AspNet
         /// <param name="path">The path to map the persistent connection</param>
         /// <param name="connectionType">The type of <see cref="PersistentConnection"/></param>
         /// <param name="configuration">The <see cref="ConnectionConfiguration"/> to use</param>
-        public static IBuilder MapSignalR(this IBuilder builder, string path, Type connectionType, ConnectionConfiguration configuration)
+        public static IBuilder UseSignalR(this IBuilder builder, string path, Type connectionType, ConnectionConfiguration configuration)
         {
             if (configuration == null)
             {
