@@ -103,9 +103,14 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             catch (Exception ex)
             {
+                // REVIEW: Figure out how to disabiguate here
                 _logger.WriteWarning(Resources.Warning_AssemblyGetTypesException,
                                     a.FullName,
+#if NET45
                                     a.Location,
+#else
+                                    null,
+#endif
                                     ex.GetType().Name,
                                     ex.Message);
 
