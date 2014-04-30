@@ -4,10 +4,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Abstractions;
 using Microsoft.AspNet.DependencyInjection;
-using Microsoft.AspNet.DependencyInjection.Fallback;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
 
@@ -165,53 +163,6 @@ namespace Microsoft.AspNet
                 var invoke = typeof(T).GetTypeInfo().GetDeclaredMethod("Invoke");
                 return (RequestDelegate)invoke.CreateDelegate(typeof(RequestDelegate), instance);
             });
-        }
-
-        // Temporary until we get map middleware
-        private static IBuilder Map(this IBuilder app, string pathMatch, Action<IBuilder> configuration)
-        {
-            // put middleware in pipeline before creating branch
-            var options = new MapOptions { PathMatch = new PathString(pathMatch) };
-            IBuilder result = app.Use(next => MapMiddleware(next, options));
-
-            // create branch and assign to options
-            IBuilder branch = app.New();
-            configuration(branch);
-            options.Branch = branch.Build();
-
-            return result;
-        }
-
-        private static RequestDelegate MapMiddleware(RequestDelegate next, MapOptions options)
-        {
-            return async context =>
-            {
-                PathString path = context.Request.Path;
-
-                PathString remainingPath;
-                if (path.StartsWithSegments(options.PathMatch, out remainingPath))
-                {
-                    // Update the path
-                    PathString pathBase = context.Request.PathBase;
-                    context.Request.PathBase = pathBase + options.PathMatch;
-                    context.Request.Path = remainingPath;
-
-                    await options.Branch(context);
-
-                    context.Request.PathBase = pathBase;
-                    context.Request.Path = path;
-                }
-                else
-                {
-                    await next(context);
-                }
-            };
-        }
-
-        private class MapOptions
-        {
-            public PathString PathMatch { get; set; }
-            public RequestDelegate Branch { get; set; }
         }
     }
 }
