@@ -7,12 +7,12 @@ namespace Microsoft.AspNet.SignalR
 {
     public static class ServiceCollectionExtensions
     {
-        public static ServiceCollection AddSignalR(this ServiceCollection services)
+        public static IServiceCollection AddSignalR(this IServiceCollection services)
         {
             return services.Add(SignalRServices.GetDefaultServices());
         }
 
-        public static ServiceCollection AddSignalR(this ServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSignalR(this IServiceCollection services, IConfiguration configuration)
         {
             return services.Add(SignalRServices.GetDefaultServices(configuration));
         }
