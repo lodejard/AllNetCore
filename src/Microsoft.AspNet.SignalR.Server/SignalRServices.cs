@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.ConfigurationModel;
+using Microsoft.Framework.ConfigurationModel;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
@@ -18,7 +18,7 @@ namespace Microsoft.AspNet.SignalR
     {
         public static IEnumerable<IServiceDescriptor> GetDefaultServices()
         {
-            return GetDefaultServices(new Microsoft.AspNet.ConfigurationModel.Configuration());
+            return GetDefaultServices(new Microsoft.Framework.ConfigurationModel.Configuration());
         }
 
         public static IEnumerable<IServiceDescriptor> GetDefaultServices(IConfiguration configuration)

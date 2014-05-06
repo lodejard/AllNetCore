@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
-using Microsoft.AspNet.ConfigurationModel;
+using Microsoft.Framework.ConfigurationModel;
 using Microsoft.AspNet.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR
