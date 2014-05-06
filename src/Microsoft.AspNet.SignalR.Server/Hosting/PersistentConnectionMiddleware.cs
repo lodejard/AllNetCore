@@ -2,9 +2,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNet.Builder;
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {

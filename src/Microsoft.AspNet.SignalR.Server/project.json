@@ -2,7 +2,7 @@
   "version": "0.1-alpha-*",
   "dependencies": {
     "Newtonsoft.Json": "5.0.8",
-    "Microsoft.AspNet.Abstractions": "0.1-alpha-*",
+    "Microsoft.AspNet.Http": "0.1-alpha-*",
     "Microsoft.AspNet.Logging": "0.1-alpha-*",
     "Microsoft.AspNet.DependencyInjection": "0.1-alpha-*",
     "Microsoft.Framework.ConfigurationModel": "0.1-alpha-*",

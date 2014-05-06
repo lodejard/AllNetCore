@@ -4,12 +4,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNet.Abstractions;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
 
-namespace Microsoft.AspNet
+namespace Microsoft.AspNet.Builder
 {
     public static class BuilderExtensions
     {
