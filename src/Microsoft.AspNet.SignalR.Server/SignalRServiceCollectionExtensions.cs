@@ -5,7 +5,7 @@ using Microsoft.Framework.ConfigurationModel;
 
 namespace Microsoft.Framework.DependencyInjection
 {
-    public static class ServiceCollectionExtensions
+    public static class SignalRServiceCollectionExtensions
     {
         public static IServiceCollection AddSignalR(this IServiceCollection services)
         {

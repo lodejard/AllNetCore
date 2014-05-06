@@ -214,7 +214,7 @@
     <Compile Include="PersistentConnection.cs" />
     <Compile Include="Resources.Designer.cs" />
     <Compile Include="Security\RNGCryptoServiceProvider.cs" />
-    <Compile Include="ServiceCollectionExtensions.cs" />
+    <Compile Include="SignalRServiceCollectionExtensions.cs" />
     <Compile Include="SignalRServices.cs" />
     <Compile Include="TaskAsyncHelper.cs" />
     <Compile Include="Transports\ForeverFrameTransport.cs" />
