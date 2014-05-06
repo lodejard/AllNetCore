@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.Logging;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR
 {

@@ -3,7 +3,7 @@
 using Microsoft.AspNet.SignalR;
 using Microsoft.Framework.ConfigurationModel;
 
-namespace Microsoft.AspNet.DependencyInjection
+namespace Microsoft.Framework.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

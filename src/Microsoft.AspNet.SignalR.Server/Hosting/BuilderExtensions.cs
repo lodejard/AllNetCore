@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.AspNet.Builder
 {

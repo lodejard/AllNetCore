@@ -7,9 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.HttpFeature;
-using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
@@ -17,6 +15,8 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR

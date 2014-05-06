@@ -3,8 +3,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.Messaging
 {

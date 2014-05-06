@@ -6,8 +6,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNet.Logging;
-using Microsoft.AspNet.DependencyInjection;
+using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {

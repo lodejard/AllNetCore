@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Newtonsoft.Json;
-using Microsoft.AspNet.DependencyInjection;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {

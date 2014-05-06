@@ -2,14 +2,14 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Framework.ConfigurationModel;
-using Microsoft.AspNet.DependencyInjection;
-using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR

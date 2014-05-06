@@ -8,11 +8,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.AspNet.DependencyInjection;
-using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
+using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Hubs

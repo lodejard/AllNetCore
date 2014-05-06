@@ -4,8 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.Messaging
 {

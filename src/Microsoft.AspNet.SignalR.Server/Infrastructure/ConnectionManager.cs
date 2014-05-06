@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Logging;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
-using Microsoft.AspNet.DependencyInjection;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {

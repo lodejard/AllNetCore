@@ -8,8 +8,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNet.DependencyInjection;
 using Microsoft.AspNet.SignalR.Json;
+using Microsoft.Framework.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Hubs
