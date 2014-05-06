@@ -128,7 +128,7 @@ namespace Microsoft.AspNet.SignalR
         public Task ProcessRequest(HttpContext httpContext)
         {
             // Disable request compression and buffering on IIS
-            var buffering = httpContext.GetFeature<IHttpBuffering>();
+            var buffering = httpContext.GetFeature<IHttpBufferingFeature>();
             if (buffering != null)
             {
                 buffering.DisableRequestBuffering();
