@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet;
 using Microsoft.Framework.DependencyInjection;
 
 namespace SignalRSample.Web
 {
     public class Startup
     {
-        public void Configuration(IBuilder app)
+        public void Configure(IBuilder app)
         {
             app.UseServices(services =>
             {
                 services.AddSignalR();
             });
 
+            app.UseStaticFiles();
             app.UseSignalR();
         }
     }

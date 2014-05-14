@@ -2,7 +2,12 @@
     "dependencies": {
         "Helios": "0.1-alpha-*",
         "Microsoft.AspNet.RequestContainer":  "0.1-alpha-*",
+        "Microsoft.AspNet.Server.WebListener": "0.1-alpha-*",
+        "Microsoft.AspNet.StaticFiles" : "0.1-alpha-*",
         "Microsoft.AspNet.SignalR.Server": ""
+    },
+    "commands": {
+        "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
     },
     "configurations":  {
         "net45": {},

@@ -20,10 +20,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <DevelopmentServerPort>48286</DevelopmentServerPort>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DevelopmentServerPort>32237</DevelopmentServerPort>
+  </PropertyGroup>
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="Project.json" />
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Startup.cs" />
