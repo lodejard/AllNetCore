@@ -24,3 +24,5 @@ nuget.exe
 *.*sdf
 *.ipch
 /SignalR-Server.sln.ide
+
+*.sln.ide
