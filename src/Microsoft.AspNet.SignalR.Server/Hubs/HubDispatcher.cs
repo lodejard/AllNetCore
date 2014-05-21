@@ -166,15 +166,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
             if (methodDescriptor == null)
             {
-                _counters.ErrorsHubInvocationTotal.Increment();
-                _counters.ErrorsHubInvocationPerSec.Increment();
-
                 // Empty (noop) method descriptor
                 // Use: Forces the hub pipeline module to throw an error.  This error is encapsulated in the HubDispatcher.
                 //      Encapsulating it in the HubDispatcher prevents the error from bubbling up to the transport level.
                 //      Specifically this allows us to return a faulted task (call .fail on client) and to not cause the
                 //      transport to unintentionally fail.
-                methodDescriptor = new NullMethodDescriptor(descriptor, hubRequest.Method);
+                IEnumerable<MethodDescriptor> availableMethods = _manager.GetHubMethods(descriptor.Name, m => m.Name == hubRequest.Method);
+                methodDescriptor = new NullMethodDescriptor(descriptor, hubRequest.Method, availableMethods);
             }
 
             // Resolving the actual state object
@@ -298,9 +296,14 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return hub.OnReconnected();
         }
 
-        internal static Task Disconnect(IHub hub)
+        internal static async Task Disconnect(IHub hub, bool stopCalled)
         {
-            return hub.OnDisconnected();
+            await hub.OnDisconnected(stopCalled).OrEmpty();
+
+            if (stopCalled)
+            {
+                await hub.OnDisconnected().OrEmpty();
+            }
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "A faulted task is returned.")]
@@ -388,9 +391,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }).SelectMany(groupsToRejoin => groupsToRejoin).ToList();
         }
 
-        protected override Task OnDisconnected(IRequest request, string connectionId)
+        protected override Task OnDisconnected(IRequest request, string connectionId, bool stopCalled)
         {
-            return ExecuteHubEvent(request, connectionId, hub => _pipelineInvoker.Disconnect(hub));
+            return ExecuteHubEvent(request, connectionId, hub => _pipelineInvoker.Disconnect(hub, stopCalled));
         }
 
         protected override IList<string> GetSignals(string userId, string connectionId)

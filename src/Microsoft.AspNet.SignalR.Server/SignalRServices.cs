@@ -31,7 +31,6 @@ namespace Microsoft.AspNet.SignalR
             // we had this before
 
             yield return serviceDescriber.Singleton<IMessageBus, MessageBus>();
-            yield return serviceDescriber.Singleton<IServerIdManager, ServerIdManager>();
             yield return serviceDescriber.Singleton<IStringMinifier, StringMinifier>();
             yield return serviceDescriber.Singleton<ITransportManager, TransportManager>();
             yield return serviceDescriber.Singleton<ITransportHeartbeat, TransportHeartbeat>();
@@ -43,7 +42,6 @@ namespace Microsoft.AspNet.SignalR
             yield return serviceDescriber.Singleton<IMethodDescriptorProvider, ReflectedMethodDescriptorProvider>();
             yield return serviceDescriber.Singleton<IHubDescriptorProvider, ReflectedHubDescriptorProvider>();
             yield return serviceDescriber.Singleton<IPerformanceCounterManager, PerformanceCounterManager>();
-            yield return serviceDescriber.Singleton<IServerCommandHandler, ServerCommandHandler>();
             yield return serviceDescriber.Singleton<JsonSerializer, JsonSerializer>();
             yield return serviceDescriber.Singleton<IUserIdProvider, PrincipalUserIdProvider>();
             yield return serviceDescriber.Singleton<IParameterResolver, DefaultParameterResolver>();

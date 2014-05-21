@@ -148,8 +148,6 @@
     <Compile Include="Infrastructure\IPerformanceCounter.cs" />
     <Compile Include="Infrastructure\IPerformanceCounterManager.cs" />
     <Compile Include="Infrastructure\IProtectedData.cs" />
-    <Compile Include="Infrastructure\IServerCommandHandler.cs" />
-    <Compile Include="Infrastructure\IServerIdManager.cs" />
     <Compile Include="Infrastructure\IStringMinifier.cs" />
     <Compile Include="Infrastructure\ListHelper.cs" />
     <Compile Include="Infrastructure\MonoUtility.cs" />
@@ -164,10 +162,7 @@
     <Compile Include="Infrastructure\Purposes.cs" />
     <Compile Include="Infrastructure\SafeCancellationTokenSource.cs" />
     <Compile Include="Infrastructure\SafeSet.cs" />
-    <Compile Include="Infrastructure\ServerCommand.cs" />
-    <Compile Include="Infrastructure\ServerCommandHandler.cs" />
     <Compile Include="Infrastructure\ServerCommandType.cs" />
-    <Compile Include="Infrastructure\ServerIdManager.cs" />
     <Compile Include="Infrastructure\SipHashBasedStringEqualityComparer.cs" />
     <Compile Include="Infrastructure\StreamExtensions.cs" />
     <Compile Include="Infrastructure\StringMinifier.cs" />
@@ -197,6 +192,7 @@
     <Compile Include="Messaging\MessageResult.cs" />
     <Compile Include="Messaging\MessageStore.cs" />
     <Compile Include="Messaging\MessageStoreResult.cs" />
+    <Compile Include="Messaging\QueuingBehavior.cs" />
     <Compile Include="Messaging\ScaleoutConfiguration.cs" />
     <Compile Include="Messaging\ScaleoutMapping.cs" />
     <Compile Include="Messaging\ScaleoutMappingStore.cs" />

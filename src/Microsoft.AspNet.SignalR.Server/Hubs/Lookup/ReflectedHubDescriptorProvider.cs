@@ -103,6 +103,22 @@ namespace Microsoft.AspNet.SignalR.Hubs
             {
                 return a.GetTypes();
             }
+            catch (ReflectionTypeLoadException ex)
+            {
+                _logger.WriteWarning("Some of the classes from assembly \"{0}\" could Not be loaded when searching for Hubs. [{1}]" + Environment.NewLine +
+                                    "Original exception type: {2}" + Environment.NewLine +
+                                    "Original exception message: {3}" + Environment.NewLine,
+                                    a.FullName,
+#if NET45
+                                    a.Location,
+#else
+                                    null,
+#endif
+                                    ex.GetType().Name,
+                                    ex.Message);
+
+                return ex.Types.Where(t => t != null);
+            }
             catch (Exception ex)
             {
                 // REVIEW: Figure out how to disabiguate here

@@ -23,9 +23,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly ConcurrentDictionary<string, ConnectionMetadata> _connections = new ConcurrentDictionary<string, ConnectionMetadata>();
         private readonly Timer _timer;
         private readonly IConfigurationManager _configurationManager;
-        private readonly IServerCommandHandler _serverCommandHandler;
         private readonly ILogger _logger;
-        private readonly string _serverId;
         private readonly IPerformanceCounterManager _counters;
         private readonly object _counterLock = new object();
 
@@ -39,14 +37,10 @@ namespace Microsoft.AspNet.SignalR.Transports
         public TransportHeartbeat(IServiceProvider serviceProvider)
         {
             _configurationManager = serviceProvider.GetService<IConfigurationManager>();
-            _serverCommandHandler = serviceProvider.GetService<IServerCommandHandler>();
-            _serverId = serviceProvider.GetService<IServerIdManager>().ServerId;
             _counters = serviceProvider.GetService<IPerformanceCounterManager>();
 
             var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
             _logger = loggerFactory.Create("SignalR.Transports.TransportHeartBeat");
-
-            _serverCommandHandler.Command = ProcessServerCommand;
 
             // REVIEW: When to dispose the timer?
             _timer = new Timer(Beat,
@@ -63,31 +57,6 @@ namespace Microsoft.AspNet.SignalR.Transports
             }
         }
 
-
-        private void ProcessServerCommand(ServerCommand command)
-        {
-            switch (command.ServerCommandType)
-            {
-                case ServerCommandType.RemoveConnection:
-                    // Only remove connections if this command didn't originate from the owner
-                    if (!command.IsFromSelf(_serverId))
-                    {
-                        var connectionId = (string)command.Value;
-
-                        // Remove the connection
-                        ConnectionMetadata metadata;
-                        if (_connections.TryGetValue(connectionId, out metadata))
-                        {
-                            metadata.Connection.End();
-
-                            RemoveConnection(metadata.Connection);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
 
         /// <summary>
         /// Adds a new connection to the list of tracked connections.
@@ -320,10 +289,10 @@ namespace Microsoft.AspNet.SignalR.Transports
                 return false;
             }
 
+            // If keep alives are enabled and the transport doesn't require timeouts,
+            // i.e. anything but long-polling, don't ever timeout.
             var keepAlive = _configurationManager.KeepAlive;
-            // If keep alive is configured and the connection supports keep alive
-            // don't ever time out
-            if (keepAlive != null && metadata.Connection.SupportsKeepAlive)
+            if (keepAlive != null && !metadata.Connection.RequiresTimeout)
             {
                 return false;
             }
