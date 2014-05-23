@@ -2,18 +2,23 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
+using Microsoft.Framework.Logging;
+using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
     public class ServerSentEventsTransport : ForeverTransport
     {
-        public ServerSentEventsTransport(HostContext context, IServiceProvider serviceProvider)
-            : base(context, serviceProvider)
+        public ServerSentEventsTransport(HostContext context,
+                                         JsonSerializer jsonSerializer,
+                                         ITransportHeartbeat heartbeat,
+                                         IPerformanceCounterManager performanceCounterWriter,
+                                         ILoggerFactory loggerFactory)
+            : base(context, jsonSerializer, heartbeat, performanceCounterWriter, loggerFactory)
         {
         }
 

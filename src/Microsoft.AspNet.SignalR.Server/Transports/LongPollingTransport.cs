@@ -21,17 +21,6 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly IConfigurationManager _configurationManager;
         private bool _responseSent;
 
-        public LongPollingTransport(HostContext context, IServiceProvider serviceProvider)
-            : this(context,
-                   serviceProvider.GetService<JsonSerializer>(),
-                   serviceProvider.GetService<ITransportHeartbeat>(),
-                   serviceProvider.GetService<IPerformanceCounterManager>(),
-                   serviceProvider.GetService<ILoggerFactory>(),
-                   serviceProvider.GetService<IConfigurationManager>())
-        {
-
-        }
-
         public LongPollingTransport(HostContext context,
                                     JsonSerializer jsonSerializer,
                                     ITransportHeartbeat heartbeat,

@@ -7,10 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
+using Microsoft.Framework.Logging;
+using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
@@ -34,8 +35,12 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private HTMLTextWriter _htmlOutputWriter;
 
-        public ForeverFrameTransport(HostContext context, IServiceProvider serviceProvider)
-            : base(context, serviceProvider)
+        public ForeverFrameTransport(HostContext context,
+                                     JsonSerializer jsonSerializer,
+                                     ITransportHeartbeat heartbeat,
+                                     IPerformanceCounterManager performanceCounterWriter,
+                                     ILoggerFactory loggerFactory)
+            : base(context, jsonSerializer, heartbeat, performanceCounterWriter, loggerFactory)
         {
         }
 

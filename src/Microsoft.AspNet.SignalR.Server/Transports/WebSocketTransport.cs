@@ -32,13 +32,11 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly Action<Exception> _error;
 
         public WebSocketTransport(HostContext context,
-                                  IServiceProvider serviceProvider)
-            : this(context,
-                   serviceProvider.GetService<JsonSerializer>(),
-                   serviceProvider.GetService<ITransportHeartbeat>(),
-                   serviceProvider.GetService<IPerformanceCounterManager>(),
-                   serviceProvider.GetService<ILoggerFactory>(),
-                   serviceProvider.GetService<IConfigurationManager>().MaxIncomingWebSocketMessageSize)
+                                  JsonSerializer serializer,
+                                  ITransportHeartbeat heartbeat,
+                                  IPerformanceCounterManager performanceCounterWriter,
+                                  ILoggerFactory loggerFactory)
+            : this(context, serializer, heartbeat, performanceCounterWriter, loggerFactory, null)
         {
         }
 

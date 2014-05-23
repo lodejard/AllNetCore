@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
+using Microsoft.Framework.DependencyInjection;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
@@ -22,19 +23,17 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// </summary>
         /// <param name="serviceProvider">The default <see cref="IDependencyResolver"/>.</param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Those are factory methods")]
-        public TransportManager(IServiceProvider serviceProvider)
+        public TransportManager(IServiceProvider serviceProvider, ITypeActivator typeActivator)
         {
             if (serviceProvider == null)
             {
                 throw new ArgumentNullException("serviceProvider");
             }
-            
-            // TODO: Use type activator here
 
-            Register("foreverFrame", context => new ForeverFrameTransport(context, serviceProvider));
-            Register("serverSentEvents", context => new ServerSentEventsTransport(context, serviceProvider));
-            Register("longPolling", context => new LongPollingTransport(context, serviceProvider));
-            Register("webSockets", context => new WebSocketTransport(context, serviceProvider));
+            Register("foreverFrame", context => typeActivator.CreateInstance<ForeverFrameTransport>(serviceProvider, context));
+            Register("serverSentEvents", context => typeActivator.CreateInstance<ServerSentEventsTransport>(serviceProvider, context));
+            Register("longPolling", context => typeActivator.CreateInstance<LongPollingTransport>(serviceProvider, context));
+            Register("webSockets", context => typeActivator.CreateInstance<WebSocketTransport>(serviceProvider, context));
         }
 
         /// <summary>

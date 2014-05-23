@@ -6,11 +6,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
-using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
 
@@ -27,15 +25,6 @@ namespace Microsoft.AspNet.SignalR.Transports
         private IDisposable _busRegistration;
 
         internal RequestLifetime _transportLifetime;
-
-        protected ForeverTransport(HostContext context, IServiceProvider serviceProvider)
-            : this(context,
-                   serviceProvider.GetService<JsonSerializer>(),
-                   serviceProvider.GetService<ITransportHeartbeat>(),
-                   serviceProvider.GetService<IPerformanceCounterManager>(),
-                   serviceProvider.GetService<ILoggerFactory>())
-        {
-        }
 
         protected ForeverTransport(HostContext context,
                                    JsonSerializer jsonSerializer,
