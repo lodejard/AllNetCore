@@ -15,9 +15,6 @@ using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.Messaging
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class MessageBus : IMessageBus, IDisposable
     {
         private readonly MessageBroker _broker;
@@ -58,31 +55,12 @@ namespace Microsoft.AspNet.SignalR.Messaging
         private readonly Action<ISubscriber, string> _removeEvent;
         private readonly Action<object> _disposeSubscription;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        public MessageBus(IServiceProvider serviceProvider)
-            : this(serviceProvider.GetService<IStringMinifier>(),
-                   serviceProvider.GetService<ILoggerFactory>(),
-                   serviceProvider.GetService<IPerformanceCounterManager>(),
-                   serviceProvider.GetService<IConfigurationManager>())
-        {
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="stringMinifier"></param>
-        /// <param name="traceManager"></param>
-        /// <param name="performanceCounterManager"></param>
-        /// <param name="configurationManager"></param>
-        /// <param name="maxTopicsWithNoSubscriptions"></param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The message broker is disposed when the bus is disposed.")]
-        private MessageBus(IStringMinifier stringMinifier,
-                           ILoggerFactory loggerFactory,
-                           IPerformanceCounterManager performanceCounterManager,
-                           IConfigurationManager configurationManager)
+        public MessageBus(IStringMinifier stringMinifier,
+                          ILoggerFactory loggerFactory,
+                          IPerformanceCounterManager performanceCounterManager,
+                          IConfigurationManager configurationManager)
         {
             if (stringMinifier == null)
             {

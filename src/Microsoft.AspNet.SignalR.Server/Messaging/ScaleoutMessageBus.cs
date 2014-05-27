@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
@@ -26,18 +27,21 @@ namespace Microsoft.AspNet.SignalR.Messaging
         private readonly Lazy<ScaleoutStreamManager> _streamManager;
         private readonly IPerformanceCounterManager _perfCounters;
 
-        protected ScaleoutMessageBus(IServiceProvider serviceProvider, ScaleoutConfiguration configuration)
-            : base(serviceProvider)
+        protected ScaleoutMessageBus(IStringMinifier stringMinifier,
+                                     ILoggerFactory loggerFactory,
+                                     IPerformanceCounterManager performanceCounterManager,
+                                     IConfigurationManager configurationManager,
+                                     ScaleoutConfiguration scaleoutConfiguration)
+            : base(stringMinifier, loggerFactory, performanceCounterManager, configurationManager)
         {
-            if (configuration == null)
+            if (scaleoutConfiguration == null)
             {
-                throw new ArgumentNullException("configuration");
+                throw new ArgumentNullException("scaleoutConfiguration");
             }
 
-            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
             _logger = loggerFactory.Create("SignalR." + typeof(ScaleoutMessageBus).Name);
-            _perfCounters = serviceProvider.GetService<IPerformanceCounterManager>();
-            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, configuration));
+            _perfCounters = performanceCounterManager;
+            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, scaleoutConfiguration));
         }
 
         /// <summary>
