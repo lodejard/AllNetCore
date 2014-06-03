@@ -41,7 +41,7 @@ namespace Microsoft.AspNet.Builder
         /// <param name="builder">The app builder</param>
         public static void RunSignalR(this IBuilder builder)
         {
-            builder.UseMiddleware<HubDispatcherMiddleware>();
+            builder.RunSignalR(typeof(HubDispatcher));
         }
 
         /// <summary>

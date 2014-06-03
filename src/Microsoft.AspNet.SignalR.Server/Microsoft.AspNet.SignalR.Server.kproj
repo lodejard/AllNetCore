@@ -38,7 +38,6 @@
     <Compile Include="GroupManager.cs" />
     <Compile Include="Hosting\BuilderExtensions.cs" />
     <Compile Include="Hosting\HostDependencyResolverExtensions.cs" />
-    <Compile Include="Hosting\HubDispatcherMiddleware.cs" />
     <Compile Include="Hosting\PersistentConnectionMiddleware.cs" />
     <Compile Include="Http\HostContext.cs" />
     <Compile Include="Http\IResponse.cs" />
