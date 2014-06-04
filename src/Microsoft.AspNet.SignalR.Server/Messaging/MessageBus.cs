@@ -4,14 +4,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR.Messaging
 {
@@ -60,7 +59,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         public MessageBus(IStringMinifier stringMinifier,
                           ILoggerFactory loggerFactory,
                           IPerformanceCounterManager performanceCounterManager,
-                          IConfigurationManager configurationManager)
+                          IOptionsAccessor<SignalROptions> optionsAccessor)
         {
             if (stringMinifier == null)
             {
@@ -77,12 +76,14 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 throw new ArgumentNullException("performanceCounterManager");
             }
 
-            if (configurationManager == null)
+            if (optionsAccessor == null)
             {
-                throw new ArgumentNullException("configurationManager");
+                throw new ArgumentNullException("optionsAccessor");
             }
 
-            if (configurationManager.DefaultMessageBufferSize < 0)
+            var options = optionsAccessor.Options;
+
+            if (options.MessageBus.MessageBufferSize < 0)
             {
                 throw new ArgumentOutOfRangeException(Resources.Error_BufferSizeOutOfRange);
             }
@@ -91,7 +92,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _loggerFactory = loggerFactory;
             Counters = performanceCounterManager;
             _logger = _loggerFactory.Create("SignalR." + typeof(MessageBus).Name);
-            _maxTopicsWithNoSubscriptions = configurationManager.DefaultMaxTopicsWithNoSubscriptions;
+            _maxTopicsWithNoSubscriptions = options.MessageBus.MaxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);
 
@@ -101,9 +102,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
             };
 
             // The default message store size
-            _messageStoreSize = (uint)configurationManager.DefaultMessageBufferSize;
+            _messageStoreSize = (uint)options.MessageBus.MessageBufferSize;
 
-            _topicTtl = configurationManager.TopicTtl();
+            _topicTtl = options.Transports.TopicTtl();
             _createTopic = CreateTopic;
             _addEvent = AddEvent;
             _removeEvent = RemoveEvent;

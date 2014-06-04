@@ -8,11 +8,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-
+using Microsoft.Framework.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR.Messaging
 {
@@ -30,9 +28,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
         protected ScaleoutMessageBus(IStringMinifier stringMinifier,
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
-                                     IConfigurationManager configurationManager,
+                                     IOptionsAccessor<SignalROptions> optionsAccessor,
                                      ScaleoutConfiguration scaleoutConfiguration)
-            : base(stringMinifier, loggerFactory, performanceCounterManager, configurationManager)
+            : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
         {
             if (scaleoutConfiguration == null)
             {

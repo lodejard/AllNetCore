@@ -15,6 +15,7 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Hubs
@@ -46,16 +47,17 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Initializes an instance of the <see cref="HubDispatcher"/> class.
         /// </summary>
-        /// <param name="configuration">Configuration settings determining whether to enable JS proxies and provide clients with detailed hub errors.</param>
-        public HubDispatcher(HubConfiguration configuration)
+        /// <param name="options">Configuration settings determining whether to enable JS proxies and provide clients with detailed hub errors.</param>
+        public HubDispatcher(IOptionsAccessor<SignalROptions> optionsAccessor)
         {
-            if (configuration == null)
+            if (optionsAccessor == null)
             {
-                throw new ArgumentNullException("configuration");
+                throw new ArgumentNullException("optionsAccessor");
             }
 
-            _enableJavaScriptProxies = configuration.EnableJavaScriptProxies;
-            _enableDetailedErrors = configuration.EnableDetailedErrors;
+            var options = optionsAccessor.Options;
+            _enableJavaScriptProxies = options.Hubs.EnableJavaScriptProxies;
+            _enableDetailedErrors = options.Hubs.EnableDetailedErrors;
         }
 
         protected override ILogger Logger

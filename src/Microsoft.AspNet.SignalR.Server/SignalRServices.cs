@@ -34,7 +34,6 @@ namespace Microsoft.AspNet.SignalR
             yield return serviceDescriber.Singleton<IStringMinifier, StringMinifier>();
             yield return serviceDescriber.Singleton<ITransportManager, TransportManager>();
             yield return serviceDescriber.Singleton<ITransportHeartbeat, TransportHeartbeat>();
-            yield return serviceDescriber.Singleton<IConfigurationManager, DefaultConfigurationManager>();
             yield return serviceDescriber.Singleton<IConnectionManager, ConnectionManager>();
             yield return serviceDescriber.Singleton<IAckHandler, AckHandler>();
             yield return serviceDescriber.Singleton<IAssemblyLocator, DefaultAssemblyLocator>();

@@ -132,11 +132,11 @@ namespace Microsoft.AspNet.SignalR.Json
             return true;
         }
 
-        internal static bool TryRejectJSONPRequest(ConnectionConfiguration config,
+        internal static bool TryRejectJSONPRequest(SignalROptions options,
                                                    HttpContext context)
         {
             // If JSONP is enabled then do nothing
-            if (config.EnableJSONP)
+            if (options.EnableJSONP)
             {
                 return false;
             }

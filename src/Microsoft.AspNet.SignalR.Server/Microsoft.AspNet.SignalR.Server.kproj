@@ -24,9 +24,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizeAttribute.cs" />
-    <Compile Include="Configuration\ConfigurationExtensions.cs" />
-    <Compile Include="Configuration\DefaultConfigurationManager.cs" />
-    <Compile Include="Configuration\IConfigurationManager.cs" />
+    <Compile Include="Configuration\TransportOptionsExtensions.cs" />
+    <Compile Include="Configuration\LongPollingOptions.cs" />
+    <Compile Include="Configuration\MessageBusOptions.cs" />
+    <Compile Include="Configuration\SignalROptions.cs" />
+    <Compile Include="Configuration\TransportOptions.cs" />
+    <Compile Include="Configuration\TransportType.cs" />
+    <Compile Include="Configuration\WebSocketOptions.cs" />
     <Compile Include="ConnectionConfiguration.cs" />
     <Compile Include="ConnectionExtensions.cs" />
     <Compile Include="ConnectionMessage.cs" />
@@ -211,6 +215,7 @@
     <Compile Include="Resources.Designer.cs" />
     <Compile Include="Security\RNGCryptoServiceProvider.cs" />
     <Compile Include="SignalRServiceCollectionExtensions.cs" />
+    <Compile Include="SignalRServiceColletion.cs" />
     <Compile Include="SignalRServices.cs" />
     <Compile Include="TaskAsyncHelper.cs" />
     <Compile Include="Transports\ForeverFrameTransport.cs" />

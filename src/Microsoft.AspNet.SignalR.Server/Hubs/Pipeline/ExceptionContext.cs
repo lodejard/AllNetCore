@@ -18,7 +18,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// The exception to be sent to the calling client.
         /// This will be overridden by a generic Exception unless Error is a <see cref="HubException"/>
-        /// or <see cref="HubConfiguration.EnableDetailedErrors"/> is set to true.
+        /// or <see cref="HubOptions.EnableDetailedErrors"/> is set to true.
         /// </summary>
         public Exception Error { get; set; }
 

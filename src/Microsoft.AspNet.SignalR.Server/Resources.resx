@@ -219,6 +219,9 @@
   <data name="Error_NoDependencyResolver" xml:space="preserve">
     <value>A dependency resolver must be specified.</value>
   </data>
+  <data name="Error_NoTransportsEnabled" xml:space="preserve">
+    <value>No transports have been enabled. There must be at least one enabled transport.</value>
+  </data>
   <data name="Error_NotWebSocketRequest" xml:space="preserve">
     <value>Not a valid web socket request.</value>
   </data>

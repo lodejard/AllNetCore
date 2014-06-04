@@ -5,20 +5,18 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Configuration;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
-using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
     public class LongPollingTransport : ForeverTransport, ITransport
     {
-        private readonly IConfigurationManager _configurationManager;
+        private readonly TimeSpan _pollDelay;
         private bool _responseSent;
 
         public LongPollingTransport(HostContext context,
@@ -26,15 +24,15 @@ namespace Microsoft.AspNet.SignalR.Transports
                                     ITransportHeartbeat heartbeat,
                                     IPerformanceCounterManager performanceCounterManager,
                                     ILoggerFactory loggerFactory,
-                                    IConfigurationManager configurationManager)
+                                    IOptionsAccessor<SignalROptions> optionsAccessor)
             : base(context, jsonSerializer, heartbeat, performanceCounterManager, loggerFactory)
         {
-            _configurationManager = configurationManager;
+            _pollDelay = optionsAccessor.Options.Transports.LongPolling.PollDelay;
         }
 
         public override TimeSpan DisconnectThreshold
         {
-            get { return _configurationManager.LongPollDelay; }
+            get { return _pollDelay; }
         }
 
         private bool IsJsonp
@@ -246,9 +244,9 @@ namespace Microsoft.AspNet.SignalR.Transports
         
         private void AddTransportData(PersistentResponse response)
         {
-            if (_configurationManager.LongPollDelay != TimeSpan.Zero)
+            if (_pollDelay != TimeSpan.Zero)
             {
-                response.LongPollDelay = (long)_configurationManager.LongPollDelay.TotalMilliseconds;
+                response.LongPollDelay = (long)_pollDelay.TotalMilliseconds;
             }
         }
 

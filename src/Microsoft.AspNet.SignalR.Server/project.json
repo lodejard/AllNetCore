@@ -3,7 +3,9 @@
   "dependencies": {
     "Microsoft.AspNet.Http": "0.1-alpha-*",
     "Microsoft.AspNet.HttpFeature":  "0.1-alpha-*",
+    "Microsoft.AspNet.RequestContainer": "0.1-alpha-*",
     "Microsoft.AspNet.Security.DataProtection": "0.1-alpha-*",
+    "Microsoft.Framework.OptionsModel": "0.1-alpha-*",
     "Microsoft.Framework.ConfigurationModel": "0.1-alpha-*",
     "Microsoft.Framework.DependencyInjection": "0.1-alpha-*",
     "Microsoft.Framework.Logging": "0.1-alpha-*",

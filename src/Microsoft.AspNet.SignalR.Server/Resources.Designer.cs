@@ -443,6 +443,17 @@ namespace Microsoft.AspNet.SignalR
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to No transports have been enabled. There must be at least one enabled transport..
+        /// </summary>
+        internal static string Error_NoTransportsEnabled
+        {
+            get
+            {
+                return ResourceManager.GetString("Error_NoTransportsEnabled", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Not a valid web socket request..
         /// </summary>
         internal static string Error_NotWebSocketRequest

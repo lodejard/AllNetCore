@@ -8,25 +8,26 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {
     public class PersistentConnectionMiddleware
     {
         private readonly Type _connectionType;
-        private readonly ConnectionConfiguration _configuration;
+        private readonly IOptionsAccessor<SignalROptions> _optionsAccessor;
         private readonly RequestDelegate _next;
         private readonly IServiceProvider _serviceProvider;
 
         public PersistentConnectionMiddleware(RequestDelegate next,
                                               Type connectionType,
-                                              ConnectionConfiguration configuration,
+                                              IOptionsAccessor<SignalROptions> optionsAccessor,
                                               IServiceProvider serviceProvider)
         {
             _next = next;
             _serviceProvider = serviceProvider;
             _connectionType = connectionType;
-            _configuration = configuration;
+            _optionsAccessor = optionsAccessor;
         }
 
         public Task Invoke(HttpContext context)
@@ -36,7 +37,7 @@ namespace Microsoft.AspNet.SignalR.Hosting
                 throw new ArgumentNullException("context");
             }
 
-            if (JsonUtility.TryRejectJSONPRequest(_configuration, context))
+            if (JsonUtility.TryRejectJSONPRequest(_optionsAccessor.Options, context))
             {
                 return TaskAsyncHelper.Empty;
             }

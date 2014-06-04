@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.HttpFeature;
 using Microsoft.AspNet.SignalR.Configuration;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
@@ -19,6 +18,7 @@ using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR
@@ -34,7 +34,7 @@ namespace Microsoft.AspNet.SignalR
         private static readonly char[] SplitChars = new[] { ':' };
         private static readonly ProtocolResolver _protocolResolver = new ProtocolResolver();
 
-        private IConfigurationManager _configurationManager;
+        private SignalROptions _options;
         private ITransportManager _transportManager;
 
         public virtual void Initialize(IServiceProvider serviceProvider)
@@ -47,7 +47,7 @@ namespace Microsoft.AspNet.SignalR
             ProtectedData = serviceProvider.GetService<IProtectedData>();
             UserIdProvider = serviceProvider.GetService<IUserIdProvider>();
 
-            _configurationManager = serviceProvider.GetService<IConfigurationManager>();
+            _options = serviceProvider.GetService<IOptionsAccessor<SignalROptions>>().Options;
             _transportManager = serviceProvider.GetService<ITransportManager>();
         }
 
@@ -476,7 +476,7 @@ namespace Microsoft.AspNet.SignalR
         /// <param name="connectionId">The id of the disconnected connection.</param>
         /// <param name="stopCalled">
         /// True if the connection has been lost for longer than the
-        /// <see cref="Configuration.IConfigurationManager.DisconnectTimeout"/>;
+        /// <see cref="SignalROptions.Transports.DisconnectTimeout"/>;
         /// False if the connection has been closed gracefully.
         /// </param>
         /// <returns>A <see cref="Task"/> that completes when the disconnect operation is complete.</returns>
@@ -493,7 +493,7 @@ namespace Microsoft.AspNet.SignalR
         private Task ProcessNegotiationRequest(HostContext context)
         {
             // Total amount of time without a keep alive before the client should attempt to reconnect in seconds.
-            var keepAliveTimeout = _configurationManager.KeepAliveTimeout();
+            var keepAliveTimeout = _options.Transports.KeepAliveTimeout();
             string connectionId = Guid.NewGuid().ToString("d");
             string connectionToken = connectionId + ':' + GetUserIdentity(context);
 
@@ -503,13 +503,13 @@ namespace Microsoft.AspNet.SignalR
                 ConnectionToken = ProtectedData.Protect(connectionToken, Purposes.ConnectionToken),
                 ConnectionId = connectionId,
                 KeepAliveTimeout = keepAliveTimeout != null ? keepAliveTimeout.Value.TotalSeconds : (double?)null,
-                DisconnectTimeout = _configurationManager.DisconnectTimeout.TotalSeconds,
+                DisconnectTimeout = _options.Transports.DisconnectTimeout.TotalSeconds,
                 // TODO: Supports websockets
                 // TryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.Environment.SupportsWebSockets(),
                 TryWebSockets = false,
                 ProtocolVersion = _protocolResolver.Resolve(context.Request).ToString(),
-                TransportConnectTimeout = _configurationManager.TransportConnectTimeout.TotalSeconds,
-                LongPollDelay = _configurationManager.LongPollDelay.TotalSeconds
+                TransportConnectTimeout = _options.Transports.TransportConnectTimeout.TotalSeconds,
+                LongPollDelay = _options.Transports.LongPolling.PollDelay.TotalSeconds
             };
 
             return SendJsonResponse(context, JsonSerializer.Stringify(payload));

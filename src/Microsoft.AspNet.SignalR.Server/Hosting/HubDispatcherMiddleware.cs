@@ -8,19 +8,20 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Json;
+using Microsoft.Framework.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {
     public class HubDispatcherMiddleware
     {
-        private readonly HubConfiguration _configuration;
+        private readonly IOptionsAccessor<SignalROptions> _optionsAccessor;
         private readonly IServiceProvider _serviceProvider;
 
         public HubDispatcherMiddleware(RequestDelegate next,
-                                       HubConfiguration configuration,
+                                       IOptionsAccessor<SignalROptions> optionsAccessor,
                                        IServiceProvider serviceProvider)
         {
-            _configuration = configuration;
+            _optionsAccessor = optionsAccessor;
             _serviceProvider = serviceProvider;
         }
 
@@ -31,12 +32,12 @@ namespace Microsoft.AspNet.SignalR.Hosting
                 throw new ArgumentNullException("context");
             }
 
-            if (JsonUtility.TryRejectJSONPRequest(_configuration, context))
+            if (JsonUtility.TryRejectJSONPRequest(_optionsAccessor.Options, context))
             {
                 return TaskAsyncHelper.Empty;
             }
 
-            var dispatcher = new HubDispatcher(_configuration);
+            var dispatcher = new HubDispatcher(_optionsAccessor);
 
             dispatcher.Initialize(_serviceProvider);
 

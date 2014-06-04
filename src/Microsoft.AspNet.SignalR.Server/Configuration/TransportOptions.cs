@@ -1,12 +1,11 @@
-// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
 
 using System;
 
 namespace Microsoft.AspNet.SignalR.Configuration
 {
-    public class DefaultConfigurationManager : IConfigurationManager
+    public class TransportOptions
     {
         // The below effectively sets the minimum heartbeat to once per second.
         // if _minimumKeepAlive != 2 seconds, update the ArguementOutOfRanceExceptionMessage below
@@ -22,24 +21,31 @@ namespace Microsoft.AspNet.SignalR.Configuration
         private TimeSpan? _keepAlive;
         private TimeSpan _disconnectTimeout;
 
-        public DefaultConfigurationManager()
+        public TransportOptions()
         {
-            ConnectionTimeout = TimeSpan.FromSeconds(110);
-            DisconnectTimeout = TimeSpan.FromSeconds(30);
-            DefaultMessageBufferSize = 1000;
-            DefaultMaxTopicsWithNoSubscriptions = 1000;
-            MaxIncomingWebSocketMessageSize = 64 * 1024; // 64 KB
+            EnabledTransports = TransportType.All;
             TransportConnectTimeout = TimeSpan.FromSeconds(5);
-            LongPollDelay = TimeSpan.Zero;
+            DisconnectTimeout = TimeSpan.FromSeconds(30);
+            WebSockets = new WebSocketOptions();
+            LongPolling = new LongPollingOptions();
         }
 
-        // TODO: Should we guard against negative TimeSpans here like everywhere else?
-        public TimeSpan ConnectionTimeout
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// Gets or sets the enabled transports.
+        /// The default value is <see cref="TransportType.All"/>.
+        public TransportType EnabledTransports { get; set; }
 
+        /// <summary>
+        /// Gets or sets a <see cref="TimeSpan"/> representing the amount of time a client should allow to connect before falling
+        /// back to another transport or failing.
+        /// The default value is 5 seconds.
+        /// </summary>
+        public TimeSpan TransportConnectTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets a <see cref="TimeSpan"/> representing the amount of time to wait after a connection goes away before raising the disconnect event.
+        /// The default value is 30 seconds.
+        /// </summary>
         public TimeSpan DisconnectTimeout
         {
             get
@@ -63,6 +69,11 @@ namespace Microsoft.AspNet.SignalR.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets or sets a <see cref="TimeSpan"/> representing the amount of time between sending keep alive messages.
+        /// If enabled, this value must be at least two seconds. Set to null to disable.
+        /// The default value is 10 seconds.
+        /// </summary>
         public TimeSpan? KeepAlive
         {
             get
@@ -86,34 +97,15 @@ namespace Microsoft.AspNet.SignalR.Configuration
             }
         }
 
-        public int DefaultMessageBufferSize
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// Gets or sets WebSocket specific configuration.
+        /// </summary>
+        public WebSocketOptions WebSockets { get; set; }
 
-        public int DefaultMaxTopicsWithNoSubscriptions
-        {
-            get;
-            set;
-        }
-
-        public int? MaxIncomingWebSocketMessageSize
-        {
-            get;
-            set;
-        }
-
-        public TimeSpan TransportConnectTimeout
-        {
-            get;
-            set;
-        }
-
-        public TimeSpan LongPollDelay
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// Gets or sets long-polling specific configuration.
+        /// </summary>
+        /// <returns></returns>
+        public LongPollingOptions LongPolling { get; set; }
     }
 }

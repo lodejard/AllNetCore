@@ -9,14 +9,16 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class SignalRServiceCollectionExtensions
     {
-        public static IServiceCollection AddSignalR(this IServiceCollection services)
+        public static SignalRServiceCollection AddSignalR(this IServiceCollection services)
         {
-            return services.Add(SignalRServices.GetDefaultServices());
+            services.Add(SignalRServices.GetDefaultServices());
+            return new SignalRServiceCollection(services);
         }
 
-        public static IServiceCollection AddSignalR(this IServiceCollection services, IConfiguration configuration)
+        public static SignalRServiceCollection AddSignalR(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.Add(SignalRServices.GetDefaultServices(configuration));
+            services.Add(SignalRServices.GetDefaultServices(configuration));
+            return new SignalRServiceCollection(services);
         }
     }
 }

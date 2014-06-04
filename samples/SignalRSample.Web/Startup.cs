@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.OptionsModel;
 
 namespace SignalRSample.Web
 {
@@ -10,7 +11,12 @@ namespace SignalRSample.Web
         {
             app.UseServices(services =>
             {
-                services.AddSignalR();
+                services
+                    .AddSignalR()
+                    .SetupOptions(options =>
+                    {
+                        options.Hubs.EnableDetailedErrors = true;
+                    });
             });
 
             app.UseStaticFiles();

@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
@@ -23,17 +23,46 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// </summary>
         /// <param name="serviceProvider">The default <see cref="IDependencyResolver"/>.</param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Those are factory methods")]
-        public TransportManager(IServiceProvider serviceProvider, ITypeActivator typeActivator)
+        public TransportManager(IServiceProvider serviceProvider,
+                                ITypeActivator typeActivator,
+                                IOptionsAccessor<SignalROptions> optionsAccessor)
         {
             if (serviceProvider == null)
             {
                 throw new ArgumentNullException("serviceProvider");
             }
+            if (typeActivator == null)
+            {
+                throw new ArgumentNullException("typeActivator");
+            }
+            if (optionsAccessor == null)
+            {
+                throw new ArgumentNullException("optionsAccessor");
+            }
 
-            Register("foreverFrame", context => typeActivator.CreateInstance<ForeverFrameTransport>(serviceProvider, context));
-            Register("serverSentEvents", context => typeActivator.CreateInstance<ServerSentEventsTransport>(serviceProvider, context));
-            Register("longPolling", context => typeActivator.CreateInstance<LongPollingTransport>(serviceProvider, context));
-            Register("webSockets", context => typeActivator.CreateInstance<WebSocketTransport>(serviceProvider, context));
+            var enabledTransports = optionsAccessor.Options.Transports.EnabledTransports;
+
+            if (enabledTransports.HasFlag(TransportType.WebSockets))
+            {
+                Register("webSockets", context => typeActivator.CreateInstance<WebSocketTransport>(serviceProvider, context));
+            }
+            if (enabledTransports.HasFlag(TransportType.ServerSentEvents))
+            {
+                Register("serverSentEvents", context => typeActivator.CreateInstance<ServerSentEventsTransport>(serviceProvider, context));
+            }
+            if (enabledTransports.HasFlag(TransportType.ForeverFrame))
+            {
+                Register("foreverFrame", context => typeActivator.CreateInstance<ForeverFrameTransport>(serviceProvider, context));
+            }
+            if (enabledTransports.HasFlag(TransportType.LongPolling))
+            {
+                Register("longPolling", context => typeActivator.CreateInstance<LongPollingTransport>(serviceProvider, context));
+            }
+
+            if (_transports.Count == 0)
+            {
+                throw new InvalidOperationException(Resources.Error_NoTransportsEnabled);
+            }
         }
 
         /// <summary>

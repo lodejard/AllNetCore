@@ -4,7 +4,7 @@
 
 namespace Microsoft.AspNet.SignalR
 {
-    public class HubConfiguration : ConnectionConfiguration
+    public class HubOptions
     {
         /// <summary>
         /// Determines whether JavaScript proxies for the server-side hubs should be auto generated at {Path}/hubs or {Path}/js.
@@ -18,7 +18,7 @@ namespace Microsoft.AspNet.SignalR
         /// </summary>
         public bool EnableDetailedErrors { get; set; }
 
-        public HubConfiguration()
+        public HubOptions()
         {
             EnableJavaScriptProxies = true;
         }
