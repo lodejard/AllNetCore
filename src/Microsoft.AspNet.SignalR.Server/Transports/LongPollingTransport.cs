@@ -4,6 +4,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -23,9 +24,10 @@ namespace Microsoft.AspNet.SignalR.Transports
                                     JsonSerializer jsonSerializer,
                                     ITransportHeartbeat heartbeat,
                                     IPerformanceCounterManager performanceCounterManager,
+                                    IApplicationLifetime applicationLifetime,
                                     ILoggerFactory loggerFactory,
                                     IOptionsAccessor<SignalROptions> optionsAccessor)
-            : base(context, jsonSerializer, heartbeat, performanceCounterManager, loggerFactory)
+            : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory)
         {
             _pollDelay = optionsAccessor.Options.Transports.LongPolling.PollDelay;
         }

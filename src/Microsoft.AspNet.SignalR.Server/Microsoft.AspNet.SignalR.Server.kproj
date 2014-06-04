@@ -125,6 +125,7 @@
     <Compile Include="Hubs\TypedHubConnectionContext.cs" />
     <Compile Include="Hubs\UserProxy.cs" />
     <Compile Include="Hub`T.cs" />
+    <Compile Include="IApplicationLifetime.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IConnectionGroupManager.cs" />
     <Compile Include="IGroupManager.cs" />

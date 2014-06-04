@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -48,7 +49,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         internal HttpRequestLifeTime _requestLifeTime;
 
-        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, ILoggerFactory loggerFactory)
+        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
         {
             if (context == null)
             {
@@ -65,6 +66,11 @@ namespace Microsoft.AspNet.SignalR.Transports
                 throw new ArgumentNullException("performanceCounterManager");
             }
 
+            if (applicationLifetime == null)
+            {
+                throw new ArgumentNullException("applicationLifetime");
+            }
+
             if (loggerFactory == null)
             {
                 throw new ArgumentNullException("loggerFactory");
@@ -73,6 +79,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             _context = context;
             _heartbeat = heartbeat;
             _counters = performanceCounterManager;
+            _hostShutdownToken = applicationLifetime.ApplicationStopping;
 
             // Queue to protect against overlapping writes to the underlying response stream
             WriteQueue = new TaskQueue();
@@ -357,9 +364,6 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected virtual void InitializePersistentState()
         {
-            // TODO: Host shutdown token
-            _hostShutdownToken = CancellationToken.None; //_context.Environment.GetShutdownToken();
-
             _requestLifeTime = new HttpRequestLifeTime(this, WriteQueue, Logger, ConnectionId);
 
             // Create the TCS that completes when the task returned by PersistentConnection.OnConnected does.

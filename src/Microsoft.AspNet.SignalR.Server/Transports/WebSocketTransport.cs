@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Http;
@@ -35,8 +36,9 @@ namespace Microsoft.AspNet.SignalR.Transports
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
                                   IPerformanceCounterManager performanceCounterWriter,
+                                  IApplicationLifetime applicationLifetime,
                                   ILoggerFactory loggerFactory)
-            : this(context, serializer, heartbeat, performanceCounterWriter, loggerFactory, null)
+            : this(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, null)
         {
         }
 
@@ -44,9 +46,10 @@ namespace Microsoft.AspNet.SignalR.Transports
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
                                   IPerformanceCounterManager performanceCounterWriter,
+                                  IApplicationLifetime applicationLifetime,
                                   ILoggerFactory loggerFactory,
                                   int? maxIncomingMessageSize)
-            : base(context, serializer, heartbeat, performanceCounterWriter, loggerFactory)
+            : base(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory)
         {
             _context = context;
             _maxIncomingMessageSize = maxIncomingMessageSize;

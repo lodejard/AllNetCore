@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
@@ -30,8 +31,9 @@ namespace Microsoft.AspNet.SignalR.Transports
                                    JsonSerializer jsonSerializer,
                                    ITransportHeartbeat heartbeat,
                                    IPerformanceCounterManager performanceCounterWriter,
+                                   IApplicationLifetime applicationLifetime,
                                    ILoggerFactory loggerFactory)
-            : base(context, heartbeat, performanceCounterWriter, loggerFactory)
+            : base(context, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory)
         {
             _jsonSerializer = jsonSerializer;
             _counters = performanceCounterWriter;
