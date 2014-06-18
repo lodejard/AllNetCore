@@ -2,16 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNet.SignalR
@@ -46,6 +43,7 @@ namespace Microsoft.AspNet.SignalR
             yield return serviceDescriber.Singleton<IParameterResolver, DefaultParameterResolver>();
             yield return serviceDescriber.Singleton<IHubActivator, DefaultHubActivator>();
             yield return serviceDescriber.Singleton<IJavaScriptProxyGenerator, DefaultJavaScriptProxyGenerator>();
+            yield return serviceDescriber.Singleton<IJavaScriptMinifier, NullJavaScriptMinifier>();
             yield return serviceDescriber.Singleton<IHubRequestParser, HubRequestParser>();
 
             // REVIEW: This used to be lazy
@@ -55,35 +53,8 @@ namespace Microsoft.AspNet.SignalR
             yield return serviceDescriber.Instance<IHubPipeline>(pipeline);
             yield return serviceDescriber.Instance<IHubPipelineInvoker>(pipeline);
 
-            // TODO: Remove these when everything is flowing from the host
-#if NET45
-            yield return serviceDescriber.Singleton<ILoggerFactory, DiagnosticsLoggerFactory>();
-#else
-            yield return serviceDescriber.Singleton<ILoggerFactory, NoopLoggerFactory>();
-#endif
-
             // TODO: Just use the new IDataProtectionProvider abstraction directly here
             yield return serviceDescriber.Singleton<IProtectedData, DataProtectionProviderProtectedData>();
-
-        }
-
-        // Host concern not being plumbed through right now
-        private class NoopLoggerFactory : ILoggerFactory
-        {
-            private static readonly NoopLogger _logger = new NoopLogger();
-
-            public ILogger Create(string name)
-            {
-                return _logger;
-            }
-
-            private class NoopLogger : ILogger
-            {
-                public bool WriteCore(TraceType eventType, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
-                {
-                    return true;
-                }
-            }
         }
     }
 }

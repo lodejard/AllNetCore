@@ -28,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Acks", Justification = "Ack is a well known term")]
-        public AckHandler(bool completeAcksOnTimeout, TimeSpan ackThreshold, TimeSpan ackInterval)
+        private AckHandler(bool completeAcksOnTimeout, TimeSpan ackThreshold, TimeSpan ackInterval)
         {
             if (completeAcksOnTimeout)
             {
