@@ -300,11 +300,11 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         internal static async Task Disconnect(IHub hub, bool stopCalled)
         {
-            await hub.OnDisconnected(stopCalled).OrEmpty();
+            await hub.OnDisconnected(stopCalled).OrEmpty().PreserveCulture();
 
             if (stopCalled)
             {
-                await hub.OnDisconnected().OrEmpty();
+                await hub.OnDisconnected().OrEmpty().PreserveCulture();
             }
         }
 
@@ -476,7 +476,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             catch (Exception ex)
             {
-                Logger.WriteInformation(String.Format(CultureInfo.CurrentCulture, Resources.Error_ErrorCreatingHub + ex.Message, descriptor.Name));
+                Logger.WriteInformation(String.Format("Error creating Hub {0}. {1}", descriptor.Name, ex.Message));
 
                 if (throwIfFailedToCreate)
                 {

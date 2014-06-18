@@ -12,6 +12,7 @@ using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.AspNet.SignalR.Transports
 {
@@ -79,12 +80,36 @@ namespace Microsoft.AspNet.SignalR.Transports
             }
         }
 
-        protected override bool IsPollRequest
+        protected override bool SuppressReconnect
         {
             get
             {
-                return Context.Request.LocalPath.EndsWith("/poll", StringComparison.OrdinalIgnoreCase);
+                return !Context.Request.LocalPath.EndsWith("/reconnect", StringComparison.OrdinalIgnoreCase);
             }
+        }
+
+        protected override async Task InitializeMessageId()
+        {
+            _lastMessageId = Context.Request.QueryString["messageId"];
+
+            if (_lastMessageId == null)
+            {
+                var form = await Context.Request.ReadForm().PreserveCulture();
+                _lastMessageId = form["messageId"];
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is for async.")]
+        public override async Task<string> GetGroupsToken()
+        {
+            var groupsToken = Context.Request.QueryString["groupsToken"];
+
+            if (groupsToken == null)
+            {
+                var form = await Context.Request.ReadForm().PreserveCulture();
+                groupsToken = form["groupsToken"];
+            }
+            return groupsToken;
         }
 
         public override Task KeepAlive()
@@ -173,12 +198,12 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected override async Task ProcessSendRequest()
         {
-            IReadableStringCollection form = await Context.Request.ReadForm();
+            IReadableStringCollection form = await Context.Request.ReadForm().PreserveCulture();
             string data = form["data"] ?? Context.Request.QueryString["data"];
 
             if (Received != null)
             {
-                await Received(data);
+                await Received(data).PreserveCulture();
             }
         }
 
@@ -243,7 +268,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             return PerformPartialSend(state);
         }
-        
+
         private void AddTransportData(PersistentResponse response)
         {
             if (_pollDelay != TimeSpan.Zero)

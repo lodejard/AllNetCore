@@ -218,6 +218,7 @@
     <Compile Include="SignalRServiceColletion.cs" />
     <Compile Include="SignalRServices.cs" />
     <Compile Include="TaskAsyncHelper.cs" />
+    <Compile Include="TaskAwaiterHelper.cs" />
     <Compile Include="Transports\ForeverFrameTransport.cs" />
     <Compile Include="Transports\ForeverTransport.cs" />
     <Compile Include="Transports\HttpRequestLifeTime.cs" />
