@@ -6,8 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.WebSockets;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
@@ -28,8 +27,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private ChunkedWriter _writer;
         private int _bufferSize;
 
-        public BufferTextWriter(IResponse response) :
-            this((data, state) => ((IResponse)state).Write(data), response, reuseBuffers: true, bufferSize: 128)
+        public BufferTextWriter(HttpResponse response) :
+            this((data, state) => ((HttpResponse)state).Write(data), response, reuseBuffers: true, bufferSize: 128)
         {
 
         }

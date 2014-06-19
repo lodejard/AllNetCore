@@ -2,8 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 namespace Microsoft.AspNet.SignalR.Transports
 {
     /// <summary>
@@ -12,11 +11,11 @@ namespace Microsoft.AspNet.SignalR.Transports
     public interface ITransportManager
     {
         /// <summary>
-        /// Gets the specified transport for the specified <see cref="HostContext"/>.
+        /// Gets the specified transport for the specified <see cref="HttpContext"/>.
         /// </summary>
-        /// <param name="hostContext">The <see cref="HostContext"/> for the current request.</param>
-        /// <returns>The <see cref="ITransport"/> for the specified <see cref="HostContext"/>.</returns>
-        ITransport GetTransport(HostContext hostContext);
+        /// <param name="context">The <see cref="HttpContext"/> for the current request.</param>
+        /// <returns>The <see cref="ITransport"/> for the specified <see cref="HttpContext"/>.</returns>
+        ITransport GetTransport(HttpContext context);
         
         /// <summary>
         /// Determines whether the specified transport is supported.

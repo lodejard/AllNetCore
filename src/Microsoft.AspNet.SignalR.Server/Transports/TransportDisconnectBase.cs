@@ -3,14 +3,12 @@
 
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.Logging;
 
@@ -20,7 +18,7 @@ namespace Microsoft.AspNet.SignalR.Transports
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "Disposable fields are disposed from a different method")]
     public abstract class TransportDisconnectBase : ITrackingConnection
     {
-        private readonly HostContext _context;
+        private readonly HttpContext _context;
         private readonly ITransportHeartbeat _heartbeat;
         private TextWriter _outputWriter;
 
@@ -52,7 +50,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         internal HttpRequestLifeTime _requestLifeTime;
 
-        protected TransportDisconnectBase(HostContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
+        protected TransportDisconnectBase(HttpContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
         {
             if (context == null)
             {
@@ -113,14 +111,14 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected virtual Task InitializeMessageId()
         {
-            _lastMessageId = Context.Request.QueryString["messageId"];
+            _lastMessageId = Context.Request.Query["messageId"];
             return TaskAsyncHelper.Empty;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is for async.")]
         public virtual Task<string> GetGroupsToken()
         {
-            return TaskAsyncHelper.FromResult(Context.Request.QueryString["groupsToken"]);
+            return TaskAsyncHelper.FromResult(Context.Request.Query["groupsToken"]);
         }
 
         public virtual TextWriter OutputWriter
@@ -149,7 +147,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return _context.Response.CancellationToken;
+                return _context.OnRequestAborted;
             }
         }
 
@@ -224,7 +222,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return Context.Request.LocalPath.EndsWith("/connect", StringComparison.OrdinalIgnoreCase);
+                return Context.Request.LocalPath().EndsWith("/connect", StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -232,7 +230,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return Context.Request.LocalPath.EndsWith("/send", StringComparison.OrdinalIgnoreCase);
+                return Context.Request.LocalPath().EndsWith("/send", StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -240,7 +238,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return Context.Request.LocalPath.EndsWith("/abort", StringComparison.OrdinalIgnoreCase);
+                return Context.Request.LocalPath().EndsWith("/abort", StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -254,7 +252,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected ITransportConnection Connection { get; set; }
 
-        protected HostContext Context
+        protected HttpContext Context
         {
             get { return _context; }
         }

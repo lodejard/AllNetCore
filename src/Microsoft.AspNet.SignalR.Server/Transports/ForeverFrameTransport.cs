@@ -8,7 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
@@ -36,7 +36,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private HTMLTextWriter _htmlOutputWriter;
 
-        public ForeverFrameTransport(HostContext context,
+        public ForeverFrameTransport(HttpContext context,
                                      JsonSerializer jsonSerializer,
                                      ITransportHeartbeat heartbeat,
                                      IPerformanceCounterManager performanceCounterWriter,
@@ -90,7 +90,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         protected internal override Task InitializeResponse(ITransportConnection connection)
         {
             uint frameId;
-            string rawFrameId = Context.Request.QueryString["frameId"];
+            string rawFrameId = Context.Request.Query["frameId"];
             if (String.IsNullOrWhiteSpace(rawFrameId) || !UInt32.TryParse(rawFrameId, NumberStyles.None, CultureInfo.InvariantCulture, out frameId))
             {
                 // Invalid frameId passed in
@@ -165,7 +165,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private class HTMLTextWriter : BufferTextWriter
         {
-            public HTMLTextWriter(IResponse response)
+            public HTMLTextWriter(HttpResponse response)
                 : base(response)
             {
             }

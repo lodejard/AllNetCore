@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.OptionsModel;
 
@@ -16,7 +16,7 @@ namespace Microsoft.AspNet.SignalR.Transports
     /// </summary>
     public class TransportManager : ITransportManager
     {
-        private readonly ConcurrentDictionary<string, Func<HostContext, ITransport>> _transports = new ConcurrentDictionary<string, Func<HostContext, ITransport>>(StringComparer.OrdinalIgnoreCase);
+        private readonly ConcurrentDictionary<string, Func<HttpContext, ITransport>> _transports = new ConcurrentDictionary<string, Func<HttpContext, ITransport>>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Initializes a new instance of <see cref="TransportManager"/> class.
@@ -70,7 +70,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// </summary>
         /// <param name="transportName">The specified transport.</param>
         /// <param name="transportFactory">The factory method for the specified transport.</param>
-        public void Register(string transportName, Func<HostContext, ITransport> transportFactory)
+        public void Register(string transportName, Func<HttpContext, ITransport> transportFactory)
         {
             if (String.IsNullOrEmpty(transportName))
             {
@@ -96,33 +96,33 @@ namespace Microsoft.AspNet.SignalR.Transports
                 throw new ArgumentNullException("transportName");
             }
 
-            Func<HostContext, ITransport> removed;
+            Func<HttpContext, ITransport> removed;
             _transports.TryRemove(transportName, out removed);
         }
 
         /// <summary>
-        /// Gets the specified transport for the specified <see cref="HostContext"/>.
+        /// Gets the specified transport for the specified <see cref="HttpContext"/>.
         /// </summary>
-        /// <param name="hostContext">The <see cref="HostContext"/> for the current request.</param>
-        /// <returns>The <see cref="ITransport"/> for the specified <see cref="HostContext"/>.</returns>
-        public ITransport GetTransport(HostContext hostContext)
+        /// <param name="context">The <see cref="HttpContext"/> for the current request.</param>
+        /// <returns>The <see cref="ITransport"/> for the specified <see cref="HttpContext"/>.</returns>
+        public ITransport GetTransport(HttpContext context)
         {
-            if (hostContext == null)
+            if (context == null)
             {
-                throw new ArgumentNullException("hostContext");
+                throw new ArgumentNullException("context");
             }
 
-            string transportName = hostContext.Request.QueryString["transport"];
+            string transportName = context.Request.Query["transport"];
 
             if (String.IsNullOrEmpty(transportName))
             {
                 return null;
             }
 
-            Func<HostContext, ITransport> factory;
+            Func<HttpContext, ITransport> factory;
             if (_transports.TryGetValue(transportName, out factory))
             {
-                return factory(hostContext);
+                return factory(context);
             }
 
             return null;

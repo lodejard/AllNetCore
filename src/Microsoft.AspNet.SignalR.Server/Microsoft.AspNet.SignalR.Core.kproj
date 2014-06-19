@@ -39,11 +39,8 @@
     <Compile Include="Hosting\BuilderExtensions.cs" />
     <Compile Include="Hosting\HostDependencyResolverExtensions.cs" />
     <Compile Include="Hosting\PersistentConnectionMiddleware.cs" />
-    <Compile Include="Http\HostContext.cs" />
-    <Compile Include="Http\IResponse.cs" />
-    <Compile Include="Http\ResponseExtensions.cs" />
-    <Compile Include="Http\ServerRequest.cs" />
-    <Compile Include="Http\ServerResponse.cs" />
+    <Compile Include="Hosting\RequestExtensions.cs" />
+    <Compile Include="Hosting\ResponseExtensions.cs" />
     <Compile Include="Hub.cs" />
     <Compile Include="HubConfiguration.cs" />
     <Compile Include="HubException.cs" />
@@ -173,7 +170,6 @@
     <Compile Include="Infrastructure\TaskQueue.cs" />
     <Compile Include="Infrastructure\UrlDecoder.cs" />
     <Compile Include="IPersistentConnectionContext.cs" />
-    <Compile Include="IRequest.cs" />
     <Compile Include="IUserIdProvider.cs" />
     <Compile Include="Json\IJsonValue.cs" />
     <Compile Include="Json\IJsonWritable.cs" />

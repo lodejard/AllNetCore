@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
@@ -26,7 +25,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         internal RequestLifetime _transportLifetime;
 
-        protected ForeverTransport(HostContext context,
+        protected ForeverTransport(HttpContext context,
                                    JsonSerializer jsonSerializer,
                                    ITransportHeartbeat heartbeat,
                                    IPerformanceCounterManager performanceCounterWriter,
@@ -130,7 +129,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected virtual async Task ProcessSendRequest()
         {
-            IReadableStringCollection form = await Context.Request.ReadForm().PreserveCulture();
+            IReadableStringCollection form = await Context.Request.GetFormAsync().PreserveCulture();
             string data = form["data"];
 
             if (Received != null)

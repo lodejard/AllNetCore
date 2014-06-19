@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{34D5CA7F-AA6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{862490FB-DD41-4BB8-9BBA-AC300F331BA8}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Core", "src\Microsoft.AspNet.SignalR.Core\Microsoft.AspNet.SignalR.Core.kproj", "{1E7F548C-CB60-46A1-B431-D67825A32698}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Core", "src\Microsoft.AspNet.SignalR.Server\Microsoft.AspNet.SignalR.Core.kproj", "{1E7F548C-CB60-46A1-B431-D67825A32698}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SignalRSample.Web", "samples\SignalRSample.Web\SignalRSample.Web.kproj", "{6EC0A923-B20F-419F-9561-EFE873C38B59}"
 EndProject

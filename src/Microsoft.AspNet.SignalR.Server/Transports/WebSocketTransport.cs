@@ -8,9 +8,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.WebSockets;
@@ -22,7 +22,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 {
     public class WebSocketTransport : ForeverTransport
     {
-        private readonly HostContext _context;
+        private readonly HttpContext _context;
         private IWebSocket _socket;
         private bool _isAlive = true;
 
@@ -32,7 +32,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly Action _closed;
         private readonly Action<Exception> _error;
 
-        public WebSocketTransport(HostContext context,
+        public WebSocketTransport(HttpContext context,
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
                                   IPerformanceCounterManager performanceCounterWriter,
@@ -42,7 +42,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
         }
 
-        public WebSocketTransport(HostContext context,
+        public WebSocketTransport(HttpContext context,
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
                                   IPerformanceCounterManager performanceCounterWriter,
@@ -135,12 +135,13 @@ namespace Microsoft.AspNet.SignalR.Transports
             //{
             //    // Bad Request
             //    _context.Response.StatusCode = 400;
-            //    return _context.Response.End(Resources.Error_NotWebSocketRequest);
+            //    return _context.Response.WriteAsync(Resources.Error_NotWebSocketRequest);
             //}
 
             //var handler = new OwinWebSocketHandler(callback, _maxIncomingMessageSize);
             //accept(null, handler.ProcessRequest);
             //return TaskAsyncHelper.Empty;
+
             return TaskAsyncHelper.Empty;
         }
 

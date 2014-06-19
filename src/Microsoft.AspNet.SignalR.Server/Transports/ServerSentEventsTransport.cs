@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
@@ -14,7 +14,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 {
     public class ServerSentEventsTransport : ForeverTransport
     {
-        public ServerSentEventsTransport(HostContext context,
+        public ServerSentEventsTransport(HttpContext context,
                                          JsonSerializer jsonSerializer,
                                          ITransportHeartbeat heartbeat,
                                          IPerformanceCounterManager performanceCounterWriter,

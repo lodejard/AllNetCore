@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Http;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -81,7 +82,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <returns>
         /// A wrapped function that dictates whether or not the client is authorized to connect to the described Hub.
         /// </returns>
-        Func<HubDescriptor, IRequest, bool> BuildAuthorizeConnect(Func<HubDescriptor, IRequest, bool> authorizeConnect);
+        Func<HubDescriptor, HttpContext, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpContext, bool> authorizeConnect);
         
         /// <summary>
         /// Wraps a function that determines which of the groups belonging to the hub described by the <see cref="HubDescriptor"/>
@@ -90,6 +91,6 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// </summary>
         /// <param name="rejoiningGroups">A function that determines which groups the client should be allowed to rejoin.</param>
         /// <returns>A wrapped function that determines which groups the client should be allowed to rejoin.</returns>
-        Func<HubDescriptor, IRequest, IList<string>, IList<string>> BuildRejoiningGroups(Func<HubDescriptor, IRequest, IList<string>, IList<string>> rejoiningGroups);
+        Func<HubDescriptor, HttpContext, IList<string>, IList<string>> BuildRejoiningGroups(Func<HubDescriptor, HttpContext, IList<string>, IList<string>> rejoiningGroups);
     }
 }

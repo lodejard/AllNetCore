@@ -6,7 +6,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
@@ -21,7 +20,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly TimeSpan _pollDelay;
         private bool _responseSent;
 
-        public LongPollingTransport(HostContext context,
+        public LongPollingTransport(HttpContext context,
                                     JsonSerializer jsonSerializer,
                                     ITransportHeartbeat heartbeat,
                                     IPerformanceCounterManager performanceCounterManager,
@@ -50,7 +49,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return Context.Request.QueryString["callback"];
+                return Context.Request.Query["callback"];
             }
         }
 
@@ -84,17 +83,17 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return !Context.Request.LocalPath.EndsWith("/reconnect", StringComparison.OrdinalIgnoreCase);
+                return !Context.Request.LocalPath().EndsWith("/reconnect", StringComparison.OrdinalIgnoreCase);
             }
         }
 
         protected override async Task InitializeMessageId()
         {
-            _lastMessageId = Context.Request.QueryString["messageId"];
+            _lastMessageId = Context.Request.Query["messageId"];
 
             if (_lastMessageId == null)
             {
-                var form = await Context.Request.ReadForm().PreserveCulture();
+                var form = await Context.Request.GetFormAsync().PreserveCulture();
                 _lastMessageId = form["messageId"];
             }
         }
@@ -102,11 +101,11 @@ namespace Microsoft.AspNet.SignalR.Transports
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is for async.")]
         public override async Task<string> GetGroupsToken()
         {
-            var groupsToken = Context.Request.QueryString["groupsToken"];
+            var groupsToken = Context.Request.Query["groupsToken"];
 
             if (groupsToken == null)
             {
-                var form = await Context.Request.ReadForm().PreserveCulture();
+                var form = await Context.Request.GetFormAsync().PreserveCulture();
                 groupsToken = form["groupsToken"];
             }
             return groupsToken;
@@ -198,8 +197,8 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected override async Task ProcessSendRequest()
         {
-            IReadableStringCollection form = await Context.Request.ReadForm().PreserveCulture();
-            string data = form["data"] ?? Context.Request.QueryString["data"];
+            IReadableStringCollection form = await Context.Request.GetFormAsync().PreserveCulture();
+            string data = form["data"] ?? Context.Request.Query["data"];
 
             if (Received != null)
             {

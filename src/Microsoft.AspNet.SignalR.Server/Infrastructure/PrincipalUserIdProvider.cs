@@ -2,22 +2,23 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-
 using System;
+using Microsoft.AspNet.Http;
+
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
     public class PrincipalUserIdProvider : IUserIdProvider
     {
-        public string GetUserId(IRequest request)
+        public string GetUserId(HttpContext context)
         {
-            if (request == null)
+            if (context == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException("context");
             }
 
-            if (request.User != null && request.User.Identity != null)
+            if (context.User != null && context.User.Identity != null)
             {
-                return request.User.Identity.Name;
+                return context.User.Identity.Name;
             }
 
             return null;

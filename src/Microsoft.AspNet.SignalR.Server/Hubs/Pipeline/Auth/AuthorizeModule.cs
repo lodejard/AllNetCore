@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Http;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -56,18 +57,18 @@ namespace Microsoft.AspNet.SignalR.Hubs
             _methodInvocationAuthorizersCache = new ConcurrentDictionary<MethodDescriptor, IEnumerable<IAuthorizeHubMethodInvocation>>();
         }
 
-        public override Func<HubDescriptor, IRequest, bool> BuildAuthorizeConnect(Func<HubDescriptor, IRequest, bool> authorizeConnect)
+        public override Func<HubDescriptor, HttpContext, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpContext, bool> authorizeConnect)
         {
-            return base.BuildAuthorizeConnect((hubDescriptor, request) =>
+            return base.BuildAuthorizeConnect((hubDescriptor, httpContext) =>
             {
                 // Execute custom modules first and short circuit if any deny authorization.
-                if (!authorizeConnect(hubDescriptor, request))
+                if (!authorizeConnect(hubDescriptor, httpContext))
                 {
                     return false;
                 }
 
                 // Execute the global hub connection authorizer if there is one next and short circuit if it denies authorization.
-                if (_globalConnectionAuthorizer != null && !_globalConnectionAuthorizer.AuthorizeHubConnection(hubDescriptor, request))
+                if (_globalConnectionAuthorizer != null && !_globalConnectionAuthorizer.AuthorizeHubConnection(hubDescriptor, httpContext))
                 {
                     return false;
                 }
@@ -78,7 +79,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                     hubType => hubType.GetTypeInfo().GetCustomAttributes().OfType<IAuthorizeHubConnection>());
 
                 // Every attribute (if any) implementing IAuthorizeHubConnection attached to the relevant hub MUST allow the connection
-                return attributeAuthorizers.All(a => a.AuthorizeHubConnection(hubDescriptor, request));
+                return attributeAuthorizers.All(a => a.AuthorizeHubConnection(hubDescriptor, httpContext));
             });
         }
 

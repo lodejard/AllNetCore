@@ -45,7 +45,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             get
             {
-                return Request.QueryString;
+                return Request.Query;
             }
         }
 
@@ -56,14 +56,26 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             get
             {
-                return Request.User;
+                return HttpContext.User;
             }
         }
 
         /// <summary>
-        /// Gets the <see cref="IRequest"/> for the current HTTP request.
+        /// Gets the <see cref="HttpRequest"/> for the current HTTP request.
         /// </summary>
-        public virtual IRequest Request { get; private set; }
+        public virtual HttpRequest Request
+        {
+            get
+            {
+                return HttpContext.Request;
+            }
+
+        }
+
+        /// <summary>
+        /// Gets the <see cref="HttpContext"/> for the current HTTP request.
+        /// </summary>
+        public virtual HttpContext HttpContext { get; private set; }
 
         /// <summary>
         /// This constructor is only intended to enable mocking of the class. Use of this constructor 
@@ -71,10 +83,10 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// </summary>
         protected HubCallerContext() { }
 
-        public HubCallerContext(IRequest request, string connectionId)
+        public HubCallerContext(HttpContext context, string connectionId)
         {
             ConnectionId = connectionId;
-            Request = request;
+            HttpContext = context;
         }
     }
 }

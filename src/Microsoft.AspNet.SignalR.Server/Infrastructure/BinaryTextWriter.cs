@@ -2,8 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Http;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.WebSockets;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
@@ -13,8 +12,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
     /// </summary>
     internal class BinaryTextWriter : BufferTextWriter, IBinaryWriter
     {
-        public BinaryTextWriter(IResponse response) :
-            base((data, state) => ((IResponse)state).Write(data), response, reuseBuffers: true, bufferSize: 128)
+        public BinaryTextWriter(HttpResponse response) :
+            base((data, state) => ((HttpResponse)state).Write(data), response, reuseBuffers: true, bufferSize: 128)
         {
 
         }
