@@ -15,7 +15,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         public DefaultHubActivator(ITypeActivator typeActivator, IServiceProvider serviceProvider)
         {
             _typeActivator = typeActivator;
-            _serviceProvider = _serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public IHub Create(HubDescriptor descriptor)
