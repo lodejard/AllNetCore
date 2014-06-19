@@ -1,10 +1,10 @@
 {
     "dependencies": {
-        "Helios": "0.1-alpha-*",
-        "Microsoft.AspNet.RequestContainer":  "0.1-alpha-*",
-        "Microsoft.AspNet.Server.WebListener": "0.1-alpha-*",
-        "Microsoft.AspNet.StaticFiles" : "0.1-alpha-*",
-        "Microsoft.AspNet.SignalR.Server": ""
+        "Helios": "1.0.0-*",
+        "Microsoft.AspNet.RequestContainer":  "1.0.0-*",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
+        "Microsoft.AspNet.StaticFiles" : "1.0.0-*",
+        "Microsoft.AspNet.SignalR.Core": ""
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
