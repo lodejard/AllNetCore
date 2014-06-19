@@ -21,7 +21,7 @@ namespace Microsoft.AspNet.SignalR.Http
         {
             _response = context.Response;
 
-            _callCancelled = context.Request.CallCanceled;
+            _callCancelled = context.OnRequestAborted;
             _responseBody = _response.Body;
         }
 
