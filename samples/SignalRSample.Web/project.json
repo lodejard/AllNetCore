@@ -4,7 +4,7 @@
         "Microsoft.AspNet.RequestContainer":  "1.0.0-*",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
         "Microsoft.AspNet.StaticFiles" : "1.0.0-*",
-        "Microsoft.AspNet.SignalR.Core": ""
+        "Microsoft.AspNet.SignalR.Server": ""
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
