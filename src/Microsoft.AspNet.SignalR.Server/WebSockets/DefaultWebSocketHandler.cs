@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-#if NET45
-
 using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.WebSockets
 {
@@ -17,8 +15,8 @@ namespace Microsoft.AspNet.SignalR.WebSockets
 
         internal ArraySegment<byte> NextMessageToSend { get; private set; }
 
-        public DefaultWebSocketHandler(int? maxIncomingMessageSize)
-            : base(maxIncomingMessageSize)
+        public DefaultWebSocketHandler(int? maxIncomingMessageSize, ILogger logger)
+            : base(maxIncomingMessageSize, logger)
         {
             _webSocket = this;
 
@@ -121,4 +119,3 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         }
     }
 }
-#endif

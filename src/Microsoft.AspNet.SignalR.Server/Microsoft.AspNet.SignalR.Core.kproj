@@ -234,7 +234,6 @@
     <Compile Include="Transports\WebSocketTransport.cs" />
     <Compile Include="WebSockets\DefaultWebSocketHandler.cs" />
     <Compile Include="WebSockets\IWebSocket.cs" />
-    <Compile Include="WebSockets\OwinWebSocketHandler.cs" />
     <Compile Include="WebSockets\WebSocketHandler.cs" />
     <Compile Include="WebSockets\WebSocketMessage.cs" />
     <Compile Include="WebSockets\WebSocketMessageReader.cs" />

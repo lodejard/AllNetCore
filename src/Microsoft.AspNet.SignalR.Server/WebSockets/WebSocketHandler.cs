@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-#if NET45
 
 using System;
 using System.Diagnostics;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.WebSockets
 {
@@ -23,12 +23,15 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         private const int _receiveLoopBufferSize = 4 * 1024;
         private readonly int? _maxIncomingMessageSize;
 
+        private readonly ILogger _logger;
+
         // Queue for sending messages
         private readonly TaskQueue _sendQueue = new TaskQueue();
 
-        protected WebSocketHandler(int? maxIncomingMessageSize)
+        protected WebSocketHandler(int? maxIncomingMessageSize, ILogger logger)
         {
             _maxIncomingMessageSize = maxIncomingMessageSize;
+            _logger = logger;
         }
 
         public virtual void OnOpen() { }
@@ -85,7 +88,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                 catch (Exception ex)
                 {
                     // Swallow exceptions on send
-                    Trace.TraceError("Error while sending: " + ex);
+                    _logger.WriteError("Error while sending: " + ex);
                 }
             },
             sendContext);
@@ -118,7 +121,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                 catch (Exception ex)
                 {
                     // Swallow exceptions on close
-                    Trace.TraceError("Error while closing the websocket: " + ex);
+                    _logger.WriteError("Error while closing the websocket: " + ex);
                 }
             },
             closeContext);
@@ -234,6 +237,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         // returns true if this is a fatal exception (e.g. OnError should be called)
         private static bool IsFatalException(Exception ex)
         {
+#if NET45
             // If this exception is due to the underlying TCP connection going away, treat as a normal close
             // rather than a fatal exception.
             COMException ce = ex as COMException;
@@ -248,7 +252,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                         return false;
                 }
             }
-
+#endif
             // unknown exception; treat as fatal
             return true;
         }
@@ -303,4 +307,3 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         }
     }
 }
-#endif

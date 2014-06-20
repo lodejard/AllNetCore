@@ -503,8 +503,7 @@ namespace Microsoft.AspNet.SignalR
                 KeepAliveTimeout = keepAliveTimeout != null ? keepAliveTimeout.Value.TotalSeconds : (double?)null,
                 DisconnectTimeout = _options.Transports.DisconnectTimeout.TotalSeconds,
                 // TODO: Supports websockets
-                // TryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.Environment.SupportsWebSockets(),
-                TryWebSockets = false,
+                TryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.GetFeature<IHttpWebSocketFeature>() != null,
                 ProtocolVersion = _protocolResolver.Resolve(context.Request).ToString(),
                 TransportConnectTimeout = _options.Transports.TransportConnectTimeout.TotalSeconds,
                 LongPollDelay = _options.Transports.LongPolling.PollDelay.TotalSeconds

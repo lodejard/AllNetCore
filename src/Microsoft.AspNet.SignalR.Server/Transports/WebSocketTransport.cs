@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
@@ -94,15 +95,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             }
             else
             {
-                return AcceptWebSocketRequest(socket =>
-                {
-                    _socket = socket;
-                    socket.OnClose = _closed;
-                    socket.OnMessage = _message;
-                    socket.OnError = _error;
-
-                    return ProcessRequestCore(connection);
-                });
+                return AcceptWebSocketRequest(connection);
             }
         }
 
@@ -126,23 +119,42 @@ namespace Microsoft.AspNet.SignalR.Transports
             return Send((object)response);
         }
 
-        private Task AcceptWebSocketRequest(Func<IWebSocket, Task> callback)
+        private async Task AcceptWebSocketRequest(ITransportConnection connection)
         {
-            // TODO: Websockets Accept
-            //var accept = _context.Environment.Get<Action<IDictionary<string, object>, WebSocketFunc>>(OwinConstants.WebSocketAccept);
+            var handler = new DefaultWebSocketHandler(_maxIncomingMessageSize, Logger);
 
-            //if (accept == null)
-            //{
-            //    // Bad Request
-            //    _context.Response.StatusCode = 400;
-            //    return _context.Response.End(Resources.Error_NotWebSocketRequest);
-            //}
+            // Configure event handlers before calling ProcessWebSocketRequestAsync
+            _socket = handler;
+            _socket.OnClose = _closed;
+            _socket.OnMessage = _message;
+            _socket.OnError = _error;
 
-            //var handler = new OwinWebSocketHandler(callback, _maxIncomingMessageSize);
-            //accept(null, handler.ProcessRequest);
-            //return TaskAsyncHelper.Empty;
+            WebSocket webSocket;
 
-            return TaskAsyncHelper.Empty;
+            try
+            {
+                webSocket = await Context.AcceptWebSocketAsync();
+            }
+            catch
+            {
+                // Bad Request
+                _context.Response.StatusCode = 400;
+                await _context.Response.WriteAsync(Resources.Error_NotWebSocketRequest);
+                return;
+            }
+
+            // Start the websocket handler so that we can process things over the channel
+            var webSocketHandlerTask = handler.ProcessWebSocketRequestAsync(webSocket, CancellationToken);
+
+            // This needs to come after wiring up the websocket handler
+            var ignoredTask = ProcessRequestCore(connection)
+                .ContinueWith(async (_, state) =>
+            {
+                await ((DefaultWebSocketHandler)state).CloseAsync();
+            },
+            handler);
+
+            await webSocketHandlerTask;
         }
 
         private static async Task PerformSend(object state)
