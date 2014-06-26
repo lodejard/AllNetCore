@@ -15,8 +15,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// Given a <see cref="HubCallerContext"/>, determine whether client is authorized to connect to <see cref="IHub"/>.
         /// </summary>
         /// <param name="hubDescriptor">Description of the hub client is attempting to connect to.</param>
-        /// <param name="context">The <see cref="HttpContext"/> for the connect request made by the client.</param>
+        /// <param name="">The connect request made by the client.</param>
         /// <returns>true if the caller is authorized to connect to the hub; otherwise, false.</returns>
-        bool AuthorizeHubConnection(HubDescriptor hubDescriptor, HttpContext context);
+        bool AuthorizeHubConnection(HubDescriptor hubDescriptor, HttpRequest request);
     }
 }

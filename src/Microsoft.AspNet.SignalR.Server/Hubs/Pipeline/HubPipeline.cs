@@ -57,14 +57,14 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return Pipeline.Disconnect(hub, stopCalled);
         }
 
-        public bool AuthorizeConnect(HubDescriptor hubDescriptor, HttpContext httpContext)
+        public bool AuthorizeConnect(HubDescriptor hubDescriptor, HttpRequest request)
         {
-            return Pipeline.AuthorizeConnect(hubDescriptor, httpContext);
+            return Pipeline.AuthorizeConnect(hubDescriptor, request);
         }
 
-        public IList<string> RejoiningGroups(HubDescriptor hubDescriptor, HttpContext httpContext, IList<string> groups)
+        public IList<string> RejoiningGroups(HubDescriptor hubDescriptor, HttpRequest request, IList<string> groups)
         {
-            return Pipeline.RejoiningGroups(hubDescriptor, httpContext, groups);
+            return Pipeline.RejoiningGroups(hubDescriptor, request, groups);
         }
 
         public Task Send(IHubOutgoingInvokerContext context)
@@ -79,8 +79,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
             public Func<IHub, Task> Connect;
             public Func<IHub, Task> Reconnect;
             public Func<IHub, bool, Task> Disconnect;
-            public Func<HubDescriptor, HttpContext, bool> AuthorizeConnect;
-            public Func<HubDescriptor, HttpContext, IList<string>, IList<string>> RejoiningGroups;
+            public Func<HubDescriptor, HttpRequest, bool> AuthorizeConnect;
+            public Func<HubDescriptor, HttpRequest, IList<string>, IList<string>> RejoiningGroups;
             public Func<IHubOutgoingInvokerContext, Task> Send;
 
             public ComposedPipeline(Stack<IHubPipelineModule> modules)
@@ -90,8 +90,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 Connect = Compose<Func<IHub, Task>>(modules, (m, f) => m.BuildConnect(f))(HubDispatcher.Connect);
                 Reconnect = Compose<Func<IHub, Task>>(modules, (m, f) => m.BuildReconnect(f))(HubDispatcher.Reconnect);
                 Disconnect = Compose<Func<IHub, bool, Task>>(modules, (m, f) => m.BuildDisconnect(f))(HubDispatcher.Disconnect);
-                AuthorizeConnect = Compose<Func<HubDescriptor, HttpContext, bool>>(modules, (m, f) => m.BuildAuthorizeConnect(f))((h, r) => true);
-                RejoiningGroups = Compose<Func<HubDescriptor, HttpContext, IList<string>, IList<string>>>(modules, (m, f) => m.BuildRejoiningGroups(f))((h, r, g) => g);
+                AuthorizeConnect = Compose<Func<HubDescriptor, HttpRequest, bool>>(modules, (m, f) => m.BuildAuthorizeConnect(f))((h, r) => true);
+                RejoiningGroups = Compose<Func<HubDescriptor, HttpRequest, IList<string>, IList<string>>>(modules, (m, f) => m.BuildRejoiningGroups(f))((h, r, g) => g);
                 Send = Compose<Func<IHubOutgoingInvokerContext, Task>>(modules, (m, f) => m.BuildOutgoing(f))(HubDispatcher.Outgoing);
             }
 

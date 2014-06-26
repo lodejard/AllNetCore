@@ -141,13 +141,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <returns>
         /// A wrapped function that dictates whether or not the client is authorized to connect to the described Hub.
         /// </returns>
-        public virtual Func<HubDescriptor, HttpContext, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpContext, bool> authorizeConnect)
+        public virtual Func<HubDescriptor, HttpRequest, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpRequest, bool> authorizeConnect)
         {
-            return (hubDescriptor, httpContext) =>
+            return (hubDescriptor, request) =>
             {
-                if (OnBeforeAuthorizeConnect(hubDescriptor, httpContext))
+                if (OnBeforeAuthorizeConnect(hubDescriptor, request))
                 {
-                    return authorizeConnect(hubDescriptor, httpContext);
+                    return authorizeConnect(hubDescriptor, request);
                 }
                 return false;
             };
@@ -160,7 +160,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// </summary>
         /// <param name="rejoiningGroups">A function that determines which groups the client should be allowed to rejoin.</param>
         /// <returns>A wrapped function that determines which groups the client should be allowed to rejoin.</returns>
-        public virtual Func<HubDescriptor, HttpContext, IList<string>, IList<string>> BuildRejoiningGroups(Func<HubDescriptor, HttpContext, IList<string>, IList<string>> rejoiningGroups)
+        public virtual Func<HubDescriptor, HttpRequest, IList<string>, IList<string>> BuildRejoiningGroups(Func<HubDescriptor, HttpRequest, IList<string>, IList<string>> rejoiningGroups)
         {
             return rejoiningGroups;
         }
@@ -189,9 +189,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// to subscribe to client-side invocations of methods belonging to the hub defined by the <see cref="HubDescriptor"/>.
         /// </summary>
         /// <param name="hubDescriptor">A description of the hub the client is trying to subscribe to.</param>
-        /// <param name="context">The <see cref="HttpContext"/> for the connect request of the client trying to subscribe to the hub.</param>
+        /// <param name="request">The connect request made by the client trying to subscribe to the hub.</param>
         /// <returns>true, if the client is authorized to connect to the hub, false otherwise.</returns>
-        protected virtual bool OnBeforeAuthorizeConnect(HubDescriptor hubDescriptor, HttpContext context)
+        protected virtual bool OnBeforeAuthorizeConnect(HubDescriptor hubDescriptor, HttpRequest request)
         {
             return true;
         }

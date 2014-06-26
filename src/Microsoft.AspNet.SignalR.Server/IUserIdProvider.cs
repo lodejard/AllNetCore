@@ -8,6 +8,6 @@ namespace Microsoft.AspNet.SignalR
 {
     public interface IUserIdProvider
     {
-        string GetUserId(HttpContext context);
+        string GetUserId(HttpRequest request);
     }
 }

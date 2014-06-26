@@ -96,15 +96,15 @@ namespace Microsoft.AspNet.SignalR.Hubs
             base.Initialize(serviceProvider);
         }
 
-        protected override bool AuthorizeRequest(HttpContext context)
+        protected override bool AuthorizeRequest(HttpRequest request)
         {
-            if (context == null)
+            if (request == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException("request");
             }
 
             // Populate _hubs
-            string data = context.Request.Query["connectionData"];
+            string data = request.Query["connectionData"];
 
             if (!String.IsNullOrEmpty(data))
             {
@@ -129,7 +129,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                                         _counters.ErrorsAllTotal,
                                                         _counters.ErrorsAllPerSec);
 
-                        if (_pipelineInvoker.AuthorizeConnect(hubDescriptor, context))
+                        if (_pipelineInvoker.AuthorizeConnect(hubDescriptor, request))
                         {
                             // Add this to the list of hub descriptors this connection is interested in
                             hubCache.Add(hubDescriptor.Name, hubDescriptor);
@@ -143,13 +143,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 }
             }
 
-            return base.AuthorizeRequest(context);
+            return base.AuthorizeRequest(request);
         }
 
         /// <summary>
         /// Processes the hub's incoming method calls.
         /// </summary>
-        protected override Task OnReceived(HttpContext context, string connectionId, string data)
+        protected override Task OnReceived(HttpRequest request, string connectionId, string data)
         {
             HubRequest hubRequest = _requestParser.Parse(data, _serializer);
 
@@ -179,7 +179,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
             // Resolving the actual state object
             var tracker = new StateChangeTracker(hubRequest.State);
-            var hub = CreateHub(context, descriptor, connectionId, tracker, throwIfFailedToCreate: true);
+            var hub = CreateHub(request, descriptor, connectionId, tracker, throwIfFailedToCreate: true);
 
             return InvokeHubPipeline(hub, parameterValues, methodDescriptor, hubRequest, tracker)
                 .ContinueWithPreservedCulture(task => hub.Dispose(), TaskContinuationOptions.ExecuteSynchronously);
@@ -367,17 +367,17 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return context.Connection.Send(message);
         }
 
-        protected override Task OnConnected(HttpContext context, string connectionId)
+        protected override Task OnConnected(HttpRequest request, string connectionId)
         {
-            return ExecuteHubEvent(context, connectionId, hub => _pipelineInvoker.Connect(hub));
+            return ExecuteHubEvent(request, connectionId, hub => _pipelineInvoker.Connect(hub));
         }
 
-        protected override Task OnReconnected(HttpContext context, string connectionId)
+        protected override Task OnReconnected(HttpRequest request, string connectionId)
         {
-            return ExecuteHubEvent(context, connectionId, hub => _pipelineInvoker.Reconnect(hub));
+            return ExecuteHubEvent(request, connectionId, hub => _pipelineInvoker.Reconnect(hub));
         }
 
-        protected override IList<string> OnRejoiningGroups(HttpContext httpContext, IList<string> groups, string connectionId)
+        protected override IList<string> OnRejoiningGroups(HttpRequest request, IList<string> groups, string connectionId)
         {
             return _hubs.Select(hubDescriptor =>
             {
@@ -387,15 +387,15 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                       .Select(g => g.Substring(groupPrefix.Length))
                                       .ToList();
 
-                return _pipelineInvoker.RejoiningGroups(hubDescriptor, httpContext, hubGroups)
+                return _pipelineInvoker.RejoiningGroups(hubDescriptor, request, hubGroups)
                                         .Select(g => groupPrefix + g);
 
             }).SelectMany(groupsToRejoin => groupsToRejoin).ToList();
         }
 
-        protected override Task OnDisconnected(HttpContext context, string connectionId, bool stopCalled)
+        protected override Task OnDisconnected(HttpRequest request, string connectionId, bool stopCalled)
         {
-            return ExecuteHubEvent(context, connectionId, hub => _pipelineInvoker.Disconnect(hub, stopCalled));
+            return ExecuteHubEvent(request, connectionId, hub => _pipelineInvoker.Disconnect(hub, stopCalled));
         }
 
         protected override IList<string> GetSignals(string userId, string connectionId)
@@ -424,9 +424,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return signals.ToList();
         }
 
-        private Task ExecuteHubEvent(HttpContext context, string connectionId, Func<IHub, Task> action)
+        private Task ExecuteHubEvent(HttpRequest request, string connectionId, Func<IHub, Task> action)
         {
-            var hubs = GetHubs(context, connectionId).ToList();
+            var hubs = GetHubs(request, connectionId).ToList();
             var operations = hubs.Select(instance => action(instance).OrEmpty().Catch()).ToArray();
 
             if (operations.Length == 0)
@@ -457,7 +457,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return tcs.Task;
         }
 
-        private IHub CreateHub(HttpContext context, HubDescriptor descriptor, string connectionId, StateChangeTracker tracker = null, bool throwIfFailedToCreate = false)
+        private IHub CreateHub(HttpRequest request, HubDescriptor descriptor, string connectionId, StateChangeTracker tracker = null, bool throwIfFailedToCreate = false)
         {
             try
             {
@@ -467,7 +467,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 {
                     tracker = tracker ?? new StateChangeTracker();
 
-                    hub.Context = new HubCallerContext(context, connectionId);
+                    hub.Context = new HubCallerContext(request, connectionId);
                     hub.Clients = new HubConnectionContext(_pipelineInvoker, Connection, descriptor.Name, connectionId, tracker);
                     hub.Groups = new GroupManager(Connection, PrefixHelper.GetHubGroupName(descriptor.Name));
                 }
@@ -487,10 +487,10 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
         }
 
-        private IEnumerable<IHub> GetHubs(HttpContext context, string connectionId)
+        private IEnumerable<IHub> GetHubs(HttpRequest request, string connectionId)
         {
             return from descriptor in _hubs
-                   select CreateHub(context, descriptor, connectionId) into hub
+                   select CreateHub(request, descriptor, connectionId) into hub
                    where hub != null
                    select hub;
         }

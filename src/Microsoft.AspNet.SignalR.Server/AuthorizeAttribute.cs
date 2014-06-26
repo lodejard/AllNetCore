@@ -73,13 +73,13 @@ namespace Microsoft.AspNet.SignalR
         /// Determines whether client is authorized to connect to <see cref="IHub"/>.
         /// </summary>
         /// <param name="hubDescriptor">Description of the hub client is attempting to connect to.</param>
-        /// <param name="context">The (re)connect request from the client.</param>
+        /// <param name="request">The (re)connect request from the client.</param>
         /// <returns>true if the caller is authorized to connect to the hub; otherwise, false.</returns>
-        public virtual bool AuthorizeHubConnection(HubDescriptor hubDescriptor, HttpContext context)
+        public virtual bool AuthorizeHubConnection(HubDescriptor hubDescriptor, HttpRequest request)
         {
-            if (context == null)
+            if (request == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException("request");
             }
 
             // If RequireOutgoing is explicitly set to false, authorize all connections.
@@ -88,7 +88,7 @@ namespace Microsoft.AspNet.SignalR
                 return true;
             }
 
-            return UserAuthorized(context.User);
+            return UserAuthorized(request.HttpContext.User);
         }
 
         /// <summary>

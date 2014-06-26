@@ -9,16 +9,17 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 {
     public class PrincipalUserIdProvider : IUserIdProvider
     {
-        public string GetUserId(HttpContext context)
+        public string GetUserId(HttpRequest request)
         {
-            if (context == null)
+            if (request == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException("request");
             }
 
-            if (context.User != null && context.User.Identity != null)
+            var user = request.HttpContext.User;
+            if (user != null && user.Identity != null)
             {
-                return context.User.Identity.Name;
+                return user.Identity.Name;
             }
 
             return null;

@@ -82,7 +82,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <returns>
         /// A wrapped function that dictates whether or not the client is authorized to connect to the described Hub.
         /// </returns>
-        Func<HubDescriptor, HttpContext, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpContext, bool> authorizeConnect);
+        Func<HubDescriptor, HttpRequest, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpRequest, bool> authorizeConnect);
         
         /// <summary>
         /// Wraps a function that determines which of the groups belonging to the hub described by the <see cref="HubDescriptor"/>
@@ -91,6 +91,6 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// </summary>
         /// <param name="rejoiningGroups">A function that determines which groups the client should be allowed to rejoin.</param>
         /// <returns>A wrapped function that determines which groups the client should be allowed to rejoin.</returns>
-        Func<HubDescriptor, HttpContext, IList<string>, IList<string>> BuildRejoiningGroups(Func<HubDescriptor, HttpContext, IList<string>, IList<string>> rejoiningGroups);
+        Func<HubDescriptor, HttpRequest, IList<string>, IList<string>> BuildRejoiningGroups(Func<HubDescriptor, HttpRequest, IList<string>, IList<string>> rejoiningGroups);
     }
 }

@@ -59,12 +59,12 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// the client is authorized to subscribe to method invocations for the described hub.
         /// </summary>
         /// <param name="hubDescriptor">A description of the hub the client is attempting to connect to.</param>
-        /// <param name="httpContext">
-        /// The <see cref="HttpContext"/> for the connect request being made by the client which should include the client's
-        /// <see cref="System.Security.Principal.IPrincipal"/> User.
+        /// <param name="request">
+        /// The connect request being made by the client which references the client's
+        /// <see cref="System.Security.Principal.IPrincipal"/> via <see cref="HttpRequest.HttpContext.User"/>.
         /// </param>
         /// <returns>true, if the client is authorized to subscribe to client-side hub method invocations; false, otherwise.</returns>
-        bool AuthorizeConnect(HubDescriptor hubDescriptor, HttpContext httpContext);
+        bool AuthorizeConnect(HubDescriptor hubDescriptor, HttpRequest request);
 
         /// <summary>
         /// This method determines which of the groups belonging to the hub described by the <see cref="HubDescriptor"/> the client should be
@@ -73,11 +73,11 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// because untrusted clients may claim to be a member of groups they were never authorized to join.
         /// </summary>
         /// <param name="hubDescriptor">A description of the hub for which the client is attempting to rejoin groups.</param>
-        /// <param name="httpContext">The <see cref="HttpContext"/> for the reconnect request being made by the client that is attempting to rejoin groups.</param>
+        /// <param name="request">The reconnect request made by the client that is attempting to rejoin groups.</param>
         /// <param name="groups">
         /// The list of groups belonging to the relevant hub that the client claims to have been a member of before the reconnect.
         /// </param>
         /// <returns>A list of groups the client is allowed to rejoin.</returns>
-        IList<string> RejoiningGroups(HubDescriptor hubDescriptor, HttpContext httpContext, IList<string> groups);
+        IList<string> RejoiningGroups(HubDescriptor hubDescriptor, HttpRequest request, IList<string> groups);
     }
 }

@@ -57,18 +57,18 @@ namespace Microsoft.AspNet.SignalR.Hubs
             _methodInvocationAuthorizersCache = new ConcurrentDictionary<MethodDescriptor, IEnumerable<IAuthorizeHubMethodInvocation>>();
         }
 
-        public override Func<HubDescriptor, HttpContext, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpContext, bool> authorizeConnect)
+        public override Func<HubDescriptor, HttpRequest, bool> BuildAuthorizeConnect(Func<HubDescriptor, HttpRequest, bool> authorizeConnect)
         {
-            return base.BuildAuthorizeConnect((hubDescriptor, httpContext) =>
+            return base.BuildAuthorizeConnect((hubDescriptor, request) =>
             {
                 // Execute custom modules first and short circuit if any deny authorization.
-                if (!authorizeConnect(hubDescriptor, httpContext))
+                if (!authorizeConnect(hubDescriptor, request))
                 {
                     return false;
                 }
 
                 // Execute the global hub connection authorizer if there is one next and short circuit if it denies authorization.
-                if (_globalConnectionAuthorizer != null && !_globalConnectionAuthorizer.AuthorizeHubConnection(hubDescriptor, httpContext))
+                if (_globalConnectionAuthorizer != null && !_globalConnectionAuthorizer.AuthorizeHubConnection(hubDescriptor, request))
                 {
                     return false;
                 }
@@ -79,7 +79,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                     hubType => hubType.GetTypeInfo().GetCustomAttributes().OfType<IAuthorizeHubConnection>());
 
                 // Every attribute (if any) implementing IAuthorizeHubConnection attached to the relevant hub MUST allow the connection
-                return attributeAuthorizers.All(a => a.AuthorizeHubConnection(hubDescriptor, httpContext));
+                return attributeAuthorizers.All(a => a.AuthorizeHubConnection(hubDescriptor, request));
             });
         }
 
