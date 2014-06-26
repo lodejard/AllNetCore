@@ -527,13 +527,13 @@ namespace Microsoft.AspNet.SignalR
             {
                 // Send normal JSON response
                 context.Response.ContentType = JsonUtility.JsonMimeType;
-                return context.Response.WriteAsync(jsonPayload);
+                return context.Response.End(jsonPayload);
             }
 
             // Send JSONP response since a callback is specified by the query string
             var callbackInvocation = JsonUtility.CreateJsonpCallback(callback, jsonPayload);
             context.Response.ContentType = JsonUtility.JavaScriptMimeType;
-            return context.Response.WriteAsync(callbackInvocation);
+            return context.Response.End(callbackInvocation);
         }
 
         private static string GetUserIdentity(HttpContext context)
@@ -548,7 +548,7 @@ namespace Microsoft.AspNet.SignalR
         private static Task FailResponse(HttpResponse response, string message, int statusCode = 400)
         {
             response.StatusCode = statusCode;
-            return response.WriteAsync(message);
+            return response.End(message);
         }
 
         private static bool IsNegotiationRequest(HttpRequest request)

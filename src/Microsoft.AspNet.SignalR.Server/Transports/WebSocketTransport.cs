@@ -135,7 +135,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             //{
             //    // Bad Request
             //    _context.Response.StatusCode = 400;
-            //    return _context.Response.WriteAsync(Resources.Error_NotWebSocketRequest);
+            //    return _context.Response.End(Resources.Error_NotWebSocketRequest);
             //}
 
             //var handler = new OwinWebSocketHandler(callback, _maxIncomingMessageSize);

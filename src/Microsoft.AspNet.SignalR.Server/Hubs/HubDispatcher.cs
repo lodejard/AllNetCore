@@ -279,7 +279,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
                 // Generate the proxy
                 context.Response.ContentType = JsonUtility.JavaScriptMimeType;
-                return context.Response.WriteAsync(_proxyGenerator.GenerateProxy(hubUrl));
+                return context.Response.End(_proxyGenerator.GenerateProxy(hubUrl));
             }
 
             // TODO: Is debugging enabled
