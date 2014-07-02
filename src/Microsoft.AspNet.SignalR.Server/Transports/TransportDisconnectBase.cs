@@ -147,7 +147,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             get
             {
-                return _context.OnRequestAborted;
+                return _context.RequestAborted;
             }
         }
 
