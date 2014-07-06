@@ -18,9 +18,9 @@ namespace Microsoft.AspNet.SignalR
         /// </summary>
         Streaming = WebSockets | ServerSentEvents | ForeverFrame,
 
-        WebSockets = 0,
-        ServerSentEvents = 1,
-        ForeverFrame = 2,
-        LongPolling = 4
+        WebSockets = 1,
+        ServerSentEvents = 2,
+        ForeverFrame = 4,
+        LongPolling = 8
     }
 }
