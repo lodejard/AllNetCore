@@ -26,6 +26,7 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="project.json" />
+    <Content Include="scripts\signalr.samples.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Startup.cs" />
