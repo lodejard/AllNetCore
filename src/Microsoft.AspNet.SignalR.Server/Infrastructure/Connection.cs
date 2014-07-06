@@ -40,6 +40,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private readonly IProtectedData _protectedData;
         private readonly Func<Message, bool> _excludeMessage;
 
+        private readonly IMemoryPool _pool;
+
         public Connection(IMessageBus newMessageBus,
                           JsonSerializer jsonSerializer,
                           string baseSignal,
@@ -49,7 +51,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                           ILoggerFactory loggerFactory,
                           IAckHandler ackHandler,
                           IPerformanceCounterManager performanceCounterManager,
-                          IProtectedData protectedData)
+                          IProtectedData protectedData,
+                          IMemoryPool pool)
         {
             if (loggerFactory == null)
             {
@@ -67,6 +70,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _counters = performanceCounterManager;
             _protectedData = protectedData;
             _excludeMessage = m => ExcludeMessage(m);
+            _pool = pool;
         }
 
         public string DefaultSignal
@@ -223,23 +227,18 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
         private ArraySegment<byte> SerializeMessageValue(object value)
         {
-            using (var stream = new MemoryStream(128))
+            using (var writer = new MemoryPoolTextWriter(_pool))
             {
-                var bufferWriter = new BinaryTextWriter((buffer, state) =>
-                {
-                    ((MemoryStream)state).Write(buffer.Array, buffer.Offset, buffer.Count);
-                },
-                stream,
-                reuseBuffers: true,
-                bufferSize: 1024);
+                _serializer.Serialize(value, writer);
+                writer.Flush();
 
-                using (bufferWriter)
-                {
-                    _serializer.Serialize(value, bufferWriter);
-                    bufferWriter.Flush();
+                var data = writer.Buffer;
 
-                    return new ArraySegment<byte>(stream.ToArray());
-                }
+                var buffer = new byte[data.Count];
+
+                Buffer.BlockCopy(data.Array, data.Offset, buffer, 0, data.Count);
+
+                return new ArraySegment<byte>(buffer);
             }
         }
 

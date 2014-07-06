@@ -30,8 +30,9 @@ namespace Microsoft.AspNet.SignalR.Transports
                                    ITransportHeartbeat heartbeat,
                                    IPerformanceCounterManager performanceCounterWriter,
                                    IApplicationLifetime applicationLifetime,
-                                   ILoggerFactory loggerFactory)
-            : base(context, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory)
+                                   ILoggerFactory loggerFactory,
+                                   IMemoryPool pool)
+            : base(context, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
         {
             _jsonSerializer = jsonSerializer;
             _counters = performanceCounterWriter;
@@ -291,8 +292,13 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             context.Transport.Context.Response.ContentType = JsonUtility.JsonMimeType;
 
-            context.Transport.JsonSerializer.Serialize(context.State, context.Transport.OutputWriter);
-            context.Transport.OutputWriter.Flush();
+            using (var writer = new BinaryMemoryPoolTextWriter(context.Transport.Pool))
+            {
+                context.Transport.JsonSerializer.Serialize(context.State, writer);
+                writer.Flush();
+
+                context.Transport.Context.Response.Write(writer.Buffer);
+            }
 
             return TaskAsyncHelper.Empty;
         }

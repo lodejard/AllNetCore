@@ -45,6 +45,7 @@ namespace Microsoft.AspNet.SignalR
             AckHandler = serviceProvider.GetService<IAckHandler>();
             ProtectedData = serviceProvider.GetService<IProtectedData>();
             UserIdProvider = serviceProvider.GetService<IUserIdProvider>();
+            Pool = serviceProvider.GetService<IMemoryPool>();
 
             _options = serviceProvider.GetService<IOptionsAccessor<SignalROptions>>().Options;
             _transportManager = serviceProvider.GetService<ITransportManager>();
@@ -73,6 +74,8 @@ namespace Microsoft.AspNet.SignalR
         protected ITransport Transport { get; private set; }
 
         protected IUserIdProvider UserIdProvider { get; private set; }
+
+        protected IMemoryPool Pool { get; set; }
 
         /// <summary>
         /// Gets the <see cref="IConnection"/> for the <see cref="PersistentConnection"/>.
@@ -370,7 +373,8 @@ namespace Microsoft.AspNet.SignalR
                                   LoggerFactory,
                                   AckHandler,
                                   Counters,
-                                  ProtectedData);
+                                  ProtectedData,
+                                  Pool);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "userId", Justification = "This method is virtual and is used in the derived class")]

@@ -50,7 +50,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         internal HttpRequestLifeTime _requestLifeTime;
 
-        protected TransportDisconnectBase(HttpContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
+        protected TransportDisconnectBase(HttpContext context, ITransportHeartbeat heartbeat, IPerformanceCounterManager performanceCounterManager, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory, IMemoryPool pool)
         {
             if (context == null)
             {
@@ -77,6 +77,8 @@ namespace Microsoft.AspNet.SignalR.Transports
                 throw new ArgumentNullException("loggerFactory");
             }
 
+            Pool = pool;
+
             _context = context;
             _heartbeat = heartbeat;
             _counters = performanceCounterManager;
@@ -86,6 +88,8 @@ namespace Microsoft.AspNet.SignalR.Transports
             WriteQueue = new TaskQueue();
             _logger = loggerFactory.Create("SignalR.Transports." + GetType().Name);
         }
+
+        protected IMemoryPool Pool { get; private set; }
 
         protected ILogger Logger
         {
@@ -120,21 +124,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             return TaskAsyncHelper.FromResult(Context.Request.Query["groupsToken"]);
         }
-
-        public virtual TextWriter OutputWriter
-        {
-            get
-            {
-                if (_outputWriter == null)
-                {
-                    _outputWriter = CreateResponseWriter();
-                    _outputWriter.NewLine = "\n";
-                }
-
-                return _outputWriter;
-            }
-        }
-
+        
         internal TaskQueue WriteQueue
         {
             get;
@@ -260,11 +250,6 @@ namespace Microsoft.AspNet.SignalR.Transports
         protected ITransportHeartbeat Heartbeat
         {
             get { return _heartbeat; }
-        }
-
-        protected virtual TextWriter CreateResponseWriter()
-        {
-            return new BinaryTextWriter(Context.Response);
         }
 
         protected void IncrementErrors()

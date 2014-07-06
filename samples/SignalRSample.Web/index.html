@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="scripts/signalr.samples.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.0.2.min.js"></script>
     <script src="signalr/hubs"></script>
@@ -15,7 +16,9 @@
                 $('#messages').append('<li>' + val + '</li>');
             };
 
-            $.connection.hub.start()
+            $.connection.hub.logging = true;
+
+            $.connection.hub.start({ transport: activeTransport })
                 .done(function () {
                     $('#send').click(function () {
                         chat.server.send($('#msg').val());

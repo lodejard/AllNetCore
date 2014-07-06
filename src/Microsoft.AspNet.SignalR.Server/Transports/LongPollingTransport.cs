@@ -20,14 +20,17 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly TimeSpan _pollDelay;
         private bool _responseSent;
 
+        private static readonly byte[] _keepAlive = new byte[] { 32 };
+
         public LongPollingTransport(HttpContext context,
                                     JsonSerializer jsonSerializer,
                                     ITransportHeartbeat heartbeat,
                                     IPerformanceCounterManager performanceCounterManager,
                                     IApplicationLifetime applicationLifetime,
                                     ILoggerFactory loggerFactory,
-                                    IOptionsAccessor<SignalROptions> optionsAccessor)
-            : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory)
+                                    IOptionsAccessor<SignalROptions> optionsAccessor,
+                                    IMemoryPool pool)
+            : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
             _pollDelay = optionsAccessor.Options.Transports.LongPolling.PollDelay;
         }
@@ -221,8 +224,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 return TaskAsyncHelper.Empty;
             }
 
-            transport.OutputWriter.Write(' ');
-            transport.OutputWriter.Flush();
+            transport.Context.Response.Write(new ArraySegment<byte>(_keepAlive));
 
             return transport.Context.Response.Flush();
         }
@@ -236,20 +238,25 @@ namespace Microsoft.AspNet.SignalR.Transports
                 return TaskAsyncHelper.Empty;
             }
 
-            if (context.Transport.IsJsonp)
+            using (var writer = new BinaryMemoryPoolTextWriter(context.Transport.Pool))
             {
-                context.Transport.OutputWriter.Write(context.Transport.JsonpCallback);
-                context.Transport.OutputWriter.Write("(");
+                if (context.Transport.IsJsonp)
+                {
+                    writer.Write(context.Transport.JsonpCallback);
+                    writer.Write("(");
+                }
+
+                context.Transport.JsonSerializer.Serialize(context.State, writer);
+
+                if (context.Transport.IsJsonp)
+                {
+                    writer.Write(");");
+                }
+
+                writer.Flush();
+
+                context.Transport.Context.Response.Write(writer.Buffer);
             }
-
-            context.Transport.JsonSerializer.Serialize(context.State, context.Transport.OutputWriter);
-
-            if (context.Transport.IsJsonp)
-            {
-                context.Transport.OutputWriter.Write(");");
-            }
-
-            context.Transport.OutputWriter.Flush();
 
             return context.Transport.Context.Response.Flush();
         }

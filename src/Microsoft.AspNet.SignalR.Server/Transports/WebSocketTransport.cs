@@ -3,19 +3,15 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net.WebSockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Configuration;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.WebSockets;
-using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
 
@@ -33,13 +29,16 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly Action _closed;
         private readonly Action<Exception> _error;
 
+        private static byte[] _keepAlive = Encoding.UTF8.GetBytes("{}");
+
         public WebSocketTransport(HttpContext context,
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
                                   IPerformanceCounterManager performanceCounterWriter,
                                   IApplicationLifetime applicationLifetime,
-                                  ILoggerFactory loggerFactory)
-            : this(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, null)
+                                  ILoggerFactory loggerFactory,
+                                  IMemoryPool pool)
+            : this(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool, maxIncomingMessageSize: null)
         {
         }
 
@@ -49,8 +48,9 @@ namespace Microsoft.AspNet.SignalR.Transports
                                   IPerformanceCounterManager performanceCounterWriter,
                                   IApplicationLifetime applicationLifetime,
                                   ILoggerFactory loggerFactory,
+                                  IMemoryPool pool,
                                   int? maxIncomingMessageSize)
-            : base(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory)
+            : base(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
         {
             _context = context;
             _maxIncomingMessageSize = maxIncomingMessageSize;
@@ -82,7 +82,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             return EnqueueOperation(state =>
             {
                 var webSocket = (IWebSocket)state;
-                return webSocket.Send("{}");
+                return webSocket.Send(new ArraySegment<byte>(_keepAlive));
             },
             _socket);
         }
@@ -97,11 +97,6 @@ namespace Microsoft.AspNet.SignalR.Transports
             {
                 return AcceptWebSocketRequest(connection);
             }
-        }
-
-        protected override TextWriter CreateResponseWriter()
-        {
-            return new BinaryTextWriter(_socket);
         }
 
         public override Task Send(object value)
@@ -160,20 +155,24 @@ namespace Microsoft.AspNet.SignalR.Transports
         private static async Task PerformSend(object state)
         {
             var context = (WebSocketTransportContext)state;
+            var socket = context.Transport._socket;
 
-            try
+            using (var writer = new BinaryMemoryPoolTextWriter(context.Transport.Pool))
             {
-                context.Transport.JsonSerializer.Serialize(context.State, context.Transport.OutputWriter);
-                context.Transport.OutputWriter.Flush();
+                try
+                {
+                    context.Transport.JsonSerializer.Serialize(context.State, writer);
+                    writer.Flush();
 
-                await context.Transport._socket.Flush().PreserveCulture();
-            }
-            catch (Exception ex)
-            {
-                // OnError will close the socket in the event of a JSON serialization or flush error.
-                // The client should then immediately reconnect instead of simply missing keep-alives.
-                context.Transport.OnError(ex);
-                throw;
+                    await socket.Send(writer.Buffer).PreserveCulture();
+                }
+                catch (Exception ex)
+                {
+                    // OnError will close the socket in the event of a JSON serialization or flush error.
+                    // The client should then immediately reconnect instead of simply missing keep-alives.
+                    context.Transport.OnError(ex);
+                    throw;
+                }
             }
         }
 

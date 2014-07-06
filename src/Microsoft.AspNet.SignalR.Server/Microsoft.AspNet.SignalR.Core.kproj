@@ -130,8 +130,7 @@
     <Compile Include="IHubContext`T.cs" />
     <Compile Include="Infrastructure\AckHandler.cs" />
     <Compile Include="Infrastructure\ArraySegmentTextReader.cs" />
-    <Compile Include="Infrastructure\BinaryTextWriter.cs" />
-    <Compile Include="Infrastructure\BufferTextWriter.cs" />
+    <Compile Include="Infrastructure\BinaryMemoryPoolTextWriter.cs" />
     <Compile Include="Infrastructure\ByteBuffer.cs" />
     <Compile Include="Infrastructure\CancellationTokenExtensions.cs" />
     <Compile Include="Infrastructure\Connection.cs" />
@@ -145,12 +144,15 @@
     <Compile Include="Infrastructure\IAckHandler.cs" />
     <Compile Include="Infrastructure\IBinaryWriter.cs" />
     <Compile Include="Infrastructure\IConnectionManager.cs" />
+    <Compile Include="Infrastructure\MemoryPool.cs" />
+    <Compile Include="Infrastructure\IMemoryPool.cs" />
     <Compile Include="Infrastructure\InterlockedHelper.cs" />
     <Compile Include="Infrastructure\IPerformanceCounter.cs" />
     <Compile Include="Infrastructure\IPerformanceCounterManager.cs" />
     <Compile Include="Infrastructure\IProtectedData.cs" />
     <Compile Include="Infrastructure\IStringMinifier.cs" />
     <Compile Include="Infrastructure\ListHelper.cs" />
+    <Compile Include="Infrastructure\MemoryPoolTextWriter.cs" />
     <Compile Include="Infrastructure\MonoUtility.cs" />
     <Compile Include="Infrastructure\NoOpPerformanceCounter.cs" />
     <Compile Include="Infrastructure\PerformanceCounterAttribute.cs" />

@@ -134,7 +134,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                                   _serviceProvider.GetService<ILoggerFactory>(),
                                   _serviceProvider.GetService<IAckHandler>(),
                                   _serviceProvider.GetService<IPerformanceCounterManager>(),
-                                  _serviceProvider.GetService<IProtectedData>());
+                                  _serviceProvider.GetService<IProtectedData>(),
+                                  _serviceProvider.GetService<IMemoryPool>());
         }
     }
 }

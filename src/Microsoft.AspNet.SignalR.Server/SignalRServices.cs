@@ -28,6 +28,7 @@ namespace Microsoft.AspNet.SignalR
             // we had this before
 
             yield return serviceDescriber.Singleton<IMessageBus, MessageBus>();
+            yield return serviceDescriber.Singleton<IMemoryPool, MemoryPool>();
             yield return serviceDescriber.Singleton<IStringMinifier, StringMinifier>();
             yield return serviceDescriber.Singleton<ITransportManager, TransportManager>();
             yield return serviceDescriber.Singleton<ITransportHeartbeat, TransportHeartbeat>();

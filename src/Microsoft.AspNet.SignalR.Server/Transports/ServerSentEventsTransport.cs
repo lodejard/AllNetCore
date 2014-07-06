@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
+using System;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
@@ -14,13 +16,17 @@ namespace Microsoft.AspNet.SignalR.Transports
 {
     public class ServerSentEventsTransport : ForeverTransport
     {
+        private static byte[] _keepAlive = Encoding.UTF8.GetBytes("data: {}\n\n");
+        private static byte[] _dataInitialized = Encoding.UTF8.GetBytes("data: initialized\n\n");
+
         public ServerSentEventsTransport(HttpContext context,
                                          JsonSerializer jsonSerializer,
                                          ITransportHeartbeat heartbeat,
                                          IPerformanceCounterManager performanceCounterWriter,
                                          IApplicationLifetime applicationLifetime,
-                                         ILoggerFactory loggerFactory)
-            : base(context, jsonSerializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory)
+                                         ILoggerFactory loggerFactory,
+                                         IMemoryPool pool)
+            : base(context, jsonSerializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
         {
         }
 
@@ -51,10 +57,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var transport = (ServerSentEventsTransport)state;
 
-            transport.OutputWriter.Write("data: {}");
-            transport.OutputWriter.WriteLine();
-            transport.OutputWriter.WriteLine();
-            transport.OutputWriter.Flush();
+            transport.Context.Response.Write(new ArraySegment<byte>(_keepAlive));
 
             return transport.Context.Response.Flush();
         }
@@ -63,11 +66,16 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var context = (SendContext)state;
 
-            context.Transport.OutputWriter.Write("data: ");
-            context.Transport.JsonSerializer.Serialize(context.State, context.Transport.OutputWriter);
-            context.Transport.OutputWriter.WriteLine();
-            context.Transport.OutputWriter.WriteLine();
-            context.Transport.OutputWriter.Flush();
+            using (var writer = new BinaryMemoryPoolTextWriter(context.Transport.Pool))
+            {
+                writer.Write("data: ");
+                context.Transport.JsonSerializer.Serialize(context.State, writer);
+                writer.WriteLine();
+                writer.WriteLine();
+                writer.Flush();
+
+                context.Transport.Context.Response.Write(writer.Buffer);
+            }
 
             return context.Transport.Context.Response.Flush();
         }
@@ -77,10 +85,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             transport.Context.Response.ContentType = "text/event-stream";
 
             // "data: initialized\n\n"
-            transport.OutputWriter.Write("data: initialized");
-            transport.OutputWriter.WriteLine();
-            transport.OutputWriter.WriteLine();
-            transport.OutputWriter.Flush();
+            transport.Context.Response.Write(new ArraySegment<byte>(_dataInitialized));
 
             return transport.Context.Response.Flush();
         }
