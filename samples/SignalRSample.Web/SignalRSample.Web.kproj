@@ -123,11 +123,14 @@
     <Content Include="Hubs\Benchmark\index.htm" />
     <Content Include="Hubs\DemoHub\DemoHub.js" />
     <Content Include="Hubs\DemoHub\index.html" />
+    <Content Include="Hubs\MessageLoops\index.html" />
+    <Content Include="Hubs\MessageLoops\MessageLoops.js" />
     <Content Include="index.html" />
     <Content Include="project.json" />
     <Content Include="Raw\index.html" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\jquery-1.8.2.js" />
+    <Content Include="scripts\jquery.color-2.1.0.js" />
     <Content Include="scripts\jquery.cookie.js" />
     <Content Include="scripts\json2.js" />
     <Content Include="scripts\signalr.samples.js" />
@@ -136,6 +139,7 @@
     <Compile Include="Hubs\Benchmark\HubBench.cs" />
     <Compile Include="Hubs\DemoHub\DemoHub.cs" />
     <Compile Include="Hubs\DemoHub\TypedDemoHub.cs" />
+    <Compile Include="Hubs\MessageLoops\MessageLoops.cs" />
     <Compile Include="Raw\RawConnection.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
