@@ -119,6 +119,10 @@
     <Content Include="Content\themes\smoothness\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\smoothness\jquery-ui-1.8.12.css" />
+    <Content Include="Hubs\Benchmark\Benchmark.js" />
+    <Content Include="Hubs\Benchmark\index.htm" />
+    <Content Include="Hubs\DemoHub\DemoHub.js" />
+    <Content Include="Hubs\DemoHub\index.html" />
     <Content Include="index.html" />
     <Content Include="project.json" />
     <Content Include="Raw\index.html" />
@@ -129,7 +133,9 @@
     <Content Include="scripts\signalr.samples.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hubs\Benchmark\HubBench.cs" />
     <Compile Include="Hubs\DemoHub\DemoHub.cs" />
+    <Compile Include="Hubs\DemoHub\TypedDemoHub.cs" />
     <Compile Include="Raw\RawConnection.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
