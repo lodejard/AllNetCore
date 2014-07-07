@@ -22,8 +22,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AckHandlerFacts.cs" />
+    <Compile Include="ArrayTextReaderFacts.cs" />
+    <Compile Include="SignalROptionsFacts.cs" />
     <Compile Include="ConnectionFacts.cs" />
     <Compile Include="Connections\ConnectionFacts.cs" />
+    <Compile Include="CursorFacts.cs" />
     <Compile Include="DiffSetFacts.cs" />
     <Compile Include="DisposerFacts.cs" />
     <Compile Include="Hubs\HubDispatcherFacts.cs" />
