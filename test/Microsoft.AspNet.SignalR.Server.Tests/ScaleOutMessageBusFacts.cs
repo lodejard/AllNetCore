@@ -11,7 +11,7 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Server
+namespace Microsoft.AspNet.SignalR.Tests
 {
     public class ScaleOutMessageBusFacts
     {

@@ -7,7 +7,7 @@ using Microsoft.AspNet.SignalR.Messaging;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Server
+namespace Microsoft.AspNet.SignalR.Tests
 {
     public class SubscriptionFacts
     {

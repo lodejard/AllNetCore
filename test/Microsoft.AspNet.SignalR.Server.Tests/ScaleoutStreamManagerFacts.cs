@@ -7,7 +7,7 @@ using Xunit;
 
 using SignalRPerformanceCounterManager = Microsoft.AspNet.SignalR.Infrastructure.PerformanceCounterManager;
 
-namespace Microsoft.AspNet.SignalR.Tests.Server
+namespace Microsoft.AspNet.SignalR.Tests
 {
     public class ScaleoutStreamManagerFacts
     {

@@ -43,7 +43,10 @@
     <Compile Include="ScaleoutStoreFacts.cs" />
     <Compile Include="ScaleoutStreamFacts.cs" />
     <Compile Include="ScaleoutStreamManagerFacts.cs" />
+    <Compile Include="StringMinifierFacts.cs" />
     <Compile Include="SubscriptionFacts.cs" />
+    <Compile Include="TaskAsyncHelperFacts.cs" />
+    <Compile Include="TaskQueueFacts.cs" />
     <Compile Include="TestSubscriber.cs" />
     <Compile Include="TopicFacts.cs" />
     <Compile Include="Transports\ForeverTransportFacts.cs" />

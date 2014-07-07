@@ -24,36 +24,11 @@ namespace Microsoft.AspNet.SignalR.Tests
             var collection = new ServiceCollection()
                 .Add(OptionsServices.GetDefaultServices())
                 .Add(HostingServices.GetDefaultServices())
-                .Add(SignalRServices.GetDefaultServices())
-                .AddInstance<ILoggerFactory>(new TestLoggerFactory());
+                .Add(SignalRServices.GetDefaultServices());
 
             configure(collection);
 
             return collection.BuildServiceProvider(CallContextServiceLocator.Locator.ServiceProvider);
-        }
-
-        private class TestLoggerFactory : ILoggerFactory
-        {
-            public ILogger Create(string name)
-            {
-                return new TestLogger(name);
-            }
-
-            private class TestLogger : ILogger
-            {
-                private readonly string _name;
-
-                public TestLogger(string name)
-                {
-                    _name = name;
-                }
-
-                public bool WriteCore(TraceType eventType, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
-                {
-                    Console.WriteLine("[" + _name + "]: " + formatter(state, exception));
-                    return true;
-                }
-            }
         }
     }
 }
