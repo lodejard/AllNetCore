@@ -136,11 +136,10 @@ namespace Microsoft.AspNet.SignalR
                 throw new ArgumentNullException("context");
             }
 
-            // Disable request compression and buffering on IIS
+            // Always disable response buffering
             var buffering = context.GetFeature<IHttpBufferingFeature>();
             if (buffering != null)
             {
-                buffering.DisableRequestBuffering();
                 buffering.DisableResponseBuffering();
             }
 

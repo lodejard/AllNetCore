@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.HttpFeature;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
@@ -82,6 +83,13 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private static Task WriteInit(ServerSentEventsTransport transport)
         {
+            // Disable request compression
+            var buffering = transport.Context.GetFeature<IHttpBufferingFeature>();
+            if (buffering != null)
+            {
+                buffering.DisableRequestBuffering();
+            }
+
             transport.Context.Response.ContentType = "text/event-stream";
 
             // "data: initialized\n\n"

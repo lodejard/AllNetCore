@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.HttpFeature;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.Framework.Logging;
@@ -93,6 +94,13 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private static Task WriteInit(ForeverFrameTransportContext context)
         {
+            // Disable request compression
+            var buffering = context.Transport.Context.GetFeature<IHttpBufferingFeature>();
+            if (buffering != null)
+            {
+                buffering.DisableRequestBuffering();
+            }
+
             context.Transport.Context.Response.ContentType = "text/html; charset=UTF-8";
 
             using (var htmlOutputWriter = new HTMLTextWriter(context.Transport.Pool))

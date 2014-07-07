@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.HttpFeature;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
 using Microsoft.Framework.DependencyInjection;
@@ -95,6 +96,33 @@ namespace Microsoft.AspNet.SignalR.Tests
             fft.InitializeResponse(connection.Object).Wait();
 
             Assert.Equal("text/html; charset=UTF-8", context.MockResponse.Object.ContentType);
+        }
+
+        [Fact]
+        public void ForeverFrameTransportDisablesRequestBuffering()
+        {
+            var qs = new Dictionary<string, string> {
+                { "frameId", "1" }
+            };
+            var context = new TestContext("/", qs);
+            var sp = ServiceProviderHelper.CreateServiceProvider();
+            var ta = new TypeActivator();
+
+            var ms = new MemoryStream();
+            var buffering = new Mock<IHttpBufferingFeature>();
+
+            context.MockHttpContext.Setup(m => m.GetFeature<IHttpBufferingFeature>())
+                .Returns(buffering.Object);
+            context.MockResponse.SetupAllProperties();
+            context.MockResponse.Setup(m => m.Body).Returns(ms);
+
+            var fft = ta.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
+            fft.ConnectionId = "1";
+            var connection = new Mock<ITransportConnection>();
+
+            fft.InitializeResponse(connection.Object).Wait();
+
+            buffering.Verify(m => m.DisableRequestBuffering(), Times.Once());
         }
 
         private static void AssertEscaped(ForeverFrameTransport fft, MemoryStream ms, object input, string expectedOutput)
