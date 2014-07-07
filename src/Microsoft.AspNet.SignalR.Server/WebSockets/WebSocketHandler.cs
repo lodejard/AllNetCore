@@ -44,24 +44,13 @@ namespace Microsoft.AspNet.SignalR.WebSockets
 
         public virtual void OnClose() { }
 
-        // Sends a text message to the client
-        public virtual Task Send(string message)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
-
-            return SendAsync(message);
-        }
-
-        internal Task SendAsync(string message)
+        public Task SendAsync(string message)
         {
             var buffer = Encoding.UTF8.GetBytes(message);
             return SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text);
         }
 
-        internal virtual Task SendAsync(ArraySegment<byte> message, WebSocketMessageType messageType, bool endOfMessage = true)
+        public virtual Task SendAsync(ArraySegment<byte> message, WebSocketMessageType messageType, bool endOfMessage = true)
         {
             if (WebSocket.State != WebSocketState.Open)
             {
