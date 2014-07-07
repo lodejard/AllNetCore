@@ -41,6 +41,7 @@
     <Compile Include="ScaleoutConfigurationFacts.cs" />
     <Compile Include="ScaleOutMessageBusFacts.cs" />
     <Compile Include="ScaleoutStoreFacts.cs" />
+    <Compile Include="ScaleoutStreamManagerFacts.cs" />
     <Compile Include="SubscriptionFacts.cs" />
     <Compile Include="TestSubscriber.cs" />
     <Compile Include="TopicFacts.cs" />
