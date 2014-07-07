@@ -69,6 +69,7 @@
     <Compile Include="TaskQueueFacts.cs" />
     <Compile Include="TestSubscriber.cs" />
     <Compile Include="TopicFacts.cs" />
+    <Compile Include="Transports\ServerSentEventsTransportFacts.cs" />
     <Compile Include="Transports\ForeverFrameTransportFacts.cs" />
     <Compile Include="Transports\ForeverTransportFacts.cs" />
     <Compile Include="Transports\LongPollingTransportFacts.cs" />
