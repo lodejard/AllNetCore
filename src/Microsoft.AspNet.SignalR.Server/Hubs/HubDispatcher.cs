@@ -40,7 +40,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private IParameterResolver _binder;
         private IHubPipelineInvoker _pipelineInvoker;
         private IPerformanceCounterManager _counters;
-        private bool _isDebuggingEnabled;
+        private bool _isDebuggingEnabled = false;
 
         private static readonly MethodInfo _continueWithMethod = typeof(HubDispatcher).GetMethod("ContinueWith", BindingFlags.NonPublic | BindingFlags.Static);
 
