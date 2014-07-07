@@ -23,6 +23,9 @@
   <ItemGroup>
     <Compile Include="AckHandlerFacts.cs" />
     <Compile Include="ArrayTextReaderFacts.cs" />
+    <Compile Include="DefaultActionResolverFacts.cs" />
+    <Compile Include="DefaultHubResolverFacts.cs" />
+    <Compile Include="GroupManagerFacts.cs" />
     <Compile Include="SignalROptionsFacts.cs" />
     <Compile Include="ConnectionFacts.cs" />
     <Compile Include="Connections\ConnectionFacts.cs" />
