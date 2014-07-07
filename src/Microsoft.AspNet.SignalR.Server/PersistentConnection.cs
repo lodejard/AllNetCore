@@ -131,6 +131,11 @@ namespace Microsoft.AspNet.SignalR
         /// <returns></returns>
         public Task ProcessRequest(HttpContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
             // Disable request compression and buffering on IIS
             var buffering = context.GetFeature<IHttpBufferingFeature>();
             if (buffering != null)
@@ -170,7 +175,6 @@ namespace Microsoft.AspNet.SignalR
         /// <param name="context">The <see cref="HttpContext"/> for the current request.</param>
         /// <returns>A <see cref="Task"/> that completes when the <see cref="PersistentConnection"/> pipeline is complete.</returns>
         /// <exception cref="T:System.InvalidOperationException">
-        /// Thrown if connection wasn't initialized.
         /// Thrown if the transport wasn't specified.
         /// Thrown if the connection id wasn't specified.
         /// </exception>

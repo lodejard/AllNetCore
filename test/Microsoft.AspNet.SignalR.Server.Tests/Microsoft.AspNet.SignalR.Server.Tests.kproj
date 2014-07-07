@@ -37,6 +37,8 @@
     <Compile Include="Infrastructure\TestUtilities.cs" />
     <Compile Include="MessageBusFacts.cs" />
     <Compile Include="MessageResultExtensions.cs" />
+    <Compile Include="PersistentConnectionFacts.cs" />
+    <Compile Include="PersistentResponseFacts.cs" />
     <Compile Include="ProtocolResolverFacts.cs" />
     <Compile Include="ScaleoutConfigurationFacts.cs" />
     <Compile Include="ScaleOutMessageBusFacts.cs" />
@@ -45,7 +47,6 @@
     <Compile Include="ScaleoutStreamManagerFacts.cs" />
     <Compile Include="StringMinifierFacts.cs" />
     <Compile Include="SubscriptionFacts.cs" />
-    <Compile Include="TaskAsyncHelperFacts.cs" />
     <Compile Include="TaskQueueFacts.cs" />
     <Compile Include="TestSubscriber.cs" />
     <Compile Include="TopicFacts.cs" />
