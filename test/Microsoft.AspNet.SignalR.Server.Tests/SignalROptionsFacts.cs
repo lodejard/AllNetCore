@@ -223,5 +223,51 @@ namespace Microsoft.AspNet.SignalR.Tests
             Assert.Equal(1000, options.MessageBufferSize);
             Assert.Equal(1000, options.MaxTopicsWithNoSubscriptions);
         }
+
+        [Fact]
+        public void DefaultWebSocketOptions()
+        {
+            var options = new WebSocketOptions();
+            Assert.Equal(64 * 1024, options.MaxIncomingMessageSize);
+        }
+
+        [Fact]
+        public void AllTransportEnabledByDefault()
+        {
+            var options = new SignalROptions();
+            Assert.Equal(TransportType.All, options.Transports.EnabledTransports);
+        }
+
+        [Fact]
+        public void SettingSingleTransport()
+        {
+            var options = new SignalROptions();
+            options.Transports.EnabledTransports = TransportType.LongPolling;
+
+            Assert.True(options.Transports.EnabledTransports.HasFlag(TransportType.LongPolling));
+            Assert.False(options.Transports.EnabledTransports.HasFlag(TransportType.ForeverFrame));
+            Assert.False(options.Transports.EnabledTransports.HasFlag(TransportType.ServerSentEvents));
+            Assert.False(options.Transports.EnabledTransports.HasFlag(TransportType.WebSockets));
+        }
+
+        [Fact]
+        public void StreamingDisablesLongPollingTransport()
+        {
+            var options = new SignalROptions();
+            options.Transports.EnabledTransports = TransportType.Streaming;
+
+            Assert.False(options.Transports.EnabledTransports.HasFlag(TransportType.LongPolling));
+            Assert.True(options.Transports.EnabledTransports.HasFlag(TransportType.ForeverFrame));
+            Assert.True(options.Transports.EnabledTransports.HasFlag(TransportType.ServerSentEvents));
+            Assert.True(options.Transports.EnabledTransports.HasFlag(TransportType.WebSockets));
+        }
+
+        [Fact]
+        public void JavascriptProviesOnByDefault()
+        {
+            var options = new SignalROptions();
+
+            Assert.True(options.Hubs.EnableJavaScriptProxies);
+        }
     }
 }
