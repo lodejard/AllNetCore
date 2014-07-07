@@ -5,6 +5,12 @@ namespace Microsoft.AspNet.SignalR.Configuration
 {
     public class MessageBusOptions
     {
+        public MessageBusOptions()
+        {
+            MessageBufferSize = 1000;
+            MaxTopicsWithNoSubscriptions = 1000;
+        }
+
         /// <summary>
         /// Gets or sets the number of messages to buffer for a specific signal.
         /// The default value is 1000.

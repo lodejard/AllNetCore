@@ -351,7 +351,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             }
         }
 
-        [Fact(Skip = "Buggy")]
+        [Fact]
         public void GarbageCollectingTopicsBeforeSubscribingTopicSetsStateToHasSubscription()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
@@ -585,7 +585,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             }
         }
 
-        [Fact(Skip = "Buggy")]
+        [Fact]
         public void AddingEventAndSendingMessages()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
@@ -605,7 +605,6 @@ namespace Microsoft.AspNet.SignalR.Tests
                         foreach (var m in result.GetMessages())
                         {
                             int n = Int32.Parse(m.GetString());
-                            Console.WriteLine(n);
                             Assert.True(n == prev + 1, "Expected " + (prev + 1));
                             prev = n;
                             Assert.True(cd.Mark(n));

@@ -154,5 +154,10 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             return message;
         }
+
+        public override string ToString()
+        {
+            return GetString();
+        }
     }
 }
