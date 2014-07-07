@@ -34,20 +34,19 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private static Func<IClientProxy, T> GenerateClientBuilder()
         {
-#if NET45
             VerifyInterface();
 
             var assemblyName = new AssemblyName(clientModule);
 
+#if NET45
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+#else
+            AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+#endif
             ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(clientModule);
             Type clientType = GenerateInterfaceImplementation(moduleBuilder);
 
             return proxy => (T)Activator.CreateInstance(clientType, proxy);
-#else
-            // TODO: Ref emit
-            throw new NotSupportedException();
-#endif
         }
 
         private static Type GenerateInterfaceImplementation(ModuleBuilder moduleBuilder)

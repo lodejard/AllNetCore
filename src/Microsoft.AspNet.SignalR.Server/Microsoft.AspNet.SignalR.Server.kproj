@@ -212,7 +212,6 @@
     <Compile Include="Messaging\Volatile.cs" />
     <Compile Include="PersistentConnection.cs" />
     <Compile Include="Resources.Designer.cs" />
-    <Compile Include="Security\RNGCryptoServiceProvider.cs" />
     <Compile Include="SignalRServiceCollectionExtensions.cs" />
     <Compile Include="SignalRServiceColletion.cs" />
     <Compile Include="SignalRServices.cs" />
