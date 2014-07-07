@@ -5,6 +5,9 @@
         "Xunit.KRunner": "1.0.0-*",
         "Moq": "4.2.1312.1622"
     },
+    "compilationOptions": {
+        "allowUnsafe": true
+    },
     "configurations": {
       "net45": {
         "dependencies": {

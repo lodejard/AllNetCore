@@ -63,6 +63,7 @@
     <Compile Include="ScaleoutStoreFacts.cs" />
     <Compile Include="ScaleoutStreamFacts.cs" />
     <Compile Include="ScaleoutStreamManagerFacts.cs" />
+    <Compile Include="SipHashBasedStringEqualityComparerFacts.cs" />
     <Compile Include="StringMinifierFacts.cs" />
     <Compile Include="SubscriptionFacts.cs" />
     <Compile Include="TaskQueueFacts.cs" />
