@@ -29,17 +29,12 @@ namespace Microsoft.AspNet.SignalR.Messaging
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
                                      IOptionsAccessor<SignalROptions> optionsAccessor,
-                                     ScaleoutConfiguration scaleoutConfiguration)
+                                     IOptionsAccessor<ScaleoutConfiguration> scaleoutConfigurationAccessor)
             : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
         {
-            if (scaleoutConfiguration == null)
-            {
-                throw new ArgumentNullException("scaleoutConfiguration");
-            }
-
             _logger = loggerFactory.Create("SignalR." + typeof(ScaleoutMessageBus).Name);
             _perfCounters = performanceCounterManager;
-            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, scaleoutConfiguration));
+            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, scaleoutConfigurationAccessor.Options));
         }
 
         /// <summary>

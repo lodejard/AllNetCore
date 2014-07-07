@@ -31,12 +31,14 @@
     <Compile Include="Hubs\HubProgressFacts.cs" />
     <Compile Include="Hubs\TypedClientBuilderFacts.cs" />
     <Compile Include="Infrastructure\CountDownRange.cs" />
+    <Compile Include="Infrastructure\OrderedCountDownRange.cs" />
     <Compile Include="Infrastructure\ServiceProviderHelper.cs" />
     <Compile Include="Infrastructure\TestContext.cs" />
     <Compile Include="MessageBusFacts.cs" />
     <Compile Include="MessageResultExtensions.cs" />
     <Compile Include="ProtocolResolverFacts.cs" />
     <Compile Include="ScaleoutConfigurationFacts.cs" />
+    <Compile Include="ScaleOutMessageBusFacts.cs" />
     <Compile Include="ScaleoutStoreFacts.cs" />
     <Compile Include="TestSubscriber.cs" />
     <Compile Include="TopicFacts.cs" />
