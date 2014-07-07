@@ -26,6 +26,16 @@
     <Compile Include="DefaultActionResolverFacts.cs" />
     <Compile Include="DefaultHubResolverFacts.cs" />
     <Compile Include="GroupManagerFacts.cs" />
+    <Compile Include="Hubs\DefaultJavaScriptProxyGeneratorFacts.cs" />
+    <Compile Include="Hubs\Extensions\HubManagerExtensionsFacts.cs" />
+    <Compile Include="Hubs\Extensions\HubTypeExtensions.cs" />
+    <Compile Include="Hubs\Extensions\MethodExtensionsFacts.cs" />
+    <Compile Include="Hubs\HubConnectionContextFacts.cs" />
+    <Compile Include="Hubs\HubContextFacts.cs" />
+    <Compile Include="Hubs\Lookup\DefaultHubManagerFacts.cs" />
+    <Compile Include="Hubs\Lookup\Descriptors\HubDescriptorFacts.cs" />
+    <Compile Include="Hubs\Lookup\HubMethodDispatcherFacts.cs" />
+    <Compile Include="Hubs\TestHubs.cs" />
     <Compile Include="Json\JsonFacts.cs" />
     <Compile Include="Json\JsonSerializerExtensionFacts.cs" />
     <Compile Include="SignalROptionsFacts.cs" />
