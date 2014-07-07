@@ -26,6 +26,8 @@
     <Compile Include="DefaultActionResolverFacts.cs" />
     <Compile Include="DefaultHubResolverFacts.cs" />
     <Compile Include="GroupManagerFacts.cs" />
+    <Compile Include="Json\JsonFacts.cs" />
+    <Compile Include="Json\JsonSerializerExtensionFacts.cs" />
     <Compile Include="SignalROptionsFacts.cs" />
     <Compile Include="ConnectionFacts.cs" />
     <Compile Include="Connections\ConnectionFacts.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="TaskQueueFacts.cs" />
     <Compile Include="TestSubscriber.cs" />
     <Compile Include="TopicFacts.cs" />
+    <Compile Include="Transports\ForeverFrameTransportFacts.cs" />
     <Compile Include="Transports\ForeverTransportFacts.cs" />
     <Compile Include="Transports\LongPollingTransportFacts.cs" />
     <Compile Include="WebSocketFacts.cs" />
