@@ -16,10 +16,9 @@ namespace Microsoft.AspNet.SignalR.Tests
 {
     public class ForeverFrameTransportFacts
     {
-        [Theory(Skip = "Should we escape regular sends?")]
-        [InlineData("</sCRiPT>", "\\u003c/sCRiPT\\u003e")]
-        [InlineData("</SCRIPT dosomething='false'>", "\\u003c/SCRIPT dosomething='false'\\u003e")]
-        [InlineData("<p>ELLO</p>", "\\u003cp\\u003eELLO\\u003c/p\\u003e")]
+        [InlineData("</sCRiPT>", "</sCRiPT>")]
+        [InlineData("</SCRIPT dosomething='false'>", "</SCRIPT dosomething='false'>")]
+        [InlineData("<p>ELLO</p>", "<p>ELLO</p>")]
         public void ForeverFrameTransportEscapesTags(string data, string expected)
         {
             var context = new TestContext("/");
