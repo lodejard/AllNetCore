@@ -44,8 +44,6 @@ namespace Microsoft.AspNet.SignalR.Tests
 
             MockResponse.SetupSet(m => m.ContentType = It.IsAny<string>())
                 .Callback<string>(type => ResponseContentType = type);
-            MockResponse.Setup(m => m.WriteAsync(It.IsAny<string>())).Returns(TaskAsyncHelper.Empty)
-                .Callback<string>(data => ResponseBuffer.Add(data));
 
             MockHttpContext = new Mock<HttpContext>();
             MockHttpContext.SetupGet(m => m.Response).Returns(MockResponse.Object);
