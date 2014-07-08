@@ -136,13 +136,6 @@ namespace Microsoft.AspNet.SignalR
                 throw new ArgumentNullException("context");
             }
 
-            // Always disable response buffering
-            var buffering = context.GetFeature<IHttpBufferingFeature>();
-            if (buffering != null)
-            {
-                buffering.DisableResponseBuffering();
-            }
-
             var response = context.Response;
 
             // Add the nosniff header for all responses to prevent IE from trying to sniff mime type from contents
