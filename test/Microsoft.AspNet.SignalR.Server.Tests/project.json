@@ -1,4 +1,4 @@
-{
+﻿{
     "dependencies": {
         "SignalRSample.Web":  "",
         "Microsoft.AspNet.SignalR.Server":  "",
@@ -8,7 +8,7 @@
     "compilationOptions": {
         "allowUnsafe": true
     },
-    "configurations": {
+    "frameworks": {
       "net45": {
         "dependencies": {
           "System.Reflection": "",

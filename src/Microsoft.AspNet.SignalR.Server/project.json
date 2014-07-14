@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "3.0.0-*",
   "dependencies": {
     "Microsoft.AspNet.Http": "1.0.0-*",
@@ -17,7 +17,7 @@
     "allowUnsafe": true
   },
   "resources": "Scripts/**/*.*",
-  "configurations": {
+  "frameworks": {
     "net45": {},
     "k10": {
       "dependencies": {
