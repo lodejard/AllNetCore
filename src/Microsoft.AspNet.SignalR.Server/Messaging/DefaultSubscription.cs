@@ -222,7 +222,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         private static string GetCursorPrefix()
         {
-            using (var rng = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 var data = new byte[4];
                 rng.GetBytes(data);

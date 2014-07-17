@@ -17,7 +17,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
     // Derivative work of https://github.com/tanglebones/ch-siphash.
     internal unsafe sealed class SipHashBasedStringEqualityComparer : IEqualityComparer<string>
     {
-        private static readonly RNGCryptoServiceProvider _rng = new RNGCryptoServiceProvider();
+        private static readonly RandomNumberGenerator _rng = RandomNumberGenerator.Create();
 
         // the 128-bit secret key
         private readonly ulong _k0;
