@@ -45,9 +45,13 @@ namespace Microsoft.AspNet.SignalR.Tests
             {
                 // Arrange
                 var connection = new Mock<IConnection>();
+                var message = default(ConnectionMessage);
+
                 connection.Setup(m => m.Send(It.IsAny<ConnectionMessage>()))
                           .Callback<ConnectionMessage>(m =>
                           {
+                              message = m;
+
                               Assert.Equal("c-1", m.Signal);
                               Assert.NotNull(m.Value);
                               var command = m.Value as Command;
@@ -96,9 +100,12 @@ namespace Microsoft.AspNet.SignalR.Tests
             {
                 // Arrange
                 var connection = new Mock<IConnection>();
+                var message = default(ConnectionMessage);
                 connection.Setup(m => m.Send(It.IsAny<ConnectionMessage>()))
                           .Callback<ConnectionMessage>(m =>
                           {
+                              message = m;
+
                               Assert.Equal("c-1", m.Signal);
                               Assert.NotNull(m.Value);
                               var command = m.Value as Command;
@@ -147,9 +154,12 @@ namespace Microsoft.AspNet.SignalR.Tests
             {
                 // Arrange
                 var connection = new Mock<IConnection>();
+                var message = default(ConnectionMessage);
                 connection.Setup(m => m.Send(It.IsAny<ConnectionMessage>()))
                           .Callback<ConnectionMessage>(m =>
                           {
+                              message = m;
+
                               Assert.Equal("Prefix.MyGroup", m.Signal);
                               Assert.Equal("some value", m.Value);
                               Assert.True(m.ExcludedSignals.Contains("c-x"));

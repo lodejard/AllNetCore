@@ -16,7 +16,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Json
             var sw = new StringWriter();
             var value = new Mock<IJsonWritable>();
             value.Setup(m => m.WriteJson(It.IsAny<TextWriter>()))
-                 .Callback<TextWriter>(tw => tw.Write("Custom"));
+                 .Callback<TextWriter>(_ => sw.Write("Custom"));
 
             // Act
             serializer.Serialize(value.Object, sw);
