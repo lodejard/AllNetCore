@@ -180,7 +180,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Received != null)
             {
-                Received(message).Catch();
+                Received(message).Catch(Logger);
             }
         }
 

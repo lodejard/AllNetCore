@@ -76,7 +76,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
                         if (previousState == StreamState.Initial && _queueBehavior == QueuingBehavior.InitialOnly)
                         {
-                            _initializeDrainTask = Drain(_queue);
+                            _initializeDrainTask = Drain(_queue, _logger);
                         }
                     }
                 }
@@ -119,7 +119,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                     }
 
                     // Always observe the task in case the user doesn't handle it
-                    return task.Catch();
+                    return task.Catch(_logger);
                 }
 
                 return Send(context);
@@ -158,7 +158,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                         EnsureQueueStarted();
 
                         // Drain the queue to stop all sends
-                        task = Drain(_queue);
+                        task = Drain(_queue, _logger);
                     }
                 }
             }
@@ -195,7 +195,8 @@ namespace Microsoft.AspNet.SignalR.Messaging
                     ctx.TaskCompletionSource.TrySetUnwrappedException(ex);
                 }
             },
-            context);
+            context,
+            context.Stream._logger);
 
             return context.TaskCompletionSource.Task;
         }
@@ -236,7 +237,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             if (_queue != null)
             {
                 // Drain the queue when the new queue is open
-                return _taskCompletionSource.Task.Then(q => Drain(q), _queue);
+                return _taskCompletionSource.Task.Then((q, t) => Drain(q, t), _queue, _logger);
             }
 
             // Nothing to drain
@@ -277,7 +278,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             return false;
         }
 
-        private static Task Drain(TaskQueue queue)
+        private static Task Drain(TaskQueue queue, ILogger logger)
         {
             if (queue == null)
             {
@@ -285,8 +286,8 @@ namespace Microsoft.AspNet.SignalR.Messaging
             }
 
             var tcs = new TaskCompletionSource<object>();
-
-            queue.Drain().Catch().ContinueWith(task =>
+            
+            queue.Drain().Catch(logger).ContinueWith(task =>
             {
                 tcs.SetResult(null);
             });

@@ -214,7 +214,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             {
                 // Ensure we enqueue the response initialization before any messages are received
                 EnqueueOperation(state => InitializeResponse((ITransportConnection)state), connection)
-                    .Catch((ex, state) => ((ForeverTransport)state).OnError(ex), this);
+                    .Catch((ex, state) => ((ForeverTransport)state).OnError(ex), this, Logger);
 
                 // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
                 IDisposable subscription = connection.Receive(LastMessageId,
@@ -228,7 +228,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 }
 
                 // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
-                initialize().Catch((ex, state) => ((ForeverTransport)state).OnError(ex), this)
+                initialize().Catch((ex, state) => ((ForeverTransport)state).OnError(ex), this, Logger)
                             .Finally(state => ((SubscriptionDisposerContext)state).Set(),
                                 new SubscriptionDisposerContext(disposer, subscription));
             }

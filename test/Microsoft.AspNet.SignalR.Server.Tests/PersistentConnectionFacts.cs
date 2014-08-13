@@ -4,8 +4,11 @@ using System.Security.Claims;
 using System.Security.Principal;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.AspNet.SignalR.Transports;
 using Moq;
+using Moq.Protected;
 using Xunit;
+using System.Threading;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {
@@ -43,6 +46,47 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 Assert.True(task.IsCompleted);
                 Assert.Equal(400, context.MockResponse.Object.StatusCode);
+            }
+
+            [Fact]
+            public void UncleanDisconnectFiresOnDisconnected()
+            {
+                // Arrange
+                var context = new TestContext("/", new Dictionary<string, string> { { "connectionToken", "1" } });
+
+                var transport = new Mock<ITransport>();
+                transport.SetupProperty(m => m.Disconnected);
+                transport.Setup(m => m.GetGroupsToken()).Returns(TaskAsyncHelper.FromResult(string.Empty));
+                transport.Setup(m => m.ProcessRequest(It.IsAny<Connection>())).Returns(TaskAsyncHelper.Empty);
+
+                var transportManager = new Mock<ITransportManager>();
+                transportManager.Setup(m => m.GetTransport(context.MockHttpContext.Object)).Returns(transport.Object);
+
+                var protectedData = new Mock<IProtectedData>();
+                protectedData.Setup(m => m.Unprotect(It.IsAny<string>(), It.IsAny<string>()))
+                             .Returns<string, string>((value, purpose) =>  value);
+
+                var connection = new Mock<PersistentConnection>() { CallBase = true };
+                var onDisconnectedCalled = false;
+                connection.Protected().Setup("OnDisconnected", context.MockRequest.Object, "1", false).Callback(() =>
+                {
+                    onDisconnectedCalled = true;
+                });
+
+                var sp = ServiceProviderHelper.CreateServiceProvider(services =>
+                {
+                    services.AddInstance<ITransportManager>(transportManager.Object);
+                    services.AddInstance<IProtectedData>(protectedData.Object);
+                });
+
+                connection.Object.Initialize(sp);
+
+                // Act
+                connection.Object.ProcessRequest(context.MockHttpContext.Object).Wait();
+                transport.Object.Disconnected(/* clean: */ false);
+
+                // Assert
+                Assert.True(onDisconnectedCalled);
             }
         }
 

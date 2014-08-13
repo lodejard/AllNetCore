@@ -225,7 +225,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                     Logger.WriteVerbose("KeepAlive(" + metadata.Connection.ConnectionId + ")");
 
                     // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
-                    metadata.Connection.KeepAlive().Catch((ex, state) => OnKeepAliveError(ex, state), Logger);
+                    metadata.Connection.KeepAlive().Catch((ex, state) => OnKeepAliveError(ex, state), state: Logger, logger: Logger);
                 }
 
                 MarkConnection(metadata.Connection);

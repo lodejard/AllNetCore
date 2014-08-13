@@ -38,7 +38,7 @@ namespace SignalRSample.Web.Hubs.Benchmark
             return null;
         }
 
-        public override Task OnDisconnected()
+        public override Task OnDisconnected(bool stopCalled)
         {
             Interlocked.Decrement(ref HubBench.Connections);
             return null;

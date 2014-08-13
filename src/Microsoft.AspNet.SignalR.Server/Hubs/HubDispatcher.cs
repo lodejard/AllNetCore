@@ -193,8 +193,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                        StateChangeTracker tracker)
         {
             // TODO: Make adding parameters here pluggable? IValueProvider? ;)
-            HubInvocationProgress progress = GetProgressInstance(methodDescriptor, value => SendProgressUpdate(hub.Context.ConnectionId, tracker, value, hubRequest));
-
+            HubInvocationProgress progress = GetProgressInstance(methodDescriptor, value => SendProgressUpdate(hub.Context.ConnectionId, tracker, value, hubRequest), Logger);
+            
             Task<object> piplineInvocation;
             try
             {
@@ -242,12 +242,12 @@ namespace Microsoft.AspNet.SignalR.Hubs
             .FastUnwrap();
         }
 
-        private static HubInvocationProgress GetProgressInstance(MethodDescriptor methodDescriptor, Func<object, Task> sendProgressFunc)
+        private static HubInvocationProgress GetProgressInstance(MethodDescriptor methodDescriptor, Func<object, Task> sendProgressFunc, ILogger logger)
         {
             HubInvocationProgress progress = null;
             if (methodDescriptor.ProgressReportingType != null)
             {
-                progress = HubInvocationProgress.Create(methodDescriptor.ProgressReportingType, sendProgressFunc);
+                progress = HubInvocationProgress.Create(methodDescriptor.ProgressReportingType, sendProgressFunc, logger);
             }
             return progress;
         }
@@ -298,14 +298,9 @@ namespace Microsoft.AspNet.SignalR.Hubs
             return hub.OnReconnected();
         }
 
-        internal static async Task Disconnect(IHub hub, bool stopCalled)
+        internal static Task Disconnect(IHub hub, bool stopCalled)
         {
-            await hub.OnDisconnected(stopCalled).OrEmpty().PreserveCulture();
-
-            if (stopCalled)
-            {
-                await hub.OnDisconnected().OrEmpty().PreserveCulture();
-            }
+            return hub.OnDisconnected(stopCalled);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "A faulted task is returned.")]
@@ -427,7 +422,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private Task ExecuteHubEvent(HttpRequest request, string connectionId, Func<IHub, Task> action)
         {
             var hubs = GetHubs(request, connectionId).ToList();
-            var operations = hubs.Select(instance => action(instance).OrEmpty().Catch()).ToArray();
+            var operations = hubs.Select(instance => action(instance).OrEmpty().Catch(Logger)).ToArray();
 
             if (operations.Length == 0)
             {

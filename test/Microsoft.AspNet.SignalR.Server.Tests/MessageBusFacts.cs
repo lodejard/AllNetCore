@@ -633,6 +633,15 @@ namespace Microsoft.AspNet.SignalR.Tests
             }
         }
 
+        [Fact]
+        public void MessageBusCanBeDisposedTwiceWithoutHanging()
+        {
+            var bus = (IDisposable)ServiceProviderHelper.CreateServiceProvider().GetService<IMessageBus>();
+
+            bus.Dispose();
+            Assert.True(Task.Run(() => bus.Dispose()).Wait(TimeSpan.FromSeconds(10)));
+        }
+
         private class TestMessageBus : MessageBus
         {
             public TestMessageBus(IStringMinifier stringMinifier,

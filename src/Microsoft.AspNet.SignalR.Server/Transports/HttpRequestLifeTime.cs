@@ -51,7 +51,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             // Drain the task queue for pending write operations so we don't end the request and then try to write
             // to a corrupted request object.
-            _writeQueue.Drain().Catch().Finally(state =>
+            _writeQueue.Drain().Catch(_logger).Finally(state =>
             {
                 // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
                 ((LifetimeContext)state).Complete();

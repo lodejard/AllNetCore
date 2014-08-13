@@ -258,19 +258,12 @@ namespace Microsoft.AspNet.SignalR
                 return TaskAsyncHelper.FromMethod(() => OnReceived(context.Request, connectionId, data).OrEmpty());
             };
 
-            Transport.Disconnected = async clean =>
+            Transport.Disconnected = clean =>
             {
-                await OnDisconnected(context.Request, connectionId, stopCalled: clean).OrEmpty().PreserveCulture();
-
-                if (clean)
-                {
-                    // Only call the old OnDisconnected method for disconnects we know
-                    // have *not* been caused by clients switching servers.
-                    await OnDisconnected(context.Request, connectionId).OrEmpty().PreserveCulture();
-                }
+                return TaskAsyncHelper.FromMethod(() => OnDisconnected(context.Request, connectionId, stopCalled: clean).OrEmpty());
             };
 
-            await Transport.ProcessRequest(connection).OrEmpty().Catch(Counters.ErrorsAllTotal, Counters.ErrorsAllPerSec).PreserveCulture();
+            await Transport.ProcessRequest(connection).OrEmpty().Catch(Logger, Counters.ErrorsAllTotal, Counters.ErrorsAllPerSec).PreserveCulture();
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "We want to catch any exception when unprotecting data.")]
@@ -461,26 +454,15 @@ namespace Microsoft.AspNet.SignalR
         }
 
         /// <summary>
-        /// Called when a connection disconnects gracefully.
-        /// </summary>
-        /// <param name="request">The <see cref="HttpRequest"/> for the current connection.</param>
-        /// <param name="connectionId">The id of the disconnected connection.</param>
-        /// <returns>A <see cref="Task"/> that completes when the disconnect operation is complete.</returns>
-        protected virtual Task OnDisconnected(HttpRequest request, string connectionId)
-        {
-            return TaskAsyncHelper.Empty;
-        }
-
-        /// <summary>
         /// Called when a connection disconnects gracefully or due to a timeout.
-        /// Timeouts can occur in scaleout when clients reconnect with another server.
         /// </summary>
         /// <param name="request">The <see cref="HttpRequest"/> for the current connection.</param>
         /// <param name="connectionId">The id of the disconnected connection.</param>
         /// <param name="stopCalled">
-        /// True if the connection has been lost for longer than the
-        /// <see cref="SignalROptions.Transports.DisconnectTimeout"/>;
-        /// False if the connection has been closed gracefully.
+        /// true, if stop was called on the client closing the connection gracefully;
+        /// false, if the connection has been lost for longer than the
+        /// <see cref="Configuration.IConfigurationManager.DisconnectTimeout"/>.
+        /// Timeouts can occur in scaleout when clients reconnect with another server.
         /// </param>
         /// <returns>A <see cref="Task"/> that completes when the disconnect operation is complete.</returns>
         protected virtual Task OnDisconnected(HttpRequest request, string connectionId, bool stopCalled)
