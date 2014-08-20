@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.PipelineCore.Collections;
+using Microsoft.AspNet.WebUtilities.Collections;
 using Moq;
 
 namespace Microsoft.AspNet.SignalR.Tests
