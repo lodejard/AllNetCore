@@ -861,7 +861,7 @@ namespace Microsoft.AspNet.SignalR
         }
 
 
-#if !K10
+#if !ASPNETCORE50
         internal struct CulturePair
         {
             public CultureInfo Culture;
