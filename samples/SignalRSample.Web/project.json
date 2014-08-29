@@ -1,4 +1,4 @@
-﻿{
+{
     "dependencies": {
         "Microsoft.AspNet.Server.IIS": "1.0.0-*",
         "Microsoft.AspNet.RequestContainer":  "1.0.0-*",
@@ -11,6 +11,6 @@
     },
     "frameworks":  {
         "net45": {},
-        "k10": {}
+        "aspnetcore50": {}
     }
 }

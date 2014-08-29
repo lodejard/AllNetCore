@@ -1,4 +1,4 @@
-﻿{
+{
     "dependencies": {
         "SignalRSample.Web":  "",
         "Microsoft.AspNet.SignalR.Server":  "",
