@@ -10,7 +10,7 @@
         "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
     },
     "frameworks":  {
-        "net45": {},
+        "aspnet50": {},
         "aspnetcore50": {}
     }
 }

@@ -6,7 +6,7 @@ using System;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
-#if NET45
+#if ASPNET50
     [Serializable]
 #endif
     public class NotAuthorizedException : Exception
@@ -14,7 +14,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         public NotAuthorizedException() { }
         public NotAuthorizedException(string message) : base(message) { }
         public NotAuthorizedException(string message, Exception inner) : base(message, inner) { }
-#if NET45
+#if ASPNET50
         protected NotAuthorizedException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)

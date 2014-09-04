@@ -226,7 +226,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         // returns true if this is a fatal exception (e.g. OnError should be called)
         private static bool IsFatalException(Exception ex)
         {
-#if NET45
+#if ASPNET50
             // If this exception is due to the underlying TCP connection going away, treat as a normal close
             // rather than a fatal exception.
             COMException ce = ex as COMException;

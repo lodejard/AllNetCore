@@ -9,7 +9,7 @@
         "allowUnsafe": true
     },
     "frameworks": {
-      "net45": {
+      "aspnet50": {
         "dependencies": {
           "System.Reflection": "",
           "System.Runtime": ""

@@ -38,7 +38,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
             var assemblyName = new AssemblyName(clientModule);
 
-#if NET45
+#if ASPNET50
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
 #else
             AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
