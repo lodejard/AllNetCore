@@ -20,7 +20,7 @@ namespace Microsoft.AspNet.Builder
         /// Maps SignalR hubs to the app builder pipeline at "/signalr".
         /// </summary>
         /// <param name="builder">The app builder</param>
-        public static IBuilder UseSignalR(this IBuilder builder)
+        public static IApplicationBuilder UseSignalR(this IApplicationBuilder builder)
         {
             return builder.UseSignalR("/signalr");
         }
@@ -30,7 +30,7 @@ namespace Microsoft.AspNet.Builder
         /// </summary>
         /// <param name="builder">The app builder</param>
         /// <param name="path">The path to map signalr hubs</param>
-        public static IBuilder UseSignalR(this IBuilder builder, string path)
+        public static IApplicationBuilder UseSignalR(this IApplicationBuilder builder, string path)
         {
             return builder.Map(path, subApp => subApp.RunSignalR());
         }
@@ -39,7 +39,7 @@ namespace Microsoft.AspNet.Builder
         /// Adds SignalR hubs to the app builder pipeline.
         /// </summary>
         /// <param name="builder">The app builder</param>
-        public static void RunSignalR(this IBuilder builder)
+        public static void RunSignalR(this IApplicationBuilder builder)
         {
             builder.RunSignalR(typeof(HubDispatcher));
         }
@@ -52,7 +52,7 @@ namespace Microsoft.AspNet.Builder
         /// <param name="builder">The app builder</param>
         /// <param name="path">The path to map the persistent connection</param>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The type parameter is syntactic sugar")]
-        public static IBuilder UseSignalR<TConnection>(this IBuilder builder, string path) where TConnection : PersistentConnection
+        public static IApplicationBuilder UseSignalR<TConnection>(this IApplicationBuilder builder, string path) where TConnection : PersistentConnection
         {
             return builder.UseSignalR(path, typeof(TConnection));
         }
@@ -64,7 +64,7 @@ namespace Microsoft.AspNet.Builder
         /// <param name="builder">The app builder</param>
         /// <param name="path">The path to map the persistent connection</param>
         /// <param name="connectionType">The type of <see cref="PersistentConnection"/></param>
-        public static IBuilder UseSignalR(this IBuilder builder, string path, Type connectionType)
+        public static IApplicationBuilder UseSignalR(this IApplicationBuilder builder, string path, Type connectionType)
         {
             return builder.Map(path, subApp => subApp.RunSignalR(connectionType));
         }
@@ -75,7 +75,7 @@ namespace Microsoft.AspNet.Builder
         /// <typeparam name="TConnection">The type of <see cref="PersistentConnection"/></typeparam>
         /// <param name="builder">The app builder</param>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The type parameter is syntactic sugar")]
-        public static void RunSignalR<TConnection>(this IBuilder builder) where TConnection : PersistentConnection
+        public static void RunSignalR<TConnection>(this IApplicationBuilder builder) where TConnection : PersistentConnection
         {
             builder.RunSignalR(typeof(TConnection));
         }
@@ -85,7 +85,7 @@ namespace Microsoft.AspNet.Builder
         /// </summary>
         /// <param name="builder">The app builder</param>
         /// <param name="connectionType">The type of <see cref="PersistentConnection"/></param>
-        public static void RunSignalR(this IBuilder builder, Type connectionType)
+        public static void RunSignalR(this IApplicationBuilder builder, Type connectionType)
         {
             builder.UseMiddleware<PersistentConnectionMiddleware>(connectionType);
         }
