@@ -541,7 +541,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
                 transport.Object.End();
             };
 
-            Assert.True(transport.Object.ProcessRequest(transportConnection.Object).Wait(TimeSpan.FromSeconds(2)));
+            Assert.True(transport.Object.ProcessRequest(transportConnection.Object).Wait(TimeSpan.FromSeconds(10)));
             Assert.True(tcs.Task.Result);
         }
     }

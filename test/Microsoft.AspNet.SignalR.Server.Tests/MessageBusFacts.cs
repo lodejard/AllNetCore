@@ -549,7 +549,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             using (var bus = (MessageBus)sp.GetService<IMessageBus>())
             {
                 Func<ISubscriber> subscriberFactory = () => new TestSubscriber(new[] { "key" });
-                var tcs = new TaskCompletionSource<MessageResult>();
+                var tcs = new TaskCompletionSource<Message[]>();
                 IDisposable subscription = null;
 
                 try
@@ -561,7 +561,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                     subscription = bus.Subscribe(subscriberFactory(), "s-key,00000000", (result, state) =>
                     {
-                        tcs.TrySetResult(result);
+                        tcs.TrySetResult(result.GetMessages().ToArray());
                         return TaskAsyncHelper.True;
                     }, 10, null);
 
@@ -569,7 +569,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                     Assert.True(tcs.Task.Wait(TimeSpan.FromSeconds(5)));
 
-                    foreach (var m in tcs.Task.Result.GetMessages())
+                    foreach (var m in tcs.Task.Result)
                     {
                         Assert.Equal("key", m.Key);
                         Assert.Equal("value", m.GetString());

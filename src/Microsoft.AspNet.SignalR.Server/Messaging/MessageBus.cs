@@ -111,14 +111,6 @@ namespace Microsoft.AspNet.SignalR.Messaging
             Topics = new TopicLookup();
         }
 
-        protected virtual ILogger Logger
-        {
-            get
-            {
-                return _logger;
-            }
-        }
-
         protected internal TopicLookup Topics { get; private set; }
         protected IPerformanceCounterManager Counters { get; private set; }
 
@@ -393,7 +385,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             Counters.MessageBusTopicsCurrent.Decrement();
 
-            Logger.WriteInformation("RemoveTopic(" + key + ")");
+            _logger.WriteInformation("RemoveTopic(" + key + ")");
 
             if (AfterTopicGarbageCollected != null)
             {
