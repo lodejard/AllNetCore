@@ -66,8 +66,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
             catch
             {
-                // Swallow this exception. Being extra paranoid, we don't want anything to break in case this dirty
-                // reflection hack fails for any reason
+                // Swallow this exception. Being extra paranoid, we don't want anything to break in case reflection fails for any reason.
             }
 
             // If the method was removed then fallback to the regular method
