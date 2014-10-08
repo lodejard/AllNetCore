@@ -100,7 +100,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.Transports.KeepAlive = null;
                 });
@@ -120,7 +120,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.Transports.KeepAlive = null;
                 });
@@ -159,7 +159,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
                 });
@@ -227,7 +227,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
                     options.Transports.KeepAlive = null;
@@ -326,7 +326,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
                     options.Transports.KeepAlive = null;
@@ -356,7 +356,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
                     options.Transports.KeepAlive = null;

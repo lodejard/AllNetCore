@@ -9,12 +9,10 @@ namespace SignalRSample.Web
         {
             app.UseServices(services =>
             {
-                services
-                    .AddSignalR()
-                    .SetupOptions(options =>
-                    {
-                        options.Hubs.EnableDetailedErrors = true;
-                    });
+                services.AddSignalR(options =>
+                {
+                    options.Hubs.EnableDetailedErrors = true;
+                });
             });
 
             app.UseFileServer();

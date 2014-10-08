@@ -213,7 +213,6 @@
     <Compile Include="PersistentConnection.cs" />
     <Compile Include="Resources.Designer.cs" />
     <Compile Include="SignalRServiceCollectionExtensions.cs" />
-    <Compile Include="SignalRServiceColletion.cs" />
     <Compile Include="SignalRServices.cs" />
     <Compile Include="TaskAsyncHelper.cs" />
     <Compile Include="TaskAwaiterHelper.cs" />

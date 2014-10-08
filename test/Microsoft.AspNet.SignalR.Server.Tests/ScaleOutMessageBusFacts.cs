@@ -188,7 +188,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.MessageBus.MessageBufferSize = 10;
                 });
@@ -243,7 +243,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.SetupOptions<SignalROptions>(options =>
+                services.ConfigureSignalR(options =>
                 {
                     options.MessageBus.MessageBufferSize = 10;
                 });
