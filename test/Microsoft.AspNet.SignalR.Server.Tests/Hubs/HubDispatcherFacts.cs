@@ -36,7 +36,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptionsAccessor<SignalROptions>>());
+            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptions<SignalROptions>>());
             var testContext = new TestContext(proxyUrl);
 
             // Act
@@ -56,7 +56,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptionsAccessor<SignalROptions>>());
+            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptions<SignalROptions>>());
             var testContext = new TestContext(proxyUrl + "/");
 
             // Act
@@ -76,7 +76,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var optionsAccessor = serviceProvider.GetService<IOptionsAccessor<SignalROptions>>();
+            var optionsAccessor = serviceProvider.GetService<IOptions<SignalROptions>>();
             optionsAccessor.Options.Hubs.EnableJavaScriptProxies = false;
             var dispatcher = new HubDispatcher(optionsAccessor);
             var testContext = new TestContext(proxyUrl);
@@ -96,7 +96,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptionsAccessor<SignalROptions>>());
+            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptions<SignalROptions>>());
             var testContext = new TestContext("/signalr/send", new Dictionary<string, string>
             {
                 {"transport", "longPolling"},
@@ -127,7 +127,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptionsAccessor<SignalROptions>>());
+            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptions<SignalROptions>>());
             var testContext = new TestContext("/signalr/send", new Dictionary<string, string>
             {
                 { "transport", "longPolling"},
@@ -157,7 +157,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var optionsAccessor = serviceProvider.GetService<IOptionsAccessor<SignalROptions>>();
+            var optionsAccessor = serviceProvider.GetService<IOptions<SignalROptions>>();
             optionsAccessor.Options.Hubs.EnableDetailedErrors = true;
             var dispatcher = new HubDispatcher(optionsAccessor);
             var testContext = new TestContext("/signalr/send", new Dictionary<string, string>
@@ -188,7 +188,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             // Arrange
             var serviceProvider = CreateServiceProvider();
-            var optionsAccessor = serviceProvider.GetService<IOptionsAccessor<SignalROptions>>();
+            var optionsAccessor = serviceProvider.GetService<IOptions<SignalROptions>>();
             optionsAccessor.Options.Hubs.EnableDetailedErrors = true;
             var dispatcher = new HubDispatcher(optionsAccessor);
             var testContext = new TestContext("/signalr/send", new Dictionary<string, string>
@@ -229,7 +229,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
                 .AddInstance<IHubManager>(mockHubManager.Object)
                 .BuildServiceProvider();
 
-            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptionsAccessor<SignalROptions>>());
+            var dispatcher = new HubDispatcher(serviceProvider.GetService<IOptions<SignalROptions>>());
             var testContext = new TestContext("/ignorePath", new Dictionary<string, string>
             {
                 {"connectionData", @"[{name: ""foo""}, {name: ""Foo""}]"},

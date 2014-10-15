@@ -28,8 +28,8 @@ namespace Microsoft.AspNet.SignalR.Messaging
         protected ScaleoutMessageBus(IStringMinifier stringMinifier,
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
-                                     IOptionsAccessor<SignalROptions> optionsAccessor,
-                                     IOptionsAccessor<ScaleoutConfiguration> scaleoutConfigurationAccessor)
+                                     IOptions<SignalROptions> optionsAccessor,
+                                     IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
             : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
         {
             _logger = loggerFactory.Create("SignalR." + typeof(ScaleoutMessageBus).Name);

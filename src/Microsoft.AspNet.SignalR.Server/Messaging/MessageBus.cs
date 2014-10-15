@@ -57,7 +57,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         public MessageBus(IStringMinifier stringMinifier,
                           ILoggerFactory loggerFactory,
                           IPerformanceCounterManager performanceCounterManager,
-                          IOptionsAccessor<SignalROptions> optionsAccessor)
+                          IOptions<SignalROptions> optionsAccessor)
         {
             if (stringMinifier == null)
             {

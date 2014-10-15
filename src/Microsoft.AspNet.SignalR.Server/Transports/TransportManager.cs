@@ -25,7 +25,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Those are factory methods")]
         public TransportManager(IServiceProvider serviceProvider,
                                 ITypeActivator typeActivator,
-                                IOptionsAccessor<SignalROptions> optionsAccessor)
+                                IOptions<SignalROptions> optionsAccessor)
         {
             if (serviceProvider == null)
             {

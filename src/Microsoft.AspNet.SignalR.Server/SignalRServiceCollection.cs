@@ -23,7 +23,7 @@ namespace Microsoft.Framework.DependencyInjection
 
         public IServiceCollection Configure(Action<SignalROptions> configure)
         {
-            return _baseCollection.ConfigureOptions(configure);
+            return _baseCollection.Configure(configure);
         }
     }
 }

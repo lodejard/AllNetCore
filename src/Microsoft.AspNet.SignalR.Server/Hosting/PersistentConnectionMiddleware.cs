@@ -15,13 +15,13 @@ namespace Microsoft.AspNet.SignalR.Hosting
     public class PersistentConnectionMiddleware
     {
         private readonly Type _connectionType;
-        private readonly IOptionsAccessor<SignalROptions> _optionsAccessor;
+        private readonly IOptions<SignalROptions> _optionsAccessor;
         private readonly RequestDelegate _next;
         private readonly IServiceProvider _serviceProvider;
 
         public PersistentConnectionMiddleware(RequestDelegate next,
                                               Type connectionType,
-                                              IOptionsAccessor<SignalROptions> optionsAccessor,
+                                              IOptions<SignalROptions> optionsAccessor,
                                               IServiceProvider serviceProvider)
         {
             _next = next;

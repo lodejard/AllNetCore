@@ -47,7 +47,7 @@ namespace Microsoft.AspNet.SignalR
             UserIdProvider = serviceProvider.GetService<IUserIdProvider>();
             Pool = serviceProvider.GetService<IMemoryPool>();
 
-            _options = serviceProvider.GetService<IOptionsAccessor<SignalROptions>>().Options;
+            _options = serviceProvider.GetService<IOptions<SignalROptions>>().Options;
             _transportManager = serviceProvider.GetService<ITransportManager>();
         }
 

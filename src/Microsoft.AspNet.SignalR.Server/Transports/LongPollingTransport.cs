@@ -28,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                                     IPerformanceCounterManager performanceCounterManager,
                                     IApplicationLifetime applicationLifetime,
                                     ILoggerFactory loggerFactory,
-                                    IOptionsAccessor<SignalROptions> optionsAccessor,
+                                    IOptions<SignalROptions> optionsAccessor,
                                     IMemoryPool pool)
             : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {

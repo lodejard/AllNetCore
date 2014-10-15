@@ -34,7 +34,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// Initializes and instance of the <see cref="TransportHeartbeat"/> class.
         /// </summary>
         /// <param name="serviceProvider">The <see cref="IDependencyResolver"/>.</param>
-        public TransportHeartbeat(IOptionsAccessor<SignalROptions> optionsAccessor,
+        public TransportHeartbeat(IOptions<SignalROptions> optionsAccessor,
                                   IPerformanceCounterManager counters,
                                   ILoggerFactory loggerFactory)
         {

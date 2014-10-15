@@ -144,7 +144,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
                                             IPerformanceCounterManager performanceCounterManager,
                                             IApplicationLifetime applicationLifetime,
                                             ILoggerFactory loggerFactory,
-                                            IOptionsAccessor<SignalROptions> optionsAccessor,
+                                            IOptions<SignalROptions> optionsAccessor,
                                             IMemoryPool pool)
                 : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, optionsAccessor, pool)
             {
@@ -168,7 +168,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
                 var counters = new Mock<IPerformanceCounterManager>();
                 var appLifetime = new Mock<IApplicationLifetime>();
                 var loggerFactory = new Mock<ILoggerFactory>();
-                var optionsAccessor = new Mock<IOptionsAccessor<SignalROptions>>();
+                var optionsAccessor = new Mock<IOptions<SignalROptions>>();
                 optionsAccessor.Setup(m => m.Options).Returns(new SignalROptions());
                 var pool = new Mock<IMemoryPool>();
 

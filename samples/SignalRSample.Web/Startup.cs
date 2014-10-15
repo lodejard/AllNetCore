@@ -7,7 +7,7 @@ namespace SignalRSample.Web
     {
         public void Configure(IApplicationBuilder app)
         {
-            app.UsePerRequestServices(services =>
+            app.UseServices(services =>
             {
                 services.AddSignalR(options =>
                 {

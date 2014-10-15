@@ -48,7 +48,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// Initializes an instance of the <see cref="HubDispatcher"/> class.
         /// </summary>
         /// <param name="options">Configuration settings determining whether to enable JS proxies and provide clients with detailed hub errors.</param>
-        public HubDispatcher(IOptionsAccessor<SignalROptions> optionsAccessor)
+        public HubDispatcher(IOptions<SignalROptions> optionsAccessor)
         {
             if (optionsAccessor == null)
             {

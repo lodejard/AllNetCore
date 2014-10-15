@@ -501,8 +501,8 @@ namespace Microsoft.AspNet.SignalR.Tests
             public TestScaleoutBus(IStringMinifier stringMinifier,
                                    ILoggerFactory loggerFactory,
                                    IPerformanceCounterManager performanceCounterManager,
-                                   IOptionsAccessor<SignalROptions> optionsAccessor,
-                                   IOptionsAccessor<ScaleoutConfiguration> scaleoutConfigurationAccessor)
+                                   IOptions<SignalROptions> optionsAccessor,
+                                   IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
                 : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
             {
             }
@@ -511,8 +511,8 @@ namespace Microsoft.AspNet.SignalR.Tests
                                    IStringMinifier stringMinifier,
                                    ILoggerFactory loggerFactory,
                                    IPerformanceCounterManager performanceCounterManager,
-                                   IOptionsAccessor<SignalROptions> optionsAccessor,
-                                   IOptionsAccessor<ScaleoutConfiguration> scaleoutConfigurationAccessor)
+                                   IOptions<SignalROptions> optionsAccessor,
+                                   IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
                 : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
             {
                 _streams = streams;

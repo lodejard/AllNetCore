@@ -647,7 +647,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             public TestMessageBus(IStringMinifier stringMinifier,
                                  ILoggerFactory loggerFactory,
                                  IPerformanceCounterManager performanceCounterManager,
-                                 IOptionsAccessor<SignalROptions> optionsAccessor) :
+                                 IOptions<SignalROptions> optionsAccessor) :
                 base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
             {
 
