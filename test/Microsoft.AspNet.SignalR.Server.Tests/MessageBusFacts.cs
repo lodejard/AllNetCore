@@ -20,7 +20,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 var subscriber = new TestSubscriber(new[] { "key" });
                 var wh = new ManualResetEventSlim(initialState: false);
@@ -67,7 +67,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 var subscriber = new TestSubscriber(new[] { "key" });
                 var wh = new ManualResetEventSlim();
@@ -106,7 +106,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 });
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 bus.Publish("test", "key", "1").Wait();
 
@@ -126,7 +126,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 });
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 var subscriber = new TestSubscriber(new[] { "key" });
                 IDisposable subscription = null;
@@ -165,7 +165,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 });
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 var subscriber = new TestSubscriber(new[] { "key" });
 
@@ -333,7 +333,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 });
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 bus.Subscribe(new TestSubscriber(new[] { "key" }), null, (result, state) => TaskAsyncHelper.True, 10, null);
                 Topic topic;
@@ -363,7 +363,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 });
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 bus.BeforeTopicMarked = (key, t) =>
                 {
@@ -386,7 +386,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 services.AddInstance<IStringMinifier>(passThroughMinfier);
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 Func<TestSubscriber> subscriberFactory = () => new TestSubscriber(new[] { "key" });
                 var cd = new CountDownRange<int>(Enumerable.Range(2, 4));
@@ -439,7 +439,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 services.AddInstance<IStringMinifier>(passThroughMinfier);
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 Func<ISubscriber> subscriberFactory = () => new TestSubscriber(new[] { "key", "key2" });
                 var cdKey = new CountDownRange<int>(Enumerable.Range(2, 4));
@@ -502,7 +502,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 var subscriber = new TestSubscriber(new[] { "key" });
                 var wh = new ManualResetEvent(false);
@@ -546,7 +546,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 services.AddInstance<IStringMinifier>(passThroughMinfier);
             });
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 Func<ISubscriber> subscriberFactory = () => new TestSubscriber(new[] { "key" });
                 var tcs = new TaskCompletionSource<Message[]>();
@@ -590,7 +590,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
 
-            using (var bus = (MessageBus)sp.GetService<IMessageBus>())
+            using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
                 var subscriber = new TestSubscriber(new[] { "a" });
                 int max = 100;
@@ -636,7 +636,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         [Fact]
         public void MessageBusCanBeDisposedTwiceWithoutHanging()
         {
-            var bus = (IDisposable)ServiceProviderHelper.CreateServiceProvider().GetService<IMessageBus>();
+            var bus = (IDisposable)ServiceProviderHelper.CreateServiceProvider().GetRequiredService<IMessageBus>();
 
             bus.Dispose();
             Assert.True(Task.Run(() => bus.Dispose()).Wait(TimeSpan.FromSeconds(10)));

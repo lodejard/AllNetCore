@@ -32,7 +32,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         public ConnectionManager(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _counters = _serviceProvider.GetService<IPerformanceCounterManager>();
+            _counters = _serviceProvider.GetRequiredService<IPerformanceCounterManager>();
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         public IHubContext GetHubContext(string hubName)
         {
             var connection = GetConnectionCore(connectionName: null);
-            var hubManager = _serviceProvider.GetService<IHubManager>();
-            var pipelineInvoker = _serviceProvider.GetService<IHubPipelineInvoker>();
+            var hubManager = _serviceProvider.GetRequiredService<IHubManager>();
+            var pipelineInvoker = _serviceProvider.GetRequiredService<IHubPipelineInvoker>();
 
             hubManager.EnsureHub(hubName,
                 _counters.ErrorsHubResolutionTotal,
@@ -125,17 +125,17 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
             // Give this a unique id
             var connectionId = Guid.NewGuid().ToString();
-            return new Connection(_serviceProvider.GetService<IMessageBus>(),
-                                  _serviceProvider.GetService<JsonSerializer>(),
+            return new Connection(_serviceProvider.GetRequiredService<IMessageBus>(),
+                                  _serviceProvider.GetRequiredService<JsonSerializer>(),
                                   connectionName,
                                   connectionId,
                                   signals,
                                   ListHelper<string>.Empty,
-                                  _serviceProvider.GetService<ILoggerFactory>(),
-                                  _serviceProvider.GetService<IAckHandler>(),
-                                  _serviceProvider.GetService<IPerformanceCounterManager>(),
-                                  _serviceProvider.GetService<IProtectedData>(),
-                                  _serviceProvider.GetService<IMemoryPool>());
+                                  _serviceProvider.GetRequiredService<ILoggerFactory>(),
+                                  _serviceProvider.GetRequiredService<IAckHandler>(),
+                                  _serviceProvider.GetRequiredService<IPerformanceCounterManager>(),
+                                  _serviceProvider.GetRequiredService<IProtectedData>(),
+                                  _serviceProvider.GetRequiredService<IMemoryPool>());
         }
     }
 }

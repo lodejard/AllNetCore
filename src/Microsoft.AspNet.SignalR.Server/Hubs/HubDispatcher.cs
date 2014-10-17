@@ -83,15 +83,15 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 throw new ArgumentNullException("resolver");
             }
 
-            _proxyGenerator = _enableJavaScriptProxies ? serviceProvider.GetService<IJavaScriptProxyGenerator>()
+            _proxyGenerator = _enableJavaScriptProxies ? serviceProvider.GetRequiredService<IJavaScriptProxyGenerator>()
                                                        : new EmptyJavaScriptProxyGenerator();
 
-            _manager = serviceProvider.GetService<IHubManager>();
-            _binder = serviceProvider.GetService<IParameterResolver>();
-            _requestParser = serviceProvider.GetService<IHubRequestParser>();
-            _serializer = serviceProvider.GetService<JsonSerializer>();
-            _pipelineInvoker = serviceProvider.GetService<IHubPipelineInvoker>();
-            _counters = serviceProvider.GetService<IPerformanceCounterManager>();
+            _manager = serviceProvider.GetRequiredService<IHubManager>();
+            _binder = serviceProvider.GetRequiredService<IParameterResolver>();
+            _requestParser = serviceProvider.GetRequiredService<IHubRequestParser>();
+            _serializer = serviceProvider.GetRequiredService<JsonSerializer>();
+            _pipelineInvoker = serviceProvider.GetRequiredService<IHubPipelineInvoker>();
+            _counters = serviceProvider.GetRequiredService<IPerformanceCounterManager>();
 
             base.Initialize(serviceProvider);
         }

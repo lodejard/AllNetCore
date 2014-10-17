@@ -38,17 +38,17 @@ namespace Microsoft.AspNet.SignalR
 
         public virtual void Initialize(IServiceProvider serviceProvider)
         {
-            MessageBus = serviceProvider.GetService<IMessageBus>();
-            JsonSerializer = serviceProvider.GetService<JsonSerializer>();
-            LoggerFactory = serviceProvider.GetService<ILoggerFactory>();
-            Counters = serviceProvider.GetService<IPerformanceCounterManager>();
-            AckHandler = serviceProvider.GetService<IAckHandler>();
-            ProtectedData = serviceProvider.GetService<IProtectedData>();
-            UserIdProvider = serviceProvider.GetService<IUserIdProvider>();
-            Pool = serviceProvider.GetService<IMemoryPool>();
+            MessageBus = serviceProvider.GetRequiredService<IMessageBus>();
+            JsonSerializer = serviceProvider.GetRequiredService<JsonSerializer>();
+            LoggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+            Counters = serviceProvider.GetRequiredService<IPerformanceCounterManager>();
+            AckHandler = serviceProvider.GetRequiredService<IAckHandler>();
+            ProtectedData = serviceProvider.GetRequiredService<IProtectedData>();
+            UserIdProvider = serviceProvider.GetRequiredService<IUserIdProvider>();
+            Pool = serviceProvider.GetRequiredService<IMemoryPool>();
 
-            _options = serviceProvider.GetService<IOptions<SignalROptions>>().Options;
-            _transportManager = serviceProvider.GetService<ITransportManager>();
+            _options = serviceProvider.GetRequiredService<IOptions<SignalROptions>>().Options;
+            _transportManager = serviceProvider.GetRequiredService<ITransportManager>();
         }
 
         public bool Authorize(HttpRequest request)

@@ -85,7 +85,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
                 .Add(SignalRServices.GetDefaultServices())
                 .BuildServiceProvider(CallContextServiceLocator.Locator.ServiceProvider);
 
-            var manager = serviceProvider.GetService<IConnectionManager>();
+            var manager = serviceProvider.GetRequiredService<IConnectionManager>();
 
             Assert.Throws<InvalidOperationException>(() => manager.GetHubContext<DemoHub, IDontReturnVoidOrTask>());
             Assert.Throws<InvalidOperationException>(() => manager.GetHubContext<DemoHub, IHaveOutParameter>());
