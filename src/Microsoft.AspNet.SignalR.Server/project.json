@@ -1,5 +1,6 @@
 {
     "version": "3.0.0-*",
+    "description": "Core server components for ASP.NET SignalR.",
     "dependencies": {
         "Microsoft.AspNet.Http": "1.0.0-*",
         "Microsoft.AspNet.HttpFeature": { "version": "1.0.0-*", "type": "build" },
