@@ -128,7 +128,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         public void SetError(Exception error)
         {
-            Log(TraceType.Error, "Error has happened with the following exception: {0}.", error);
+            Log(LogLevel.Error, "Error has happened with the following exception: {0}.", error);
 
             lock (_lockObj)
             {
@@ -184,7 +184,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             {
                 var ctx = (SendContext)obj;
 
-                ctx.Stream.Log(TraceType.Error, "Send failed: {0}", ex);
+                ctx.Stream.Log(LogLevel.Error, "Send failed: {0}", ex);
 
                 lock (ctx.Stream._lockObj)
                 {
@@ -270,7 +270,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             if (_state != newState)
             {
-                Log(TraceType.Information, "Changed state from {0} to {1}", _state, newState);
+                Log(LogLevel.Information, "Changed state from {0} to {1}", _state, newState);
                 _state = newState;
                 return true;
             }
@@ -295,23 +295,23 @@ namespace Microsoft.AspNet.SignalR.Messaging
             return tcs.Task;
         }
 
-        private void Log(TraceType traceType, string value, params object[] args)
+        private void Log(LogLevel logLevel, string value, params object[] args)
         {
-            switch (traceType)
+            switch (logLevel)
             {
-                case TraceType.Critical:
+                case LogLevel.Critical:
                     _logger.WriteCritical(String.Format(value, args));
                     break;
-                case TraceType.Error:
+                case LogLevel.Error:
                     _logger.WriteError(String.Format(value, args));
                     break;
-                case TraceType.Information:
+                case LogLevel.Information:
                     _logger.WriteInformation(String.Format(value, args));
                     break;
-                case TraceType.Verbose:
+                case LogLevel.Verbose:
                     _logger.WriteVerbose(String.Format(value, args));
                     break;
-                case TraceType.Warning:
+                case LogLevel.Warning:
                     _logger.WriteWarning(String.Format(value, args));
                     break;
                 default:
