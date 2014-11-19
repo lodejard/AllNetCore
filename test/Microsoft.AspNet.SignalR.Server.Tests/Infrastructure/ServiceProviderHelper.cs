@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Security.DataProtection;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.DependencyInjection.Fallback;
@@ -24,6 +25,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var collection = new ServiceCollection()
                 .Add(OptionsServices.GetDefaultServices())
                 .Add(HostingServices.GetDefaultServices())
+                .Add(DataProtectionServices.GetDefaultServices())
                 .Add(SignalRServices.GetDefaultServices());
 
             configure(collection);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Security.DataProtection;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
@@ -82,6 +83,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
             var serviceProvider = new ServiceCollection()
                 .Add(OptionsServices.GetDefaultServices())
                 .Add(HostingServices.GetDefaultServices())
+                .Add(DataProtectionServices.GetDefaultServices())
                 .Add(SignalRServices.GetDefaultServices())
                 .BuildServiceProvider(CallContextServiceLocator.Locator.ServiceProvider);
 
