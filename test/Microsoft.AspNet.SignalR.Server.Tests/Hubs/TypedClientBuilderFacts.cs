@@ -80,12 +80,11 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         public void GetHubContextRejectsInvalidTypes()
         {
             //var resolver = new DefaultDependencyResolver();
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = HostingServices.Create()
                 .Add(OptionsServices.GetDefaultServices())
-                .Add(HostingServices.GetDefaultServices())
                 .Add(DataProtectionServices.GetDefaultServices())
                 .Add(SignalRServices.GetDefaultServices())
-                .BuildServiceProvider(CallContextServiceLocator.Locator.ServiceProvider);
+                .BuildServiceProvider();
 
             var manager = serviceProvider.GetRequiredService<IConnectionManager>();
 
