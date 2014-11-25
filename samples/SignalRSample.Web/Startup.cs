@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Framework.DependencyInjection;
 
 namespace SignalRSample.Web
@@ -12,6 +13,8 @@ namespace SignalRSample.Web
                 services.AddSignalR(options =>
                 {
                     options.Hubs.EnableDetailedErrors = true;
+
+                    // options.Hubs.RequireAuthentication();
                 });
             });
 

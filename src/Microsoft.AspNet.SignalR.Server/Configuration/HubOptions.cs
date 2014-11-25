@@ -2,6 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
+using System.Collections.Generic;
+using Microsoft.AspNet.SignalR.Hubs;
+
 namespace Microsoft.AspNet.SignalR
 {
     public class HubOptions
@@ -17,6 +20,8 @@ namespace Microsoft.AspNet.SignalR
         /// Defaults to false.
         /// </summary>
         public bool EnableDetailedErrors { get; set; }
+
+        public Stack<IHubPipelineModule> PipelineModules { get; } = new Stack<IHubPipelineModule>();
 
         public HubOptions()
         {

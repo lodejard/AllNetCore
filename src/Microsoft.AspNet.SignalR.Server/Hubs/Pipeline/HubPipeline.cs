@@ -4,32 +4,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
+using Microsoft.Framework.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
-    internal class HubPipeline : IHubPipeline, IHubPipelineInvoker
+    internal class HubPipeline : IHubPipelineInvoker
     {
-        private readonly Stack<IHubPipelineModule> _modules;
         private readonly Lazy<ComposedPipeline> _pipeline;
 
-        public HubPipeline()
+        public HubPipeline(IOptions<SignalROptions> options)
         {
-            _modules = new Stack<IHubPipelineModule>();
-            _pipeline = new Lazy<ComposedPipeline>(() => new ComposedPipeline(_modules));
-        }
-
-        public IHubPipeline AddModule(IHubPipelineModule pipelineModule)
-        {
-            if (_pipeline.IsValueCreated)
-            {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.Error_UnableToAddModulePiplineAlreadyInvoked));
-            }
-            _modules.Push(pipelineModule);
-            return this;
+            _pipeline = new Lazy<ComposedPipeline>(() => new ComposedPipeline(options.Options.Hubs.PipelineModules));
         }
 
         private ComposedPipeline Pipeline
