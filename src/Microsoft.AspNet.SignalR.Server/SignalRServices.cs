@@ -17,12 +17,7 @@ namespace Microsoft.AspNet.SignalR
 {
     public static class SignalRServices
     {
-        public static IEnumerable<IServiceDescriptor> GetDefaultServices()
-        {
-            return GetDefaultServices(new Microsoft.Framework.ConfigurationModel.Configuration());
-        }
-
-        public static IEnumerable<IServiceDescriptor> GetDefaultServices(IConfiguration configuration)
+        internal static IEnumerable<IServiceDescriptor> GetDefaultServices(IConfiguration configuration = null)
         {
             var serviceDescriber = new ServiceDescriber(configuration);
 

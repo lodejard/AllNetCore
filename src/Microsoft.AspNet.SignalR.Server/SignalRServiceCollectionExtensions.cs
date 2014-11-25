@@ -1,39 +1,32 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-
+using System;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Framework.ConfigurationModel;
-using System;
 
 namespace Microsoft.Framework.DependencyInjection
 {
     public static class SignalRServiceCollectionExtensions
     {
-        public static SignalRServiceCollection AddSignalR(this IServiceCollection services, Action<SignalROptions> configureOptions = null)
+        public static IServiceCollection AddSignalR(this IServiceCollection services, Action<SignalROptions> configureOptions = null)
         {
-            services.Add(SignalRServices.GetDefaultServices());
-            var result = new SignalRServiceCollection(services);
-            if (configureOptions != null)
-            {
-                result.Configure(configureOptions);
-            }
-            return result;
+            return services.AddSignalR(configuration: null, configureOptions: configureOptions);
         }
 
-        public static SignalRServiceCollection AddSignalR(this IServiceCollection services, IConfiguration configuration, Action<SignalROptions> configureOptions = null)
+        public static IServiceCollection AddSignalR(this IServiceCollection services, IConfiguration configuration, Action<SignalROptions> configureOptions = null)
         {
-            services.Add(SignalRServices.GetDefaultServices(configuration));
-            var result = new SignalRServiceCollection(services);
+            services.AddOptions(configuration);
+            services.TryAdd(SignalRServices.GetDefaultServices(configuration));
             if (configuration != null)
             {
                 services.Configure<SignalROptions>(configuration);
             }
             if (configureOptions != null)
             {
-                result.Configure(configureOptions);
+                services.ConfigureSignalR(configureOptions);
             }
-            return result;
+            return services;
         }
 
         public static IServiceCollection ConfigureSignalR(this IServiceCollection services, Action<SignalROptions> configure)

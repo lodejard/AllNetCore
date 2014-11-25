@@ -81,9 +81,9 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         {
             //var resolver = new DefaultDependencyResolver();
             var serviceProvider = HostingServices.Create()
-                .Add(OptionsServices.GetDefaultServices())
-                .Add(DataProtectionServices.GetDefaultServices())
-                .Add(SignalRServices.GetDefaultServices())
+                .AddOptions()
+                .AddDataProtection()
+                .AddSignalR()
                 .BuildServiceProvider();
 
             var manager = serviceProvider.GetRequiredService<IConnectionManager>();
