@@ -21,7 +21,7 @@ namespace Microsoft.AspNet.SignalR
         /// </summary>
         public bool EnableDetailedErrors { get; set; }
 
-        public Stack<IHubPipelineModule> PipelineModules { get; } = new Stack<IHubPipelineModule>();
+        public List<IHubPipelineModule> PipelineModules { get; } = new List<IHubPipelineModule>();
 
         public HubOptions()
         {

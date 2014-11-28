@@ -16,7 +16,7 @@ namespace Microsoft.AspNet.SignalR
         private static void ConfigureSignalR(SignalROptions options)
         {
             // Add the authorization module by default
-            options.Hubs.PipelineModules.Push(new AuthorizeModule());
+            options.Hubs.PipelineModules.Add(new AuthorizeModule());
         }
     }
 }

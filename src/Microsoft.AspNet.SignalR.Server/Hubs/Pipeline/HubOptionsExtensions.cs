@@ -3,11 +3,12 @@
 
 
 using System;
+using JetBrains.Annotations;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Microsoft.AspNet.SignalR
 {
-    public static class HubPipelineExtensions
+    public static class HubOptionsExtensions
     {
         /// <summary>
         /// Requiring Authentication adds an <see cref="AuthorizeModule"/> to the <see cref="HubOptions" /> with <see cref="IAuthorizeHubConnection"/>
@@ -16,15 +17,10 @@ namespace Microsoft.AspNet.SignalR
         /// IsAuthenticated for any clients that invoke server-side hub methods or receive client-side hub method invocations. 
         /// </summary>
         /// <param name="options">The <see cref="HubOptions" /> to which the <see cref="AuthorizeModule" /> will be added.</param>
-        public static void RequireAuthentication(this HubOptions options)
+        public static void RequireAuthentication([NotNull]this HubOptions options)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException("pipeline");
-            }
-
             var authorizer = new AuthorizeAttribute();
-            options.PipelineModules.Push(new AuthorizeModule(globalConnectionAuthorizer: authorizer, globalInvocationAuthorizer: authorizer));
+            options.PipelineModules.Add(new AuthorizeModule(globalConnectionAuthorizer: authorizer, globalInvocationAuthorizer: authorizer));
         }
     }
 }

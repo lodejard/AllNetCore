@@ -62,7 +62,6 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private class ComposedPipeline
         {
-
             public Func<IHubIncomingInvokerContext, Task<object>> Invoke;
             public Func<IHub, Task> Connect;
             public Func<IHub, Task> Reconnect;
@@ -71,7 +70,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             public Func<HubDescriptor, HttpRequest, IList<string>, IList<string>> RejoiningGroups;
             public Func<IHubOutgoingInvokerContext, Task> Send;
 
-            public ComposedPipeline(Stack<IHubPipelineModule> modules)
+            public ComposedPipeline(IEnumerable<IHubPipelineModule> modules)
             {
                 // This wouldn't look nearly as gnarly if C# had better type inference, but now we don't need the ComposedModule or PassThroughModule.
                 Invoke = Compose<Func<IHubIncomingInvokerContext, Task<object>>>(modules, (m, f) => m.BuildIncoming(f))(HubDispatcher.Incoming);
