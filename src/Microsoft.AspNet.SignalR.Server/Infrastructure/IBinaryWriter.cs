@@ -11,6 +11,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
     /// </summary>
     public interface IBinaryWriter
     {
-        void Write(ArraySegment<byte> data);
+        void WriteRawBytes(ArraySegment<byte> data);
     }
 }

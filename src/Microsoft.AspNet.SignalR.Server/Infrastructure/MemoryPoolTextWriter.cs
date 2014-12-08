@@ -152,7 +152,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
         }
 
-        public void Write(ArraySegment<byte> data)
+        public void WriteRawBytes(ArraySegment<byte> data)
         {
             Flush();
 

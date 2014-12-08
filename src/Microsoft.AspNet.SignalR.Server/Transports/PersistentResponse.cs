@@ -166,7 +166,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                             }
 
                             // If we can write binary then just write it
-                            binaryWriter.Write(message.Value);
+                            binaryWriter.WriteRawBytes(message.Value);
 
                             first = false;
                         }
