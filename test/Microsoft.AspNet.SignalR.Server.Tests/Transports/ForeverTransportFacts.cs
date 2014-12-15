@@ -480,6 +480,30 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
             Assert.True(tcs.Task.Result);
         }
 
+        [Fact]
+        public void RequestAbortedTokenIsReadOnlyOnce()
+        {
+            var httpContext = new Mock<HttpContext>();
+            var mockTransport = new Mock<ForeverTransport>(httpContext.Object,
+                                                           new JsonSerializer(),
+                                                           Mock.Of<ITransportHeartbeat>(),
+                                                           Mock.Of<IPerformanceCounterManager>(),
+                                                           Mock.Of<IApplicationLifetime>(),
+                                                           Mock.Of<ILoggerFactory>(),
+                                                           Mock.Of<IMemoryPool>())
+            {
+                CallBase = true
+            };
+
+            // Force the invocation of the constructor
+            var transport = mockTransport.Object;
+            httpContext.Verify(m => m.RequestAborted, Times.Once());
+
+            // Verify that accessing the CancellationToken property doesn't cause the HttpContext.RequestAborted to be reevaluated
+            var token = transport.CancellationToken;
+            httpContext.Verify(m => m.RequestAborted, Times.Once());
+        }
+
         public void EnqueAsyncWriteAndEndRequest(Func<Task> writeAsync)
         {
             var testContext = new TestContext("/test/echo/connect");

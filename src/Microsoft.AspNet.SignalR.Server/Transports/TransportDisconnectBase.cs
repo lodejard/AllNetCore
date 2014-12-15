@@ -44,9 +44,12 @@ namespace Microsoft.AspNet.SignalR.Transports
         private Task _lastWriteTask = TaskAsyncHelper.Empty;
 
         // Token that represents the host shutting down
-        private CancellationToken _hostShutdownToken;
+        private readonly CancellationToken _hostShutdownToken;
         private IDisposable _hostRegistration;
         private IDisposable _connectionEndRegistration;
+
+        // Token that represents the client disconnecting
+        private readonly CancellationToken _requestAborted;
 
         internal HttpRequestLifeTime _requestLifeTime;
 
@@ -83,6 +86,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             _heartbeat = heartbeat;
             _counters = performanceCounterManager;
             _hostShutdownToken = applicationLifetime.ApplicationStopping;
+            _requestAborted = context.RequestAborted;
 
             // Queue to protect against overlapping writes to the underlying response stream
             WriteQueue = new TaskQueue();
@@ -133,11 +137,12 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         public Func<bool, Task> Disconnected { get; set; }
 
+        // Token that represents the client disconnecting
         public virtual CancellationToken CancellationToken
         {
             get
             {
-                return _context.RequestAborted;
+                return _requestAborted;
             }
         }
 
