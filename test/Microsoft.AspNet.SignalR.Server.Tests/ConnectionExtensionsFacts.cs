@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
-//using Microsoft.AspNet.SignalR.Tracing;
 using Microsoft.Framework.Logging;
 using Moq;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Microsoft.AspNet.SignalR.Tests.Core
@@ -14,7 +12,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Core
     public class ConnectionExtensionsFacts
     {
         [Fact]
-        public void SendThrowsNullExceptionWhenConnectionIdIsNull()
+        async public void SendThrowsNullExceptionWhenConnectionIdIsNull()
         {
             var serializer = JsonUtility.CreateDefaultSerializer();
             var counters = new PerformanceCounterManager(new Mock<ILoggerFactory>().Object);
@@ -33,11 +31,11 @@ namespace Microsoft.AspNet.SignalR.Tests.Core
                                 new Mock<IProtectedData>().Object,
                                 new MemoryPool());
 
-            Assert.ThrowsAsync<ArgumentException>(() => connection.Send((string)null, new object())).Wait();
+            await Assert.ThrowsAsync<ArgumentException>(() => connection.Send((string)null, new object()));
         }
 
         [Fact]
-        public void SendThrowsNullExceptionWhenConnectionIdsAreNull()
+        async public void SendThrowsNullExceptionWhenConnectionIdsAreNull()
         {
             var serializer = JsonUtility.CreateDefaultSerializer();
             var counters = new PerformanceCounterManager(new Mock<ILoggerFactory>().Object);
@@ -56,7 +54,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Core
                                 new Mock<IProtectedData>().Object,
                                 new MemoryPool());
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => connection.Send((IList<string>)null, new object())).Wait();
+            await Assert.ThrowsAsync<ArgumentNullException>(() => connection.Send((IList<string>)null, new object()));
         }
     }
 }

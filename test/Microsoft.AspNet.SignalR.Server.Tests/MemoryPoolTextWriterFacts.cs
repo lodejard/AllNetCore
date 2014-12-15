@@ -1,11 +1,8 @@
+using Microsoft.AspNet.SignalR.Infrastructure;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.AspNet.SignalR.Infrastructure;
 using Xunit;
-using Moq;
-using System.Threading.Tasks;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {

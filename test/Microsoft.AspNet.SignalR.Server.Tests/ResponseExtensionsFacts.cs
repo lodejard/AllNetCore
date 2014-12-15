@@ -1,11 +1,7 @@
-using System;
-using System.IO;
-using System.Text;
-using Moq;
-using Xunit;
-using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.AspNet.Http;
-using System.Threading.Tasks;
+using Moq;
+using System.Text;
+using Xunit;
 
 namespace Microsoft.AspNet.SignalR.Tests.Hosting
 {
@@ -32,4 +28,3 @@ namespace Microsoft.AspNet.SignalR.Tests.Hosting
         }
     }
 }
-
