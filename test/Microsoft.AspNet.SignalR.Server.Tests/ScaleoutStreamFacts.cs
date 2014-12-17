@@ -25,7 +25,8 @@ namespace Microsoft.AspNet.SignalR.Tests
 
             stream.Open();
 
-            Assert.DoesNotThrow(() => sendTask.Wait());
+            // (Does not throw)
+            sendTask.Wait();
         }
 
         [Fact]
