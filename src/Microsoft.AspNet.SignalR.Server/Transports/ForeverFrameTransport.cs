@@ -35,15 +35,28 @@ namespace Microsoft.AspNet.SignalR.Transports
                                             "</script></head>" +
                                             "<body>\r\n";
 
+        private readonly IPerformanceCounterManager _counters;
+
         public ForeverFrameTransport(HttpContext context,
                                      JsonSerializer jsonSerializer,
                                      ITransportHeartbeat heartbeat,
-                                     IPerformanceCounterManager performanceCounterWriter,
+                                     IPerformanceCounterManager performanceCounterManager,
                                      IApplicationLifetime applicationLifetime,
                                      ILoggerFactory loggerFactory,
                                      IMemoryPool pool)
-            : base(context, jsonSerializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
+            : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
+            _counters = performanceCounterManager;
+        }
+
+        public override void IncrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentForeverFrame.Increment();
+        }
+
+        public override void DecrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentForeverFrame.Decrement();
         }
 
         public override Task KeepAlive()

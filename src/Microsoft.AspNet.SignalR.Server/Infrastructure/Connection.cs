@@ -103,16 +103,6 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used for debugging purposes.")]
-        private ILogger Logger
-        {
-            get
-            {
-                return _logger;
-            }
-        }
-
-
         public Subscription Subscription
         {
             get;
@@ -304,7 +294,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
         private void ProcessResults(MessageResult result)
         {
-            result.Messages.Enumerate<Connection>(message => message.IsAck || message.IsCommand,
+            result.Messages.Enumerate<Connection>(message => message.IsCommand,
                 (connection, message) => ProcessResultsCore(connection, message), this);
         }
 
@@ -312,26 +302,19 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         {
             if (message.IsAck)
             {
-                connection._ackHandler.TriggerAck(message.CommandId);
+                connection._logger.WriteError("Connection {0} received an unexpected ACK message.", connection.Identity);
+                return;
             }
-            else if (message.IsCommand)
-            {
-                var command = connection._serializer.Parse<Command>(message.Value, message.Encoding);
-                connection.ProcessCommand(command);
 
-                // Only send the ack if this command is waiting for it
-                if (message.WaitForAck)
-                {
-                    // If we're on the same box and there's a pending ack for this command then
-                    // just trip it
-                    if (!connection._ackHandler.TriggerAck(message.CommandId))
-                    {
-                        connection._bus.Ack(
-                            acker: connection._connectionId,
-                            waiter: message.Source,
-                            commandId: message.CommandId).Catch(connection._logger);
-                    }
-                }
+            var command = connection._serializer.Parse<Command>(message.Value, message.Encoding);
+            connection.ProcessCommand(command);
+
+            // Only send the ack if this command is waiting for it
+            if (message.WaitForAck)
+            {
+                connection._bus.Ack(
+                    acker: connection._connectionId,
+                    commandId: message.CommandId).Catch(connection._logger);
             }
         }
 

@@ -3,6 +3,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 {
     internal static class TypedClientBuilder<T>
     {
-        private const string clientModule = "Microsoft.AspNet.SignalR.Tests.Server.Hubs.TypedClient";
+        private const string ClientModuleName = "Microsoft.AspNet.SignalR.Hubs.TypedClientBuilder";
 
         // There is one static instance of _builder per T
         private static Lazy<Func<IClientProxy, T>> _builder = new Lazy<Func<IClientProxy, T>>(() => GenerateClientBuilder());
@@ -34,16 +35,16 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private static Func<IClientProxy, T> GenerateClientBuilder()
         {
-            VerifyInterface();
+            VerifyInterface(typeof(T));
 
-            var assemblyName = new AssemblyName(clientModule);
+            var assemblyName = new AssemblyName(ClientModuleName);
 
 #if ASPNET50
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
 #else
             AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
 #endif
-            ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(clientModule);
+            ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(ClientModuleName);
             Type clientType = GenerateInterfaceImplementation(moduleBuilder);
 
             return proxy => (T)Activator.CreateInstance(clientType, proxy);
@@ -51,19 +52,38 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         private static Type GenerateInterfaceImplementation(ModuleBuilder moduleBuilder)
         {
-            TypeBuilder type = moduleBuilder.DefineType(typeof(T).Name + "Impl", TypeAttributes.Public,
-                typeof(Object), new Type[] { typeof(T) });
+            TypeBuilder type = moduleBuilder.DefineType(
+                ClientModuleName + "." + typeof(T).Name + "Impl",
+                TypeAttributes.Public,
+                typeof(Object),
+                new[] { typeof(T) });
 
             FieldBuilder proxyField = type.DefineField("_proxy", typeof(IClientProxy), FieldAttributes.Private);
 
             BuildConstructor(type, proxyField);
 
-            foreach (var method in typeof(T).GetMethods())
+            foreach (var method in GetAllInterfaceMethods(typeof(T)))
             {
                 BuildMethod(type, method, proxyField);
             }
 
             return type.CreateTypeInfo().AsType();
+        }
+
+        private static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type interfaceType)
+        {
+            foreach (var parent in interfaceType.GetInterfaces())
+            {
+                foreach (var parentMethod in GetAllInterfaceMethods(parent))
+                {
+                    yield return parentMethod;
+                }
+            }
+
+            foreach (var method in interfaceType.GetMethods())
+            {
+                yield return method;
+            }
         }
 
         private static void BuildConstructor(TypeBuilder type, FieldInfo proxyField)
@@ -100,7 +120,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             ParameterInfo[] parameters = interfaceMethodInfo.GetParameters();
             Type[] paramTypes = parameters.Select(param => param.ParameterType).ToArray();
 
-            MethodBuilder methodBuilder = type.DefineMethod(interfaceMethodInfo.Name, methodAttributes, typeof(void), paramTypes);
+            MethodBuilder methodBuilder = type.DefineMethod(interfaceMethodInfo.Name, methodAttributes);
 
             MethodInfo invokeMethod = typeof(IClientProxy).GetRuntimeMethod("Invoke", new Type[] { typeof(string), typeof(object[]) });
 
@@ -147,10 +167,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
             generator.Emit(OpCodes.Ret);
         }
 
-        private static void VerifyInterface()
+        private static void VerifyInterface(Type interfaceType)
         {
-            var interfaceType = typeof(T);
-
             if (!interfaceType.GetTypeInfo().IsInterface)
             {
                 throw new InvalidOperationException(
@@ -172,6 +190,11 @@ namespace Microsoft.AspNet.SignalR.Hubs
             foreach (var method in interfaceType.GetMethods())
             {
                 VerifyMethod(interfaceType, method);
+            }
+
+            foreach (var parent in interfaceType.GetInterfaces())
+            {
+                VerifyInterface(parent);
             }
         }
 

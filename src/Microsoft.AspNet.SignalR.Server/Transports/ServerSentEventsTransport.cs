@@ -20,15 +20,18 @@ namespace Microsoft.AspNet.SignalR.Transports
         private static byte[] _keepAlive = Encoding.UTF8.GetBytes("data: {}\n\n");
         private static byte[] _dataInitialized = Encoding.UTF8.GetBytes("data: initialized\n\n");
 
+        private readonly IPerformanceCounterManager _counters;
+
         public ServerSentEventsTransport(HttpContext context,
                                          JsonSerializer jsonSerializer,
                                          ITransportHeartbeat heartbeat,
-                                         IPerformanceCounterManager performanceCounterWriter,
+                                         IPerformanceCounterManager performanceCounterManager,
                                          IApplicationLifetime applicationLifetime,
                                          ILoggerFactory loggerFactory,
                                          IMemoryPool pool)
-            : base(context, jsonSerializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
+            : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
+            _counters = performanceCounterManager;
         }
 
         public override Task KeepAlive()
@@ -45,6 +48,16 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
             return EnqueueOperation(state => PerformSend(state), context);
+        }
+
+        public override void IncrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentServerSentEvents.Increment();
+        }
+
+        public override void DecrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentServerSentEvents.Decrement();
         }
 
         protected internal override Task InitializeResponse(ITransportConnection connection)

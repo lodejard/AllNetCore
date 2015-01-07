@@ -49,6 +49,9 @@ namespace Microsoft.AspNet.SignalR
 
             _options = serviceProvider.GetRequiredService<IOptions<SignalROptions>>().Options;
             _transportManager = serviceProvider.GetRequiredService<ITransportManager>();
+
+            // Ensure that this server is listening for any ACKs sent over the bus.
+            serviceProvider.GetRequiredService<AckSubscriber>();
         }
 
         public bool Authorize(HttpRequest request)
@@ -377,12 +380,10 @@ namespace Microsoft.AspNet.SignalR
             // The list of default signals this connection cares about:
             // 1. The default signal (the type name)
             // 2. The connection id (so we can message this particular connection)
-            // 3. Ack signal
 
             return new string[] {
                 DefaultSignal,
-                PrefixHelper.GetConnectionId(connectionId),
-                PrefixHelper.GetAck(connectionId)
+                PrefixHelper.GetConnectionId(connectionId)
             };
         }
 

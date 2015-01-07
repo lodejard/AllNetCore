@@ -18,6 +18,7 @@ namespace Microsoft.AspNet.SignalR.Transports
     public class LongPollingTransport : ForeverTransport, ITransport
     {
         private readonly TimeSpan _pollDelay;
+        private readonly IPerformanceCounterManager _counters;
         private bool _responseSent;
 
         private static readonly byte[] _keepAlive = new byte[] { 32 };
@@ -33,6 +34,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
             _pollDelay = optionsAccessor.Options.Transports.LongPolling.PollDelay;
+            _counters = performanceCounterManager;
         }
 
         public override TimeSpan DisconnectThreshold
@@ -139,6 +141,16 @@ namespace Microsoft.AspNet.SignalR.Transports
             // This overload is only used in response to /send requests,
             // so the response will be uninitialized.
             return EnqueueOperation(state => PerformCompleteSend(state), context);
+        }
+
+        public override void IncrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentLongPolling.Increment();
+        }
+        
+        public override void DecrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentLongPolling.Decrement();
         }
 
         protected override Task<bool> OnMessageReceived(PersistentResponse response)

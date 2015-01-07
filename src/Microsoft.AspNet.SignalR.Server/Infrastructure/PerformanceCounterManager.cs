@@ -3,14 +3,13 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Framework.Logging;
-
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
@@ -64,6 +63,30 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// </summary>
         [PerformanceCounter(Name = "Connections Disconnected", Description = "The total number of connection Disconnect events since the application was started.", CounterType = PerformanceCounterType.NumberOfItems32)]
         public IPerformanceCounter ConnectionsDisconnected { get; private set; }
+
+        /// <summary>
+        /// Gets the performance counter representing the number of connections currently connected using the ForeverFrame transport.
+        /// </summary>
+        [PerformanceCounter(Name = "Connections Current ForeverFrame", Description = "The number of connections currently connected using the ForeverFrame transport.", CounterType = PerformanceCounterType.NumberOfItems32)]
+        public IPerformanceCounter ConnectionsCurrentForeverFrame { get; private set; }
+        
+        /// <summary>
+        /// Gets the performance counter representing the number of connections currently connected using the LongPolling transport.
+        /// </summary>
+        [PerformanceCounter(Name = "Connections Current LongPolling", Description = "The number of connections currently connected using the LongPolling transport.", CounterType = PerformanceCounterType.NumberOfItems32)]
+        public IPerformanceCounter ConnectionsCurrentLongPolling { get; private set; }
+        
+        /// <summary>
+        /// Gets the performance counter representing the number of connections currently connected using the ServerSentEvents transport.
+        /// </summary>
+        [PerformanceCounter(Name = "Connections Current ServerSentEvents", Description = "The number of connections currently connected using the ServerSentEvents transport.", CounterType = PerformanceCounterType.NumberOfItems32)]
+        public IPerformanceCounter ConnectionsCurrentServerSentEvents { get; private set; }
+        
+        /// <summary>
+        /// Gets the performance counter representing the number of connections currently connected using the WebSockets transport.
+        /// </summary>
+        [PerformanceCounter(Name = "Connections Current WebSockets", Description = "The number of connections currently connected using the WebSockets transport.", CounterType = PerformanceCounterType.NumberOfItems32)]
+        public IPerformanceCounter ConnectionsCurrentWebSockets { get; private set; }
 
         /// <summary>
         /// Gets the performance counter representing the number of connections currently connected.
@@ -273,6 +296,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         }
 
 #if PERFCOUNTER
+        internal string InstanceName { get; private set; }
+
         /// <summary>
         /// Initializes the performance counters.
         /// </summary>
@@ -290,8 +315,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             {
                 if (!_initialized)
                 {
-                    instanceName = instanceName ?? Guid.NewGuid().ToString();
-                    SetCounterProperties(instanceName);
+                    InstanceName = SanitizeInstanceName(instanceName);
+                    SetCounterProperties();
                     // The initializer ran, so let's register the shutdown cleanup
                     if (hostShutdownToken != CancellationToken.None)
                     {
@@ -330,7 +355,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
         }
 
-        private void SetCounterProperties(string instanceName)
+        private void SetCounterProperties()
         {
             var loadCounters = true;
 
@@ -347,7 +372,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
                 if (loadCounters)
                 {
-                    counter = LoadCounter(CategoryName, attribute.Name, instanceName, isReadOnly: false);
+                    counter = LoadCounter(CategoryName, attribute.Name, isReadOnly:false);
 
                     if (counter == null)
                     {
@@ -360,6 +385,36 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
                 property.SetValue(this, counter, null);
             }
+        }
+
+        private static string SanitizeInstanceName(string instanceName)
+        {
+            // Details on how to sanitize instance names are at http://msdn.microsoft.com/en-us/library/vstudio/system.diagnostics.performancecounter.instancename
+            if (string.IsNullOrWhiteSpace(instanceName))
+            {
+                instanceName = Guid.NewGuid().ToString();
+            }
+
+            // Substitute invalid chars with valid replacements
+            var substMap = new Dictionary<char, char> {
+                { '(', '[' },
+                { ')', ']' },
+                { '#', '-' },
+                { '\\', '-' },
+                { '/', '-' }
+            };
+            var sanitizedName = new String(instanceName.Select(c => substMap.ContainsKey(c) ? substMap[c] : c).ToArray());
+
+            // Names must be shorter than 128 chars, see doc link above
+            var maxLength = 127;
+            return sanitizedName.Length <= maxLength
+                ? sanitizedName
+                : sanitizedName.Substring(0, maxLength);
+        }
+
+        private IPerformanceCounter LoadCounter(string categoryName, string counterName, bool isReadOnly)
+        {
+            return LoadCounter(categoryName, counterName, InstanceName, isReadOnly);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This file is shared")]

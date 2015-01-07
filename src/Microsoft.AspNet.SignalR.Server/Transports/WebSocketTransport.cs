@@ -28,29 +28,30 @@ namespace Microsoft.AspNet.SignalR.Transports
         private readonly Action<string> _message;
         private readonly Action _closed;
         private readonly Action<Exception> _error;
+        private readonly IPerformanceCounterManager _counters;
 
         private static byte[] _keepAlive = Encoding.UTF8.GetBytes("{}");
 
         public WebSocketTransport(HttpContext context,
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
-                                  IPerformanceCounterManager performanceCounterWriter,
+                                  IPerformanceCounterManager performanceCounterManager,
                                   IApplicationLifetime applicationLifetime,
                                   ILoggerFactory loggerFactory,
                                   IMemoryPool pool)
-            : this(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool, maxIncomingMessageSize: null)
+            : this(context, serializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool, maxIncomingMessageSize: null)
         {
         }
 
         public WebSocketTransport(HttpContext context,
                                   JsonSerializer serializer,
                                   ITransportHeartbeat heartbeat,
-                                  IPerformanceCounterManager performanceCounterWriter,
+                                  IPerformanceCounterManager performanceCounterManager,
                                   IApplicationLifetime applicationLifetime,
                                   ILoggerFactory loggerFactory,
                                   IMemoryPool pool,
                                   int? maxIncomingMessageSize)
-            : base(context, serializer, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
+            : base(context, serializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
             _context = context;
             _maxIncomingMessageSize = maxIncomingMessageSize;
@@ -58,6 +59,8 @@ namespace Microsoft.AspNet.SignalR.Transports
             _message = OnMessage;
             _closed = OnClosed;
             _error = OnSocketError;
+
+            _counters = performanceCounterManager;
         }
 
         public override bool IsAlive
@@ -112,6 +115,16 @@ namespace Microsoft.AspNet.SignalR.Transports
             OnSendingResponse(response);
 
             return Send((object)response);
+        }
+
+        public override void IncrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentWebSockets.Increment();
+        }
+
+        public override void DecrementConnectionsCount()
+        {
+            _counters.ConnectionsCurrentWebSockets.Decrement();
         }
 
         private async Task AcceptWebSocketRequest(ITransportConnection connection)

@@ -36,6 +36,7 @@ namespace Microsoft.Framework.DependencyInjection
             services.TryAdd(describe.Singleton<ITransportHeartbeat, TransportHeartbeat>());
             services.TryAdd(describe.Singleton<IConnectionManager, ConnectionManager>());
             services.TryAdd(describe.Singleton<IAckHandler, AckHandler>());
+            services.TryAdd(describe.Singleton<AckSubscriber, AckSubscriber>());
             services.TryAdd(describe.Singleton<IAssemblyLocator, DefaultAssemblyLocator>());
             services.TryAdd(describe.Singleton<IHubManager, DefaultHubManager>());
             services.TryAdd(describe.Singleton<IMethodDescriptorProvider, ReflectedMethodDescriptorProvider>());

@@ -57,8 +57,6 @@ namespace Microsoft.AspNet.SignalR.Tests
             var webSocket = new Mock<WebSocket>(MockBehavior.Strict);
             var webSocketHandler = new Mock<WebSocketHandler>(MockBehavior.Strict, 64 * 1024, new Mock<ILogger>().Object);
 
-            webSocket.Setup(w => w.State).Returns(WebSocketState.Closed);
-
             webSocket.Setup(w => w.ReceiveAsync(It.IsAny<ArraySegment<byte>>(), CancellationToken.None))
                      .Returns(() => TaskAsyncHelper.FromResult(webSocketMessages[messageIndex++]));
 
@@ -70,41 +68,6 @@ namespace Microsoft.AspNet.SignalR.Tests
 
             webSocket.VerifyAll();
             webSocketHandler.VerifyAll();
-        }
-
-        [Fact]
-        public async Task WebSocketHandlerClosesIfWebSocketStateIsCloseSentAfterClosing()
-        {
-            var messageIndex = 0;
-            var webSocketMessages = new[] { new WebSocketReceiveResult(0, WebSocketMessageType.Text, endOfMessage: false),
-                                            new WebSocketReceiveResult(0, WebSocketMessageType.Text, endOfMessage: false),
-                                            new WebSocketReceiveResult(0, WebSocketMessageType.Close, endOfMessage: true)};
-
-            var webSocket = new Mock<WebSocket>(MockBehavior.Strict);
-
-            webSocket.Setup(w => w.ReceiveAsync(It.IsAny<ArraySegment<byte>>(), CancellationToken.None))
-                     .Returns(() => TaskAsyncHelper.FromResult(webSocketMessages[messageIndex++]));
-
-            WebSocketState state = WebSocketState.Open;
-            webSocket.Setup(w => w.State).Returns(() => state);
-            webSocket.Setup(w => w.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None))
-                .Returns(() =>
-                {
-                    state = WebSocketState.CloseSent;
-                    return TaskAsyncHelper.Empty;
-                });
-
-            webSocket.Setup(w => w.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None))
-                .Returns(() =>
-                {
-                    state = WebSocketState.Closed;
-                    return TaskAsyncHelper.Empty;
-                });
-
-            var webSocketHandler = new Mock<WebSocketHandler>(64 * 1024, new Mock<ILogger>().Object) {CallBase = true};
-            await webSocketHandler.Object.ProcessWebSocketRequestAsync(webSocket.Object, CancellationToken.None);
-
-            webSocket.VerifyAll();
         }
 
         [Theory]

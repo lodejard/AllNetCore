@@ -2,10 +2,18 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
+#if CLIENT_NET45 || CLIENT_NET4 || PORTABLE || NETFX_CORE
+#define CLIENT
+#endif
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+
+#if CLIENT
+using Microsoft.AspNet.SignalR.Client.Infrastructure;
+#endif
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
@@ -19,6 +27,12 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         private volatile bool _drained;
         private readonly int? _maxSize;
         private long _size;
+
+#if CLIENT
+        // This is the TaskQueueMonitor in the .NET client that watches for
+        // suspected deadlocks in user code.
+        private readonly ITaskMonitor _taskMonitor;
+#endif
 
         public TaskQueue()
             : this(TaskAsyncHelper.Empty)
@@ -37,7 +51,16 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _maxSize = maxSize;
         }
 
-#if !CLIENT_NET45 && !CLIENT_NET4 && !PORTABLE && !NETFX_CORE
+
+#if CLIENT
+        public TaskQueue(Task initialTask, ITaskMonitor taskMonitor)
+            : this(initialTask)
+        {
+            _taskMonitor = taskMonitor;
+        }
+#endif
+
+#if !CLIENT
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "This is shared code.")]
         public IPerformanceCounter QueueSizeCounter { get; set; }
 #endif
@@ -73,7 +96,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                         return null;
                     }
 
-#if !CLIENT_NET45 && !CLIENT_NET4 && !PORTABLE && !NETFX_CORE
+#if !CLIENT
                     var counter = QueueSizeCounter;
                     if (counter != null)
                     {
@@ -82,28 +105,41 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 #endif
                 }
 
-                Task newTask = _lastQueuedTask.Then((n, ns, q) => InvokeNext(n, ns, q), taskFunc, state, this);
+                var newTask = _lastQueuedTask.Then((n, ns, q) => q.InvokeNext(n, ns), taskFunc, state, this);
 
                 _lastQueuedTask = newTask;
                 return newTask;
             }
         }
 
-        private static Task InvokeNext(Func<object, Task> next, object nextState, object queueState)
+        private Task InvokeNext(Func<object, Task> next, object nextState)
         {
-            return next(nextState).Finally(s => Dequeue(s), queueState);
+#if CLIENT
+            if (_taskMonitor != null)
+            {
+                _taskMonitor.TaskStarted();
+            }
+#endif
+
+            return next(nextState).Finally(s => ((TaskQueue)s).Dequeue(), this);
         }
 
-        private static void Dequeue(object queueState)
+        private void Dequeue()
         {
-            var queue = (TaskQueue)queueState;
-            if (queue._maxSize != null)
+#if CLIENT
+            if (_taskMonitor != null)
+            {
+                _taskMonitor.TaskCompleted();
+            }
+#endif
+
+            if (_maxSize != null)
             {
                 // Decrement the number of items left in the queue
-                Interlocked.Decrement(ref queue._size);
+                Interlocked.Decrement(ref _size);
 
-#if !CLIENT_NET45 && !CLIENT_NET4 && !PORTABLE && !NETFX_CORE
-                var counter = queue.QueueSizeCounter;
+#if !CLIENT
+                var counter = QueueSizeCounter;
                 if (counter != null)
                 {
                     counter.Decrement();

@@ -206,6 +206,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
 
             try
             {
+#if CLIENT_NET45
                 if (WebSocket.State == WebSocketState.Closed ||
                     WebSocket.State == WebSocketState.Aborted)
                 {
@@ -213,12 +214,16 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                 }
                 else
                 {
-                    // Close the socket
+                    // Initiate the WebSocket closing handshake. Only the client should ever do this.
                     await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).PreserveCulture();
                 }
+#endif
             }
             finally
             {
+#if CLIENT_NET45
+                WebSocket.Dispose();
+#endif
                 OnClose();
             }
         }

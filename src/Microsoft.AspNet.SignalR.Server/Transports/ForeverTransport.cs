@@ -28,14 +28,14 @@ namespace Microsoft.AspNet.SignalR.Transports
         protected ForeverTransport(HttpContext context,
                                    JsonSerializer jsonSerializer,
                                    ITransportHeartbeat heartbeat,
-                                   IPerformanceCounterManager performanceCounterWriter,
+                                   IPerformanceCounterManager performanceCounterManager,
                                    IApplicationLifetime applicationLifetime,
                                    ILoggerFactory loggerFactory,
                                    IMemoryPool pool)
-            : base(context, heartbeat, performanceCounterWriter, applicationLifetime, loggerFactory, pool)
+            : base(context, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
             _jsonSerializer = jsonSerializer;
-            _counters = performanceCounterWriter;
+            _counters = performanceCounterManager;
         }
 
         protected virtual int MaxMessages
