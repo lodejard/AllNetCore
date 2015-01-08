@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
@@ -37,10 +36,8 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             }
             else
             {
-#if !PORTABLE && !NETFX_CORE
                 // Set has been called multiple times, fail
                 Debug.Fail("Multiple calls to Disposer.Set(IDisposable) without calling Disposer.Dispose()");
-#endif
             }
         }
 
