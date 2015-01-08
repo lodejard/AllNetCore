@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.WebUtilities.Collections;
+using Microsoft.AspNet.PipelineCore.Collections;
 using Moq;
 
 namespace Microsoft.AspNet.SignalR.Tests
@@ -80,7 +80,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var processedQuery = query.ToDictionary(kvp => kvp.Key, kvp => new[] { kvp.Value });
             request.Setup(m => m.Query).Returns(new ReadableStringCollection(processedQuery));
 
-            var mockForm = new Mock<IReadableStringCollection>();
+            var mockForm = new Mock<IFormCollection>();
 
             foreach (var kvp in form)
             {
@@ -88,7 +88,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             }
 
             request.Setup(m => m.ReadFormAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult<IReadableStringCollection>(mockForm.Object));
+                .Returns(Task.FromResult<IFormCollection>(mockForm.Object));
 
             return request;
         }
