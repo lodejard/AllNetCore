@@ -98,7 +98,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             if (_lastMessageId == null)
             {
-                var form = await Context.Request.GetFormAsync().PreserveCulture();
+                var form = await Context.Request.ReadFormAsync().PreserveCulture();
                 _lastMessageId = form["messageId"];
             }
         }
@@ -110,7 +110,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             if (groupsToken == null)
             {
-                var form = await Context.Request.GetFormAsync().PreserveCulture();
+                var form = await Context.Request.ReadFormAsync().PreserveCulture();
                 groupsToken = form["groupsToken"];
             }
             return groupsToken;
@@ -212,7 +212,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected override async Task ProcessSendRequest()
         {
-            IReadableStringCollection form = await Context.Request.GetFormAsync().PreserveCulture();
+            IReadableStringCollection form = await Context.Request.ReadFormAsync().PreserveCulture();
             string data = form["data"] ?? Context.Request.Query["data"];
 
             if (Received != null)

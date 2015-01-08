@@ -87,7 +87,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                 mockForm.SetupGet(m => m[kvp.Key]).Returns(kvp.Value);
             }
 
-            request.Setup(m => m.GetFormAsync(It.IsAny<CancellationToken>()))
+            request.Setup(m => m.ReadFormAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<IReadableStringCollection>(mockForm.Object));
 
             return request;
