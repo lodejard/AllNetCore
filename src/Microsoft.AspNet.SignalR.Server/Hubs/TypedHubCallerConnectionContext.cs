@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
-    public class TypedHubCallerConnectionContext<T> : TypedHubConnectionContext<T>, IHubCallerConnectionContext<T>
+    public class TypedHubCallerConnectionContext<TClient> : TypedHubConnectionContext<TClient>, IHubCallerConnectionContext<TClient>
+        where TClient : class
     {
         private IHubCallerConnectionContext<dynamic> _dynamicContext;
 
@@ -16,11 +17,11 @@ namespace Microsoft.AspNet.SignalR.Hubs
             _dynamicContext = dynamicContext;
         }
 
-        public T Caller
+        public TClient Caller
         {
             get
             {
-                return TypedClientBuilder<T>.Build(_dynamicContext.Caller);
+                return TypedClientBuilder<TClient>.Build(_dynamicContext.Caller);
             }
         }
 
@@ -32,22 +33,22 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
         }
 
-        public T Others
+        public TClient Others
         {
             get
             {
-                return TypedClientBuilder<T>.Build(_dynamicContext.Others);
+                return TypedClientBuilder<TClient>.Build(_dynamicContext.Others);
             }
         }
 
-        public T OthersInGroup(string groupName)
+        public TClient OthersInGroup(string groupName)
         {
-            return TypedClientBuilder<T>.Build(_dynamicContext.OthersInGroup(groupName));
+            return TypedClientBuilder<TClient>.Build(_dynamicContext.OthersInGroup(groupName));
         }
 
-        public T OthersInGroups(IList<string> groupNames)
+        public TClient OthersInGroups(IList<string> groupNames)
         {
-            return TypedClientBuilder<T>.Build(_dynamicContext.OthersInGroups(groupNames));
+            return TypedClientBuilder<TClient>.Build(_dynamicContext.OthersInGroups(groupNames));
         }
     }
 }

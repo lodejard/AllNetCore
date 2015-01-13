@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
@@ -11,6 +10,13 @@ namespace SignalRSample.Web.Hubs.DemoHub
     public class DemoHub : Hub
     {
         private static readonly TaskCompletionSource<object> _neverEndingTcs = new TaskCompletionSource<object>();
+
+        private readonly IHubContext<TypedDemoHub, IClient> _typedDemoContext;
+
+        public DemoHub(IHubContext<TypedDemoHub, IClient> typedDemoContext)
+        {
+            _typedDemoContext = typedDemoContext;
+        }
 
         public Task<int> GetValue()
         {
@@ -224,6 +230,11 @@ namespace SignalRSample.Web.Hubs.DemoHub
         public void MispelledClientMethod()
         {
             Clients.Caller.clientMethd();
+        }
+
+        public void InvokeViaInjectedContext(int arg1, int arg2)
+        {
+            _typedDemoContext.Clients.Client(Context.ConnectionId).MethodB(arg1, arg2);
         }
 
         public string ReturnLargePayload()

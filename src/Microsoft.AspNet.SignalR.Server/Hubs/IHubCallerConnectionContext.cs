@@ -10,12 +10,13 @@ namespace Microsoft.AspNet.SignalR.Hubs
     /// <summary>
     /// Encapsulates all information about an individual SignalR connection for an <see cref="IHub"/>.
     /// </summary>
-    public interface IHubCallerConnectionContext<T> : IHubConnectionContext<T>
+    public interface IHubCallerConnectionContext<TClient> : IHubConnectionContext<TClient>
+        where TClient : class
     {
-        T Caller { get; }
+        TClient Caller { get; }
         dynamic CallerState { get; }
-        T Others { get; }
-        T OthersInGroup(string groupName);
-        T OthersInGroups(IList<string> groupNames);
+        TClient Others { get; }
+        TClient OthersInGroup(string groupName);
+        TClient OthersInGroups(IList<string> groupNames);
     }
 }

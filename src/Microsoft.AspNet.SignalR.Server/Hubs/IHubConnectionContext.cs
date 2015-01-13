@@ -9,19 +9,19 @@ namespace Microsoft.AspNet.SignalR.Hubs
     /// <summary>
     /// Encapsulates all information about a SignalR connection for an <see cref="IHub"/>.
     /// </summary>
-    public interface IHubConnectionContext<T>
+    public interface IHubConnectionContext<TClient> where TClient : class
     {
-        T All { get; }
-        T AllExcept(params string[] excludeConnectionIds);
+        TClient All { get; }
+        TClient AllExcept(params string[] excludeConnectionIds);
 
-        T Client(string connectionId);
-        T Clients(IList<string> connectionIds);
+        TClient Client(string connectionId);
+        TClient Clients(IList<string> connectionIds);
 
-        T Group(string groupName, params string[] excludeConnectionIds);
-        T Groups(IList<string> groupNames, params string[] excludeConnectionIds);
+        TClient Group(string groupName, params string[] excludeConnectionIds);
+        TClient Groups(IList<string> groupNames, params string[] excludeConnectionIds);
 
-        T User(string userId);
+        TClient User(string userId);
 
-        T Users(IList<string> userIds);
+        TClient Users(IList<string> userIds);
     }
 }

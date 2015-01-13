@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR;
 
-namespace Microsoft.AspNet.SignalR.Samples.Hubs.DemoHub
+namespace SignalRSample.Web.Hubs.DemoHub
 {
     public class TypedDemoHub : Hub<IClient>
     {

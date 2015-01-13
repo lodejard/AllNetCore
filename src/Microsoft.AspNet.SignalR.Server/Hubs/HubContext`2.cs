@@ -4,18 +4,20 @@
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
-    internal class HubContext<T> : IHubContext<T>
+    internal class HubContext<THub, TClient> : IHubContext<THub, TClient>
+        where THub : IHub
+        where TClient : class
     {
         public HubContext(IHubContext dynamicContext)
         {
             // Validate will throw an InvalidOperationException if T is an invalid type
-            TypedClientBuilder<T>.Validate();
+            TypedClientBuilder<TClient>.Validate();
 
-            Clients = new TypedHubConnectionContext<T>(dynamicContext.Clients);
+            Clients = new TypedHubConnectionContext<TClient>(dynamicContext.Clients);
             Groups = dynamicContext.Groups;
         }
 
-        public IHubConnectionContext<T> Clients { get; private set; }
+        public IHubConnectionContext<TClient> Clients { get; private set; }
 
         public IGroupManager Groups { get; private set; }
     }

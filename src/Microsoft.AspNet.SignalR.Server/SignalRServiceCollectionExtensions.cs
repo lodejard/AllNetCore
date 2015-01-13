@@ -51,6 +51,9 @@ namespace Microsoft.Framework.DependencyInjection
             services.TryAdd(describe.Singleton<IHubRequestParser, HubRequestParser>());
             services.TryAdd(describe.Singleton<IHubPipelineInvoker, HubPipeline>());
 
+            services.TryAdd(describe.Singleton(typeof(IHubContext<>), typeof(HubContextService<>)));
+            services.TryAdd(describe.Singleton(typeof(IHubContext<,>), typeof(HubContextService<,>)));
+
             // TODO: Just use the new IDataProtectionProvider abstraction directly here
             services.TryAdd(describe.Singleton<IProtectedData, DataProtectionProviderProtectedData>());
 

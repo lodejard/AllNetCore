@@ -4,12 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.Framework.Logging;
 using Newtonsoft.Json;
@@ -42,7 +37,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <returns>A <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.</returns>
         public IPersistentConnectionContext GetConnectionContext<T>() where T : PersistentConnection
         {
-            return GetConnection(typeof(T));
+            return GetConnectionContext(typeof(T));
         }
 
         /// <summary>
@@ -50,7 +45,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// </summary>
         /// <param name="type">Type of the <see cref="PersistentConnection"/></param>
         /// <returns>A <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.</returns>
-        public IPersistentConnectionContext GetConnection(Type type)
+        public IPersistentConnectionContext GetConnectionContext(Type type)
         {
             if (type == null)
             {
@@ -67,18 +62,19 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <summary>
         /// Returns a <see cref="IHubContext"/> for the specified <see cref="IHub"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the <see cref="IHub"/></typeparam>
-        /// <returns>a <see cref="IHubContext"/> for the specified <see cref="IHub"/></returns>
-        public IHubContext GetHubContext<T>() where T : IHub
+        /// <typeparam name="THub">Type of the <see cref="IHub"/></typeparam>
+        /// <returns>A <see cref="IHubContext"/> for the specified <see cref="IHub"/></returns>
+        public IHubContext GetHubContext<THub>()
+            where THub : IHub
         {
-            return GetHubContext(typeof(T).GetHubName());
+            return GetHubContext(typeof(THub).GetHubName());
         }
 
         /// <summary>
         /// Returns a <see cref="IHubContext"/>for the specified hub.
         /// </summary>
         /// <param name="hubName">Name of the hub</param>
-        /// <returns>a <see cref="IHubContext"/> for the specified hub</returns>
+        /// <returns>A <see cref="IHubContext"/> for the specified hub</returns>
         public IHubContext GetHubContext(string hubName)
         {
             var connection = GetConnectionCore(connectionName: null);
@@ -95,28 +91,17 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         }
 
         /// <summary>
-        /// Returns a <see cref="IHubContext{TClient}"/> for the specified <see cref="IHub"/>.
+        /// Returns a <see cref="IHubContext{THub, TClient}"/> for the specified <see cref="IHub"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the <see cref="IHub"/></typeparam>
+        /// <typeparam name="THub">Type of the <see cref="IHub"/></typeparam>
         /// <typeparam name="TClient">Interface implemented by the client proxy</typeparam>
-        /// <returns>a <see cref="IHubContext{TClient}"/> for the specified <see cref="IHub"/></returns>
-        public IHubContext<TClient> GetHubContext<T, TClient>()
-            where T : IHub
+        /// <returns>A <see cref="IHubContext{THub, TClient}"/> for the specified <see cref="IHub"/></returns>
+        public IHubContext<THub, TClient> GetHubContext<THub, TClient>()
+            where THub : IHub
             where TClient : class
         {
-            return GetHubContext<TClient>(typeof(T).GetHubName());
-        }
-
-        /// <summary>
-        /// Returns a <see cref="IHubContext{TClient}"/>for the specified hub.
-        /// </summary>
-        /// <param name="hubName">Name of the hub</param>
-        /// <typeparam name="TClient">Interface implemented by the client proxy</typeparam>
-        /// <returns>a <see cref="IHubContext{TClient}"/> for the specified hub</returns>
-        public IHubContext<TClient> GetHubContext<TClient>(string hubName) where TClient : class
-        {
-            var dynamicContext = GetHubContext(hubName);
-            return new HubContext<TClient>(dynamicContext);
+            var dynamicContext = GetHubContext<THub>();
+            return new HubContext<THub, TClient>(dynamicContext);
         }
 
         internal Connection GetConnectionCore(string connectionName)

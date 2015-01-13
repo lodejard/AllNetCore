@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNet.SignalR.Hubs;
 
@@ -15,37 +16,29 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <summary>
         /// Returns a <see cref="IHubContext"/> for the specified <see cref="IHub"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the <see cref="IHub"/></typeparam>
-        /// <returns>a <see cref="IHubContext"/> for the specified <see cref="IHub"/></returns>
+        /// <typeparam name="THub">Type of the <see cref="IHub"/></typeparam>
+        /// <returns>A <see cref="IHubContext"/> for the specified <see cref="IHub"/></returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The hub type needs to be specified")]
-        IHubContext GetHubContext<T>() where T : IHub;
+        IHubContext GetHubContext<THub>()
+            where THub : IHub;
 
         /// <summary>
         /// Returns a <see cref="IHubContext"/>for the specified hub.
         /// </summary>
         /// <param name="hubName">Name of the hub</param>
-        /// <returns>a <see cref="IHubContext"/> for the specified hub</returns>
+        /// <returns>A <see cref="IHubContext"/> for the specified hub</returns>
         IHubContext GetHubContext(string hubName);
 
-
         /// <summary>
-        /// Returns a <see cref="IHubContext{TClient}"/> for the specified <see cref="IHub"/>.
+        /// Returns a <see cref="IHubContext{THub, TClient}"/> for the specified <see cref="IHub"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the <see cref="IHub"/></typeparam>
+        /// <typeparam name="THub">Type of the <see cref="IHub"/></typeparam>
         /// <typeparam name="TClient">Interface implemented by the client proxy</typeparam>
-        /// <returns>a <see cref="IHubContext{TClient}"/> for the specified <see cref="IHub"/></returns>
+        /// <returns>A <see cref="IHubContext{THub, TClient}"/> for the specified <see cref="IHub"/></returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The hub type needs to be specified")]
-        IHubContext<TClient> GetHubContext<T, TClient>()
-            where T : IHub
+        IHubContext<THub, TClient> GetHubContext<THub, TClient>()
+            where THub : IHub
             where TClient : class;
-
-        /// <summary>
-        /// Returns a <see cref="IHubContext{TClient}"/>for the specified hub.
-        /// </summary>
-        /// <param name="hubName">Name of the hub</param>
-        /// <typeparam name="TClient">Interface implemented by the client proxy</typeparam>
-        /// <returns>a <see cref="IHubContext{TClient}"/> for the specified hub</returns>
-        IHubContext<TClient> GetHubContext<TClient>(string hubName) where TClient : class;
 
         /// <summary>
         /// Returns a <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.
@@ -54,5 +47,12 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <returns>A <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The connection type needs to be specified")]
         IPersistentConnectionContext GetConnectionContext<T>() where T : PersistentConnection;
+
+        /// <summary>
+        /// Returns a <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.
+        /// </summary>
+        /// <param name="type">Type of the <see cref="PersistentConnection"/></param>
+        /// <returns>A <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.</returns>
+        IPersistentConnectionContext GetConnectionContext(Type type);
     }
 }
