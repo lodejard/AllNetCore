@@ -64,7 +64,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             get
             {
-                return LoggerFactory.Create("SignalR.HubDispatcher");
+                return LoggerFactory.Create<HubDispatcher>();
             }
         }
 
@@ -194,7 +194,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             // TODO: Make adding parameters here pluggable? IValueProvider? ;)
             HubInvocationProgress progress = GetProgressInstance(methodDescriptor, value => SendProgressUpdate(hub.Context.ConnectionId, tracker, value, hubRequest), Logger);
-            
+
             Task<object> piplineInvocation;
             try
             {
@@ -398,8 +398,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
             var signals = _hubs.SelectMany(info =>
             {
                 var items = new List<string>
-                { 
-                    PrefixHelper.GetHubName(info.Name), 
+                {
+                    PrefixHelper.GetHubName(info.Name),
                     PrefixHelper.GetHubConnectionId(info.CreateQualifiedName(connectionId)),
                 };
 
@@ -410,8 +410,8 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
                 return items;
             })
-            .Concat(new[] 
-            { 
+            .Concat(new[]
+            {
                 PrefixHelper.GetConnectionId(connectionId)
             });
 

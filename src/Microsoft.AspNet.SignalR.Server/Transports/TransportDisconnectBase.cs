@@ -90,7 +90,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             // Queue to protect against overlapping writes to the underlying response stream
             WriteQueue = new TaskQueue();
-            _logger = loggerFactory.Create("SignalR.Transports." + GetType().Name);
+            _logger = loggerFactory.Create(GetType().FullName);
         }
 
         protected IMemoryPool Pool { get; private set; }
@@ -128,7 +128,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             return TaskAsyncHelper.FromResult(Context.Request.Query["groupsToken"]);
         }
-        
+
         internal TaskQueue WriteQueue
         {
             get;
@@ -268,7 +268,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         public abstract void IncrementConnectionsCount();
 
         public abstract void DecrementConnectionsCount();
-        
+
         public Task Disconnect()
         {
             return Abort(clean: false);

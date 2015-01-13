@@ -23,7 +23,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             _locator = locator;
             _hubs = new Lazy<IDictionary<string, HubDescriptor>>(BuildHubsCache);
-            _logger = loggerFactory.Create("SignalR." + typeof(ReflectedHubDescriptorProvider).Name);
+            _logger = loggerFactory.Create<ReflectedHubDescriptorProvider>();
         }
 
         public IList<HubDescriptor> GetHubs()

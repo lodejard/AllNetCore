@@ -65,7 +65,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _connectionId = connectionId;
             _signals = new List<string>(signals.Concat(groups));
             _groups = new DiffSet<string>(groups);
-            _logger = loggerFactory.Create("SignalR.Connection");
+            _logger = loggerFactory.Create<Connection>();
             _ackHandler = ackHandler;
             _counters = performanceCounterManager;
             _protectedData = protectedData;
@@ -151,7 +151,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
 
             // Serialize once
             ArraySegment<byte> messageBuffer = GetMessageBuffer(value);
-            string filter = GetFilter(excludedSignals); 
+            string filter = GetFilter(excludedSignals);
 
             var tasks = new Task[signals.Count];
 

@@ -89,7 +89,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _stringMinifier = stringMinifier;
             _loggerFactory = loggerFactory;
             Counters = performanceCounterManager;
-            _logger = _loggerFactory.Create("SignalR." + typeof(MessageBus).Name);
+            _logger = _loggerFactory.Create<MessageBus>();
             _maxTopicsWithNoSubscriptions = options.MessageBus.MaxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);

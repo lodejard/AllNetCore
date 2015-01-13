@@ -63,7 +63,7 @@ namespace Microsoft.AspNet.SignalR
         {
             get
             {
-                return LoggerFactory.Create("SignalR.PersistentConnection");
+                return LoggerFactory.Create<PersistentConnection>();
             }
         }
 

@@ -40,7 +40,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             _transportOptions = optionsAccessor.Options.Transports;
             _counters = counters;
-            _logger = loggerFactory.Create("SignalR.Transports.TransportHeartBeat");
+            _logger = loggerFactory.Create<TransportHeartbeat>();
 
             // REVIEW: When to dispose the timer?
             _timer = new Timer(Beat,
