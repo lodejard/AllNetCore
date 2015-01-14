@@ -33,11 +33,12 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <summary>
         /// Returns a <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the <see cref="PersistentConnection"/></typeparam>
+        /// <typeparam name="TConnection">Type of the <see cref="PersistentConnection"/></typeparam>
         /// <returns>A <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.</returns>
-        public IPersistentConnectionContext GetConnectionContext<T>() where T : PersistentConnection
+        public IPersistentConnectionContext GetConnectionContext<TConnection>()
+            where TConnection : PersistentConnection
         {
-            return GetConnectionContext(typeof(T));
+            return GetConnectionContext(typeof(TConnection));
         }
 
         /// <summary>

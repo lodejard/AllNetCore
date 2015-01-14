@@ -137,7 +137,7 @@ namespace SignalRSample.Web
             return null;
         }
 
-        enum MessageType
+        public enum MessageType
         {
             Send,
             Broadcast,

@@ -43,10 +43,11 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         /// <summary>
         /// Returns a <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the <see cref="PersistentConnection"/></typeparam>
+        /// <typeparam name="TConnection">Type of the <see cref="PersistentConnection"/></typeparam>
         /// <returns>A <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The connection type needs to be specified")]
-        IPersistentConnectionContext GetConnectionContext<T>() where T : PersistentConnection;
+        IPersistentConnectionContext GetConnectionContext<TConnection>()
+            where TConnection : PersistentConnection;
 
         /// <summary>
         /// Returns a <see cref="IPersistentConnectionContext"/> for the <see cref="PersistentConnection"/>.

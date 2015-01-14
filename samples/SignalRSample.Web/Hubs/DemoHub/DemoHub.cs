@@ -12,10 +12,24 @@ namespace SignalRSample.Web.Hubs.DemoHub
         private static readonly TaskCompletionSource<object> _neverEndingTcs = new TaskCompletionSource<object>();
 
         private readonly IHubContext<TypedDemoHub, IClient> _typedDemoContext;
+        private readonly IPersistentConnectionContext _rawConnectionContext;
 
-        public DemoHub(IHubContext<TypedDemoHub, IClient> typedDemoContext)
+        public DemoHub(
+            IHubContext<TypedDemoHub, IClient> typedDemoContext,
+            IPersistentConnectionContext<RawConnection> rawConnectionContext)
         {
             _typedDemoContext = typedDemoContext;
+            _rawConnectionContext = rawConnectionContext;
+        }
+
+        public override async Task OnConnected()
+        {
+            await _rawConnectionContext.Connection.Broadcast(new
+            {
+                type = RawConnection.MessageType.Broadcast.ToString(),
+                from = Context.ConnectionId,
+                data = "Connected to DemoHub!"
+            });
         }
 
         public Task<int> GetValue()
