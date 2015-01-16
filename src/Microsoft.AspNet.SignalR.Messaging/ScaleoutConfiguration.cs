@@ -9,12 +9,12 @@ namespace Microsoft.AspNet.SignalR.Messaging
     /// <summary>
     /// Common settings for scale-out message bus implementations.
     /// </summary>
-    public class ScaleoutOptions
+    public class ScaleoutConfiguration
     {
         private int _maxQueueLength;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ScaleoutOptions()
+        public ScaleoutConfiguration()
         {
             QueueBehavior = QueuingBehavior.InitialOnly;
             _maxQueueLength = 1000;

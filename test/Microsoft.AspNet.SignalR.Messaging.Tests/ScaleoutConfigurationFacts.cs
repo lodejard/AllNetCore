@@ -12,7 +12,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         [InlineData(100)]
         public void ValidMaxQueueLength(int maxLength)
         {
-            var config = new ScaleoutOptions();
+            var config = new ScaleoutConfiguration();
             config.MaxQueueLength = maxLength;
 
             Assert.Equal(maxLength, config.MaxQueueLength);
@@ -23,7 +23,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         [InlineData(-2)]
         public void InvalidMaxQueueLength(int maxLength)
         {
-            var config = new ScaleoutOptions();
+            var config = new ScaleoutConfiguration();
             Assert.Throws<ArgumentOutOfRangeException>(() => config.MaxQueueLength = maxLength);
         }
     }

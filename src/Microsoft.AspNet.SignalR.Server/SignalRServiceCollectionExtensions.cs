@@ -27,11 +27,10 @@ namespace Microsoft.Framework.DependencyInjection
             // Dependencies
             services.AddOptions(configuration);
             services.AddDataProtection(configuration);
+            services.AddMessageBus(configuration);
 
             // SignalR services
-            services.TryAdd(describe.Singleton<IMessageBus, MessageBus>());
             services.TryAdd(describe.Singleton<IMemoryPool, MemoryPool>());
-            services.TryAdd(describe.Singleton<IStringMinifier, StringMinifier>());
             services.TryAdd(describe.Singleton<ITransportManager, TransportManager>());
             services.TryAdd(describe.Singleton<ITransportHeartbeat, TransportHeartbeat>());
             services.TryAdd(describe.Singleton<IConnectionManager, ConnectionManager>());
@@ -41,7 +40,6 @@ namespace Microsoft.Framework.DependencyInjection
             services.TryAdd(describe.Singleton<IHubManager, DefaultHubManager>());
             services.TryAdd(describe.Singleton<IMethodDescriptorProvider, ReflectedMethodDescriptorProvider>());
             services.TryAdd(describe.Singleton<IHubDescriptorProvider, ReflectedHubDescriptorProvider>());
-            services.TryAdd(describe.Singleton<IPerformanceCounterManager, PerformanceCounterManager>());
             services.TryAdd(describe.Singleton<JsonSerializer, JsonSerializer>());
             services.TryAdd(describe.Singleton<IUserIdProvider, PrincipalUserIdProvider>());
             services.TryAdd(describe.Singleton<IParameterResolver, DefaultParameterResolver>());

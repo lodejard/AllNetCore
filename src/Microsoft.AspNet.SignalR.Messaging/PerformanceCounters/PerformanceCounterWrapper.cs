@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
-    internal class PerformanceCounterWrapper : IPerformanceCounter
+    public class PerformanceCounterWrapper : IPerformanceCounter
     {
         private readonly PerformanceCounter _counter;
 

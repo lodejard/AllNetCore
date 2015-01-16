@@ -28,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         protected ScaleoutMessageBus(IStringMinifier stringMinifier,
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
-                                     IOptions<SignalROptions> optionsAccessor,
+                                     IOptions<MessageBusOptions> optionsAccessor,
                                      IOptions<ScaleoutOptions> scaleoutOptionsAccessor)
             : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
         {
