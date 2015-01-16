@@ -98,13 +98,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         [Fact]
         public void PublishingDoesNotCreateTopic()
         {
-            var sp = ServiceProviderHelper.CreateServiceProvider(services =>
-            {
-                services.ConfigureSignalR(options =>
-                {
-                    options.Transports.KeepAlive = null;
-                });
-            });
+            var sp = ServiceProviderHelper.CreateServiceProvider();
 
             using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
@@ -118,13 +112,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         [Fact]
         public void GarbageCollectingTopicsAfterGettingTopicsNoops()
         {
-            var sp = ServiceProviderHelper.CreateServiceProvider(services =>
-            {
-                services.ConfigureSignalR(options =>
-                {
-                    options.Transports.KeepAlive = null;
-                });
-            });
+            var sp = ServiceProviderHelper.CreateServiceProvider();
 
             using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
             {
@@ -159,9 +147,9 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.ConfigureSignalR(options =>
+                services.Configure<MessageBusOptions>(options =>
                 {
-                    options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
+                    options.TopicTTL = TopicTtl(TimeSpan.FromSeconds(6));
                 });
             });
 
@@ -178,6 +166,13 @@ namespace Microsoft.AspNet.SignalR.Tests
                 Assert.True(bus.Topics.TryGetValue("key", out topic));
                 Assert.Equal(TopicState.HasSubscriptions, topic.State);
             }
+        }
+
+        private static TimeSpan TopicTtl(TimeSpan disconnectTimeout)
+        {
+            var keepAliveTimeout = TimeSpan.FromTicks(disconnectTimeout.Ticks / 3);
+            var ttl = TimeSpan.FromTicks((disconnectTimeout.Ticks + keepAliveTimeout.Ticks) * 2);
+            return ttl;
         }
 
         [Fact]
@@ -227,10 +222,9 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.ConfigureSignalR(options =>
+                services.Configure<MessageBusOptions>(options =>
                 {
-                    options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
-                    options.Transports.KeepAlive = null;
+                    options.TopicTTL = TopicTtl(TimeSpan.FromSeconds(6));
                 });
             });
 
@@ -326,10 +320,9 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.ConfigureSignalR(options =>
+                services.Configure<MessageBusOptions>(options =>
                 {
-                    options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
-                    options.Transports.KeepAlive = null;
+                    options.TopicTTL = TopicTtl(TimeSpan.FromSeconds(6));
                 });
             });
 
@@ -356,10 +349,9 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.ConfigureSignalR(options =>
+                services.Configure<MessageBusOptions>(options =>
                 {
-                    options.Transports.DisconnectTimeout = TimeSpan.FromSeconds(6);
-                    options.Transports.KeepAlive = null;
+                    options.TopicTTL = TopicTtl(TimeSpan.FromSeconds(6));
                 });
             });
 
@@ -647,7 +639,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             public TestMessageBus(IStringMinifier stringMinifier,
                                  ILoggerFactory loggerFactory,
                                  IPerformanceCounterManager performanceCounterManager,
-                                 IOptions<SignalROptions> optionsAccessor) :
+                                 IOptions<MessageBusOptions> optionsAccessor) :
                 base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
             {
 

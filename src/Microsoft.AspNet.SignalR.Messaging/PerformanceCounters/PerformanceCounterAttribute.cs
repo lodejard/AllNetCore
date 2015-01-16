@@ -7,7 +7,7 @@ using System;
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    internal sealed class PerformanceCounterAttribute : Attribute
+    public sealed class PerformanceCounterAttribute : Attribute
     {
         public string Name { get; set; }
         public string Description { get; set; }

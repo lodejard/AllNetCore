@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
@@ -57,7 +56,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         public MessageBus(IStringMinifier stringMinifier,
                           ILoggerFactory loggerFactory,
                           IPerformanceCounterManager performanceCounterManager,
-                          IOptions<SignalROptions> optionsAccessor)
+                          IOptions<MessageBusOptions> optionsAccessor)
         {
             if (stringMinifier == null)
             {
@@ -81,7 +80,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             var options = optionsAccessor.Options;
 
-            if (options.MessageBus.MessageBufferSize < 0)
+            if (options.MessageBufferSize < 0)
             {
                 throw new ArgumentOutOfRangeException(Resources.Error_BufferSizeOutOfRange);
             }
@@ -90,7 +89,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _loggerFactory = loggerFactory;
             Counters = performanceCounterManager;
             _logger = _loggerFactory.Create<MessageBus>();
-            _maxTopicsWithNoSubscriptions = options.MessageBus.MaxTopicsWithNoSubscriptions;
+            _maxTopicsWithNoSubscriptions = options.MaxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);
 
@@ -100,9 +99,9 @@ namespace Microsoft.AspNet.SignalR.Messaging
             };
 
             // The default message store size
-            _messageStoreSize = (uint)options.MessageBus.MessageBufferSize;
+            _messageStoreSize = (uint)options.MessageBufferSize;
 
-            _topicTtl = options.Transports.TopicTtl();
+            _topicTtl = options.TopicTTL;
             _createTopic = CreateTopic;
             _addEvent = AddEvent;
             _removeEvent = RemoveEvent;

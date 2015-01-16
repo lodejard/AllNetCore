@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.DependencyInjection.Fallback;
 
@@ -17,10 +16,8 @@ namespace Microsoft.AspNet.SignalR.Tests
 
         public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> configure)
         {
-            var collection = HostingServices.Create()
-                .AddOptions()
-                .AddDataProtection()
-                .AddSignalR();
+            var collection = new ServiceCollection()
+                .AddSignalRMessageBus();
 
             configure(collection);
 

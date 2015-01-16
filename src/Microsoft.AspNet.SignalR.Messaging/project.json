@@ -1,23 +1,21 @@
-{
+﻿{
     "version": "3.0.0-*",
-    "description": "Core server components for ASP.NET SignalR.",
+    "description": "Core messaging components for ASP.NET SignalR.",
     "dependencies": {
-        "Microsoft.AspNet.SignalR.Common": { "version": "3.0.0-*", "type": "build" },
-        "Microsoft.AspNet.SignalR.Messaging": "3.0.0-*",
-        "Microsoft.AspNet.HttpFeature": { "version": "1.0.0-*", "type": "build" },
-        "Microsoft.AspNet.RequestContainer": "1.0.0-*",
-        "Microsoft.AspNet.Security.DataProtection": "1.0.0-*",
         "Microsoft.Framework.Logging": "1.0.0-*",
+        "Microsoft.Framework.OptionsModel": "1.0.0-*",
         "Microsoft.Framework.Runtime.Interfaces": { "version": "1.0.0-*", "type": "build" },
-        "Newtonsoft.Json": "6.0.6"
+        "Microsoft.AspNet.SignalR.Common": { "version": "3.0.0-*", "type": "build" }
     },
     "compilationOptions": {
         "warningsAsErrors": true,
         "allowUnsafe": true
     },
-    "resources": "Scripts/**/*.*",
     "frameworks": {
-        "aspnet50": { },
+        "aspnet50": {
+            "dependencies": {
+            }
+        },
         "aspnetcore50": {
             "dependencies": {
                 "Microsoft.CSharp": "4.0.0-beta-*",
@@ -31,7 +29,9 @@
                 "System.Security.Cryptography.RandomNumberGenerator": "4.0.0-beta-*",
                 "System.Threading.Thread": "4.0.0-beta-*",
                 "System.Threading.ThreadPool": "4.0.10-beta-*",
-                "System.Threading.Timer": "4.0.0-beta-*"
+                "System.Threading.Timer": "4.0.0-beta-*",
+                "System.Diagnostics.Tools": "4.0.0-beta-*",
+                "System.Text.Encoding.Extensions": "4.0.10-beta-*"
             }
         }
     }

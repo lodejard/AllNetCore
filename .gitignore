@@ -26,3 +26,4 @@ nuget.exe
 /SignalR-Server.sln.ide
 
 *.sln.ide
+/src/Microsoft.AspNet.SignalR.Server/Properties/debugSettings.json

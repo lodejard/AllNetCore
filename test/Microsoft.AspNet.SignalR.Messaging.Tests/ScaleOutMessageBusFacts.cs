@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Configuration;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.Framework.DependencyInjection;
@@ -188,9 +187,9 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.ConfigureSignalR(options =>
+                services.Configure<MessageBusOptions>(options =>
                 {
-                    options.MessageBus.MessageBufferSize = 10;
+                    options.MessageBufferSize = 10;
                 });
             });
 
@@ -243,9 +242,9 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
-                services.ConfigureSignalR(options =>
+                services.Configure<MessageBusOptions>(options =>
                 {
-                    options.MessageBus.MessageBufferSize = 10;
+                    options.MessageBufferSize = 10;
                 });
             });
 
@@ -501,7 +500,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             public TestScaleoutBus(IStringMinifier stringMinifier,
                                    ILoggerFactory loggerFactory,
                                    IPerformanceCounterManager performanceCounterManager,
-                                   IOptions<SignalROptions> optionsAccessor,
+                                   IOptions<MessageBusOptions> optionsAccessor,
                                    IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
                 : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
             {
@@ -511,7 +510,7 @@ namespace Microsoft.AspNet.SignalR.Tests
                                    IStringMinifier stringMinifier,
                                    ILoggerFactory loggerFactory,
                                    IPerformanceCounterManager performanceCounterManager,
-                                   IOptions<SignalROptions> optionsAccessor,
+                                   IOptions<MessageBusOptions> optionsAccessor,
                                    IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
                 : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
             {

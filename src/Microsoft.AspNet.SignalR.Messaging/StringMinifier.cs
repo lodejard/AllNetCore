@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {
-    internal class StringMinifier : IStringMinifier
+    public class StringMinifier : IStringMinifier
     {
         private readonly ConcurrentDictionary<string, string> _stringMinifier = new ConcurrentDictionary<string, string>();
         private readonly ConcurrentDictionary<string, string> _stringMaximizer = new ConcurrentDictionary<string, string>();
