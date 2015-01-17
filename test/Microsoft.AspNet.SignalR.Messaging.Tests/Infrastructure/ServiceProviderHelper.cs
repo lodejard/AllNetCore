@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.DependencyInjection.Fallback;
+using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {
@@ -17,7 +18,8 @@ namespace Microsoft.AspNet.SignalR.Tests
         public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> configure)
         {
             var collection = new ServiceCollection()
-                .AddSignalRMessageBus();
+                .AddMessageBus()
+                .AddSingleton<ILoggerFactory, LoggerFactory>();
 
             configure(collection);
 
