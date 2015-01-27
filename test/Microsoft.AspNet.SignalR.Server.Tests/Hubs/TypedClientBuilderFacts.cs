@@ -129,6 +129,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
                 .AddOptions()
                 .AddDataProtection()
                 .AddSignalR()
+                .ServiceCollection
                 .BuildServiceProvider();
 
             var manager = serviceProvider.GetRequiredService<IConnectionManager>();

@@ -228,6 +228,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
                 .AddHosting()
                 .AddDataProtection()
                 .AddSignalR()
+                .ServiceCollection
                 .AddInstance<IHubManager>(mockHubManager.Object)
                 .BuildServiceProvider();
 

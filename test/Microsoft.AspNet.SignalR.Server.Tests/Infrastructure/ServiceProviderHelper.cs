@@ -27,9 +27,9 @@ namespace Microsoft.AspNet.SignalR.Tests
                 .AddDataProtection()
                 .AddSignalR();
 
-            configure(collection);
+            configure(collection.ServiceCollection);
 
-            return collection.BuildServiceProvider();
+            return collection.ServiceCollection.BuildServiceProvider();
         }
     }
 }
