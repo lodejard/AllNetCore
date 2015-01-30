@@ -16,16 +16,16 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var loggerFactory = new Mock<ILoggerFactory>();
             var perfCounters = new SignalRPerformanceCounterManager(loggerFactory.Object);
-            var config = new ScaleoutConfiguration();
+            var config = new ScaleoutOptions();
 
             config.QueueBehavior = QueuingBehavior.Always;
             config.MaxQueueLength = 0;
 
             Assert.Throws<InvalidOperationException>(() => new ScaleoutStreamManager((int x, IList<Message> list) => { return TaskAsyncHelper.Empty; },
-                (int x, ulong y, ScaleoutMessage msg) => { }, 
-                0, 
+                (int x, ulong y, ScaleoutMessage msg) => { },
+                0,
                 new Mock<ILogger>().Object,
-                perfCounters, 
+                perfCounters,
                 config));
         }
     }

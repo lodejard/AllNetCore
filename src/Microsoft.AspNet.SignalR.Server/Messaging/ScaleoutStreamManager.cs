@@ -24,7 +24,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                                      int streamCount,
                                      ILogger logger,
                                      IPerformanceCounterManager performanceCounters,
-                                     ScaleoutConfiguration configuration)
+                                     ScaleoutOptions configuration)
         {
             if (configuration.QueueBehavior != QueuingBehavior.Disabled && configuration.MaxQueueLength == 0)
             {

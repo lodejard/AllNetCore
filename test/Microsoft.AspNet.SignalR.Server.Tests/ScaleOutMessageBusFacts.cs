@@ -502,8 +502,8 @@ namespace Microsoft.AspNet.SignalR.Tests
                                    ILoggerFactory loggerFactory,
                                    IPerformanceCounterManager performanceCounterManager,
                                    IOptions<SignalROptions> optionsAccessor,
-                                   IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
-                : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
+                                   IOptions<ScaleoutOptions> scaleoutOptionsAccessor)
+                : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor)
             {
             }
 
@@ -512,8 +512,8 @@ namespace Microsoft.AspNet.SignalR.Tests
                                    ILoggerFactory loggerFactory,
                                    IPerformanceCounterManager performanceCounterManager,
                                    IOptions<SignalROptions> optionsAccessor,
-                                   IOptions<ScaleoutConfiguration> scaleoutConfigurationAccessor)
-                : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
+                                   IOptions<ScaleoutOptions> scaleoutOptionsAccessor)
+                : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor)
             {
                 _streams = streams;
             }
