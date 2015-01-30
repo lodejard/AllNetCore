@@ -96,7 +96,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             _lastMessageId = Context.Request.Query["messageId"];
 
-            if (_lastMessageId == null)
+            if (_lastMessageId == null && Context.Request.HasFormContentType)
             {
                 var form = await Context.Request.ReadFormAsync().PreserveCulture();
                 _lastMessageId = form["messageId"];
@@ -108,7 +108,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var groupsToken = Context.Request.Query["groupsToken"];
 
-            if (groupsToken == null)
+            if (groupsToken == null && Context.Request.HasFormContentType)
             {
                 var form = await Context.Request.ReadFormAsync().PreserveCulture();
                 groupsToken = form["groupsToken"];
@@ -147,7 +147,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             _counters.ConnectionsCurrentLongPolling.Increment();
         }
-        
+
         public override void DecrementConnectionsCount()
         {
             _counters.ConnectionsCurrentLongPolling.Decrement();
