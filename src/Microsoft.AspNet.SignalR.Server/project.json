@@ -2,6 +2,7 @@
     "version": "3.0.0-*",
     "description": "Core server components for ASP.NET SignalR.",
     "dependencies": {
+        "Microsoft.AspNet.Hosting.Interfaces": "1.0.0-*",
         "Microsoft.AspNet.Http.Interfaces": "1.0.0-*",
         "Microsoft.AspNet.RequestContainer": "1.0.0-*",
         "Microsoft.AspNet.Security.DataProtection": "1.0.0-*",
