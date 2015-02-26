@@ -4,7 +4,7 @@
 
 using System;
 using System.Text;
-using Microsoft.AspNet.Security.DataProtection;
+using Microsoft.AspNet.DataProtection;
 
 namespace Microsoft.AspNet.SignalR.Infrastructure
 {

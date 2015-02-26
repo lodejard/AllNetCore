@@ -1,6 +1,6 @@
 ﻿using System;
+using Microsoft.AspNet.DataProtection;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Security.DataProtection;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.DependencyInjection.Fallback;
