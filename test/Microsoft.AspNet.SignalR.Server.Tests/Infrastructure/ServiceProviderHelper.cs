@@ -1,8 +1,6 @@
 ﻿using System;
-using Microsoft.AspNet.DataProtection;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.DependencyInjection.Fallback;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {

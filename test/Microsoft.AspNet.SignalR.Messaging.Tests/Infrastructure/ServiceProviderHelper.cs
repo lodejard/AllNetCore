@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.DependencyInjection.Fallback;
 using Microsoft.Framework.Logging;
 
 namespace Microsoft.AspNet.SignalR.Tests
