@@ -32,7 +32,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                                      IOptions<ScaleoutOptions> scaleoutOptionsAccessor)
             : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor)
         {
-            _logger = loggerFactory.Create<ScaleoutMessageBus>();
+            _logger = loggerFactory.CreateLogger<ScaleoutMessageBus>();
             _perfCounters = performanceCounterManager;
             _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, scaleoutOptionsAccessor.Options));
         }
@@ -172,7 +172,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         {
             Counters.ScaleoutMessageBusMessagesReceivedPerSec.IncrementBy(scaleoutMessage.Messages.Count);
 
-            _logger.WriteInformation(String.Format("OnReceived({0}, {1}, {2})", streamIndex, id, scaleoutMessage.Messages.Count));
+            _logger.LogInformation(String.Format("OnReceived({0}, {1}, {2})", streamIndex, id, scaleoutMessage.Messages.Count));
 
             var localMapping = new LocalEventKeyInfo[scaleoutMessage.Messages.Count];
             var keys = new HashSet<string>();

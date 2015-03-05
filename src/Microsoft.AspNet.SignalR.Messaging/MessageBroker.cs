@@ -81,7 +81,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 }
                 catch (Exception ex)
                 {
-                    context.Broker.Logger.WriteError("Failed to process work - " + ex.GetBaseException());
+                    context.Broker.Logger.LogError("Failed to process work - " + ex.GetBaseException());
                     break;
                 }
                 finally

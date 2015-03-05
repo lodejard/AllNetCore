@@ -300,19 +300,19 @@ namespace Microsoft.AspNet.SignalR.Messaging
             switch (logLevel)
             {
                 case LogLevel.Critical:
-                    _logger.WriteCritical(String.Format(value, args));
+                    _logger.LogCritical(String.Format(value, args));
                     break;
                 case LogLevel.Error:
-                    _logger.WriteError(String.Format(value, args));
+                    _logger.LogError(String.Format(value, args));
                     break;
                 case LogLevel.Information:
-                    _logger.WriteInformation(String.Format(value, args));
+                    _logger.LogInformation(String.Format(value, args));
                     break;
                 case LogLevel.Verbose:
-                    _logger.WriteVerbose(String.Format(value, args));
+                    _logger.LogVerbose(String.Format(value, args));
                     break;
                 case LogLevel.Warning:
-                    _logger.WriteWarning(String.Format(value, args));
+                    _logger.LogWarning(String.Format(value, args));
                     break;
                 default:
                     break;

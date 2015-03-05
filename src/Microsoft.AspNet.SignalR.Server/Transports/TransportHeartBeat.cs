@@ -40,7 +40,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             _transportOptions = optionsAccessor.Options.Transports;
             _counters = counters;
-            _logger = loggerFactory.Create<TransportHeartbeat>();
+            _logger = loggerFactory.CreateLogger<TransportHeartbeat>();
 
             // REVIEW: When to dispose the timer?
             _timer = new Timer(Beat,
@@ -75,7 +75,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             _connections.AddOrUpdate(connection.ConnectionId, newMetadata, (key, old) =>
             {
-                Logger.WriteVerbose(String.Format("Connection {0} exists. Closing previous connection.", old.Connection.ConnectionId));
+                Logger.LogVerbose(String.Format("Connection {0} exists. Closing previous connection.", old.Connection.ConnectionId));
                 // Kick out the older connection. This should only happen when 
                 // a previous connection attempt fails on the client side (e.g. transport fallback).
 
@@ -94,7 +94,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             if (isNewConnection)
             {
-                Logger.WriteInformation(String.Format("Connection {0} is New.", connection.ConnectionId));
+                Logger.LogInformation(String.Format("Connection {0} is New.", connection.ConnectionId));
                 connection.IncrementConnectionsCount();
             }
 
@@ -134,7 +134,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
                 connection.ApplyState(TransportConnectionStates.Removed);
 
-                Logger.WriteInformation(String.Format("Removing connection {0}", connection.ConnectionId));
+                Logger.LogInformation(String.Format("Removing connection {0}", connection.ConnectionId));
             }
         }
 
@@ -172,7 +172,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Interlocked.Exchange(ref _running, 1) == 1)
             {
-                Logger.WriteVerbose("Timer handler took longer than current interval");
+                Logger.LogVerbose("Timer handler took longer than current interval");
                 return;
             }
 
@@ -193,7 +193,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                     }
                     else
                     {
-                        Logger.WriteVerbose(metadata.Connection.ConnectionId + " is dead");
+                        Logger.LogVerbose(metadata.Connection.ConnectionId + " is dead");
 
                         // Check if we need to disconnect this connection
                         CheckDisconnect(metadata);
@@ -202,7 +202,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             }
             catch (Exception ex)
             {
-                Logger.WriteError("SignalR error during transport heart beat on background thread: {0}", ex);
+                Logger.LogError("SignalR error during transport heart beat on background thread: {0}", ex);
             }
             finally
             {
@@ -224,7 +224,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 // of us handling timeout's or disconnects gracefully
                 if (RaiseKeepAlive(metadata))
                 {
-                    Logger.WriteVerbose("KeepAlive(" + metadata.Connection.ConnectionId + ")");
+                    Logger.LogVerbose("KeepAlive(" + metadata.Connection.ConnectionId + ")");
 
                     // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
                     metadata.Connection.KeepAlive().Catch((ex, state) => OnKeepAliveError(ex, state), state: Logger, logger: Logger);
@@ -251,7 +251,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             catch (Exception ex)
             {
                 // Swallow exceptions that might happen during disconnect
-                Logger.WriteError(String.Format("Raising Disconnect failed: {0}", ex));
+                Logger.LogError(String.Format("Raising Disconnect failed: {0}", ex));
             }
         }
 
@@ -314,7 +314,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                     _timer.Dispose();
                 }
 
-                Logger.WriteInformation("Dispose(). Closing all connections");
+                Logger.LogInformation("Dispose(). Closing all connections");
 
                 // Kill all connections
                 foreach (var pair in _connections)
@@ -335,7 +335,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private static void OnKeepAliveError(AggregateException ex, object state)
         {
-            ((ILogger)state).WriteError("Failed to send keep alive: " + ex.GetBaseException());
+            ((ILogger)state).LogError("Failed to send keep alive: " + ex.GetBaseException());
         }
 
         private class ConnectionMetadata

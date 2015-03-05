@@ -76,7 +76,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                 catch (Exception ex)
                 {
                     // Swallow exceptions on send
-                    _logger.WriteError("Error while sending: " + ex);
+                    _logger.LogError("Error while sending: " + ex);
                 }
             },
             sendContext);
@@ -109,7 +109,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
                 catch (Exception ex)
                 {
                     // Swallow exceptions on close
-                    _logger.WriteError("Error while closing the websocket: " + ex);
+                    _logger.LogError("Error while closing the websocket: " + ex);
                 }
             },
             closeContext);

@@ -23,7 +23,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             _locator = locator;
             _hubs = new Lazy<IDictionary<string, HubDescriptor>>(BuildHubsCache);
-            _logger = loggerFactory.Create<ReflectedHubDescriptorProvider>();
+            _logger = loggerFactory.CreateLogger<ReflectedHubDescriptorProvider>();
         }
 
         public IList<HubDescriptor> GetHubs()
@@ -105,7 +105,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             catch (ReflectionTypeLoadException ex)
             {
-                _logger.WriteWarning("Some of the classes from assembly \"{0}\" could Not be loaded when searching for Hubs. [{1}]\r\n" +
+                _logger.LogWarning("Some of the classes from assembly \"{0}\" could Not be loaded when searching for Hubs. [{1}]\r\n" +
                                      "Original exception type: {2}\r\n" +
                                      "Original exception message: {3}\r\n",
                                      a.FullName,
@@ -122,7 +122,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             catch (Exception ex)
             {
                 // REVIEW: Figure out how to disabiguate here
-                _logger.WriteWarning("None of the classes from assembly \"{0}\" could be loaded when searching for Hubs. [{1}]\r\n" +
+                _logger.LogWarning("None of the classes from assembly \"{0}\" could be loaded when searching for Hubs. [{1}]\r\n" +
                                      "Original exception type: {2}\r\n" +
                                      "Original exception message: {3}\r\n",
                                      a.FullName,

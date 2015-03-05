@@ -43,7 +43,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         public void Complete(Exception error)
         {
-            _logger.WriteVerbose("DrainWrites(" + _connectionId + ")");
+            _logger.LogVerbose("DrainWrites(" + _connectionId + ")");
 
             var context = new LifetimeContext(_transport, _lifetimeTcs, error);
 
@@ -60,11 +60,11 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             if (error != null)
             {
-                _logger.WriteError("CompleteRequest (" + _connectionId + ") failed: " + error.GetBaseException());
+                _logger.LogError("CompleteRequest (" + _connectionId + ") failed: " + error.GetBaseException());
             }
             else
             {
-                _logger.WriteInformation("CompleteRequest (" + _connectionId + ")");
+                _logger.LogInformation("CompleteRequest (" + _connectionId + ")");
             }
         }
 

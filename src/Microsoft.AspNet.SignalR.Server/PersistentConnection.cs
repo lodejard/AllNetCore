@@ -63,7 +63,7 @@ namespace Microsoft.AspNet.SignalR
         {
             get
             {
-                return LoggerFactory.Create<PersistentConnection>();
+                return LoggerFactory.CreateLogger<PersistentConnection>();
             }
         }
 
@@ -291,7 +291,7 @@ namespace Microsoft.AspNet.SignalR
             }
             catch (Exception ex)
             {
-                Logger.WriteInformation(String.Format("Failed to process connectionToken {0}: {1}", connectionToken, ex));
+                Logger.LogInformation(String.Format("Failed to process connectionToken {0}: {1}", connectionToken, ex));
             }
 
             if (String.IsNullOrEmpty(unprotectedConnectionToken))
@@ -332,7 +332,7 @@ namespace Microsoft.AspNet.SignalR
             }
             catch (Exception ex)
             {
-                Logger.WriteInformation(String.Format("Failed to process groupsToken {0}: {1}", groupsToken, ex));
+                Logger.LogInformation(String.Format("Failed to process groupsToken {0}: {1}", groupsToken, ex));
             }
 
             if (String.IsNullOrEmpty(unprotectedGroupsToken))

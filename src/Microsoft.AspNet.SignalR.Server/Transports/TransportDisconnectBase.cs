@@ -90,7 +90,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             // Queue to protect against overlapping writes to the underlying response stream
             WriteQueue = new TaskQueue();
-            _logger = loggerFactory.Create(GetType().FullName);
+            _logger = loggerFactory.CreateLogger(GetType().FullName);
         }
 
         protected IMemoryPool Pool { get; private set; }
@@ -290,7 +290,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 ApplyState(TransportConnectionStates.Disconnected);
             }
 
-            Logger.WriteInformation("Abort(" + ConnectionId + ")");
+            Logger.LogInformation("Abort(" + ConnectionId + ")");
 
             // When a connection is aborted (graceful disconnect) we send a command to it
             // telling to to disconnect. At that moment, we raise the disconnect event and
@@ -321,7 +321,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Interlocked.Exchange(ref _timedOut, 1) == 0)
             {
-                Logger.WriteInformation("Timeout(" + ConnectionId + ")");
+                Logger.LogInformation("Timeout(" + ConnectionId + ")");
 
                 End();
             }
@@ -336,7 +336,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Interlocked.Exchange(ref _ended, 1) == 0)
             {
-                Logger.WriteInformation("End(" + ConnectionId + ")");
+                Logger.LogInformation("End(" + ConnectionId + ")");
 
                 if (_connectionEndTokenSource != null)
                 {
@@ -412,7 +412,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private static void OnDisconnectError(AggregateException ex, object state)
         {
-            ((ILogger)state).WriteError("Failed to raise disconnect: " + ex.GetBaseException());
+            ((ILogger)state).LogError("Failed to raise disconnect: " + ex.GetBaseException());
         }
     }
 }

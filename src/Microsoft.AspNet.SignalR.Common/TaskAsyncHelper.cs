@@ -146,7 +146,7 @@ namespace Microsoft.AspNet.SignalR
             // Observe Exception
             if (logger != null)
             {
-                logger.WriteWarning("Exception thrown by Task", exception);
+                logger.LogWarning("Exception thrown by Task", exception);
             }
 
             handler(exception, state);

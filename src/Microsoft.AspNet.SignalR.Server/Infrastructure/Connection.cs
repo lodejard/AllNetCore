@@ -65,7 +65,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
             _connectionId = connectionId;
             _signals = new List<string>(signals.Concat(groups));
             _groups = new DiffSet<string>(groups);
-            _logger = loggerFactory.Create<Connection>();
+            _logger = loggerFactory.CreateLogger<Connection>();
             _ackHandler = ackHandler;
             _counters = performanceCounterManager;
             _protectedData = protectedData;
@@ -302,7 +302,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
         {
             if (message.IsAck)
             {
-                connection._logger.WriteError("Connection {0} received an unexpected ACK message.", connection.Identity);
+                connection._logger.LogError("Connection {0} received an unexpected ACK message.", connection.Identity);
                 return;
             }
 

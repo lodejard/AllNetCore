@@ -42,7 +42,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                 throw new ArgumentNullException("loggerFactory");
             }
 
-            _logger = loggerFactory.Create<PerformanceCounterManager>();
+            _logger = loggerFactory.CreateLogger<PerformanceCounterManager>();
             InitNoOpCounters();
         }
 

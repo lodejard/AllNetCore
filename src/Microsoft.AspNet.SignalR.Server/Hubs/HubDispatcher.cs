@@ -64,7 +64,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             get
             {
-                return LoggerFactory.Create<HubDispatcher>();
+                return LoggerFactory.CreateLogger<HubDispatcher>();
             }
         }
 
@@ -470,7 +470,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
             catch (Exception ex)
             {
-                Logger.WriteInformation(String.Format("Error creating Hub {0}. {1}", descriptor.Name, ex.Message));
+                Logger.LogInformation(String.Format("Error creating Hub {0}. {1}", descriptor.Name, ex.Message));
 
                 if (throwIfFailedToCreate)
                 {

@@ -88,7 +88,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
             _stringMinifier = stringMinifier;
             _loggerFactory = loggerFactory;
             Counters = performanceCounterManager;
-            _logger = _loggerFactory.Create<MessageBus>();
+            _logger = _loggerFactory.CreateLogger<MessageBus>();
             _maxTopicsWithNoSubscriptions = options.MaxTopicsWithNoSubscriptions;
 
             _gcTimer = new Timer(_ => GarbageCollectTopics(), state: null, dueTime: _gcInterval, period: _gcInterval);
@@ -384,7 +384,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
             Counters.MessageBusTopicsCurrent.Decrement();
 
-            _logger.WriteInformation("RemoveTopic(" + key + ")");
+            _logger.LogInformation("RemoveTopic(" + key + ")");
 
             if (AfterTopicGarbageCollected != null)
             {

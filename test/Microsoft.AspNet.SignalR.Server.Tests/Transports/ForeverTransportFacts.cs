@@ -228,7 +228,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
             applicationLifetime.SetupGet(m => m.ApplicationStopping).Returns(CancellationToken.None);
 
             var logger = new Mock<ILogger>();
-            loggerFactory.Setup(m => m.Create(It.IsAny<string>())).Returns(logger.Object);
+            loggerFactory.Setup(m => m.CreateLogger(It.IsAny<string>())).Returns(logger.Object);
 
             Func<PersistentResponse, object, Task<bool>> callback = null;
             object state = null;
@@ -435,7 +435,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
             applicationLifetime.SetupGet(m => m.ApplicationStopping).Returns(CancellationToken.None);
 
             var logger = new Mock<ILogger>();
-            loggerFactory.Setup(m => m.Create(It.IsAny<string>())).Returns(logger.Object);
+            loggerFactory.Setup(m => m.CreateLogger(It.IsAny<string>())).Returns(logger.Object);
 
             transportConnection.Setup(m => m.Receive(It.IsAny<string>(),
                                                      It.IsAny<Func<PersistentResponse, object, Task<bool>>>(),
@@ -517,7 +517,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
             counters.SetupGet(m => m.ConnectionsConnected).Returns(new NoOpPerformanceCounter());
 
             var logger = new Mock<ILogger>();
-            loggerFactory.Setup(m => m.Create(It.IsAny<string>())).Returns(logger.Object);
+            loggerFactory.Setup(m => m.CreateLogger(It.IsAny<string>())).Returns(logger.Object);
 
             Func<PersistentResponse, object, Task<bool>> callback = null;
             object state = null;

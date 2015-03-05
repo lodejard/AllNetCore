@@ -199,7 +199,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private void OnClosed()
         {
-            Logger.WriteInformation(String.Format("CloseSocket({0})", ConnectionId));
+            Logger.LogInformation(String.Format("CloseSocket({0})", ConnectionId));
 
             // Require a request to /abort to stop tracking the connection. #2195
             _isAlive = false;
@@ -207,7 +207,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         private void OnSocketError(Exception error)
         {
-            Logger.WriteError(String.Format("OnError({0}, {1})", ConnectionId, error));
+            Logger.LogError(String.Format("OnError({0}, {1})", ConnectionId, error));
         }
 
         private class WebSocketTransportContext
