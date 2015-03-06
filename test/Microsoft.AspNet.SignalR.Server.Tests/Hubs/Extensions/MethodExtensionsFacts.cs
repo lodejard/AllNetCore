@@ -11,8 +11,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void MatchSuccessful()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
 
             // Should be AddNumbers
             MethodDescriptor methodDescriptor = hubManager.GetHubMethod("CoreTestHubWithMethod", "AddNumbers", new IJsonValue[] { null, null });

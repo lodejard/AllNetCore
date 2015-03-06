@@ -10,8 +10,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ShouldResolveHubByTypeName()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubResolver = ta.CreateInstance<ReflectedHubDescriptorProvider>(sp);
+            var hubResolver = ActivatorUtilities.CreateInstance<ReflectedHubDescriptorProvider>(sp);
             HubDescriptor hub;
             hubResolver.TryGetHub("HubWithoutAttribute", out hub);
 
@@ -24,8 +23,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ShouldResolveHubByHubNameAttribute()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubResolver = ta.CreateInstance<ReflectedHubDescriptorProvider>(sp);
+            var hubResolver = ActivatorUtilities.CreateInstance<ReflectedHubDescriptorProvider>(sp);
             HubDescriptor hub;
             hubResolver.TryGetHub("NameFromAttribute", out hub);
 
@@ -38,8 +36,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ShouldNotResolveHubByFullTypeName()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubResolver = ta.CreateInstance<ReflectedHubDescriptorProvider>(sp);
+            var hubResolver = ActivatorUtilities.CreateInstance<ReflectedHubDescriptorProvider>(sp);
             HubDescriptor hub;
             hubResolver.TryGetHub("SignalR.Tests.HubWithoutAttribute", out hub);
 
@@ -50,8 +47,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ShouldNotResolveHubByTypeNameIfAttributeExists()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubResolver = ta.CreateInstance<ReflectedHubDescriptorProvider>(sp);
+            var hubResolver = ActivatorUtilities.CreateInstance<ReflectedHubDescriptorProvider>(sp);
             HubDescriptor hub;
             hubResolver.TryGetHub("HubWithAttribute", out hub);
 
@@ -62,8 +58,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ShouldIgnoreCaseWhenDiscoveringHubs()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubResolver = ta.CreateInstance<ReflectedHubDescriptorProvider>(sp);
+            var hubResolver = ActivatorUtilities.CreateInstance<ReflectedHubDescriptorProvider>(sp);
             HubDescriptor hub;
             hubResolver.TryGetHub("hubwithoutattribute", out hub);
 
@@ -76,8 +71,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ShouldIgnoreCaseWhenDiscoveringHubsUsingManager()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var manager = ta.CreateInstance<DefaultHubManager>(sp);
+            var manager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hub = manager.GetHub("hubwithoutattribute");
 
             Assert.NotNull(hub);

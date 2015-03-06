@@ -13,8 +13,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHub()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptor = hubManager.GetHub("CoreTestHub");
 
             Assert.NotNull(hubDescriptor);
@@ -25,8 +24,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetInValidHub()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptor = hubManager.GetHub("__ELLO__");
 
             Assert.Null(hubDescriptor);
@@ -36,8 +34,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubsWithoutPredicate()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptors = hubManager.GetHubs(predicate: null);
 
             Assert.NotNull(hubDescriptors);
@@ -51,8 +48,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubsWithValidPredicate()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptors = hubManager.GetHubs(descriptor => descriptor.Name == "CoreTestHub");
 
             Assert.NotNull(hubDescriptors);
@@ -63,8 +59,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubsWithInvalidPredicate()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptors = hubManager.GetHubs(descriptor => descriptor.Name == "CoreTestHub_INVALIDHUB_____");
 
             // Still have an ienumerable sequence
@@ -77,8 +72,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubMethod()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var methodDescriptor = hubManager.GetHubMethod("CoreTestHubWithMethod", "AddNumbers", new IJsonValue[] { null, null });
 
             Assert.NotNull(methodDescriptor);
@@ -97,8 +91,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetInvalidHubMethod()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             // The AddNumbers method has 2 parameters, so should not find the method
             var methodDescriptor = hubManager.GetHubMethod("CoreTestHubWithMethod", "AddNumbers", null);
 
@@ -109,8 +102,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetHubMethodFromInvalidHub()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             // There is no ________________CoreTestHubWithMethod________________ name
             var methodDescriptor = hubManager.GetHubMethod("________________CoreTestHubWithMethod________________", "AddNumbers", new IJsonValue[] { null, null });
 
@@ -121,8 +113,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubMethodsWithoutPredicate()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var methodDescriptors = hubManager.GetHubMethods("CoreTestHubWithMethod", predicate: null);
 
             Assert.NotNull(methodDescriptors);
@@ -136,8 +127,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubMethodsWithPredicate()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var methodDescriptors = hubManager.GetHubMethods("CoreTestHubWithMethod", descriptor => descriptor.Name == "AddNumbers");
 
             Assert.NotNull(methodDescriptors);
@@ -148,8 +138,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void GetValidHubMethodsWithInvalidPredicate()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var methodDescriptors = hubManager.GetHubMethods("CoreTestHubWithMethod", descriptor => descriptor.Name == "______AddNumbers______");
 
             // Still have an ienumerable sequence
@@ -162,8 +151,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ResolveValidHub()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptor = hubManager.ResolveHub("CoreTestHub");
 
             Assert.NotNull(hubDescriptor);
@@ -173,8 +161,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ResolveInvalidHub()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptor = hubManager.ResolveHub("____CoreTestHub____");
 
             Assert.Null(hubDescriptor);
@@ -184,8 +171,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void ResolveHubsIsNotEmpty()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var hubDescriptor = hubManager.ResolveHubs();
 
             Assert.NotNull(hubDescriptor);

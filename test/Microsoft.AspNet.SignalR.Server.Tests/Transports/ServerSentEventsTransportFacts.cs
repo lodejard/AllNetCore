@@ -14,7 +14,6 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var context = new TestContext("/");
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
 
             var ms = new MemoryStream();
             var buffering = new Mock<IHttpBufferingFeature>();
@@ -24,7 +23,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             context.MockResponse.SetupAllProperties();
             context.MockResponse.Setup(m => m.Body).Returns(ms);
 
-            var sst = ta.CreateInstance<ServerSentEventsTransport>(sp, context.MockHttpContext.Object);
+            var sst = ActivatorUtilities.CreateInstance<ServerSentEventsTransport>(sp, context.MockHttpContext.Object);
             sst.ConnectionId = "1";
             var connection = new Mock<ITransportConnection>();
 

@@ -11,8 +11,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void EnsureHubThrowsWhenCantResolve()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
 
             Assert.Throws<InvalidOperationException>(() => hubManager.EnsureHub("__ELLO__"));
         }
@@ -21,8 +20,7 @@ namespace Microsoft.AspNet.SignalR.Tests
         public void EnsureHubSuccessfullyResolves()
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
-            var hubManager = ta.CreateInstance<DefaultHubManager>(sp);
+            var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             var TestHubName = "CoreTestHubWithMethod";
 
             HubDescriptor hub = null,

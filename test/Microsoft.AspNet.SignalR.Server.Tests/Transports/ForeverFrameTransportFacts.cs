@@ -23,12 +23,11 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var context = new TestContext("/");
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
 
             var ms = new MemoryStream();
             context.MockResponse.Setup(m => m.Body).Returns(ms);
 
-            var fft = ta.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
+            var fft = ActivatorUtilities.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
 
             AssertEscaped(fft, ms, data, expected);
         }
@@ -40,12 +39,11 @@ namespace Microsoft.AspNet.SignalR.Tests
         {
             var context = new TestContext("/");
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
 
             var ms = new MemoryStream();
             context.MockResponse.Setup(m => m.Body).Returns(ms);
 
-            var fft = ta.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
+            var fft = ActivatorUtilities.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
             fft.ConnectionId = "1";
 
             AssertEscaped(fft, ms, GetWrappedResponse(data), expected);
@@ -63,12 +61,11 @@ namespace Microsoft.AspNet.SignalR.Tests
             var qs = new Dictionary<string, string> { { "frameId", frameId } };
             var context = new TestContext("/", qs);
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
 
             var ms = new MemoryStream();
             context.MockResponse.Setup(m => m.Body).Returns(ms);
 
-            var fft = ta.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
+            var fft = ActivatorUtilities.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
             var connection = new Mock<ITransportConnection>();
 
             Assert.Throws(typeof(InvalidOperationException), () => fft.InitializeResponse(connection.Object));
@@ -82,13 +79,12 @@ namespace Microsoft.AspNet.SignalR.Tests
             };
             var context = new TestContext("/", qs);
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
 
             var ms = new MemoryStream();
             context.MockResponse.SetupAllProperties();
             context.MockResponse.Setup(m => m.Body).Returns(ms);
 
-            var fft = ta.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
+            var fft = ActivatorUtilities.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
             fft.ConnectionId = "1";
             var connection = new Mock<ITransportConnection>();
 
@@ -105,7 +101,6 @@ namespace Microsoft.AspNet.SignalR.Tests
             };
             var context = new TestContext("/", qs);
             var sp = ServiceProviderHelper.CreateServiceProvider();
-            var ta = new TypeActivator();
 
             var ms = new MemoryStream();
             var buffering = new Mock<IHttpBufferingFeature>();
@@ -115,7 +110,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             context.MockResponse.SetupAllProperties();
             context.MockResponse.Setup(m => m.Body).Returns(ms);
 
-            var fft = ta.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
+            var fft = ActivatorUtilities.CreateInstance<ForeverFrameTransport>(sp, context.MockHttpContext.Object);
             fft.ConnectionId = "1";
             var connection = new Mock<ITransportConnection>();
 
