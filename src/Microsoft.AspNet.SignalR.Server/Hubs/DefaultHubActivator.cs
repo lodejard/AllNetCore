@@ -9,12 +9,10 @@ namespace Microsoft.AspNet.SignalR.Hubs
 {
     public class DefaultHubActivator : IHubActivator
     {
-        private readonly ITypeActivator _typeActivator;
         private readonly IServiceProvider _serviceProvider;
 
-        public DefaultHubActivator(ITypeActivator typeActivator, IServiceProvider serviceProvider)
+        public DefaultHubActivator(IServiceProvider serviceProvider)
         {
-            _typeActivator = typeActivator;
             _serviceProvider = serviceProvider;
         }
 
@@ -30,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 return null;
             }
 
-            return _typeActivator.CreateInstance(_serviceProvider, descriptor.HubType) as IHub;
+            return ActivatorUtilities.CreateInstance(_serviceProvider, descriptor.HubType) as IHub;
         }
     }
 }

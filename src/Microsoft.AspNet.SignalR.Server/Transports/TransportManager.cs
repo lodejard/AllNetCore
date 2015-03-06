@@ -24,16 +24,11 @@ namespace Microsoft.AspNet.SignalR.Transports
         /// <param name="serviceProvider">The default <see cref="IDependencyResolver"/>.</param>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Those are factory methods")]
         public TransportManager(IServiceProvider serviceProvider,
-                                ITypeActivator typeActivator,
                                 IOptions<SignalROptions> optionsAccessor)
         {
             if (serviceProvider == null)
             {
                 throw new ArgumentNullException("serviceProvider");
-            }
-            if (typeActivator == null)
-            {
-                throw new ArgumentNullException("typeActivator");
             }
             if (optionsAccessor == null)
             {
@@ -44,19 +39,19 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             if (enabledTransports.HasFlag(TransportType.WebSockets))
             {
-                Register("webSockets", context => typeActivator.CreateInstance<WebSocketTransport>(serviceProvider, context));
+                Register("webSockets", context => ActivatorUtilities.CreateInstance<WebSocketTransport>(serviceProvider, context));
             }
             if (enabledTransports.HasFlag(TransportType.ServerSentEvents))
             {
-                Register("serverSentEvents", context => typeActivator.CreateInstance<ServerSentEventsTransport>(serviceProvider, context));
+                Register("serverSentEvents", context => ActivatorUtilities.CreateInstance<ServerSentEventsTransport>(serviceProvider, context));
             }
             if (enabledTransports.HasFlag(TransportType.ForeverFrame))
             {
-                Register("foreverFrame", context => typeActivator.CreateInstance<ForeverFrameTransport>(serviceProvider, context));
+                Register("foreverFrame", context => ActivatorUtilities.CreateInstance<ForeverFrameTransport>(serviceProvider, context));
             }
             if (enabledTransports.HasFlag(TransportType.LongPolling))
             {
-                Register("longPolling", context => typeActivator.CreateInstance<LongPollingTransport>(serviceProvider, context));
+                Register("longPolling", context => ActivatorUtilities.CreateInstance<LongPollingTransport>(serviceProvider, context));
             }
 
             if (_transports.Count == 0)
