@@ -11,7 +11,7 @@ namespace SignalRSample.Web
     {
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-#if ASPNET50
+#if DNX451
             string OutputTemplate = "{SourceContext} {Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}";
 
             var serilog = new LoggerConfiguration()

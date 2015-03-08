@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace Microsoft.AspNet.SignalR
                                                              Action continuation,
                                                              bool useSyncContext)
         {
-#if ASPNETCORE50
+#if DNXCORE50
             notifier.UnsafeOnCompleted(continuation);
 #else
             // Rely on the SyncContext to preserve culture if it exists

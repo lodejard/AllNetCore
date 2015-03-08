@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
@@ -109,7 +109,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                      "Original exception type: {2}\r\n" +
                                      "Original exception message: {3}\r\n",
                                      a.FullName,
-#if ASPNET50
+#if DNX451
                                      a.Location,
 #else
                                      null,
@@ -126,7 +126,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                      "Original exception type: {2}\r\n" +
                                      "Original exception message: {3}\r\n",
                                      a.FullName,
-#if ASPNET50
+#if DNX451
                                      a.Location,
 #else
                                      null,

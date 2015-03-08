@@ -1,4 +1,4 @@
-{
+﻿{
     "dependencies": {
         "SignalRSample.Web": "1.0.0",
         "Microsoft.AspNet.SignalR.Testing.Common": "1.0.0-*",
@@ -10,7 +10,7 @@
         "allowUnsafe": true
     },
     "frameworks": {
-        "aspnet50": { }
+        "dnx451": { }
     },
     "commands": {
         "test": "xunit.runner.kre"

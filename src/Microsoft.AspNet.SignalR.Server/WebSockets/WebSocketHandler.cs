@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
@@ -209,7 +209,7 @@ namespace Microsoft.AspNet.SignalR.WebSockets
         // returns true if this is a fatal exception (e.g. OnError should be called)
         private static bool IsFatalException(Exception ex)
         {
-#if ASPNET50
+#if DNX451
             // If this exception is due to the underlying TCP connection going away, treat as a normal close
             // rather than a fatal exception.
             COMException ce = ex as COMException;

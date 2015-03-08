@@ -1,4 +1,4 @@
-{
+﻿{
     "webroot": ".",
     "dependencies": {
         "Microsoft.AspNet.Server.IIS": "1.0.0-*",
@@ -12,11 +12,11 @@
         "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
     },
     "frameworks": {
-        "aspnet50": {
+        "dnx451": {
             "dependencies": {
                 "Microsoft.Framework.Logging.Serilog": "1.0.0-*"
             }
         },
-        "aspnetcore50": { }
+        "dnxcore50": { }
     }
 }

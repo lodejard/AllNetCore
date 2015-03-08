@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
@@ -48,7 +48,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                 return token.Register(callback, state);
             };
 
-#if NETFX_CORE || PORTABLE || ASPNETCORE50
+#if NETFX_CORE || PORTABLE || DNXCORE50
             return fallback;
 #else
 

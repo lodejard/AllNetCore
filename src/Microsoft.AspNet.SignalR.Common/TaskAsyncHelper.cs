@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
@@ -861,7 +861,7 @@ namespace Microsoft.AspNet.SignalR
         }
 
 
-#if !ASPNETCORE50
+#if !DNXCORE50
         internal struct CulturePair
         {
             public CultureInfo Culture;
@@ -918,7 +918,7 @@ namespace Microsoft.AspNet.SignalR
         internal static Task ContinueWithPreservedCulture(this Task task, Action<Task> continuationAction, TaskContinuationOptions continuationOptions)
         {
             // TODO
-#if ASPNETCORE50
+#if DNXCORE50
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else
@@ -929,7 +929,7 @@ namespace Microsoft.AspNet.SignalR
 
         internal static Task ContinueWithPreservedCulture<T>(this Task<T> task, Action<Task<T>> continuationAction, TaskContinuationOptions continuationOptions)
         {
-#if ASPNETCORE50
+#if DNXCORE50
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else
@@ -941,7 +941,7 @@ namespace Microsoft.AspNet.SignalR
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "This is a shared file")]
         internal static Task<TResult> ContinueWithPreservedCulture<T, TResult>(this Task<T> task, Func<Task<T>, TResult> continuationAction, TaskContinuationOptions continuationOptions)
         {
-#if ASPNETCORE50
+#if DNXCORE50
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else
