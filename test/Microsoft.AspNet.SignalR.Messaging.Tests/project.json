@@ -1,4 +1,4 @@
-﻿{
+{
     "dependencies": {
         "Microsoft.AspNet.SignalR.Messaging": "3.0.0-*",
         "Microsoft.AspNet.SignalR.Testing.Common": "1.0.0-*",
