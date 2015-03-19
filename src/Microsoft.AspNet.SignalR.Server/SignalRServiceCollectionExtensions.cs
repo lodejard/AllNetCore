@@ -15,12 +15,12 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class SignalRServiceCollectionExtensions
     {
-        public static SignalRServicesBuilder AddSignalR(this IServiceCollection services, Action<SignalROptions> configureOptions = null)
+        public static SignalRServicesBuilder AddSignalR(this IServiceCollection services)
         {
-            return services.AddSignalR(configuration: null, configureOptions: configureOptions);
+            return services.AddSignalR(configureOptions: null);
         }
 
-        public static SignalRServicesBuilder AddSignalR(this IServiceCollection services, IConfiguration configuration, Action<SignalROptions> configureOptions = null)
+        public static SignalRServicesBuilder AddSignalR(this IServiceCollection services, Action<SignalROptions> configureOptions)
         {
             // Dependencies
             services.AddOptions();
@@ -56,11 +56,6 @@ namespace Microsoft.Framework.DependencyInjection
 
             // Setup the default SignalR options
             services.TryAdd(ServiceDescriptor.Transient<IConfigureOptions<SignalROptions>, SignalROptionsSetup>());
-
-            if (configuration != null)
-            {
-                services.Configure<SignalROptions>(configuration);
-            }
 
             if (configureOptions != null)
             {
