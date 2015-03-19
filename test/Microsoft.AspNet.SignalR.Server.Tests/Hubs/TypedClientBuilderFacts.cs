@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Framework.DependencyInjection;
@@ -121,12 +120,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
         public void GetHubContextRejectsInvalidTypes()
         {
             //var resolver = new DefaultDependencyResolver();
-            var serviceProvider = HostingServices.Create()
-                .AddOptions()
-                .AddDataProtection()
-                .AddSignalR()
-                .ServiceCollection
-                .BuildServiceProvider();
+            var serviceProvider = ServiceProviderHelper.CreateServiceProvider();
 
             var manager = serviceProvider.GetRequiredService<IConnectionManager>();
 

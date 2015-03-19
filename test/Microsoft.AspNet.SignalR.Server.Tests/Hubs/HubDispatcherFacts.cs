@@ -218,14 +218,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
             var mockHubManager = new Mock<IHubManager>();
             mockHubManager.Setup(m => m.GetHub("foo")).Returns(new HubDescriptor { Name = "foo", HubType = mockHub.Object.GetType() });
 
-            var serviceProvider = new ServiceCollection()
-                .AddOptions()
-                .AddHosting()
-                .AddDataProtection()
-                .AddSignalR()
-                .ServiceCollection
-                .AddInstance<IHubManager>(mockHubManager.Object)
-                .BuildServiceProvider();
+            var serviceProvider = ServiceProviderHelper.CreateServiceProvider(services => services.AddInstance(mockHubManager.Object));
 
             var dispatcher = new HubDispatcher(serviceProvider.GetRequiredService<IOptions<SignalROptions>>());
             var testContext = new TestContext("/ignorePath", new Dictionary<string, string>
