@@ -9,6 +9,14 @@ namespace SignalRSample.Web
 {
     public class Startup
     {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSignalR(options =>
+            {
+                options.Hubs.EnableDetailedErrors = true;
+            });
+        }
+
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
 #if DNX451
@@ -20,16 +28,6 @@ namespace SignalRSample.Web
 
             loggerFactory.AddSerilog(serilog);
 #endif
-
-            app.UseServices(services =>
-            {
-                services.AddSignalR(options =>
-                {
-                    options.Hubs.EnableDetailedErrors = true;
-
-                    // options.Hubs.RequireAuthentication();
-                });
-            });
 
             app.UseFileServer();
 
