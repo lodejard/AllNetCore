@@ -22,7 +22,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         private static readonly Type[] _numberTypes = new[] { typeof(byte), typeof(short), typeof(int), typeof(long), typeof(float), typeof(decimal), typeof(double) };
         private static readonly Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTimeOffset) };
 
-        private const string ScriptResource = "Scripts/hubs.js";
+        private static readonly string ScriptResource = typeof(DefaultJavaScriptProxyGenerator).GetTypeInfo().Assembly.GetName().Name + ".Scripts.hubs.js";
 
         private readonly IHubManager _manager;
         private readonly IJavaScriptMinifier _javaScriptMinifier;
