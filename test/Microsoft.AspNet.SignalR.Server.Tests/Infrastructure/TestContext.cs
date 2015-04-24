@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Core.Collections;
+using Microsoft.AspNet.Http.Collections;
 using Moq;
 
 namespace Microsoft.AspNet.SignalR.Tests

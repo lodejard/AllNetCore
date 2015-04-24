@@ -141,7 +141,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             try
             {
-                webSocket = await Context.AcceptWebSocketAsync();
+                webSocket = await Context.WebSockets.AcceptWebSocketAsync();
             }
             catch
             {

@@ -23,21 +23,17 @@ namespace Microsoft.AspNet.SignalR.Tests
 
         public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> configure)
         {
-            var context = new HostingContext
-            {
-                ServerFactory = new ServerFactory(),
-                StartupMethods = new StartupMethods(
-                    _ => { }, 
+            var engine = WebHost.CreateEngine()
+                .UseServer(new ServerFactory())
+                .UseStartup(
+                    _ => { },
                     services =>
                     {
                         services.AddSignalR();
                         configure(services);
                         return services.BuildServiceProvider();
-                    })
-            };
-
-            var engine = new HostingEngine().Start(context);
-            return context.ApplicationServices;
+                    });
+            return engine.ApplicationServices;
         }
 
         private class ServerFactory : IServerFactory

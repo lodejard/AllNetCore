@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Microsoft.AspNet.FeatureModel;
-using Microsoft.AspNet.Http.Core;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Moq;
 using Xunit;
