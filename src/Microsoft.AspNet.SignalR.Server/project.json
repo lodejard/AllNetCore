@@ -5,7 +5,7 @@
         "Microsoft.AspNet.SignalR.Common": { "version": "3.0.0-*", "type": "build" },
         "Microsoft.AspNet.SignalR.Messaging": "3.0.0-*",
         "Microsoft.AspNet.DataProtection": "1.0.0-*",
-        "Microsoft.AspNet.Hosting.Interfaces": "1.0.0-*",
+        "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-*",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-*",
         "Microsoft.Framework.Logging": "1.0.0-*",
         "Microsoft.Framework.NotNullAttribute.Internal": { "type": "build", "version": "1.0.0-*" },
