@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Features;
 using Microsoft.AspNet.SignalR.Transports;
 using Microsoft.Framework.DependencyInjection;
 using Moq;
