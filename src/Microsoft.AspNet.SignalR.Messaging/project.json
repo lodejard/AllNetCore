@@ -5,7 +5,7 @@
         "Microsoft.Framework.Logging": "1.0.0-*",
         "Microsoft.Framework.OptionsModel": "1.0.0-*",
         "Microsoft.Framework.Runtime.Abstractions": { "version": "1.0.0-*", "type": "build" },
-        "Microsoft.AspNet.SignalR.Common": { "version": "3.0.0-*", "type": "build" }
+        "Microsoft.AspNet.SignalR.Sources": { "version": "3.0.0-*", "type": "build" }
     },
     "compilationOptions": {
         "warningsAsErrors": true,

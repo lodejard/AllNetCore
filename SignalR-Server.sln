@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Messaging", "src\Microsoft.AspNet.SignalR.Messaging\Microsoft.AspNet.SignalR.Messaging.xproj", "{1A8EEF26-BA42-496D-9CAE-722581F9777C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Common", "src\Microsoft.AspNet.SignalR.Common\Microsoft.AspNet.SignalR.Common.xproj", "{C41C7A05-ADC3-4771-8F8D-18B86CE7FACC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Sources", "src\Microsoft.AspNet.SignalR.Sources\Microsoft.AspNet.SignalR.Sources.xproj", "{C41C7A05-ADC3-4771-8F8D-18B86CE7FACC}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.SignalR.Messaging.Tests", "test\Microsoft.AspNet.SignalR.Messaging.Tests\Microsoft.AspNet.SignalR.Messaging.Tests.xproj", "{1CD4CDAC-42AB-4DE8-BF94-DAB7CC15B171}"
 EndProject
