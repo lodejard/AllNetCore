@@ -5,7 +5,7 @@ using Microsoft.AspNet.FeatureModel;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Hosting.Server;
 using Microsoft.AspNet.Hosting.Startup;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Runtime.Infrastructure;
 

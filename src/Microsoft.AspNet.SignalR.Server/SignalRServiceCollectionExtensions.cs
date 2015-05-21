@@ -7,7 +7,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.Transports;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
