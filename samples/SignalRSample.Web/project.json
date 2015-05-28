@@ -4,18 +4,13 @@
         "Microsoft.AspNet.Server.IIS": "1.0.0-*",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
         "Microsoft.AspNet.StaticFiles": "1.0.0-*",
-        "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
-        "Serilog": "1.4.113.0"
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-*"
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
     },
     "frameworks": {
-        "dnx451": {
-            "dependencies": {
-                "Microsoft.Framework.Logging.Serilog": "1.0.0-*"
-            }
-        },
+        "dnx451": { },
         "dnxcore50": { }
     }
 }
