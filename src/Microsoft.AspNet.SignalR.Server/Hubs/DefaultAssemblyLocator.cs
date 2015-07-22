@@ -23,7 +23,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             var libraries = _libraryManager.GetReferencingLibraries(typeof(Hub).GetTypeInfo().Assembly.GetName().Name);
 
-            return libraries.SelectMany(l => l.LoadableAssemblies)
+            return libraries.SelectMany(l => l.Assemblies)
                             .Select(an => Assembly.Load(an))
                             .ToList();
         }
