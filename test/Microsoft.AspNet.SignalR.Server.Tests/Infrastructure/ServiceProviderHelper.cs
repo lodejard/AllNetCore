@@ -7,7 +7,7 @@ using Microsoft.AspNet.Hosting.Server;
 using Microsoft.AspNet.Hosting.Startup;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Runtime.Infrastructure;
+using Microsoft.Dnx.Runtime.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {
