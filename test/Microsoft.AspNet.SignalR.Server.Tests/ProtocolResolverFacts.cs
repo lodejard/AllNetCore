@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using Microsoft.AspNet.FeatureModel;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Moq;
 using Xunit;
 
 namespace Microsoft.AspNet.SignalR.Tests

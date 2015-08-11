@@ -16,7 +16,7 @@
         "warningsAsErrors": true,
         "allowUnsafe": true
     },
-    "resources": "Scripts/**/*.*",
+    "resource": "Scripts/**/*.*",
     "frameworks": {
         "dnx451": { },
         "dnxcore50": {

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.FeatureModel;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Hosting.Server;
-using Microsoft.AspNet.Hosting.Startup;
+using Microsoft.AspNet.Http.Features;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Dnx.Runtime.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {
