@@ -224,7 +224,7 @@ namespace Microsoft.AspNet.SignalR
             // Get the user id from the request
             string userId = UserIdProvider.GetUserId(context.Request);
 
-            // Get the groups oken from the request
+            // Get the groups token from the request
             string groupsToken = await Transport.GetGroupsToken().PreserveCulture();
 
             IList<string> signals = GetSignals(userId, connectionId);
