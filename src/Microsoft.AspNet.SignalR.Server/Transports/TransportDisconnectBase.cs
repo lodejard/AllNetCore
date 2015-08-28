@@ -126,7 +126,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is for async.")]
         public virtual Task<string> GetGroupsToken()
         {
-            return TaskAsyncHelper.FromResult(Context.Request.Query["groupsToken"]);
+            return TaskAsyncHelper.FromResult(Context.Request.Query["groupsToken"].ToString());
         }
 
         internal TaskQueue WriteQueue

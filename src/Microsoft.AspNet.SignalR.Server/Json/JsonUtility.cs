@@ -141,7 +141,7 @@ namespace Microsoft.AspNet.SignalR.Json
                 return false;
             }
 
-            string callback = context.Request.Query.Get("callback");
+            string callback = context.Request.Query["callback"];
 
             // The request isn't a JSONP request so do nothing
             if (String.IsNullOrEmpty(callback))

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Internal;
+using Microsoft.Framework.Primitives;
 using Moq;
 
 namespace Microsoft.AspNet.SignalR.Tests
@@ -30,7 +31,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             MockRequest = GetRequestForUrl(path, query, form);
 
             MockResponseHeaders = new Mock<IHeaderDictionary>();
-            MockResponseHeaders.Setup(m => m.Set("X-Content-Type-Options", "nosniff"));
+            MockResponseHeaders.Setup(m => m.Append("X-Content-Type-Options",  "nosniff"));
 
             var mockResponseBody = new Mock<Stream>();
             mockResponseBody.Setup(m => m.Write(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -77,7 +78,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var request = new Mock<HttpRequest>();
             request.Setup(m => m.Path).Returns(new PathString(path));
 
-            var processedQuery = query.ToDictionary(kvp => kvp.Key, kvp => new[] { kvp.Value });
+            var processedQuery = query.ToDictionary(kvp => kvp.Key, kvp => new StringValues(kvp.Value));
             request.Setup(m => m.Query).Returns(new ReadableStringCollection(processedQuery));
 
             var mockForm = new Mock<IFormCollection>();

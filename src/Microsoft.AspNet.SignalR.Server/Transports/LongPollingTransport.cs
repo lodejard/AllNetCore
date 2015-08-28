@@ -213,7 +213,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         protected override async Task ProcessSendRequest()
         {
             IReadableStringCollection form = await Context.Request.ReadFormAsync().PreserveCulture();
-            string data = form["data"] ?? Context.Request.Query["data"];
+            string data = (string)form["data"] ?? Context.Request.Query["data"];
 
             if (Received != null)
             {
