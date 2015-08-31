@@ -157,7 +157,7 @@ namespace SignalRSample.Web
 
         private static string GetClientIP(HttpRequest request)
         {
-            var conn = request.HttpContext.GetFeature<IHttpConnectionFeature>();
+            var conn = request.HttpContext.Features.Get<IHttpConnectionFeature>();
             return conn != null ? conn.RemoteIpAddress.ToString() : null;
         }
     }

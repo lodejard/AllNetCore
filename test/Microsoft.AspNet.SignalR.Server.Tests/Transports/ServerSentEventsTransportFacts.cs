@@ -18,7 +18,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var ms = new MemoryStream();
             var buffering = new Mock<IHttpBufferingFeature>();
 
-            context.MockHttpContext.Setup(m => m.GetFeature<IHttpBufferingFeature>())
+            context.MockHttpContext.Setup(m => m.Features.Get<IHttpBufferingFeature>())
                 .Returns(buffering.Object);
             context.MockResponse.SetupAllProperties();
             context.MockResponse.Setup(m => m.Body).Returns(ms);

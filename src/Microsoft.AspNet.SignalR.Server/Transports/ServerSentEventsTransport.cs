@@ -96,7 +96,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         private static Task WriteInit(ServerSentEventsTransport transport)
         {
             // Disable request compression
-            var buffering = transport.Context.GetFeature<IHttpBufferingFeature>();
+            var buffering = transport.Context.Features.Get<IHttpBufferingFeature>();
             if (buffering != null)
             {
                 buffering.DisableRequestBuffering();
