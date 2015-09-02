@@ -78,7 +78,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 throw new ArgumentNullException("optionsAccessor");
             }
 
-            var options = optionsAccessor.Options;
+            var options = optionsAccessor.Value;
 
             if (options.MessageBufferSize < 0)
             {

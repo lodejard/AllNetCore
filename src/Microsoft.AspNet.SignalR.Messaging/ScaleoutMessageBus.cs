@@ -34,7 +34,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
         {
             _logger = loggerFactory.CreateLogger<ScaleoutMessageBus>();
             _perfCounters = performanceCounterManager;
-            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, scaleoutOptionsAccessor.Options));
+            _streamManager = new Lazy<ScaleoutStreamManager>(() => new ScaleoutStreamManager(Send, OnReceivedCore, StreamCount, _logger, _perfCounters, scaleoutOptionsAccessor.Value));
         }
 
         /// <summary>
