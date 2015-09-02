@@ -37,12 +37,12 @@ namespace Microsoft.AspNet.SignalR.Tests
 
         private class ServerFactory : IServerFactory
         {
-            public IServerInformation Initialize(IConfiguration configuration)
+            public IFeatureCollection Initialize(IConfiguration configuration)
             {
                 return null;
             }
 
-            public IDisposable Start(IServerInformation serverInformation, Func<IFeatureCollection, Task> application)
+            public IDisposable Start(IFeatureCollection serverFeatures, Func<IFeatureCollection, Task> application)
             {
                 return new StartInstance(application);
             }
