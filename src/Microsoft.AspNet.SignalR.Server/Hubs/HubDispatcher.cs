@@ -55,7 +55,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                 throw new ArgumentNullException("optionsAccessor");
             }
 
-            var options = optionsAccessor.Options;
+            var options = optionsAccessor.Value;
             _enableJavaScriptProxies = options.Hubs.EnableJavaScriptProxies;
             _enableDetailedErrors = options.Hubs.EnableDetailedErrors;
         }

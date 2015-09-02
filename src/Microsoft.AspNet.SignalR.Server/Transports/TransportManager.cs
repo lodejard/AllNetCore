@@ -35,7 +35,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 throw new ArgumentNullException("optionsAccessor");
             }
 
-            var enabledTransports = optionsAccessor.Options.Transports.EnabledTransports;
+            var enabledTransports = optionsAccessor.Value.Transports.EnabledTransports;
 
             if (enabledTransports.HasFlag(TransportType.WebSockets))
             {

@@ -37,7 +37,7 @@ namespace Microsoft.AspNet.SignalR.Hosting
                 throw new ArgumentNullException("context");
             }
 
-            if (JsonUtility.TryRejectJSONPRequest(_optionsAccessor.Options, context))
+            if (JsonUtility.TryRejectJSONPRequest(_optionsAccessor.Value, context))
             {
                 return TaskAsyncHelper.Empty;
             }

@@ -33,7 +33,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                                     IMemoryPool pool)
             : base(context, jsonSerializer, heartbeat, performanceCounterManager, applicationLifetime, loggerFactory, pool)
         {
-            _pollDelay = optionsAccessor.Options.Transports.LongPolling.PollDelay;
+            _pollDelay = optionsAccessor.Value.Transports.LongPolling.PollDelay;
             _counters = performanceCounterManager;
         }
 

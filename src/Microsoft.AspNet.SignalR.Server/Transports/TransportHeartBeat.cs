@@ -38,7 +38,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                                   IPerformanceCounterManager counters,
                                   ILoggerFactory loggerFactory)
         {
-            _transportOptions = optionsAccessor.Options.Transports;
+            _transportOptions = optionsAccessor.Value.Transports;
             _counters = counters;
             _logger = loggerFactory.CreateLogger<TransportHeartbeat>();
 

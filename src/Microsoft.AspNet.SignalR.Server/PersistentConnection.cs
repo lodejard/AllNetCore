@@ -47,7 +47,7 @@ namespace Microsoft.AspNet.SignalR
             UserIdProvider = serviceProvider.GetRequiredService<IUserIdProvider>();
             Pool = serviceProvider.GetRequiredService<IMemoryPool>();
 
-            _options = serviceProvider.GetRequiredService<IOptions<SignalROptions>>().Options;
+            _options = serviceProvider.GetRequiredService<IOptions<SignalROptions>>().Value;
             _transportManager = serviceProvider.GetRequiredService<ITransportManager>();
 
             // Ensure that this server is listening for any ACKs sent over the bus.

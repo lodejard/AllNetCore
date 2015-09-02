@@ -17,7 +17,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
 
         public HubPipeline(IOptions<SignalROptions> options)
         {
-            _pipeline = new Lazy<ComposedPipeline>(() => new ComposedPipeline(options.Options.Hubs.PipelineModules));
+            _pipeline = new Lazy<ComposedPipeline>(() => new ComposedPipeline(options.Value.Hubs.PipelineModules));
         }
 
         private ComposedPipeline Pipeline
