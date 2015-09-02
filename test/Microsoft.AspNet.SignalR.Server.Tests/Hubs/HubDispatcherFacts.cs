@@ -73,7 +73,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
             // Arrange
             var serviceProvider = CreateServiceProvider();
             var optionsAccessor = serviceProvider.GetRequiredService<IOptions<SignalROptions>>();
-            optionsAccessor.Options.Hubs.EnableJavaScriptProxies = false;
+            optionsAccessor.Value.Hubs.EnableJavaScriptProxies = false;
             var dispatcher = new HubDispatcher(optionsAccessor);
             var testContext = new TestContext(proxyUrl);
 
@@ -154,7 +154,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
             // Arrange
             var serviceProvider = CreateServiceProvider();
             var optionsAccessor = serviceProvider.GetRequiredService<IOptions<SignalROptions>>();
-            optionsAccessor.Options.Hubs.EnableDetailedErrors = true;
+            optionsAccessor.Value.Hubs.EnableDetailedErrors = true;
             var dispatcher = new HubDispatcher(optionsAccessor);
             var testContext = new TestContext("/signalr/send", new Dictionary<string, string>
             {
@@ -185,7 +185,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
             // Arrange
             var serviceProvider = CreateServiceProvider();
             var optionsAccessor = serviceProvider.GetRequiredService<IOptions<SignalROptions>>();
-            optionsAccessor.Options.Hubs.EnableDetailedErrors = true;
+            optionsAccessor.Value.Hubs.EnableDetailedErrors = true;
             var dispatcher = new HubDispatcher(optionsAccessor);
             var testContext = new TestContext("/signalr/send", new Dictionary<string, string>
             {

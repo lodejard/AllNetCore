@@ -169,7 +169,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Transports
                 var appLifetime = new Mock<IApplicationLifetime>();
                 var loggerFactory = new Mock<ILoggerFactory>();
                 var optionsAccessor = new Mock<IOptions<SignalROptions>>();
-                optionsAccessor.Setup(m => m.Options).Returns(new SignalROptions());
+                optionsAccessor.Setup(m => m.Value).Returns(new SignalROptions());
                 var pool = new Mock<IMemoryPool>();
 
                 transport = new TestLongPollingTransport(
