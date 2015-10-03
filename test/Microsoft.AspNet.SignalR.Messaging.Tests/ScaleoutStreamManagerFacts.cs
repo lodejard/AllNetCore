@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 

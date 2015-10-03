@@ -3,7 +3,7 @@
 
 
 using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.Framework.Internal;
+using Microsoft.Extensions.Internal;
 
 namespace Microsoft.AspNet.SignalR
 {

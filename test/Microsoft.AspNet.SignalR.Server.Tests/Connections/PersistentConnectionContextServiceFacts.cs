@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
 

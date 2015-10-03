@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.WebSockets;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 

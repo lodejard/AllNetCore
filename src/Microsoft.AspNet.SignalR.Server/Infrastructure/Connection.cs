@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.DataProtection;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 using Microsoft.AspNet.SignalR.Transports;
 using Newtonsoft.Json;

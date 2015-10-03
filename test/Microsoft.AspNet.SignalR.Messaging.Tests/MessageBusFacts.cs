@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.Framework.OptionsModel;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.AspNet.SignalR.Tests
 {

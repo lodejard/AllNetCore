@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Microsoft.AspNet.SignalR.Tests

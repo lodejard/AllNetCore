@@ -7,7 +7,7 @@
         "Microsoft.AspNet.DataProtection": "1.0.0-*",
         "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-*",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-*",
-        "Microsoft.Framework.NotNullAttribute.Sources": { "type": "build", "version": "1.0.0-*" },
+        "Microsoft.Extensions.NotNullAttribute.Sources": { "type": "build", "version": "1.0.0-*" },
         "Newtonsoft.Json": "6.0.6"
     },
     "compilationOptions": {

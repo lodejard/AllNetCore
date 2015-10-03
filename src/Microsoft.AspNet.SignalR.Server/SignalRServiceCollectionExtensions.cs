@@ -6,11 +6,11 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Transports;
-using Microsoft.Framework.DependencyInjection.Extensions;
-using Microsoft.Framework.OptionsModel;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.OptionsModel;
 using Newtonsoft.Json;
 
-namespace Microsoft.Framework.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SignalRServiceCollectionExtensions
     {

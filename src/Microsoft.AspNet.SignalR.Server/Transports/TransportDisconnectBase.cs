@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 
 namespace Microsoft.AspNet.SignalR.Transports

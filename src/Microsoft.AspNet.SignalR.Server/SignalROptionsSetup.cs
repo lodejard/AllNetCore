@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.Framework.OptionsModel;
+using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.Extensions.OptionsModel;
 
 namespace Microsoft.AspNet.SignalR
 {

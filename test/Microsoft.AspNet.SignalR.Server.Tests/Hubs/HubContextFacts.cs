@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Json;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 

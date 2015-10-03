@@ -1,7 +1,7 @@
-﻿using System.IO;
+using System.IO;
 using Microsoft.AspNet.Http.Features;
 using Microsoft.AspNet.SignalR.Transports;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
 

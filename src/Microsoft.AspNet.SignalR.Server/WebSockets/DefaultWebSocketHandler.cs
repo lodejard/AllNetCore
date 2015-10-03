@@ -4,7 +4,7 @@
 using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.AspNet.SignalR.WebSockets
 {

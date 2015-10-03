@@ -2,7 +2,7 @@
     "dependencies": {
         "Microsoft.AspNet.SignalR.Messaging": "3.0.0-*",
         "Microsoft.AspNet.SignalR.Testing.Common": "1.0.0-*",
-        "Microsoft.Framework.DependencyInjection": "1.0.0-*",
+        "Microsoft.Extensions.DependencyInjection": "1.0.0-*",
         "xunit.runner.aspnet": "2.0.0-aspnet-*",
         "Moq": "4.2.1312.1622"
     },
