@@ -2,10 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-using System.Collections.Generic;
 using System.Security.Principal;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Hosting;
 
 namespace Microsoft.AspNet.SignalR.Hubs
 {
@@ -30,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Gets the headers for the request.
         /// </summary>
-        public virtual IReadableStringCollection Headers
+        public virtual IHeaderDictionary Headers
         {
             get
             {
