@@ -1,7 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Microsoft.Extensions.Internal;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -9,8 +9,13 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         private readonly IServiceCollection _serviceCollection;
 
-        public SignalRServicesBuilder([NotNull] IServiceCollection serviceCollection)
+        public SignalRServicesBuilder(IServiceCollection serviceCollection)
         {
+            if (serviceCollection == null)
+            {
+                throw new ArgumentNullException(nameof(serviceCollection));
+            }
+
             _serviceCollection = serviceCollection;
         }
 
