@@ -20,9 +20,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
         public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> configure)
         {
-            var collection = new ServiceCollection();
-
-            var host = new WebHostBuilder(collection.BuildServiceProvider())
+            var host = new WebHostBuilder()
                 .UseServer(new ServerFactory())
                 .UseStartup(
                     _ => { },
