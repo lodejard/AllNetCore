@@ -108,7 +108,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var groupsToken = Context.Request.Query["groupsToken"];
 
-            if (groupsToken == null && Context.Request.HasFormContentType)
+            if (groupsToken.Count > 0 && Context.Request.HasFormContentType)
             {
                 var form = await Context.Request.ReadFormAsync().PreserveCulture();
                 groupsToken = form["groupsToken"];
