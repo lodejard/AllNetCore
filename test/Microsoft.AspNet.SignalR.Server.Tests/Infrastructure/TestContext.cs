@@ -79,7 +79,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             request.Setup(m => m.Path).Returns(new PathString(path));
 
             var processedQuery = query.ToDictionary(kvp => kvp.Key, kvp => new StringValues(kvp.Value));
-            request.Setup(m => m.Query).Returns(new ReadableStringCollection(processedQuery));
+            request.Setup(m => m.Query).Returns(new QueryCollection(processedQuery));
 
             var mockForm = new Mock<IFormCollection>();
 

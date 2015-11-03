@@ -90,7 +90,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
 
             hub.Context = context.Object;
 
-            var qs = new Mock<IReadableStringCollection>();
+            var qs = new Mock<IQueryCollection>();
             qs.Setup(m => m["connectionId"]).Returns("1").Verifiable();
             context.Setup(c => c.QueryString).Returns(qs.Object);
 

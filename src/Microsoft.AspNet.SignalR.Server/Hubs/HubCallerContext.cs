@@ -17,7 +17,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Gets the cookies for the request.
         /// </summary>
-        public virtual IReadableStringCollection RequestCookies
+        public virtual IRequestCookieCollection RequestCookies
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         /// <summary>
         /// Gets the querystring for the request.
         /// </summary>
-        public virtual IReadableStringCollection QueryString
+        public virtual IQueryCollection QueryString
         {
             get
             {
