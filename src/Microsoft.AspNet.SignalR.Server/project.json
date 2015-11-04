@@ -11,7 +11,8 @@
     },
     "compilationOptions": {
         "warningsAsErrors": true,
-        "allowUnsafe": true
+        "allowUnsafe": true,
+        "keyFile": "../../tools/Key.snk"
     },
     "resource": "Scripts/**/*.*",
     "frameworks": {
