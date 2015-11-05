@@ -16,7 +16,7 @@
     },
     "resource": "Scripts/**/*.*",
     "frameworks": {
-        "dnx451": { },
-        "dnxcore50": { }
+        "net451": { },
+        "dotnet5.4": { }
     }
 }

@@ -109,7 +109,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                      "Original exception type: {2}\r\n" +
                                      "Original exception message: {3}\r\n",
                                      a.FullName,
-#if DNX451
+#if NET451
                                      a.Location,
 #else
                                      null,
@@ -126,7 +126,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
                                      "Original exception type: {2}\r\n" +
                                      "Original exception message: {3}\r\n",
                                      a.FullName,
-#if DNX451
+#if NET451
                                      a.Location,
 #else
                                      null,

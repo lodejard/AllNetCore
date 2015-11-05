@@ -31,7 +31,7 @@ namespace Microsoft.AspNet.SignalR
                                                              Action continuation,
                                                              bool useSyncContext)
         {
-#if DNXCORE50
+#if DOTNET5_4
             notifier.UnsafeOnCompleted(continuation);
 #else
             // Rely on the SyncContext to preserve culture if it exists

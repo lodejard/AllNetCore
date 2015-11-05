@@ -13,11 +13,8 @@
         "keyFile": "../../tools/Key.snk"
     },
     "frameworks": {
-        "dnx451": {
-            "dependencies": {
-            }
-        },
-        "dnxcore50": {
+        "net451": { },
+        "dotnet5.4": {
             "dependencies": {
                 "Microsoft.CSharp": "4.0.1-*",
                 "System.Collections.Concurrent": "4.0.11-*",

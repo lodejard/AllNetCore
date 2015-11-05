@@ -28,3 +28,8 @@ nuget.exe
 *.sln.ide
 /src/Microsoft.AspNet.SignalR.Server/Properties/debugSettings.json
 project.lock.json
+
+# Visual Studio 2015 cache/options directory
+.vs/
+.vscode/
+

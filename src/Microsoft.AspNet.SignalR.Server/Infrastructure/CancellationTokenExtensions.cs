@@ -48,7 +48,7 @@ namespace Microsoft.AspNet.SignalR.Infrastructure
                 return token.Register(callback, state);
             };
 
-#if NETFX_CORE || PORTABLE || DNXCORE50
+#if NETFX_CORE || PORTABLE || DOTNET5_4
             return fallback;
 #else
 

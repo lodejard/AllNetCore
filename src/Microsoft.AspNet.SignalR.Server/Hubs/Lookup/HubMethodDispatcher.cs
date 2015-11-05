@@ -49,7 +49,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
             }
 
             // TODO: CORECLR reflected type?
-#if DNX451
+#if NET451
             // Call method
             UnaryExpression instanceCast = (!methodInfo.IsStatic) ? Expression.Convert(hubParameter, methodInfo.ReflectedType) : null;
 #else

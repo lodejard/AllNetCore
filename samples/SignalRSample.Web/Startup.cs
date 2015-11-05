@@ -19,6 +19,7 @@ namespace SignalRSample.Web
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            app.UseIISPlatformHandler();
             app.UseFileServer();
 
             app.UseSignalR<RawConnection>("/raw-connection");
