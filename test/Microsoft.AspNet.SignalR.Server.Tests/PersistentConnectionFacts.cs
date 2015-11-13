@@ -76,8 +76,8 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<ITransportManager>(transportManager.Object);
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<ITransportManager>(transportManager.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);
@@ -146,7 +146,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);
@@ -171,7 +171,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);
@@ -198,7 +198,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);
@@ -225,7 +225,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);
@@ -253,7 +253,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);
@@ -283,7 +283,7 @@ namespace Microsoft.AspNet.SignalR.Tests
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
-                    services.AddInstance<IProtectedData>(protectedData.Object);
+                    services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
                 connection.Object.Initialize(sp);

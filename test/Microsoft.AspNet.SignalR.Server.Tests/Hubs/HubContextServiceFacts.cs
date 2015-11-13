@@ -16,7 +16,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
 
             var sp = ServiceProviderHelper.CreateServiceProvider(sc =>
             {
-                sc.AddInstance<IConnectionManager>(mockConnectionManager.Object);
+                sc.AddSingleton<IConnectionManager>(mockConnectionManager.Object);
             });
 
             var returnedContext = sp.GetRequiredService<IHubContext<ContextHub>>();
@@ -35,7 +35,7 @@ namespace Microsoft.AspNet.SignalR.Tests.Hubs
 
             var sp = ServiceProviderHelper.CreateServiceProvider(sc =>
             {
-                sc.AddInstance<IConnectionManager>(mockConnectionManager.Object);
+                sc.AddSingleton<IConnectionManager>(mockConnectionManager.Object);
             });
 
             var returnedContext = sp.GetRequiredService<IHubContext<TypedContextHub, IClient>>();

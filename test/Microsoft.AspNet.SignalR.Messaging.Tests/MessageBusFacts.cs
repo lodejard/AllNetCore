@@ -372,7 +372,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
                 var passThroughMinfier = new PassThroughStringMinifier();
-                services.AddInstance<IStringMinifier>(passThroughMinfier);
+                services.AddSingleton<IStringMinifier>(passThroughMinfier);
             });
 
             using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
@@ -425,7 +425,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
                 var passThroughMinfier = new PassThroughStringMinifier();
-                services.AddInstance<IStringMinifier>(passThroughMinfier);
+                services.AddSingleton<IStringMinifier>(passThroughMinfier);
             });
 
             using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
@@ -532,7 +532,7 @@ namespace Microsoft.AspNet.SignalR.Tests
             var sp = ServiceProviderHelper.CreateServiceProvider(services =>
             {
                 var passThroughMinfier = new PassThroughStringMinifier();
-                services.AddInstance<IStringMinifier>(passThroughMinfier);
+                services.AddSingleton<IStringMinifier>(passThroughMinfier);
             });
 
             using (var bus = (MessageBus)sp.GetRequiredService<IMessageBus>())
