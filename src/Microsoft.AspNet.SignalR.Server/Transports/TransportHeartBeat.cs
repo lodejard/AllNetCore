@@ -75,7 +75,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
             _connections.AddOrUpdate(connection.ConnectionId, newMetadata, (key, old) =>
             {
-                Logger.LogVerbose(String.Format("Connection {0} exists. Closing previous connection.", old.Connection.ConnectionId));
+                Logger.LogDebug(String.Format("Connection {0} exists. Closing previous connection.", old.Connection.ConnectionId));
                 // Kick out the older connection. This should only happen when 
                 // a previous connection attempt fails on the client side (e.g. transport fallback).
 
@@ -172,7 +172,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             if (Interlocked.Exchange(ref _running, 1) == 1)
             {
-                Logger.LogVerbose("Timer handler took longer than current interval");
+                Logger.LogDebug("Timer handler took longer than current interval");
                 return;
             }
 
@@ -193,7 +193,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                     }
                     else
                     {
-                        Logger.LogVerbose(metadata.Connection.ConnectionId + " is dead");
+                        Logger.LogDebug(metadata.Connection.ConnectionId + " is dead");
 
                         // Check if we need to disconnect this connection
                         CheckDisconnect(metadata);
@@ -224,7 +224,7 @@ namespace Microsoft.AspNet.SignalR.Transports
                 // of us handling timeout's or disconnects gracefully
                 if (RaiseKeepAlive(metadata))
                 {
-                    Logger.LogVerbose("KeepAlive(" + metadata.Connection.ConnectionId + ")");
+                    Logger.LogDebug("KeepAlive(" + metadata.Connection.ConnectionId + ")");
 
                     // Ensure delegate continues to use the C# Compiler static delegate caching optimization.
                     metadata.Connection.KeepAlive().Catch((ex, state) => OnKeepAliveError(ex, state), state: Logger, logger: Logger);

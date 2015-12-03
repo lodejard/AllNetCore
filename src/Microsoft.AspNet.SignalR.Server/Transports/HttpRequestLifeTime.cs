@@ -43,7 +43,7 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         public void Complete(Exception error)
         {
-            _logger.LogVerbose("DrainWrites(" + _connectionId + ")");
+            _logger.LogDebug("DrainWrites(" + _connectionId + ")");
 
             var context = new LifetimeContext(_transport, _lifetimeTcs, error);
 

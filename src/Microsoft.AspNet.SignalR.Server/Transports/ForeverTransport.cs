@@ -244,7 +244,7 @@ namespace Microsoft.AspNet.SignalR.Transports
         {
             var context = (ForeverTransportContext)state;
 
-            context.Transport.Logger.LogVerbose("Cancel(" + context.Transport.ConnectionId + ")");
+            context.Transport.Logger.LogDebug("Cancel(" + context.Transport.ConnectionId + ")");
 
             ((IDisposable)context.State).Dispose();
         }

@@ -305,14 +305,17 @@ namespace Microsoft.AspNet.SignalR.Messaging
                 case LogLevel.Error:
                     _logger.LogError(String.Format(value, args));
                     break;
+                case LogLevel.Warning:
+                    _logger.LogWarning(String.Format(value, args));
+                    break;
                 case LogLevel.Information:
                     _logger.LogInformation(String.Format(value, args));
                     break;
-                case LogLevel.Verbose:
-                    _logger.LogVerbose(String.Format(value, args));
+                case LogLevel.Debug:
+                    _logger.LogDebug(String.Format(value, args));
                     break;
-                case LogLevel.Warning:
-                    _logger.LogWarning(String.Format(value, args));
+                case LogLevel.Trace:
+                    _logger.LogTrace(String.Format(value, args));
                     break;
                 default:
                     break;
