@@ -8,6 +8,7 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Transports;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -61,7 +62,12 @@ namespace Microsoft.Extensions.DependencyInjection
                 services.Configure(configureOptions);
             }
 
+            if (PlatformServices.Default?.LibraryManager != null)
+            {
+                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.LibraryManager));
+            }
+
             return new SignalRServicesBuilder(services);
-        }        
+        }
     }
 }

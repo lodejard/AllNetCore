@@ -80,7 +80,7 @@ namespace Microsoft.AspNet.SignalR.Hubs
         {
             if (serviceProvider == null)
             {
-                throw new ArgumentNullException("resolver");
+                throw new ArgumentNullException(nameof(serviceProvider));
             }
 
             _proxyGenerator = _enableJavaScriptProxies ? serviceProvider.GetRequiredService<IJavaScriptProxyGenerator>()
