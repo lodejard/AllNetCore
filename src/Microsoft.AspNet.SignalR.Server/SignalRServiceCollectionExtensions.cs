@@ -51,6 +51,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.TryAddSingleton(typeof(IHubContext<>), typeof(HubContextService<>));
             services.TryAddSingleton(typeof(IHubContext<,>), typeof(HubContextService<,>));
 
+            //allows detecting if services were registered
+            services.TryAddSingleton<SignalRMarkerService, SignalRMarkerService>();
+
             // TODO: Just use the new IDataProtectionProvider abstraction directly here
             services.TryAddSingleton<IProtectedData, DataProtectionProviderProtectedData>();
 

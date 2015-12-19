@@ -270,4 +270,7 @@
   <data name="Forbidden_JSONPDisabled" xml:space="preserve">
     <value>Forbidden: JSONP is disabled.</value>
   </data>
+  <data name="Error_ServicesNotRegistered" xml:space="preserve">
+    <value>SignalR services have not been registered. Register services by calling 'IServices.UseSignalR()'.</value>
+  </data>
 </root>

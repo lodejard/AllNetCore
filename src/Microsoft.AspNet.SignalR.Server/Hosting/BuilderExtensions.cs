@@ -46,7 +46,7 @@ namespace Microsoft.AspNet.Builder
         }
 
         /// <summary>
-        /// Maps the specified SignalR <see cref="PersistentConnection"/> to the app builder pipeline at 
+        /// Maps the specified SignalR <see cref="PersistentConnection"/> to the app builder pipeline at
         /// the specified path.
         /// </summary>
         /// <typeparam name="TConnection">The type of <see cref="PersistentConnection"/></typeparam>
@@ -88,6 +88,11 @@ namespace Microsoft.AspNet.Builder
         /// <param name="connectionType">The type of <see cref="PersistentConnection"/></param>
         public static void RunSignalR(this IApplicationBuilder builder, Type connectionType)
         {
+            if (builder.ApplicationServices.GetService(typeof(SignalRMarkerService)) == null)
+            {
+                throw new InvalidOperationException(Resources.Error_ServicesNotRegistered);
+            }
+
             builder.UseMiddleware<PersistentConnectionMiddleware>(connectionType);
         }
     }

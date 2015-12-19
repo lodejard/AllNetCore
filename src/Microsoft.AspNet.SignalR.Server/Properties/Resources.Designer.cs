@@ -826,6 +826,22 @@ namespace Microsoft.AspNet.SignalR
             return GetString("Forbidden_JSONPDisabled");
         }
 
+        /// <summary>
+        /// SignalR services have not been registered. Register services by calling 'IServices.UseSignalR()'.
+        /// </summary>
+        internal static string Error_ServicesNotRegistered
+        {
+            get { return GetString("Error_ServicesNotRegistered"); }
+        }
+
+        /// <summary>
+        /// SignalR services have not been registered. Register services by calling 'IServices.UseSignalR()'.
+        /// </summary>
+        internal static string FormatError_ServicesNotRegistered()
+        {
+            return GetString("Error_ServicesNotRegistered");
+        }
+
         private static string GetString(string name, params string[] formatterNames)
         {
             var value = _resourceManager.GetString(name);
