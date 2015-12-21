@@ -1,22 +1,25 @@
 {
-    "version": "3.0.0-*",
-    "description": "Core server components for ASP.NET SignalR.",
-    "dependencies": {
-        "Microsoft.AspNet.SignalR.Sources": { "version": "3.0.0-*", "type": "build" },
-        "Microsoft.AspNet.SignalR.Messaging": "3.0.0-*",
-        "Microsoft.AspNet.DataProtection": "1.0.0-*",
-        "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-*",
-        "Microsoft.AspNet.Http.Extensions": "1.0.0-*",
-        "Newtonsoft.Json": "6.0.6"
+  "version": "3.0.0-*",
+  "description": "Core server components for ASP.NET SignalR.",
+  "dependencies": {
+    "Microsoft.AspNet.SignalR.Sources": {
+      "version": "3.0.0-*",
+      "type": "build"
     },
-    "compilationOptions": {
-        "warningsAsErrors": true,
-        "allowUnsafe": true,
-        "keyFile": "../../tools/Key.snk"
-    },
-    "resource": "Scripts/**/*.*",
-    "frameworks": {
-        "net451": { },
-        "dotnet5.4": { }
-    }
+    "Microsoft.AspNet.SignalR.Messaging": "3.0.0-*",
+    "Microsoft.AspNet.DataProtection": "1.0.0-*",
+    "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-*",
+    "Microsoft.AspNet.Http.Extensions": "1.0.0-*",
+    "Newtonsoft.Json": "6.0.6"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "allowUnsafe": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "resource": "Scripts/**/*.*",
+  "frameworks": {
+    "net451": { },
+    "dotnet5.4": { }
+  }
 }
