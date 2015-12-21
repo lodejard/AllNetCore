@@ -8,7 +8,7 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNet.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.AspNet.SignalR.Hosting
 {
