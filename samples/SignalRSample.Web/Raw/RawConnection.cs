@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Features;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 
@@ -22,7 +21,7 @@ namespace SignalRSample.Web
                 _users[userName] = connectionId;
             }
 
-            string clientIp = GetClientIP(request);
+            string clientIp = request.HttpContext.Connection.RemoteIpAddress?.ToString();
 
             string user = GetUser(connectionId);
 
@@ -153,12 +152,6 @@ namespace SignalRSample.Web
         {
             public MessageType Type { get; set; }
             public string Value { get; set; }
-        }
-
-        private static string GetClientIP(HttpRequest request)
-        {
-            var conn = request.HttpContext.Features.Get<IHttpConnectionFeature>();
-            return conn != null ? conn.RemoteIpAddress.ToString() : null;
         }
     }
 }
