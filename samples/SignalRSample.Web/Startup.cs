@@ -17,9 +17,12 @@ namespace SignalRSample.Web
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(LogLevel.Debug);
+
             app.UseIISPlatformHandler();
             app.UseFileServer();
 
+            app.UseWebSockets();
             app.UseSignalR<RawConnection>("/raw-connection");
             app.UseSignalR();
         }
@@ -27,7 +30,9 @@ namespace SignalRSample.Web
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
+                .UseServer("Microsoft.AspNet.Server.Kestrel")
                 .UseDefaultConfiguration(args)
+                .UseIISPlatformHandlerUrl()
                 .UseStartup<Startup>()
                 .Build();
 
