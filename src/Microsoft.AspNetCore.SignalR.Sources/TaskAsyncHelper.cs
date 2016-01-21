@@ -144,10 +144,7 @@ namespace Microsoft.AspNetCore.SignalR
         private static void ExecuteOnFaulted(Action<AggregateException, object> handler, object state, AggregateException exception, ILogger logger)
         {
             // Observe Exception
-            if (logger != null)
-            {
-                logger.LogWarning("Exception thrown by Task", exception);
-            }
+            logger?.LogWarning(0, exception, "Exception thrown by Task");
 
             handler(exception, state);
         }
