@@ -2,7 +2,7 @@
   "dependencies": {
     "SignalRSample.Web": "1.0.0",
     "Microsoft.AspNetCore.SignalR.Testing.Common": "1.0.0-*",
-    "Microsoft.AspNetCore.SignalR.Server": "3.0.0-*",
+    "Microsoft.AspNetCore.SignalR.Server": "0.1.0-*",
     "xunit.runner.aspnet": "2.0.0-aspnet-*",
     "Moq": "4.2.1312.1622"
   },
@@ -11,8 +11,7 @@
     "keyFile": "../../tools/Key.snk"
   },
   "frameworks": {
-    "dnx451": { }
+    "dnx451": {}
   },
-  "commands": {
-  }
+  "commands": {}
 }

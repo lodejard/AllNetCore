@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0-*",
+  "version": "0.1.0-*",
   "description": "Core messaging components for ASP.NET SignalR.",
   "dependencies": {
     "Microsoft.Extensions.Logging": "1.0.0-*",
@@ -9,7 +9,7 @@
       "type": "build"
     },
     "Microsoft.AspNetCore.SignalR.Sources": {
-      "version": "3.0.0-*",
+      "version": "0.1.0-*",
       "type": "build"
     }
   },
@@ -19,7 +19,7 @@
     "keyFile": "../../tools/Key.snk"
   },
   "frameworks": {
-    "net451": { },
+    "net451": {},
     "dotnet5.4": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-*",

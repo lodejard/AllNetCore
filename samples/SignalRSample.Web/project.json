@@ -2,9 +2,9 @@
   "dependencies": {
     "Microsoft.AspNetCore.IISPlatformHandler": "1.0.0-*",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*",
-    "Microsoft.AspNetCore.SignalR.Server": "3.0.0-*",
+    "Microsoft.AspNetCore.SignalR.Server": "0.1.0-*",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0-*",
-    "Microsoft.AspNetCore.WebSockets.Server": "1.0.0-*",
+    "Microsoft.AspNetCore.WebSockets.Server": "0.1.0-*",
     "Microsoft.Extensions.Logging.Console": "1.0.0-*"
   },
   "compilationOptions": {
@@ -14,7 +14,7 @@
     "web": "SignalRSample.Web"
   },
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {},
+    "dnxcore50": {}
   }
 }

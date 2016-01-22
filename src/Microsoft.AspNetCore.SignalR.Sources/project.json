@@ -1,11 +1,9 @@
 {
-  "version": "3.0.0-*",
+  "version": "0.1.0-*",
   "shared": "*.cs",
-  "dependencies": {
-  },
-
+  "dependencies": {},
   "frameworks": {
-    "net451": { },
+    "net451": {},
     "dotnet5.4": {
       "dependencies": {
         "System.Runtime": "4.0.21-*"

@@ -1,12 +1,12 @@
 {
-  "version": "3.0.0-*",
+  "version": "0.1.0-*",
   "description": "Core server components for ASP.NET SignalR.",
   "dependencies": {
     "Microsoft.AspNetCore.SignalR.Sources": {
-      "version": "3.0.0-*",
+      "version": "0.1.0-*",
       "type": "build"
     },
-    "Microsoft.AspNetCore.SignalR.Messaging": "3.0.0-*",
+    "Microsoft.AspNetCore.SignalR.Messaging": "0.1.0-*",
     "Microsoft.AspNetCore.DataProtection": "1.0.0-*",
     "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
     "Microsoft.AspNetCore.Http.Extensions": "1.0.0-*",
@@ -19,7 +19,7 @@
   },
   "resource": "Scripts/**/*.*",
   "frameworks": {
-    "net451": { },
-    "dotnet5.4": { }
+    "net451": {},
+    "dotnet5.4": {}
   }
 }

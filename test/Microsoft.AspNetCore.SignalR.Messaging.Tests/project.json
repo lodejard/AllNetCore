@@ -1,18 +1,17 @@
 {
-    "dependencies": {
-        "Microsoft.AspNetCore.SignalR.Messaging": "3.0.0-*",
-        "Microsoft.AspNetCore.SignalR.Testing.Common": "1.0.0-*",
-        "Microsoft.Extensions.DependencyInjection": "1.0.0-*",
-        "xunit.runner.aspnet": "2.0.0-aspnet-*",
-        "Moq": "4.2.1312.1622"
-    },
-    "compilationOptions": {
-        "allowUnsafe": true,
-        "keyFile": "../../tools/Key.snk"
-    },
-    "frameworks": {
-        "dnx451": { }
-    },
-    "commands": {
-    }
+  "dependencies": {
+    "Microsoft.AspNetCore.SignalR.Messaging": "0.1.0-*",
+    "Microsoft.AspNetCore.SignalR.Testing.Common": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection": "1.0.0-*",
+    "xunit.runner.aspnet": "2.0.0-aspnet-*",
+    "Moq": "4.2.1312.1622"
+  },
+  "compilationOptions": {
+    "allowUnsafe": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "frameworks": {
+    "dnx451": {}
+  },
+  "commands": {}
 }
