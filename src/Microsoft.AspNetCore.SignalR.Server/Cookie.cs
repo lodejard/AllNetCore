@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     public class Cookie
     {

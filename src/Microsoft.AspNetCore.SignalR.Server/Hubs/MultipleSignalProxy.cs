@@ -8,7 +8,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class MultipleSignalProxy : DynamicObject, IClientProxy
     {

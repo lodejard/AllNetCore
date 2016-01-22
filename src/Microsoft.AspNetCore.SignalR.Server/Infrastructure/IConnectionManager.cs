@@ -4,9 +4,9 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     /// <summary>
     /// Provides access to hubs and persistent connections references.

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class TaskAsyncHelperFacts
     {

@@ -2,10 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;

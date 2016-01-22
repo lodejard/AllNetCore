@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class AckHandlerFacts
     {

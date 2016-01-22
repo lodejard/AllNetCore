@@ -5,9 +5,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     // Represents a message store that is backed by a ring buffer.
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "The rate sampler doesn't need to be disposed")]

@@ -5,7 +5,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     // Represents the result of a call to MessageStore<T>.GetMessages.
     [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "This is never compared")]

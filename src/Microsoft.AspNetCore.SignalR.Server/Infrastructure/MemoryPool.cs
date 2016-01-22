@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class MemoryPool : IMemoryPool
     {

@@ -7,10 +7,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     internal static class TaskAsyncHelper
     {

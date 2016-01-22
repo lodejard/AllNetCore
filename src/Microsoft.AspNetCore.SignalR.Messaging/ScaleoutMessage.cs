@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     /// <summary>
     /// Represents a message to the scaleout backplane

@@ -6,10 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Messaging;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// The default <see cref="IGroupManager"/> implementation.
@@ -23,7 +23,7 @@ namespace Microsoft.AspNet.SignalR
         /// Initializes a new instance of the <see cref="GroupManager"/> class.
         /// </summary>
         /// <param name="connection">The <see cref="IConnection"/> this group resides on.</param>
-        /// <param name="groupPrefix">The prefix for this group. Either a <see cref="Microsoft.AspNet.SignalR.Hubs.IHub"/> name or <see cref="PersistentConnection"/> type name.</param>
+        /// <param name="groupPrefix">The prefix for this group. Either a <see cref="Microsoft.AspNetCore.SignalR.Hubs.IHub"/> name or <see cref="PersistentConnection"/> type name.</param>
         public GroupManager(IConnection connection, string groupPrefix)
         {
             if (connection == null)

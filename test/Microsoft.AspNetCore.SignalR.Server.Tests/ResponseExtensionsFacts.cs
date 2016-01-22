@@ -1,9 +1,9 @@
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System.Text;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Hosting
+namespace Microsoft.AspNetCore.SignalR.Tests.Hosting
 {
     public class ResponseExtensionsFacts
     {

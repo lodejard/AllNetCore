@@ -3,7 +3,7 @@
 
 
 using Newtonsoft.Json;
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Handles parsing incoming requests through the <see cref="HubDispatcher"/>.

@@ -5,7 +5,7 @@
 using System;
 using System.Globalization;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class EmptyJavaScriptProxyGenerator : IJavaScriptProxyGenerator
     {

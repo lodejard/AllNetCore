@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class TypedHubConnectionContext<TClient> : IHubConnectionContext<TClient>
         where TClient : class

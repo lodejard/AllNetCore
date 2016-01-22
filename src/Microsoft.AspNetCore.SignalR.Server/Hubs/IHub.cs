@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public interface IHub : IDisposable
     {

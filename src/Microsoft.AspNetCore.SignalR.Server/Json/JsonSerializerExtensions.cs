@@ -6,10 +6,10 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Json
+namespace Microsoft.AspNetCore.SignalR.Json
 {
     /// <summary>
     /// Extensions for <see cref="JsonSerializer"/>.

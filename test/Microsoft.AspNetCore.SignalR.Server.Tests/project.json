@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "SignalRSample.Web": "1.0.0",
-    "Microsoft.AspNet.SignalR.Testing.Common": "1.0.0-*",
-    "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
+    "Microsoft.AspNetCore.SignalR.Testing.Common": "1.0.0-*",
+    "Microsoft.AspNetCore.SignalR.Server": "3.0.0-*",
     "xunit.runner.aspnet": "2.0.0-aspnet-*",
     "Moq": "4.2.1312.1622"
   },

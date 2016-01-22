@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public static class HubManagerExtensions
     {

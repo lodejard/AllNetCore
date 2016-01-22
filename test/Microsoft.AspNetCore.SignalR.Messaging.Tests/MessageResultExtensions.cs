@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Messaging;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR.Messaging;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public static class MessageResultExtensions
     {

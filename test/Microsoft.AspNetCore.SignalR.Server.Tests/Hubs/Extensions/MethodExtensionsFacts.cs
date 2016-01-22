@@ -1,9 +1,9 @@
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class MethodExtensionsFacts
     {

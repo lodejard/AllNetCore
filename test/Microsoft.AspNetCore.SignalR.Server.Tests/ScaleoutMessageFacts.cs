@@ -2,10 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Server.Tests
+namespace Microsoft.AspNetCore.SignalR.Server.Tests
 {
     public class ScaleoutMessageFacts
     {

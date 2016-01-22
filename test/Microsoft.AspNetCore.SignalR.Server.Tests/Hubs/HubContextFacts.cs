@@ -1,13 +1,13 @@
 using System;
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Json;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-using SignalRPerformanceCounterManager = Microsoft.AspNet.SignalR.Infrastructure.PerformanceCounterManager;
+using SignalRPerformanceCounterManager = Microsoft.AspNetCore.SignalR.Infrastructure.PerformanceCounterManager;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class HubContextFacts
     {

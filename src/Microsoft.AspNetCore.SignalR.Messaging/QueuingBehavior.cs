@@ -1,4 +1,4 @@
-﻿namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     public enum QueuingBehavior
     {

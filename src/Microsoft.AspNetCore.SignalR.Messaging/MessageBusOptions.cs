@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     public class MessageBusOptions
     {

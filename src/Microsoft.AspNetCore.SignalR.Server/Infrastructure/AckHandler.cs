@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class AckHandler : IAckHandler, IDisposable
     {

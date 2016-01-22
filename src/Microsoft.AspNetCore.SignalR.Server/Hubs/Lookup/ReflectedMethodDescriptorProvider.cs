@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Json;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class ReflectedMethodDescriptorProvider : IMethodDescriptorProvider
     {

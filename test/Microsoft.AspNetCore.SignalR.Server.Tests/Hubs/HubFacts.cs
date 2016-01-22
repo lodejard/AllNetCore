@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Dynamic;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR.Hubs;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Hubs
+namespace Microsoft.AspNetCore.SignalR.Tests.Hubs
 {
     public class HubFacts
     {

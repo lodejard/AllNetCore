@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class SubscriptionFacts
     {

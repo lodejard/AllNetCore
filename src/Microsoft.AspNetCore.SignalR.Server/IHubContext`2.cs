@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Provides access to information about a <see cref="IHub"/>.

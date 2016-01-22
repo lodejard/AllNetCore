@@ -3,9 +3,9 @@
 
 
 using System;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     public static class HubOptionsExtensions
     {

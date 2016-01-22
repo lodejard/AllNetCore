@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     [Flags]
     public enum TransportConnectionStates

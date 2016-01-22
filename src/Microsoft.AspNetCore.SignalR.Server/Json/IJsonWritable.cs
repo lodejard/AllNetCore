@@ -4,7 +4,7 @@
 
 using System.IO;
 
-namespace Microsoft.AspNet.SignalR.Json
+namespace Microsoft.AspNetCore.SignalR.Json
 {
     /// <summary>
     /// Implementations handle their own serialization to JSON.

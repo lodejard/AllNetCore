@@ -4,9 +4,9 @@
 
 using System;
 using System.Threading;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Hosting
+namespace Microsoft.AspNetCore.SignalR.Hosting
 {
     public static class HostDependencyResolverExtensions
     {

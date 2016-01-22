@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public interface IAckHandler
     {

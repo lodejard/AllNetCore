@@ -8,9 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     public class ScaleoutSubscription : Subscription
     {

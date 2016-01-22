@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     public interface ISubscription
     {

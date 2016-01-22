@@ -25,7 +25,7 @@ nuget.exe
 *.ipch
 /SignalR-Server.sln.ide
 *.sln.ide
-/src/Microsoft.AspNet.SignalR.Server/Properties/debugSettings.json
+/src/Microsoft.AspNetCore.SignalR.Server/Properties/debugSettings.json
 project.lock.json
 .vs/
 .vscode/

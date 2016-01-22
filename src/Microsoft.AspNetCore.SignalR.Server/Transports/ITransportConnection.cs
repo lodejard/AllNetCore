@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     public interface ITransportConnection
     {

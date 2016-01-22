@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class ArrayTextReaderFacts
     {

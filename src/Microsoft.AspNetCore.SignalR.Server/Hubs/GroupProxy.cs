@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class GroupProxy : SignalProxy
     {

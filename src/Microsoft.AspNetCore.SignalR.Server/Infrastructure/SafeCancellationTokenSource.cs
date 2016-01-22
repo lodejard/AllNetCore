@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     /// <summary>
     /// Thread safe cancellation token source. Allows the following:

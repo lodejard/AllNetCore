@@ -7,15 +7,15 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.WebSockets;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.WebSockets;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     public class WebSocketTransport : ForeverTransport
     {

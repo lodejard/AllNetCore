@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class HubConnectionContextBase : IHubConnectionContext<object>
     {

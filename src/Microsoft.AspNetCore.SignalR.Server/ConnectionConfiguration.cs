@@ -4,7 +4,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     public class ConnectionConfiguration
     {

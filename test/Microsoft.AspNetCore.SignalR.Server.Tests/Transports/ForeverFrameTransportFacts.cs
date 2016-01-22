@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Microsoft.AspNet.Http.Features;
-using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class ForeverFrameTransportFacts
     {

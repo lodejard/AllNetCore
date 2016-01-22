@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class NullMethodDescriptor : MethodDescriptor
     {

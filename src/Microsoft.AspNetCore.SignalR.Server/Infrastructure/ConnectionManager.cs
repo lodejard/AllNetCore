@@ -4,13 +4,13 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     /// <summary>
     /// Default <see cref="IConnectionManager"/> implementation.

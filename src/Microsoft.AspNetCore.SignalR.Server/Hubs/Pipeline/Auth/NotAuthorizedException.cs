@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
 #if NET451
     [Serializable]

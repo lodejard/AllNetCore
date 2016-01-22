@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Hosting
+namespace Microsoft.AspNetCore.SignalR.Tests.Hosting
 {
     public class CookieFacts
     {

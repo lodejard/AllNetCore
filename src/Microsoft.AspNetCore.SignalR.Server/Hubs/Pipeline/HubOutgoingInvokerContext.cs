@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     internal class HubOutgoingInvokerContext : IHubOutgoingInvokerContext
     {        

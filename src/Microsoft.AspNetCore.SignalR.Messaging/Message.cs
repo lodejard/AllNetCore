@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     public class Message
     {

@@ -5,7 +5,7 @@
 using System;
 using System.Text;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     /// <summary>
     /// Helpers for decoding URI query components.

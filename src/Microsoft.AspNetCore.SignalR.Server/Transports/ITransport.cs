@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Hosting;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Hosting;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     /// <summary>
     /// Represents a transport that communicates

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class BinaryMemoryPoolTextWriter : MemoryPoolTextWriter, IBinaryWriter
     {

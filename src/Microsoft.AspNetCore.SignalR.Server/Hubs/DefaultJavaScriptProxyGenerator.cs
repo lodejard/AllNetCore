@@ -10,10 +10,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Json;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class DefaultJavaScriptProxyGenerator : IJavaScriptProxyGenerator
     {

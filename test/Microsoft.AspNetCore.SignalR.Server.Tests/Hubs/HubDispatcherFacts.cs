@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Hubs
+namespace Microsoft.AspNetCore.SignalR.Tests.Hubs
 {
     public class HubDispatcherFacts
     {

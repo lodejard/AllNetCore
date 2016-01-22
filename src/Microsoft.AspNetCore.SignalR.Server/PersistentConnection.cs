@@ -8,19 +8,19 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Features;
-using Microsoft.AspNet.SignalR.Configuration;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.SignalR.Configuration;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Represents a connection between client and server.

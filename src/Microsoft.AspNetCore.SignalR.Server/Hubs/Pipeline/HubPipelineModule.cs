@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Common base class to simplify the implementation of IHubPipelineModules.

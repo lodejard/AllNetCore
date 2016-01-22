@@ -8,10 +8,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Principal;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Apply to Hubs and Hub methods to authorize client connections to Hubs and authorize client invocations of Hub methods.

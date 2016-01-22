@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class DefaultAssemblyLocator : IAssemblyLocator
     {

@@ -3,7 +3,7 @@
 
 
 using System.Collections.Generic;
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// A description of a client-side hub method invocation originating from the server.

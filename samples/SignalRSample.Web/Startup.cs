@@ -1,5 +1,5 @@
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +30,7 @@ namespace SignalRSample.Web
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseServer("Microsoft.AspNet.Server.Kestrel")
+                .UseServer("Microsoft.AspNetCore.Server.Kestrel")
                 .UseDefaultConfiguration(args)
                 .UseIISPlatformHandlerUrl()
                 .UseStartup<Startup>()

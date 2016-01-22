@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Encapsulates all information about a SignalR connection for an <see cref="IHub"/>.

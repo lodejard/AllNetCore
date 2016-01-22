@@ -1,15 +1,15 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-using SignalRPerformanceCounterManager = Microsoft.AspNet.SignalR.Infrastructure.PerformanceCounterManager;
+using SignalRPerformanceCounterManager = Microsoft.AspNetCore.SignalR.Infrastructure.PerformanceCounterManager;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class ScaleoutStreamFacts
     {

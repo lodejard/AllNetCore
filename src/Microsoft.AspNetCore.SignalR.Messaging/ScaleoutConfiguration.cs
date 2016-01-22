@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     /// <summary>
     /// Common settings for scale-out message bus implementations.
@@ -22,7 +22,7 @@ namespace Microsoft.AspNet.SignalR.Messaging
 
         /// <summary>
         /// Gets or sets a value that represents the queuing behavior for scale-out messages.
-        /// Defaults to <see cref="Microsoft.AspNet.SignalR.QueuingBehavior.InitialOnly">QueuingBehavior.InitialOnly</see>
+        /// Defaults to <see cref="Microsoft.AspNetCore.SignalR.QueuingBehavior.InitialOnly">QueuingBehavior.InitialOnly</see>
         /// </summary>
         public virtual QueuingBehavior QueueBehavior { get; set; }
 

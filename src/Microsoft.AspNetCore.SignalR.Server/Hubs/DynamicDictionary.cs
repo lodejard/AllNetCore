@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class DynamicDictionary : DynamicObject, IDictionary<string, object>
     {

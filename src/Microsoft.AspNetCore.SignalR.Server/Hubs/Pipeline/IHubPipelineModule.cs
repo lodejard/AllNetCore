@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// An <see cref="IHubPipelineModule"/> can intercept and customize various stages of hub processing such as connecting,

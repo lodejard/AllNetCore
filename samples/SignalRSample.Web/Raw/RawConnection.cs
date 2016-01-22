@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 
 namespace SignalRSample.Web

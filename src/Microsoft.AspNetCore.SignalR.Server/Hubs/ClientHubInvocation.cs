@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// A description of a client-side hub method invocation.

@@ -6,14 +6,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Hosting;
+using Microsoft.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.AspNet.Builder
+namespace Microsoft.AspNetCore.Builder
 {
     public static class BuilderExtensions
     {

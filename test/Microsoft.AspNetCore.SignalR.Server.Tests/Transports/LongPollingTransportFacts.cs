@@ -2,20 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Configuration;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR.Configuration;
+using Microsoft.AspNetCore.SignalR.Hosting;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Transports
+namespace Microsoft.AspNetCore.SignalR.Tests.Transports
 {
     public class LongPollingTransportFacts
     {

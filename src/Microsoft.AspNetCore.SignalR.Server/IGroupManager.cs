@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Manages groups for a connection.

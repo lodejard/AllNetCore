@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Manages groups for a connection and allows sending messages to the group.

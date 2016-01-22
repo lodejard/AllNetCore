@@ -1,9 +1,9 @@
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class PersistentConnectionContextServiceFacts
     {

@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     /// <summary>
     /// Represents a response to a connection.

@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.AspNet.SignalR.Hubs;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class DefaultActionResolverFacts
     {

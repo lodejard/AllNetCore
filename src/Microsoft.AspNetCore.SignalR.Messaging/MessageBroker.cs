@@ -5,10 +5,10 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     /// <summary>
     /// This class is the main coordinator. 

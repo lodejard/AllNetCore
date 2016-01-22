@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class EnumerableOfAssemblyLocator : IAssemblyLocator
     {

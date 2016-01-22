@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
 namespace SignalRSample.Web.Hubs.DemoHub
 {

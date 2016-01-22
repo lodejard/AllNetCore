@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     internal static class StreamExtensions
     {

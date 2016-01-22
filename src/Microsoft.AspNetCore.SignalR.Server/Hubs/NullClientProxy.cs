@@ -6,7 +6,7 @@ using System;
 using System.Dynamic;
 using System.Globalization;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     internal class NullClientProxy : DynamicObject
     {

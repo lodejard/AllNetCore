@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
-namespace Microsoft.AspNet.SignalR.Tests.Transports
+namespace Microsoft.AspNetCore.SignalR.Tests.Transports
 {
     public class ForeverTransportFacts
     {

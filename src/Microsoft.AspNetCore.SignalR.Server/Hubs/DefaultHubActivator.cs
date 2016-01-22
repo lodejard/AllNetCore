@@ -5,7 +5,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class DefaultHubActivator : IHubActivator
     {

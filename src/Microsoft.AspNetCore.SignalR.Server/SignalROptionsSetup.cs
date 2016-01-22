@@ -1,7 +1,7 @@
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     public class SignalROptionsSetup : ConfigureOptions<SignalROptions>
     {

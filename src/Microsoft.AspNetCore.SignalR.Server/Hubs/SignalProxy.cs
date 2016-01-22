@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public abstract class SignalProxy : DynamicObject, IClientProxy
     {

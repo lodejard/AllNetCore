@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     /// <summary>
     /// Represents a connection that can be tracked by an <see cref="ITransportHeartbeat"/>.

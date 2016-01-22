@@ -1,10 +1,10 @@
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class MemoryPoolTextWriterFacts
     {

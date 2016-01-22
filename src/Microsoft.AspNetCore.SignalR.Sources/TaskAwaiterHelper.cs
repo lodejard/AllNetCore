@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     internal static class TaskAwaiterHelper
     {

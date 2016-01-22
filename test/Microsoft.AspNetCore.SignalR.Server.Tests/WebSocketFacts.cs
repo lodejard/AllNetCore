@@ -3,12 +3,12 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.WebSockets;
+using Microsoft.AspNetCore.SignalR.WebSockets;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class WebSocketFacts
     {

@@ -5,7 +5,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.WebSockets
+namespace Microsoft.AspNetCore.SignalR.WebSockets
 {
     /// <summary>
     /// Represents a web socket.

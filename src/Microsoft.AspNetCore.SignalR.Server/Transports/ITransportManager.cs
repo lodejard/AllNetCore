@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 
-using Microsoft.AspNet.Http;
-namespace Microsoft.AspNet.SignalR.Transports
+using Microsoft.AspNetCore.Http;
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     /// <summary>
     /// Manages the transports for connections.

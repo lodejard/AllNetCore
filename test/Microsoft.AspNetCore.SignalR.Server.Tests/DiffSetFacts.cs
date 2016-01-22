@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using System.Linq;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class DiffSetFacts
     {

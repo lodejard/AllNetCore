@@ -3,9 +3,9 @@
 
 
 using System;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class ProtocolResolver
     {

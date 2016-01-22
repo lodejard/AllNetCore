@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.AspNet.SignalR.Configuration;
+using System;
+using Microsoft.AspNetCore.SignalR.Configuration;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class SignalROptionsFacts
     {

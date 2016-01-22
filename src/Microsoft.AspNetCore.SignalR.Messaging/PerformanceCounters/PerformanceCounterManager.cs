@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     // TODO: Figure out performance counters
     /// <summary>

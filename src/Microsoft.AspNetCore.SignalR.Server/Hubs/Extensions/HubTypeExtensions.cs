@@ -5,7 +5,7 @@
 using System;
 using System.Reflection;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     internal static class HubTypeExtensions
     {

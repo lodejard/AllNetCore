@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Messaging;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     /// <summary>
     /// A singleton that subscribes to all ACKs sent over the
-    /// <see cref="Microsoft.AspNet.SignalR.Messaging.IMessageBus"/> and
+    /// <see cref="Microsoft.AspNetCore.SignalR.Messaging.IMessageBus"/> and
     /// triggers any corresponding ACKs on the <see cref="IAckHandler"/>.
     /// </summary>
     internal class AckSubscriber : ISubscriber, IDisposable

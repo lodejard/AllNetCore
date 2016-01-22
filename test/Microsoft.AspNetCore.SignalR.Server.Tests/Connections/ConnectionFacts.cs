@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class ServerConnectionFacts
     {

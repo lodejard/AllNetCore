@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     [Flags]
     public enum TransportType

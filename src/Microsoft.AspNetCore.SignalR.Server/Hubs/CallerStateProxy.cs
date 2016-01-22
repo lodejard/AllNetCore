@@ -4,7 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class CallerStateProxy : DynamicObject
     {

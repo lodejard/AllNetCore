@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Holds information about a single hub method parameter.

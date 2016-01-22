@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class ArraySegmentTextReader : TextReader
     {

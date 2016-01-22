@@ -4,7 +4,7 @@
 
 using System.Threading;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
 
     public static class InterlockedHelper

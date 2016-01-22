@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     internal static class ResponseExtensions
     {

@@ -4,9 +4,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Json;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class HubRequest
     {

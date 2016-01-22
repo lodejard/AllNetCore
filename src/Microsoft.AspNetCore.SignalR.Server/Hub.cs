@@ -3,9 +3,9 @@
 
 
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Provides methods that communicate with SignalR connections that connected to a <see cref="Hub"/>.

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Configuration
+namespace Microsoft.AspNetCore.SignalR.Configuration
 {
     public class TransportOptions
     {

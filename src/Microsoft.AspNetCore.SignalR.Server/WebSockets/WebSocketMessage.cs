@@ -4,7 +4,7 @@
 using System;
 using System.Net.WebSockets;
 
-namespace Microsoft.AspNet.SignalR.WebSockets
+namespace Microsoft.AspNetCore.SignalR.WebSockets
 {
     internal sealed class WebSocketMessage
     {

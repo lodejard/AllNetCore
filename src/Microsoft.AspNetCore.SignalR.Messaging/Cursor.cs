@@ -8,7 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     internal unsafe class Cursor
     {

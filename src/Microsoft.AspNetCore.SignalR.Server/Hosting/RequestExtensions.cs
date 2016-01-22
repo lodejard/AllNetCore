@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNet.Http;
+using System;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     internal static class RequestExtensions
     {

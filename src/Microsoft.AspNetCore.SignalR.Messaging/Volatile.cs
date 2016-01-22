@@ -5,7 +5,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     // All methods here are guaranteed both volatile +  atomic.
     // TODO: Make this use the .NET 4.5 'Volatile' type.

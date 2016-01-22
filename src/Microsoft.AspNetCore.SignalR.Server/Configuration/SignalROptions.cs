@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.SignalR.Configuration;
+using Microsoft.AspNetCore.SignalR.Configuration;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// Provides access to server configuration.

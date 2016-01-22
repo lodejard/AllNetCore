@@ -6,7 +6,7 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.WebSockets
+namespace Microsoft.AspNetCore.SignalR.WebSockets
 {
     public class DefaultWebSocketHandler : WebSocketHandler, IWebSocket
     {

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Microsoft.AspNet.SignalR.Messaging
+namespace Microsoft.AspNetCore.SignalR.Messaging
 {
     public class Topic
     {

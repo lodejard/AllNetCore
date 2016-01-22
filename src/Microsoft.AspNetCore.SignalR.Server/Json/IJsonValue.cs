@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Json
+namespace Microsoft.AspNetCore.SignalR.Json
 {
     /// <summary>
     /// Represents a JSON value.

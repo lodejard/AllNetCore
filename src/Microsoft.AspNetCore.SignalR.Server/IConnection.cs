@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// A communication channel for a <see cref="PersistentConnection"/> and its connections.

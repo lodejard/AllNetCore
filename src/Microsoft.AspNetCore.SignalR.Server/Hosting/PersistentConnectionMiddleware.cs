@@ -4,13 +4,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.AspNet.SignalR.Hosting
+namespace Microsoft.AspNetCore.SignalR.Hosting
 {
     public class PersistentConnectionMiddleware
     {

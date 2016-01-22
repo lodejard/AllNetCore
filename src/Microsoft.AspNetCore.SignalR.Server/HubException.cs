@@ -5,7 +5,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "ErrorData may not be serializable")]
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification = "ErrorData may not be serializable")]

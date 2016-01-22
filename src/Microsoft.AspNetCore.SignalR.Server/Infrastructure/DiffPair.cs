@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     internal struct DiffPair<T>
     {

@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     internal class ListHelper<T>
     {

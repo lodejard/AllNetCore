@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     // These classes are used by the Core/Hubs XUnit tests.
 

@@ -1,13 +1,13 @@
-using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Core
+namespace Microsoft.AspNetCore.SignalR.Tests.Core
 {
     public class ConnectionExtensionsFacts
     {

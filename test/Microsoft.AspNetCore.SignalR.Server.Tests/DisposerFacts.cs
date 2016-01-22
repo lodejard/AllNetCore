@@ -1,7 +1,7 @@
-﻿using Xunit;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Xunit;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class DisposerFacts
     {

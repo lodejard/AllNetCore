@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     /// <summary>
     /// The default <see cref="ITransportManager"/> implementation.

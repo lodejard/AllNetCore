@@ -3,9 +3,9 @@
 
 
 using System.Security.Principal;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class HubCallerContext
     {

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class GroupManagerFacts
     {

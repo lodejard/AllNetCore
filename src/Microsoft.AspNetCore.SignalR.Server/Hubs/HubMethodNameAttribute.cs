@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public sealed class HubMethodNameAttribute : Attribute

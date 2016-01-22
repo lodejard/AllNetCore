@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class MemoryPoolTextWriter : TextWriter
     {

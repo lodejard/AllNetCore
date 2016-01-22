@@ -4,9 +4,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     /// <summary>
     /// A message sent to one more connections.

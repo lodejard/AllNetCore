@@ -4,9 +4,9 @@
 
 using System;
 using System.Text;
-using Microsoft.AspNet.DataProtection;
+using Microsoft.AspNetCore.DataProtection;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class DataProtectionProviderProtectedData : IProtectedData
     {

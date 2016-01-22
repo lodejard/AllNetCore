@@ -9,9 +9,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR.Json
+namespace Microsoft.AspNetCore.SignalR.Json
 {
     /// <summary>
     /// Helper class for common JSON operations.

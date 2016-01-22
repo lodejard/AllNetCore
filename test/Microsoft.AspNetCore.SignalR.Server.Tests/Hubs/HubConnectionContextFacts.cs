@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.AspNet.SignalR.Hubs;
+using System;
+using Microsoft.AspNetCore.SignalR.Hubs;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class HubConnectionContextFacts
     {

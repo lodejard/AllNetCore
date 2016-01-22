@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Threading;
-using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.SignalR;
 
 namespace SignalRSample.Web.Hubs.MessageLoops
 {

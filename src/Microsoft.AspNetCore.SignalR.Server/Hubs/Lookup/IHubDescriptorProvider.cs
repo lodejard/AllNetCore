@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Describes hub descriptor provider, which provides information about available hubs.

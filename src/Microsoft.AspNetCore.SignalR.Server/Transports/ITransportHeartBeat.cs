@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNet.SignalR.Transports
+namespace Microsoft.AspNetCore.SignalR.Transports
 {
     /// <summary>
     /// Manages tracking the state of connections.

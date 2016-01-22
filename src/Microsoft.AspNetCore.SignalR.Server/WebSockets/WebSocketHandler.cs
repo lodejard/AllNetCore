@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.WebSockets
+namespace Microsoft.AspNetCore.SignalR.WebSockets
 {
     public abstract class WebSocketHandler
     {

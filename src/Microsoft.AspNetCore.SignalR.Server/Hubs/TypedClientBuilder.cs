@@ -11,11 +11,11 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     internal static class TypedClientBuilder<T>
     {
-        private const string ClientModuleName = "Microsoft.AspNet.SignalR.Hubs.TypedClientBuilder";
+        private const string ClientModuleName = "Microsoft.AspNetCore.SignalR.Hubs.TypedClientBuilder";
 
         // There is one static instance of _builder per T
         private static Lazy<Func<IClientProxy, T>> _builder = new Lazy<Func<IClientProxy, T>>(() => GenerateClientBuilder());

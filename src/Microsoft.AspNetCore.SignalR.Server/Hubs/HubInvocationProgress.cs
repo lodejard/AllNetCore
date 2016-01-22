@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     internal class HubInvocationProgress
     {

@@ -8,7 +8,7 @@
       "version": "1.0.0-*",
       "type": "build"
     },
-    "Microsoft.AspNet.SignalR.Sources": {
+    "Microsoft.AspNetCore.SignalR.Sources": {
       "version": "3.0.0-*",
       "type": "build"
     }

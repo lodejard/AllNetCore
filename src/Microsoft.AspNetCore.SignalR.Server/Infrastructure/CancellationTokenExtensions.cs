@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     internal static class CancellationTokenExtensions
     {

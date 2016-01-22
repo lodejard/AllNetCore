@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     public class DefaultHubManager : IHubManager
     {

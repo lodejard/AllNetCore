@@ -12,15 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.DataProtection;
-using Microsoft.AspNet.SignalR.Json;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
 
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     public class Connection : IConnection, ITransportConnection, ISubscriber
     {

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
-namespace Microsoft.AspNet.SignalR.Infrastructure
+namespace Microsoft.AspNetCore.SignalR.Infrastructure
 {
     // A string equality comparer based on the SipHash-2-4 algorithm. Key differences:
     // (a) we output 32-bit hashes instead of 64-bit hashes, and

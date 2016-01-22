@@ -4,10 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Json;
+using Microsoft.AspNetCore.SignalR.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Describes a hub manager - main point in the whole hub and method lookup process.

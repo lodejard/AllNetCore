@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR.Hubs;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Hubs
+namespace Microsoft.AspNetCore.SignalR.Tests.Hubs
 {
     public class HubProgressFacts
     {

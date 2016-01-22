@@ -4,10 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Newtonsoft.Json;
 
-namespace Microsoft.AspNet.SignalR.Json
+namespace Microsoft.AspNetCore.SignalR.Json
 {
     /// <summary>
     /// A converter for dictionaries that uses a SipHash comparer

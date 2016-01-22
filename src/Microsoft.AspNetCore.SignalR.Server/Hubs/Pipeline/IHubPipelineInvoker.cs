@@ -4,9 +4,9 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// Implementations of this interface are responsible for executing operation required to complete various stages

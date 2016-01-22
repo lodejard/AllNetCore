@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNet.SignalR.Hubs
+namespace Microsoft.AspNetCore.SignalR.Hubs
 {
     /// <summary>
     /// A server side proxy for the client side hub.

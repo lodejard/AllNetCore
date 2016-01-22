@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNet.SignalR.Transports;
+using Microsoft.AspNetCore.SignalR.Transports;
 using Moq;
 using Moq.Protected;
 using Xunit;
 using System.Threading;
 
-namespace Microsoft.AspNet.SignalR.Tests
+namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class PersistentConnectionFacts
     {

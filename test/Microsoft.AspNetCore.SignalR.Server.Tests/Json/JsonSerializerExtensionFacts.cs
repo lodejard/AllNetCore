@@ -1,10 +1,10 @@
-﻿using System.IO;
-using Microsoft.AspNet.SignalR.Json;
+using System.IO;
+using Microsoft.AspNetCore.SignalR.Json;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.Json
+namespace Microsoft.AspNetCore.SignalR.Tests.Json
 {
     public class JsonSerializerExtensionFacts
     {
