@@ -65,9 +65,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 services.Configure(configureOptions);
             }
 
-            if (PlatformServices.Default?.LibraryManager != null)
+            if (DnxPlatformServices.Default?.LibraryManager != null)
             {
-                services.TryAddSingleton(PlatformServices.Default.LibraryManager);
+                services.TryAddSingleton(DnxPlatformServices.Default.LibraryManager);
             }
 
             return new SignalRServicesBuilder(services);
