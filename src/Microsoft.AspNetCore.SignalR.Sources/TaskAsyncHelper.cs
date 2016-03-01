@@ -858,7 +858,7 @@ namespace Microsoft.AspNetCore.SignalR
         }
 
 
-#if !DOTNET5_4
+#if !NETSTANDARD1_3
         internal struct CulturePair
         {
             public CultureInfo Culture;
@@ -915,7 +915,7 @@ namespace Microsoft.AspNetCore.SignalR
         internal static Task ContinueWithPreservedCulture(this Task task, Action<Task> continuationAction, TaskContinuationOptions continuationOptions)
         {
             // TODO
-#if DOTNET5_4
+#if NETSTANDARD1_3
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else
@@ -926,7 +926,7 @@ namespace Microsoft.AspNetCore.SignalR
 
         internal static Task ContinueWithPreservedCulture<T>(this Task<T> task, Action<Task<T>> continuationAction, TaskContinuationOptions continuationOptions)
         {
-#if DOTNET5_4
+#if NETSTANDARD1_3
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else
@@ -938,7 +938,7 @@ namespace Microsoft.AspNetCore.SignalR
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "This is a shared file")]
         internal static Task<TResult> ContinueWithPreservedCulture<T, TResult>(this Task<T> task, Func<Task<T>, TResult> continuationAction, TaskContinuationOptions continuationOptions)
         {
-#if DOTNET5_4
+#if NETSTANDARD1_3
             // The Thread class is not available on WinRT
             return task.ContinueWith(continuationAction, continuationOptions);
 #else

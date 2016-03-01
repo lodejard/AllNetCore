@@ -9,13 +9,15 @@
   },
   "frameworks": {
     "dnx451": {
-      "dependencies": {
-      }
+      "dependencies": {}
     },
-    "dnxcore50": {
+    "netstandardapp1.5": {
       "dependencies": {
         "System.Runtime": "4.1.0-*"
-      }
+      },
+      "imports": [
+        "dnxcore50"
+      ]
     }
   }
 }
