@@ -19,7 +19,11 @@
     "keyFile": "../../tools/Key.snk"
   },
   "frameworks": {
-    "net451": {},
+    "net451": {
+      "frameworkAssemblies": {
+         "System.Runtime": { "type": "build" }
+      }
+    },
     "netstandard1.3": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-*",
