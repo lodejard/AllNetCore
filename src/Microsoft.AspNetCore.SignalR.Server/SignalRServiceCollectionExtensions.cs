@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.AspNetCore.SignalR.Transports;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -63,11 +62,6 @@ namespace Microsoft.Extensions.DependencyInjection
             if (configureOptions != null)
             {
                 services.Configure(configureOptions);
-            }
-
-            if (DnxPlatformServices.Default?.LibraryManager != null)
-            {
-                services.TryAddSingleton(DnxPlatformServices.Default.LibraryManager);
             }
 
             return new SignalRServicesBuilder(services);

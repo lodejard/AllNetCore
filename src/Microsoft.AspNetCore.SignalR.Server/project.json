@@ -10,7 +10,7 @@
     "Microsoft.AspNetCore.DataProtection": "1.0.0-*",
     "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
     "Microsoft.AspNetCore.Http.Extensions": "1.0.0-*",
-    "Microsoft.Extensions.PlatformAbstractions.Dnx": "1.0.0-*",
+    "Microsoft.Extensions.DependencyModel": "1.0.0-*",
     "Newtonsoft.Json": "8.0.2"
   },
   "compilationOptions": {
