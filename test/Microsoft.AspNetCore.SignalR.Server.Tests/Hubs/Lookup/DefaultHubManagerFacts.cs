@@ -73,7 +73,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
             var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
-            var methodDescriptor = hubManager.GetHubMethod("CoreTestHubWithMethod", "AddNumbers", new IJsonValue[] { null, null });
+            var methodDescriptor = hubManager.GetHubMethod(nameof(CoreTestHubWithMethod), "AddNumbers", new IJsonValue[] { null, null });
 
             Assert.NotNull(methodDescriptor);
             Assert.Equal(methodDescriptor.Name, "AddNumbers");
@@ -93,7 +93,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
             var sp = ServiceProviderHelper.CreateServiceProvider();
             var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
             // The AddNumbers method has 2 parameters, so should not find the method
-            var methodDescriptor = hubManager.GetHubMethod("CoreTestHubWithMethod", "AddNumbers", null);
+            var methodDescriptor = hubManager.GetHubMethod(nameof(CoreTestHubWithMethod), "AddNumbers", null);
 
             Assert.Null(methodDescriptor);
         }
@@ -114,7 +114,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
             var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
-            var methodDescriptors = hubManager.GetHubMethods("CoreTestHubWithMethod", predicate: null);
+            var methodDescriptors = hubManager.GetHubMethods(nameof(CoreTestHubWithMethod), predicate: null);
 
             Assert.NotNull(methodDescriptors);
 
@@ -128,7 +128,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
             var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
-            var methodDescriptors = hubManager.GetHubMethods("CoreTestHubWithMethod", descriptor => descriptor.Name == "AddNumbers");
+            var methodDescriptors = hubManager.GetHubMethods(nameof(CoreTestHubWithMethod), descriptor => descriptor.Name == "AddNumbers");
 
             Assert.NotNull(methodDescriptors);
             Assert.Equal(methodDescriptors.First().Name, "AddNumbers");
@@ -139,7 +139,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         {
             var sp = ServiceProviderHelper.CreateServiceProvider();
             var hubManager = ActivatorUtilities.CreateInstance<DefaultHubManager>(sp);
-            var methodDescriptors = hubManager.GetHubMethods("CoreTestHubWithMethod", descriptor => descriptor.Name == "______AddNumbers______");
+            var methodDescriptors = hubManager.GetHubMethods(nameof(CoreTestHubWithMethod), descriptor => descriptor.Name == "______AddNumbers______");
 
             // Still have an ienumerable sequence
             Assert.NotNull(methodDescriptors);

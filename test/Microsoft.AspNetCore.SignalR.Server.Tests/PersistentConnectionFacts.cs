@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SignalR.Transports;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.Protected;
 using Xunit;
-using System.Threading;
 
 namespace Microsoft.AspNetCore.SignalR.Tests
 {
@@ -67,12 +68,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
                 protectedData.Setup(m => m.Unprotect(It.IsAny<string>(), It.IsAny<string>()))
                              .Returns<string, string>((value, purpose) =>  value);
 
-                var connection = new Mock<PersistentConnection>() { CallBase = true };
-                var onDisconnectedCalled = false;
-                connection.Protected().Setup("OnDisconnected", context.MockRequest.Object, "1", false).Callback(() =>
-                {
-                    onDisconnectedCalled = true;
-                });
+                var connection = new TestablePersistentConnection();
 
                 var sp = ServiceProviderHelper.CreateServiceProvider(services =>
                 {
@@ -80,14 +76,25 @@ namespace Microsoft.AspNetCore.SignalR.Tests
                     services.AddSingleton<IProtectedData>(protectedData.Object);
                 });
 
-                connection.Object.Initialize(sp);
+                connection.Initialize(sp);
 
                 // Act
-                connection.Object.ProcessRequest(context.MockHttpContext.Object).Wait();
+                connection.ProcessRequest(context.MockHttpContext.Object).Wait();
                 transport.Object.Disconnected(/* clean: */ false);
 
                 // Assert
-                Assert.True(onDisconnectedCalled);
+                Assert.True(connection.OnDisconectedCalled);
+            }
+        }
+
+        public class TestablePersistentConnection : PersistentConnection
+        {
+            public bool OnDisconectedCalled { get; private set; }
+
+            protected override Task OnDisconnected(HttpRequest request, string connectionId, bool stopCalled)
+            {
+                OnDisconectedCalled = true;
+                return Task.FromResult(0);
             }
         }
 

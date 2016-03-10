@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -31,7 +32,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
             MockRequest = GetRequestForUrl(path, query, form);
 
             MockResponseHeaders = new Mock<IHeaderDictionary>();
-            MockResponseHeaders.Setup(m => m.Append("X-Content-Type-Options",  "nosniff"));
+            MockResponseHeaders.Setup(m => m.Add("X-Content-Type-Options", new StringValues("nosniff")));
 
             var mockResponseBody = new Mock<Stream>();
             mockResponseBody.Setup(m => m.Write(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()))
@@ -49,6 +50,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
             MockHttpContext.SetupGet(m => m.Response).Returns(MockResponse.Object);
             MockHttpContext.SetupGet(m => m.Request).Returns(MockRequest.Object);
             MockHttpContext.SetupGet(m => m.RequestAborted).Returns(CancellationToken.None);
+            MockHttpContext.SetupGet(m => m.Features).Returns(new FeatureCollection());
 
             MockRequest.SetupGet(m => m.HttpContext).Returns(MockHttpContext.Object);
             MockResponse.SetupGet(m => m.HttpContext).Returns(MockHttpContext.Object);

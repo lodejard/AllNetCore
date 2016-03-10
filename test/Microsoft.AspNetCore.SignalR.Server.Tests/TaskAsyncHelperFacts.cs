@@ -4,14 +4,15 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Testing.xunit;
 using Xunit;
 
 namespace Microsoft.AspNetCore.SignalR.Tests
 {
     public class TaskAsyncHelperFacts
     {
-        private static readonly CultureInfo _defaultCulture = Thread.CurrentThread.CurrentCulture;
-        private static readonly CultureInfo _defaultUICulture = Thread.CurrentThread.CurrentUICulture;
+        private static readonly CultureInfo _defaultCulture = CultureInfo.CurrentCulture;
+        private static readonly CultureInfo _defaultUICulture = CultureInfo.CurrentUICulture;
         private static readonly CultureInfo _testCulture = new CultureInfo("zh-Hans");
         private static readonly CultureInfo _testUICulture = new CultureInfo("zh-CN");
 
@@ -51,8 +52,13 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         {
             try
             {
+#if NET451
                 Thread.CurrentThread.CurrentCulture = _testCulture;
                 Thread.CurrentThread.CurrentUICulture = _testUICulture;
+#else
+                CultureInfo.CurrentCulture = _testCulture;
+                CultureInfo.CurrentUICulture = _testUICulture;
+#endif
 
                 TaskCompletionSource<CultureInfo> cultureTcs = null;
                 TaskCompletionSource<CultureInfo> uiCultureTcs = null;
@@ -65,8 +71,8 @@ namespace Microsoft.AspNetCore.SignalR.Tests
 
                 Action saveCulture = () =>
                 {
-                    cultureTcs.SetResult(Thread.CurrentThread.CurrentCulture);
-                    uiCultureTcs.SetResult(Thread.CurrentThread.CurrentUICulture);
+                    cultureTcs.SetResult(CultureInfo.CurrentCulture);
+                    uiCultureTcs.SetResult(CultureInfo.CurrentUICulture);
                 };
 
                 foreach (var taskGenerator in taskGenerators)
@@ -89,12 +95,18 @@ namespace Microsoft.AspNetCore.SignalR.Tests
             }
             finally
             {
+#if NET451
                 Thread.CurrentThread.CurrentCulture = _defaultCulture;
                 Thread.CurrentThread.CurrentUICulture = _defaultUICulture;
+#else
+                CultureInfo.CurrentCulture = _defaultCulture;
+                CultureInfo.CurrentUICulture = _defaultUICulture;
+#endif
             }
         }
 
-        [Fact]
+        [ConditionalFact]
+        [FrameworkSkipCondition(RuntimeFrameworks.CoreCLR, SkipReason = "Tracked by #157")]
         public void ThenPreservesCulture()
         {
             // Then with sync/async completed tasks
@@ -102,7 +114,8 @@ namespace Microsoft.AspNetCore.SignalR.Tests
                 (task, continuation) => task.Then(continuation));
         }
 
-        [Fact]
+        [ConditionalFact]
+        [FrameworkSkipCondition(RuntimeFrameworks.CoreCLR, SkipReason = "Tracked by #157")]
         public void ContinuePreservedCulturePreservesCulture()
         {
             // ContinueWithPreservedCulture with sync/async faulted, canceled and completed tasks
@@ -110,7 +123,8 @@ namespace Microsoft.AspNetCore.SignalR.Tests
                 (task, continuation) => task.ContinueWithPreservedCulture(_ => continuation()));
         }
 
-        [Fact]
+        [ConditionalFact]
+        [FrameworkSkipCondition(RuntimeFrameworks.CoreCLR, SkipReason = "Tracked by #157")]
         public void PreserveCultureAwaiterPreservesCulture()
         {
             // PreserveCultureAwaiter with sync/async faulted, canceled and completed tasks

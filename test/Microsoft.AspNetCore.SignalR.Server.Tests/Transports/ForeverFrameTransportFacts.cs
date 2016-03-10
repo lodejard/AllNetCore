@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.AspNetCore.SignalR.Transports;
@@ -69,7 +70,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         }
 
         [Fact]
-        public void ForeverFrameTransportSetsCorrectContentType()
+        public async Task ForeverFrameTransportSetsCorrectContentType()
         {
             var qs = new Dictionary<string, string> {
                 { "frameId", "1" }
@@ -85,7 +86,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
             fft.ConnectionId = "1";
             var connection = new Mock<ITransportConnection>();
 
-            fft.InitializeResponse(connection.Object).Wait();
+            await fft.InitializeResponse(connection.Object);
 
             Assert.Equal("text/html; charset=UTF-8", context.MockResponse.Object.ContentType);
         }
@@ -138,7 +139,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
 
         private static PersistentResponse GetWrappedResponse(string raw)
         {
-            var data = Encoding.Default.GetBytes(raw);
+            var data = Encoding.UTF8.GetBytes(raw);
             var message = new Message("foo", "key", new ArraySegment<byte>(data));
 
             var response = new PersistentResponse

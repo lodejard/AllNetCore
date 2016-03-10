@@ -5,18 +5,12 @@
   },
   "shared": "*.cs",
   "dependencies": {
-    "Microsoft.NETCore.Platforms": "1.0.1-*"
+    "System.Runtime": "4.1.0-*"
   },
   "frameworks": {
-    "dnx451": {
-      "dependencies": {}
-    },
-    "netstandardapp1.5": {
-      "dependencies": {
-        "System.Runtime": "4.1.0-*"
-      },
+    "netstandard1.0": {
       "imports": [
-        "dnxcore50"
+        "dotnet5.1"
       ]
     }
   }
