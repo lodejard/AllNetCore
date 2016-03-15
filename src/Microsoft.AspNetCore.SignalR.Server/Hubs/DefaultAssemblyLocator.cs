@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyModel;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Microsoft.AspNetCore.SignalR.Hubs
 {
@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.SignalR.Hubs
         private readonly Assembly _entryAssembly;
         private readonly DependencyContext _dependencyContext;
 
-        public DefaultAssemblyLocator(IApplicationEnvironment environment)
+        public DefaultAssemblyLocator(IHostingEnvironment environment)
         {
             _entryAssembly = Assembly.Load(new AssemblyName(environment.ApplicationName));
             _dependencyContext = DependencyContext.Load(_entryAssembly);
