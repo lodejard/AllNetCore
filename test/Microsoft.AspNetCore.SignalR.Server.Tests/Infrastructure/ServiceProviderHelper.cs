@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.Versioning;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,7 @@ namespace Microsoft.AspNetCore.SignalR.Tests
         public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> configure)
         {
             var builder = new WebHostBuilder()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseServer(new Server())
                 .Configure(_ => { })
                 .ConfigureServices(services =>
