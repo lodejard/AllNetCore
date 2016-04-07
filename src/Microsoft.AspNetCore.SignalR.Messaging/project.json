@@ -34,7 +34,7 @@
         "System.Reflection.Emit.ILGeneration": "4.0.1-*",
         "System.Reflection.Extensions": "4.0.1-*",
         "System.Reflection.Primitives": "4.0.1-*",
-        "System.Security.Cryptography.Algorithms": "4.0.0-*",
+        "System.Security.Cryptography.Algorithms": "4.1.0-*",
         "System.Threading.Thread": "4.0.0-*",
         "System.Threading.ThreadPool": "4.0.10-*",
         "System.Threading.Timer": "4.0.1-*",
