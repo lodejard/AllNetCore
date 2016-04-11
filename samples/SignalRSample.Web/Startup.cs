@@ -19,7 +19,6 @@ namespace SignalRSample.Web
         {
             loggerFactory.AddConsole(LogLevel.Debug);
 
-            app.UseIISPlatformHandler();
             app.UseFileServer();
 
             app.UseWebSockets();
@@ -32,7 +31,7 @@ namespace SignalRSample.Web
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseDefaultHostingConfiguration(args)
-                .UseIISPlatformHandlerUrl()
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
