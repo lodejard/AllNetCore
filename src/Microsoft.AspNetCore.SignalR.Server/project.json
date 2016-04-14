@@ -11,8 +11,7 @@
     "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
     "Microsoft.AspNetCore.Http.Extensions": "1.0.0-*",
     "Microsoft.Extensions.DependencyModel": "1.0.0-*",
-    "Newtonsoft.Json": "8.0.2",
-    "System.Runtime.Serialization.Primitives": "4.1.1-*"
+    "Newtonsoft.Json": "8.0.2"
   },
   "compilationOptions": {
     "warningsAsErrors": true,
@@ -23,6 +22,9 @@
   "frameworks": {
     "net451": {},
     "netstandard1.5": {
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1-*"
+      },
       "imports": [
         "portable-net451+win8"
       ]
