@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace E2E.Sqlite
+{
+    public partial class OneToManyDependent
+    {
+        public long OneToManyDependentID1 { get; set; }
+        public long OneToManyDependentID2 { get; set; }
+        public string SomeDependentEndColumn { get; set; }
+        public long? OneToManyDependentFK1 { get; set; }
+        public long? OneToManyDependentFK2 { get; set; }
+
+        public virtual OneToManyPrincipal OneToManyDependentFK { get; set; }
+    }
+}

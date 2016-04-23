@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0-*",
+  "description": "Reusable Microsoft.EntityFrameworkCore functional tests for provider writers.",
+  "compilationOptions": {
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "Microsoft.EntityFrameworkCore.Specification.Tests": "1.0.0-*"
+  },
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net452+win81"
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        },
+        "Microsoft.CSharp": "4.0.1-*",
+        "dotnet-test-xunit": "1.0.0-*"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Collections": {
+          "type": "build"
+        },
+        "System.Diagnostics.Debug": {
+          "type": "build"
+        },
+        "System.Globalization": {
+          "type": "build"
+        },
+        "System.Linq": {
+          "type": "build"
+        },
+        "System.ObjectModel": {
+          "type": "build"
+        },
+        "System.Reflection": {
+          "type": "build"
+        },
+        "System.Reflection.Extensions": {
+          "type": "build"
+        },
+        "System.Runtime": {
+          "type": "build"
+        },
+        "System.Runtime.Extensions": {
+          "type": "build"
+        },
+        "System.Text.RegularExpressions": {
+          "type": "build"
+        },
+        "System.Threading.Tasks": {
+          "type": "build"
+        }
+      }
+    }
+  }
+}

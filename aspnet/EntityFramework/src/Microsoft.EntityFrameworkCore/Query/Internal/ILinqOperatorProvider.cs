@@ -1,0 +1,56 @@
+// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System;
+using System.Reflection;
+using JetBrains.Annotations;
+
+namespace Microsoft.EntityFrameworkCore.Query.Internal
+{
+    public interface ILinqOperatorProvider
+    {
+        MethodInfo SelectMany { get; }
+        MethodInfo Join { get; }
+        MethodInfo GroupJoin { get; }
+        MethodInfo Select { get; }
+        MethodInfo OrderBy { get; }
+        MethodInfo ThenBy { get; }
+        MethodInfo Where { get; }
+        MethodInfo Any { get; }
+        MethodInfo All { get; }
+        MethodInfo Cast { get; }
+        MethodInfo Concat { get; }
+        MethodInfo Count { get; }
+        MethodInfo Contains { get; }
+        MethodInfo DefaultIfEmpty { get; }
+        MethodInfo DefaultIfEmptyArg { get; }
+        MethodInfo Distinct { get; }
+        MethodInfo Except { get; }
+        MethodInfo First { get; }
+        MethodInfo FirstOrDefault { get; }
+        MethodInfo GroupBy { get; }
+        MethodInfo Intersect { get; }
+        MethodInfo Last { get; }
+        MethodInfo LastOrDefault { get; }
+        MethodInfo LongCount { get; }
+        MethodInfo Single { get; }
+        MethodInfo SingleOrDefault { get; }
+        MethodInfo Skip { get; }
+        MethodInfo Take { get; }
+        MethodInfo InterceptExceptions { get; }
+        MethodInfo OfType { get; }
+
+        MethodInfo ToSequence { get; }
+        MethodInfo ToOrdered { get; }
+        MethodInfo ToEnumerable { get; }
+        MethodInfo ToQueryable { get; }
+
+        MethodInfo TrackEntities { get; }
+        MethodInfo TrackGroupedEntities { get; }
+        MethodInfo Union { get; }
+
+        MethodInfo GetAggregateMethod([NotNull] string methodName, [NotNull] Type elementType);
+
+        Type MakeSequenceType([NotNull] Type elementType);
+    }
+}

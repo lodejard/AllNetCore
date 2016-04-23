@@ -1,0 +1,36 @@
+// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Utilities;
+
+// ReSharper disable once CheckNamespace
+namespace Microsoft.EntityFrameworkCore
+{
+    /// <summary>
+    ///     Extension methods for <see cref="IModel" />.
+    /// </summary>
+    public static class ModelExtensions
+    {
+        /// <summary>
+        ///     Gets the entity that maps the given entity class. Returns null if no entity type with the given name is found.
+        /// </summary>
+        /// <param name="model"> The model to find the entity type in. </param>
+        /// <param name="type"> The type of the entity class to find the type for. </param>
+        /// <returns> The entity type, or null if none if found. </returns>
+        public static IEntityType FindEntityType([NotNull] this IModel model, [NotNull] Type type)
+        {
+            Check.NotNull(type, nameof(type));
+
+            var findClrEntityType = model as IModelFindClrType;
+
+            return findClrEntityType != null
+                ? findClrEntityType.FindEntityType(type)
+                : model.FindEntityType(type.DisplayName());
+        }
+    }
+}
