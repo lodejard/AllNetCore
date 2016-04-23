@@ -1,0 +1,28 @@
+{
+  "version": "0.1.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "ASP.NET Core middleware for buffering response bodies.",
+  "tags": [
+    "aspnetcore",
+    "buffer",
+    "buffering"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/basicmiddleware"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {}
+  }
+}
