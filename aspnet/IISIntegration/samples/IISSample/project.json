@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-*",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-*"
+  },
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "frameworks": {
+    "net451": { },
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      },
+      "imports": "dnxcore50"
+    }
+  },
+  "content": [
+    "web.config"
+  ]
+}

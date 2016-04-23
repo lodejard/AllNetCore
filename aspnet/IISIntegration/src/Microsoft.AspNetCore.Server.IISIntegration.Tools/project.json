@@ -1,0 +1,30 @@
+﻿{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": true,
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [ "CS1591" ],
+    "xmlDoc": true,
+    "outputName": "dotnet-publish-iis"
+  },
+
+  "dependencies": {
+    "Microsoft.Extensions.CommandLineUtils": "1.0.0-*",
+    "Microsoft.DotNet.ProjectModel": "1.0.0-*",
+    "System.Diagnostics.Process": "4.1.0-*"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "portable-dnxcore50+net45+win8+wp8+wpa81"
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0-*"
+        }
+      }
+    }
+  }
+}
