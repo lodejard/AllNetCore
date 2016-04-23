@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "Newtonsoft.Json": "8.0.3",
+    "Project.ProjectReference": "1.0.0-*",
+    "Project.SharedFiles": "1.0.0-*"
+  },
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Web": ""
+      }
+    },
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      },
+      "imports": [
+        "dnxcore50"
+      ]
+    }
+  }
+}

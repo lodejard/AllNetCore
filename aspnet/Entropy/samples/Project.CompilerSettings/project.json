@@ -1,0 +1,27 @@
+{
+  "compilationOptions": {
+    "define": [
+      "SOMETHING"
+    ],
+    "allowUnsafe": true,
+    "warningsAsErrors": true,
+    "emitEntryPoint": true
+  },
+  "frameworks": {
+    "net451": {},
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      },
+      "imports": [
+        "dnxcore50"
+      ]
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*"
+  }
+}

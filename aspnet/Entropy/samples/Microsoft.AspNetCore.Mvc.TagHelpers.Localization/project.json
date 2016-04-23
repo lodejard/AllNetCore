@@ -1,0 +1,27 @@
+{
+  "description": "Tag Helpers to aid with localizing ASP.NET Core MVC applications.",
+  "version": "1.0.0-*",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/Entropy"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc.Localization": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.Razor": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.5": {
+      "dependencies": {
+        "NETStandard.Library": "1.5.0-*"
+      },
+      "imports": [
+        "dotnet5.6",
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

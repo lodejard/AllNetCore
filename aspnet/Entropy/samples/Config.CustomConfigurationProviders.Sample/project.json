@@ -1,0 +1,38 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "content": [
+    "Web.config"
+  ],
+
+  "dependencies": {
+    "Microsoft.Extensions.Configuration": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0-*",
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "System.Collections.Immutable": "1.2.0-*"
+  },
+
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Xml": "",
+        "System.Xml.Linq": ""
+      }
+    },
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      },
+      "imports": [
+        "dnxcore50"
+      ]
+    }
+  }
+}
