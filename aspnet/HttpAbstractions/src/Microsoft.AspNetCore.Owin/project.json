@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core component for running OWIN middleware in an ASP.NET Core application, and to run ASP.NET Core middleware in an OWIN application.",
+  "tags": [
+    "aspnetcore",
+    "katana",
+    "owin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/httpabstractions"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Http": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {}
+  }
+}

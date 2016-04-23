@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0-*",
+  "description": "HTTP header parser implementations.",
+  "tags": [
+    "http"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/httpabstractions"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {},
+  "frameworks": {
+    "netstandard1.1": {
+      "dependencies": {
+        "System.Collections": "4.0.11-*",
+        "System.Diagnostics.Contracts": "4.0.1-*",
+        "System.Globalization": "4.0.11-*",
+        "System.Linq": "4.1.0-*",
+        "System.Resources.ResourceManager": "4.0.1-*",
+        "System.Runtime.Extensions": "4.1.0-*",
+        "System.Text.Encoding": "4.0.11-*",
+        "System.Buffers": "4.0.0-*"
+      }
+    }
+  }
+}

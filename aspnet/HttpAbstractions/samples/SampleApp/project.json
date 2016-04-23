@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "Microsoft.AspNetCore.Http": "1.0.0-*"
+  },
+  "commands": {
+    "SampleApp": "SampleApp"
+  },
+  "frameworks": {
+    "net451": {}
+  }
+}
