@@ -1,0 +1,42 @@
+{
+  "description": "Razor is a markup syntax for adding server-side logic to web pages. This package contains the Razor parser and code generation infrastructure.",
+  "tags": [
+    "aspnetcore",
+    "cshtml",
+    "razor"
+  ],
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/razor"
+  },
+  "dependencies": {
+    "Microsoft.Extensions.HashCodeCombiner.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    }
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Diagnostics.Debug": "4.0.11-*",
+        "System.IO.FileSystem": "4.0.1-*",
+        "System.Linq": "4.1.0-*",
+        "System.Resources.ResourceManager": "4.0.1-*",
+        "System.Runtime.Extensions": "4.1.0-*",
+        "System.Security.Cryptography.Algorithms": "4.1.0-*",
+        "System.Threading": "4.0.11-*",
+        "System.Threading.Thread": "4.0.0-*"
+      }
+    }
+  }
+}

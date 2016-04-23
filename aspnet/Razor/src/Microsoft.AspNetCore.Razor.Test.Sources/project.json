@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+  "shared": "*.cs",
+  "dependencies": {
+    "xunit.assert": "2.1.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "imports": [
+        "dotnet"
+      ]
+    }
+  }
+}

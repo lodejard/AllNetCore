@@ -1,0 +1,34 @@
+{
+    "adx": { // Packages written by the ADX team and that ship on NuGet.org
+        "rules": [
+            "AdxVerificationCompositeRule"
+        ],
+        "packages": {
+            "Microsoft.AspNetCore.Razor": { },
+            "Microsoft.AspNet.Razor.VSRC1": { 
+                "DOC_MISSING": {
+                    "lib/net451/Microsoft.AspNet.Razor.VSRC1.dll": "Enter justification"
+                }
+            },
+            "Microsoft.AspNetCore.Razor.Runtime": { },
+            "Microsoft.AspNet.Razor.Runtime.VSRC1": {
+                "DOC_MISSING": {
+                    "lib/net451/Microsoft.AspNet.Razor.Runtime.VSRC1.dll": "Enter justification"
+                }
+            }
+        }
+    },
+    "adx-nonshipping": { // Packages written by the ADX team but that don't ship on NuGet.org (thus, no need to scan anything in them)
+        "rules": [
+            // Don't run any rules for packages the ADX team creates but doesn't ship.
+        ],
+        "packages": {
+            "Microsoft.AspNetCore.Razor.Test.Sources": { }
+        }
+    },
+    "Default": { // Rules to run for packages not listed in any other set.
+        "rules": [
+            "DefaultCompositeRule"
+        ]
+    }
+}
