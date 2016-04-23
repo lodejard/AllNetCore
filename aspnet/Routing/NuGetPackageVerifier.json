@@ -1,0 +1,32 @@
+{
+    "adx": { // Packages written by the ADX team and that ship on NuGet.org
+        "rules": [
+            "AssemblyHasDocumentFileRule",
+            "AssemblyHasVersionAttributesRule",
+            "AssemblyHasServicingAttributeRule",
+            "AssemblyHasNeutralResourcesLanguageAttributeRule",
+            "SatellitePackageRule",
+            "StrictSemanticVersionValidationRule"
+        ],
+        "packages": {
+            "Microsoft.AspNetCore.Routing.Abstractions": { },
+            "Microsoft.AspNetCore.Routing": { }
+        }
+    },
+    "adx-nonshipping": {
+        "rules": [],
+        "packages": {
+            "Microsoft.AspNetCore.Routing.DecisionTree.Sources": { }
+        }
+    },
+    "Default": { // Rules to run for packages not listed in any other set.
+        "rules": [
+            "AssemblyHasDocumentFileRule",
+            "AssemblyHasVersionAttributesRule",
+            "AssemblyHasServicingAttributeRule",
+            "AssemblyHasNeutralResourcesLanguageAttributeRule",
+            "SatellitePackageRule",
+            "StrictSemanticVersionValidationRule"
+        ]
+    }
+}
