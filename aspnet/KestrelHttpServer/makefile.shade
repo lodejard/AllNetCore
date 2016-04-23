@@ -1,0 +1,11 @@
+var VERSION='0.1'
+var FULL_VERSION='0.1'
+var AUTHORS='Microsoft'
+var kestrelSrcDir='${Path.Combine(Directory.GetCurrentDirectory(), "src/Microsoft.AspNetCore.Server.Kestrel")}'
+
+use-standard-lifecycle
+k-standard-goals
+custom-goals
+
+#initialize if='Directory.Exists("src")'
+  exec program='dotnet' commandline='run -p ../../tools/Microsoft.AspNetCore.Server.Kestrel.GeneratedCode Http/FrameHeaders.Generated.cs Http/Frame.Generated.cs' workingdir='${kestrelSrcDir}'
