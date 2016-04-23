@@ -1,0 +1,28 @@
+{
+  "version": "0.1.0-*",
+  "description": "Core server components for ASP.NET SignalR.",
+  "dependencies": {
+    "Microsoft.AspNetCore.SignalR.Server": "0.1.0-*",
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0-*"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "resources": "install.sql;send.sql",
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Data": ""
+      }
+    },
+    "netstandard1.5": {
+      "dependencies": {
+        "System.Data.SqlClient": "4.1.0-*"
+      },
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}
