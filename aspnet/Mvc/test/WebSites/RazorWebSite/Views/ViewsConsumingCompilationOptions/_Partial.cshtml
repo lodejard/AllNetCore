@@ -1,0 +1,11 @@
+﻿@inject FrameworkSpecificHelper MyHelper
+@{
+    string value =
+#if NET451_CUSTOM_DEFINE
+    MyHelper.ExecuteNet451Operation();
+#endif
+#if NETCOREAPP1_0_CUSTOM_DEFINE
+    MyHelper.ExecuteNetCoreApp1_0Operation();
+#endif
+}
+@value
