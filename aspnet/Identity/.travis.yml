@@ -1,0 +1,32 @@
+language: csharp
+sudo: required
+dist: trusty
+addons:
+  apt:
+    packages:
+    - gettext
+    - libcurl4-openssl-dev
+    - libicu-dev
+    - libssl-dev
+    - libunwind8
+    - zlib1g
+mono:
+  - 4.0.5
+os:
+  - linux
+  - osx
+osx_image: xcode7.1
+branches:
+  only:
+    - master
+    - release
+    - dev
+    - /^(.*\/)?ci-.*$/
+script:
+  - ./build.sh --quiet verify
+notifications:
+  webhooks:
+    secure: "imfp26oc8QAWwRdbLoeyNWhkJnE/fD/80B7GD3jac0MEfjJiNjox1bKzgXfUlxZE8MITQk5F+TX00fm4/YYHQSQQqzQSUM1P/02OM+PAbSyVX8MqII2+ECJC1x5UcoCI/hbQW5wAVzhCv9qDirJSbRFAAv0c3+alBrZs4RuYf4w="
+  on_success: always
+  on_failure: always
+  on_start: always
