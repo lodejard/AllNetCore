@@ -1,0 +1,9 @@
+{
+  "frameworks": {
+    "netcore50": {
+      "dependencies": {
+        "Microsoft.TargetingPack.Private.NETNative": "1.0.0-rc3-24022-00"
+      }
+    }
+  }
+}

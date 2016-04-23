@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7F5F5134-00FE-4DE8-B20C-3DA8BA2EBA68}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>System.Runtime.Tests</RootNamespace>
+    <AssemblyName>System.Runtime.Tests</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1718</NoWarn>
+    <IncludePerformanceTests>true</IncludePerformanceTests>
+  </PropertyGroup>
+  <!-- Default configurations to help VS understand the configurations -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Common\CompareHelper.cs" />
+    <Compile Include="System\Activator.cs" />
+    <Compile Include="System\Array.cs" />
+    <Compile Include="System\Attribute.cs" />
+    <Compile Include="System\ArraySegment.cs" />
+    <Compile Include="System\Boolean.cs" />
+    <Compile Include="System\Buffer.cs" />
+    <Compile Include="System\Byte.cs" />
+    <Compile Include="System\Char.cs" />
+    <Compile Include="System\Collections\ObjectModel\Collection.cs" />
+    <Compile Include="System\Collections\ObjectModel\CollectionTestBase.cs" />
+    <Compile Include="System\Collections\ObjectModel\ReadOnlyCollection.cs" />
+    <Compile Include="System\ComponentModel\EditorBrowsableAttribute.cs" />
+    <Compile Include="System\ComponentModel\DefaultValueAttribute.cs" />
+    <Compile Include="System\DateTime.cs" />
+    <Compile Include="System\DateTimeOffset.cs" />
+    <Compile Include="System\Decimal.cs" />
+    <Compile Include="System\Delegate.cs" />
+    <Compile Include="System\Double.cs" />
+    <Compile Include="System\Enum.cs" />
+    <Compile Include="System\FieldAccessException.cs" />
+    <Compile Include="System\GC.cs" />
+    <Compile Include="System\Guid.cs" />
+    <Compile Include="System\Int16.cs" />
+    <Compile Include="System\Int32.cs" />
+    <Compile Include="System\Int64.cs" />
+    <Compile Include="System\IntPtr.cs" />
+    <Compile Include="System\IO\DirectoryNotFoundException.cs" />
+    <Compile Include="System\IO\DirectoryNotFoundException.Interop.cs" />
+    <Compile Include="System\IO\Exceptions.HResults.cs" />
+    <Compile Include="System\IO\Exceptions.Utility.cs" />
+    <Compile Include="System\IO\FileLoadException.cs" />
+    <Compile Include="System\IO\FileLoadException.Interop.cs" />
+    <Compile Include="System\IO\PathTooLongException.cs" />
+    <Compile Include="System\IO\PathTooLongException.Interop.cs" />
+    <Compile Include="System\Lazy.cs" />
+    <Compile Include="System\LazyOfTMetadata.cs" />
+    <Compile Include="System\MethodAccessException.cs" />
+    <Compile Include="System\MissingFieldException.cs" />
+    <Compile Include="System\MissingMethodException.cs" />
+    <Compile Include="System\MulticastDelegate.cs" />
+    <Compile Include="System\Nullable.cs" />
+    <Compile Include="System\ExceptionTests.cs" />
+    <Compile Include="System\Object.cs" />
+    <Compile Include="System\Runtime\CompilerServices\ConditionalWeakTable.cs" />
+    <Compile Include="System\Runtime\CompilerServices\StrongBox.cs" />
+    <Compile Include="System\Runtime\CompilerServices\RuntimeHelpers.cs" />
+    <Compile Include="System\SByte.cs" />
+    <Compile Include="System\Single.cs" />
+    <Compile Include="System\String.cs" />
+    <Compile Include="System\String.Split.cs" />
+    <Compile Include="System\Text\StringBuilder.cs" />
+    <Compile Include="System\Threading\WaitHandle.cs" />
+    <Compile Include="System\TimeSpan.cs" />
+    <Compile Include="System\TimeZoneInfo.cs" />
+    <Compile Include="System\Tuple.cs" />
+    <Compile Include="System\Type.cs" />
+    <Compile Include="System\UInt16.cs" />
+    <Compile Include="System\UInt32.cs" />
+    <Compile Include="System\UInt64.cs" />
+    <Compile Include="System\UIntPtr.cs" />
+    <Compile Include="System\Uri.CreateString.cs" />
+    <Compile Include="System\Uri.CreateUri.cs" />
+    <Compile Include="System\Uri.Methods.cs" />
+    <Compile Include="System\ValueType.cs" />
+    <Compile Include="System\Version.cs" />
+    <Compile Include="System\WeakReference.cs" />
+    <Compile Include="$(CommonTestPath)\System\RandomDataGenerator.cs">
+      <Link>Common\System\RandomDataGenerator.cs</Link>
+    </Compile>
+    <!-- Performance Tests -->
+    <Compile Include="Performance\Perf.Boolean.cs" />
+    <Compile Include="Performance\Perf.Char.cs" />
+    <Compile Include="Performance\Perf.Double.cs" />
+    <Compile Include="Performance\Perf.Enum.cs" />
+    <Compile Include="Performance\Perf.Guid.cs" />
+    <Compile Include="Performance\Perf.Object.cs" />
+    <Compile Include="Performance\Perf.String.cs" />
+    <Compile Include="Performance\Perf.TimeSpan.cs" />
+    <Compile Include="Performance\Perf.Type.cs" />
+    <Compile Include="Performance\Perf.UInt32.cs" />
+    <Compile Include="Performance\Perf.DateTime.cs" />
+    <Compile Include="Performance\Perf.Int32.cs" />
+    <Compile Include="Performance\Perf.IntPtr.cs" />
+    <Compile Include="Performance\Perf.StringBuilder.cs" />
+    <Compile Include="$(CommonTestPath)\System\PerfUtils.cs">
+      <Link>Common\System\PerfUtils.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Compile tests against the System.Runtime contract, but copy our local-built implementation for testing -->
+    <ProjectReference Include="..\ref\System.Runtime.csproj">
+      <Project>{446de6f0-47a0-4c2f-a918-768a76ccf461}</Project>
+      <Name>System.Runtime</Name>
+      <!-- Don't copy the reference assembly to output -->
+      <Private>false</Private>
+      <UndefineProperties>OSGroup</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="..\src\System.Runtime.csproj">
+      <Project>{1e689c1b-690c-4799-bde9-6e7990585894}</Project>
+      <Name>System.Runtime</Name>
+      <!-- Don't reference implementation assembly, but do deploy it. -->
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Private.Uri\src\System.Private.Uri.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
+      <OSGroup>$(InputOSGroup)</OSGroup>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+</Project>
