@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0-*",
+  "description": "Application localization services and default implementation based on ResourceManager to load localized assembly resources.",
+  "tags": [
+    "localization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/localization"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Localization.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Options": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Collections.Concurrent": "4.0.12-*",
+        "System.Resources.Reader": "4.0.0-*"
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+  "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "Microsoft.AspNetCore.Localization": "1.0.0-*",
+    "Microsoft.AspNetCore.Server.Testing": "1.0.0-*",
+    "Microsoft.Extensions.Logging": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-*",
+    "xunit": "2.1.0"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        },
+        "dotnet-test-xunit": "1.0.0-*",
+        "System.Diagnostics.Process": "4.1.0-*"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": ""
+      }
+    }
+  },
+  "testRunner": "xunit"
+}
