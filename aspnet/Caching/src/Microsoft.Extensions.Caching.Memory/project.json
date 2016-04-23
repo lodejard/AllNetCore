@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0-*",
+  "description": "In-memory cache implementation of Microsoft.Extensions.Caching.Memory.IMemoryCache.",
+  "tags": [
+    "cache",
+    "memorycache"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/caching"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Caching.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Options": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": {
+          "type": "build"
+        }
+      }
+    },
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Linq": "4.1.0-*",
+        "System.Threading": "4.0.11-*"
+      }
+    },
+    "netcore50": {
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": {
+          "type": "build",
+          "version": "1.0.1-*"
+        },
+        "System.Linq": "4.0.0",
+        "System.Threading": "4.0.10",
+        "System.Runtime.Extensions": {
+          "type": "build",
+          "version": "4.0.10"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "Microsoft.AspNetCore.Testing": "1.0.0-*",
+    "Microsoft.Extensions.Caching.Redis": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection": "1.0.0-*",
+    "xunit": "2.1.0"
+  },
+  "testRunner": "xunit",
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        "Moq": "4.2.1312.1622",
+        "xunit.runner.console": "2.1.0"
+      },
+      "frameworkAssemblies": {
+        "System.Runtime": ""
+      }
+    }
+  }
+}
