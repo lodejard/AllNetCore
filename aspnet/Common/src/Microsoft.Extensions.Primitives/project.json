@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET 5 primitives.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/common"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.Extensions.HashCodeCombiner.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    }
+  },
+  "frameworks": {
+    "netstandard1.0": {
+      "dependencies": {
+        "System.Runtime": "4.1.0-*",
+        "System.Resources.ResourceManager": "4.0.1-*"
+      }
+    },
+    "netcore50": {
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": {
+          "type": "build",
+          "version": "1.0.1-*"
+        },
+        "System.Runtime": "4.0.20",
+        "System.Resources.ResourceManager": "4.0.0",
+        "System.Threading": {
+          "type": "build",
+          "version": "4.0.10"
+        }
+      }
+    }
+  }
+}

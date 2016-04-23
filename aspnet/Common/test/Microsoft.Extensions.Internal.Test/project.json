@@ -1,0 +1,67 @@
+{
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+  "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "Microsoft.AspNetCore.Testing": "1.0.0-*",
+    "Microsoft.Extensions.ClosedGenericMatcher.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.CopyOnWriteDictionary.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.HashCodeCombiner.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.PropertyActivator.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.PropertyHelper.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.SecurityHelper.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.TypeNameHelper.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "xunit": "2.1.0"
+  },
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        },
+        "System.Diagnostics.Process": "4.1.0-*",
+        "System.Diagnostics.TraceSource": "4.0.0-*",
+        "moq.netcore": "4.4.0-beta8",
+        "dotnet-test-xunit": "1.0.0-*"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "",
+        "System.Threading.Tasks": ""
+      },
+      "dependencies": {
+        "xunit.runner.console": "2.1.0",
+        "Moq": "4.2.1312.1622"
+      }
+    }
+  }
+}
