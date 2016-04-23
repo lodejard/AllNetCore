@@ -1,0 +1,18 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using ContextNamespace;
+
+namespace WebAppNamespace
+{
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection servicesVar)
+        {
+            // Add EF services to the services container.
+            servicesVar.AddEntityFramework();
+
+            servicesVar.AddDbContext<MyContext>(options =>
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyContext-NewGuid;Trusted_Connection=True;MultipleActiveResultSets=true"));
+        }
+    }
+}

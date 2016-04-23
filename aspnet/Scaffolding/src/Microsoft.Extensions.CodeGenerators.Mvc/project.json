@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "dependencies": {
+    "Microsoft.Extensions.CodeGeneration": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.3",
+    "System.Runtime": "4.1.0-*"
+  },
+  "frameworks": {
+    "netstandard1.5": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "packInclude": {
+    "/": "THIRDPARTYNOTICE ASP.NET_Preview.rtf",
+    "Templates/": "Templates/"
+  }
+}

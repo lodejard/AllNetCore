@@ -1,0 +1,26 @@
+{
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "dependencies": {
+    "dotnet-test-xunit": "1.0.0-*",
+    "Microsoft.Extensions.CodeGeneration.EntityFrameworkCore": "1.0.0-*",
+    "Microsoft.Extensions.FileProviders.Embedded": "1.0.0-*",
+    "moq.netcore": "4.4.0-beta8",
+    "xunit": "2.1.0"
+  },
+  "frameworks": {
+    "netstandardapp1.5": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
+      "dependencies": {
+        "NETStandard.Library": "1.5.0-*",
+        "System.Diagnostics.Process": "4.1.0-*"
+      }
+    }
+  },
+  "testRunner": "xunit"
+}
