@@ -1,0 +1,21 @@
+{
+    "adx": { // Packages written by the ADX team and that ship on NuGet.org
+        "rules": [
+            "AdxVerificationCompositeRule"
+        ],
+        "packages": {
+            "Microsoft.Extensions.Options": { },
+            "Microsoft.Extensions.OptionsModel.VSRC1": {
+                "DOC_MISSING": {
+                    "lib/net451/Microsoft.Extensions.OptionsModel.VSRC1.dll": "This project is temporary."
+                }
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": { }
+        }
+    },
+    "Default": { // Rules to run for packages not listed in any other set.
+        "rules": [
+            "DefaultCompositeRule"
+        ]
+    }
+}
