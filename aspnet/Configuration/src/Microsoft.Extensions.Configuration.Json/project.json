@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "JSON configuration provider implementation for Microsoft.Extensions.Configuration.",
+  "tags": [
+    "configuration",
+    "json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/configuration"
+  },
+  "dependencies": {
+    "Microsoft.Extensions.Configuration": "1.0.0-*",
+    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.3"
+  },
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": {
+          "type": "build"
+        }
+      }
+    },
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Dynamic.Runtime": "4.0.11-*",
+        "System.IO.FileSystem": "4.0.1-*",
+        "System.Runtime.Serialization.Primitives": "4.1.1-*"
+      },
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

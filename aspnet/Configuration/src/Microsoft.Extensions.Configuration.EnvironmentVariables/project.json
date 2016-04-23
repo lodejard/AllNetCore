@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "Environment variables configuration provider implementation for Microsoft.Extensions.Configuration.",
+  "tags": [
+    "configuration",
+    "envvar",
+    "environmentvariable"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/configuration"
+  },
+  "dependencies": {
+    "Microsoft.Extensions.Configuration": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": {
+          "type": "build"
+        }
+      }
+    },
+    "netstandard1.3": {}
+  }
+}

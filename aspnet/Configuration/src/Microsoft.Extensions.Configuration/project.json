@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "Implementation of key-value pair based configuration for Microsoft.Extensions.Configuration. Includes the memory configuration provider.",
+  "tags": [
+    "configuration"
+  ],
+  "dependencies": {
+    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/configuration"
+  },
+  "frameworks": {
+    "netstandard1.1": {
+      "dependencies": {
+        "System.Collections": "4.0.11-*",
+        "System.Diagnostics.Debug": "4.0.11-*",
+        "System.IO": "4.1.0-*",
+        "System.Resources.ResourceManager": "4.0.1-*",
+        "System.Runtime.Extensions": "4.1.0-*",
+        "System.Runtime.InteropServices": "4.1.0-*",
+        "System.Threading": "4.0.11-*"
+      }
+    }
+  }
+}
