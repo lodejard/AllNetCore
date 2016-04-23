@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0-*",
+  "description": "Microsoft.DotNet.TestFramework Class Library",
+  "authors": [
+    "sridhper"
+  ],
+  "tags": [
+    ""
+  ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "dependencies": {
+    "Microsoft.DotNet.Cli.Utils": "1.0.0-*",
+    "NETStandard.Library": "1.5.0-rc2-23931"
+  },
+  "frameworks": {
+    "netstandard1.5": {
+      "imports": "dnxcore50"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0-*",
+  "description": "Microsoft.DotNet.Tools.Tests.Utilities Class Library",
+  "compilationOptions": {
+    "keyFile": "../../tools/Key.snk"
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": "1.0.0-rc2-23931",
+    "Microsoft.DotNet.Tools.Tests.Utilities": {
+      "target": "project"
+    },
+    "FluentAssertions": "4.0.0",
+    "moq.netcore": "4.4.0-beta8",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "1.0.0-dev-128011-22"
+  },
+  "frameworks": {
+    "netstandardapp1.5": {
+      "imports": [
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "testRunner": "xunit"
+}
