@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "ASP.NET 5 Hosting server abstractions.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/hosting"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Http.Features": "1.0.0-*",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {}
+  }
+}
