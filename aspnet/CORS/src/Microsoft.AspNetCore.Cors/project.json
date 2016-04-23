@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0-*",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspnet/cors"
+  },
+  "description": "CORS middleware and policy for ASP.NET Core to enable cross-origin resource sharing.\r\nCommonly used types:\r\nMicrosoft.AspNetCore.Cors.DisableCorsAttribute\r\nMicrosoft.AspNetCore.Cors.EnableCorsAttribute",
+  "tags": [
+    "aspnetcore",
+    "cors"
+  ],
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Http.Extensions": "1.0.0-*",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Options": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {}
+  }
+}
