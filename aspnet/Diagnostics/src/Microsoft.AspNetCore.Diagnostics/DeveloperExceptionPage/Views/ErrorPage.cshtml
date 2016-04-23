@@ -1,0 +1,237 @@
+@using System
+@using System.Globalization
+@using System.Linq
+@using System.Net
+@using Microsoft.AspNetCore.Diagnostics.Views
+@using Microsoft.AspNetCore.Diagnostics
+@functions
+{
+    public ErrorPage(ErrorPageModel model)
+    {
+        Model = model;
+    }
+
+    public ErrorPageModel Model { get; set; }
+}
+@{
+    // TODO: Response.ReasonPhrase = "Internal Server Error";
+    Response.ContentType = "text/html; charset=utf-8";
+    string location = string.Empty;
+}
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>@Resources.ErrorPageHtml_Title</title>
+        <style>
+            <%$ include: ErrorPage.css %>
+        </style>
+    </head>
+    <body>
+        <h1>@Resources.ErrorPageHtml_UnhandledException</h1>
+        @foreach (var errorDetail in Model.ErrorDetails)
+        {
+            <div class="titleerror">@errorDetail.Error.GetType().Name: @{ Output.Write(HtmlEncodeAndReplaceLineBreaks(errorDetail.Error.Message)); }</div>
+            @{
+                StackFrame firstFrame = null;
+                firstFrame = errorDetail.StackFrames.FirstOrDefault();
+                if (firstFrame != null)
+                {
+                    location = firstFrame.Function;
+                }/* TODO: TargetSite is not defined
+                else if (errorDetail.Error.TargetSite != null && errorDetail.Error.TargetSite.DeclaringType != null)
+                {
+                    location = errorDetail.Error.TargetSite.DeclaringType.FullName + "." + errorDetail.Error.TargetSite.Name;
+                }*/
+            }
+            if (!string.IsNullOrEmpty(location) && firstFrame != null && !string.IsNullOrEmpty(firstFrame.File))
+            {
+                <p class="location">@location in <code title="@firstFrame.File">@System.IO.Path.GetFileName(firstFrame.File)</code>, line @firstFrame.Line</p>
+            }
+            else if (!string.IsNullOrEmpty(location))
+            {
+                <p class="location">@location</p>
+            }
+            else
+            {
+                <p class="location">@Resources.ErrorPageHtml_UnknownLocation</p>
+            }
+        }
+        <ul id="header">
+            <li id="stack" tabindex="1" class="selected">
+                @Resources.ErrorPageHtml_StackButton
+            </li>
+            <li id="query" tabindex="2">
+                @Resources.ErrorPageHtml_QueryButton
+            </li>
+            <li id="cookies" tabindex="3">
+                @Resources.ErrorPageHtml_CookiesButton
+            </li>
+            <li id="headers" tabindex="4">
+                @Resources.ErrorPageHtml_HeadersButton
+            </li>
+        </ul>
+
+        <div id="stackpage" class="page">
+            <ul>
+                @{ int tabIndex = 6; }
+                @foreach (var errorDetail in Model.ErrorDetails)
+                {
+                    <li>
+                        <h2 class="stackerror">@errorDetail.Error.GetType().Name: @errorDetail.Error.Message</h2>
+                        <ul>
+                        @foreach (var frame in errorDetail.StackFrames)
+                        {
+                            <li class="frame" tabindex="@tabIndex">
+                                @{ tabIndex++; }
+                                @if (string.IsNullOrEmpty(frame.File))
+                                {
+                                    <h3>@frame.Function</h3>
+                                }
+                                else
+                                {
+                                    <h3>@frame.Function in <code title="@frame.File">@System.IO.Path.GetFileName(frame.File)</code></h3>
+                                }
+
+                                @if (frame.Line != 0 && frame.ContextCode.Any())
+                                {
+                                    <div class="source">
+                                        @if (frame.PreContextCode.Any())
+                                        {
+                                            <ol start="@frame.PreContextLine" class="collapsible">
+                                                @foreach (var line in frame.PreContextCode)
+                                                {
+                                                    <li><span>@line</span></li>
+                                                }
+                                            </ol>
+                                        }
+
+                                        <ol start="@frame.Line" class="highlight">
+                                            @foreach (var line in frame.ContextCode)
+                                            {
+                                                <li><span>@line</span></li>
+                                            }
+                                        </ol>
+
+                                        @if (frame.PostContextCode.Any())
+                                        {
+                                            <ol start='@(frame.Line + 1)' class="collapsible">
+                                                @foreach (var line in frame.PostContextCode)
+                                                {
+                                                    <li><span>@line</span></li>
+                                                }
+                                            </ol>
+                                        }
+                                    </div>
+                                }
+                            </li>
+                        }
+                        </ul>
+                    </li>
+                    <li>
+                        <br/>
+                        <div class="rawExceptionBlock">
+                            <div>
+                                <a href="#" id="rawExceptionButton">Show raw exception details</a>
+                            </div>
+                            <div id="rawException" style="display:none">
+                                <pre>@errorDetail.Error.ToString()</pre>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div id="querypage" class="page">
+            @if (Model.Query.Any())
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>@Resources.ErrorPageHtml_VariableColumn</th>
+                            <th>@Resources.ErrorPageHtml_ValueColumn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kv in Model.Query.OrderBy(kv => kv.Key))
+                        {
+                            foreach (var v in kv.Value)
+                            {
+                                <tr>
+                                    <td>@kv.Key</td>
+                                    <td>@v</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>@Resources.ErrorPageHtml_NoQueryStringData</p>
+            }
+        </div>
+
+        <div id="cookiespage" class="page">
+            @if (Model.Cookies.Any())
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>@Resources.ErrorPageHtml_VariableColumn</th>
+                            <th>@Resources.ErrorPageHtml_ValueColumn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kv in Model.Cookies.OrderBy(kv => kv.Key))
+                        {
+                            <tr>
+                                <td>@kv.Key</td>
+                                <td>@kv.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>@Resources.ErrorPageHtml_NoCookieData</p>
+            }
+        </div>
+        <div id="headerspage" class="page">
+            @if (Model.Headers.Any())
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>@Resources.ErrorPageHtml_VariableColumn</th>
+                            <th>@Resources.ErrorPageHtml_ValueColumn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kv in Model.Headers.OrderBy(kv => kv.Key))
+                        {
+                            foreach (var v in kv.Value)
+                            {
+                                <tr>
+                                    <td>@kv.Key</td>
+                                    <td>@v</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>@Resources.ErrorPageHtml_NoHeaderData</p>
+            }
+        </div>
+        <script>
+            //<!--
+            <%$ include: ErrorPage.js %>
+            //-->
+        </script>
+    </body>
+</html>
