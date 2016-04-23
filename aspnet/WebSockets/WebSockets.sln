@@ -1,0 +1,92 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22216.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestServer", "test\TestServer\TestServer.csproj", "{4E5F5FCC-172C-44D9-BEA0-39098A79CD0B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2C7947A5-9FBD-4267-97C1-2D726D7B3BAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C45106D0-76C8-4776-A140-F7DD83CA2958}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{9E55FC5B-FD9C-4266-AB24-F3AA649D7C8B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNetCore.WebSockets.Protocol", "src\Microsoft.AspNetCore.WebSockets.Protocol\Microsoft.AspNetCore.WebSockets.Protocol.xproj", "{E0C10DEC-3339-4A47-85BC-3100C5D34AD4}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNetCore.WebSockets.Protocol.Test", "test\Microsoft.AspNetCore.WebSockets.Protocol.Test\Microsoft.AspNetCore.WebSockets.Protocol.Test.xproj", "{62A07A24-4D06-4DDA-B6BF-02D0C9CB7D32}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestClient", "test\TestClient\TestClient.xproj", "{8C8EAC01-DC49-4C5E-B348-E4E46FE675F9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNetCore.WebSockets.Client", "src\Microsoft.AspNetCore.WebSockets.Client\Microsoft.AspNetCore.WebSockets.Client.xproj", "{4A1C4875-AE21-4A78-979A-F0E4DF5EB518}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNetCore.WebSockets.Client.Test", "test\Microsoft.AspNetCore.WebSockets.Client.Test\Microsoft.AspNetCore.WebSockets.Client.Test.xproj", "{6604D154-817F-4BC5-BE95-FF7E851179D9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNetCore.WebSockets.Server", "src\Microsoft.AspNetCore.WebSockets.Server\Microsoft.AspNetCore.WebSockets.Server.xproj", "{78A097D0-C0A4-4AED-93E2-84A65392FB52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{86E1ADA2-631C-484F-906C-2D0BCF628E65}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AutobahnTestServer", "test\AutobahnTestServer\AutobahnTestServer.xproj", "{C03C43FE-9201-48A6-B434-AD67EF627D67}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AutobahnTestClient", "test\AutobahnTestClient\AutobahnTestClient.xproj", "{BC4D2BB1-05A8-4816-8BC1-3A664F09EE32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E5F5FCC-172C-44D9-BEA0-39098A79CD0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5F5FCC-172C-44D9-BEA0-39098A79CD0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5F5FCC-172C-44D9-BEA0-39098A79CD0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5F5FCC-172C-44D9-BEA0-39098A79CD0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C10DEC-3339-4A47-85BC-3100C5D34AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0C10DEC-3339-4A47-85BC-3100C5D34AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0C10DEC-3339-4A47-85BC-3100C5D34AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C10DEC-3339-4A47-85BC-3100C5D34AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A07A24-4D06-4DDA-B6BF-02D0C9CB7D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A07A24-4D06-4DDA-B6BF-02D0C9CB7D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A07A24-4D06-4DDA-B6BF-02D0C9CB7D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A07A24-4D06-4DDA-B6BF-02D0C9CB7D32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C8EAC01-DC49-4C5E-B348-E4E46FE675F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C8EAC01-DC49-4C5E-B348-E4E46FE675F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C8EAC01-DC49-4C5E-B348-E4E46FE675F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C8EAC01-DC49-4C5E-B348-E4E46FE675F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A1C4875-AE21-4A78-979A-F0E4DF5EB518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1C4875-AE21-4A78-979A-F0E4DF5EB518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1C4875-AE21-4A78-979A-F0E4DF5EB518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1C4875-AE21-4A78-979A-F0E4DF5EB518}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6604D154-817F-4BC5-BE95-FF7E851179D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6604D154-817F-4BC5-BE95-FF7E851179D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6604D154-817F-4BC5-BE95-FF7E851179D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6604D154-817F-4BC5-BE95-FF7E851179D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A097D0-C0A4-4AED-93E2-84A65392FB52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A097D0-C0A4-4AED-93E2-84A65392FB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A097D0-C0A4-4AED-93E2-84A65392FB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A097D0-C0A4-4AED-93E2-84A65392FB52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C03C43FE-9201-48A6-B434-AD67EF627D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C03C43FE-9201-48A6-B434-AD67EF627D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C03C43FE-9201-48A6-B434-AD67EF627D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C03C43FE-9201-48A6-B434-AD67EF627D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC4D2BB1-05A8-4816-8BC1-3A664F09EE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC4D2BB1-05A8-4816-8BC1-3A664F09EE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC4D2BB1-05A8-4816-8BC1-3A664F09EE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC4D2BB1-05A8-4816-8BC1-3A664F09EE32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E5F5FCC-172C-44D9-BEA0-39098A79CD0B} = {9E55FC5B-FD9C-4266-AB24-F3AA649D7C8B}
+		{E0C10DEC-3339-4A47-85BC-3100C5D34AD4} = {2C7947A5-9FBD-4267-97C1-2D726D7B3BAF}
+		{62A07A24-4D06-4DDA-B6BF-02D0C9CB7D32} = {C45106D0-76C8-4776-A140-F7DD83CA2958}
+		{8C8EAC01-DC49-4C5E-B348-E4E46FE675F9} = {9E55FC5B-FD9C-4266-AB24-F3AA649D7C8B}
+		{4A1C4875-AE21-4A78-979A-F0E4DF5EB518} = {2C7947A5-9FBD-4267-97C1-2D726D7B3BAF}
+		{6604D154-817F-4BC5-BE95-FF7E851179D9} = {C45106D0-76C8-4776-A140-F7DD83CA2958}
+		{78A097D0-C0A4-4AED-93E2-84A65392FB52} = {2C7947A5-9FBD-4267-97C1-2D726D7B3BAF}
+		{C03C43FE-9201-48A6-B434-AD67EF627D67} = {C45106D0-76C8-4776-A140-F7DD83CA2958}
+		{BC4D2BB1-05A8-4816-8BC1-3A664F09EE32} = {C45106D0-76C8-4776-A140-F7DD83CA2958}
+	EndGlobalSection
+EndGlobal
