@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "ASP.NET Core static files middleware. Includes middleware for serving static files, directory browsing, and default files.",
+  "tags": [
+    "aspnetcore",
+    "staticfiles"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/staticfiles"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Http.Extensions": "1.0.0-*",
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.WebEncoders": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {}
+  }
+}
