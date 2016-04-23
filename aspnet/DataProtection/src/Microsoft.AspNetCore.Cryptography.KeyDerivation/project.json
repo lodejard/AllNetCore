@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core utilities for key derivation.",
+  "tags": [
+    "aspnetcore",
+    "dataprotection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/dataprotection"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Cryptography.Internal": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Runtime.Extensions": "4.1.0-*",
+        "System.Security.Cryptography.Algorithms": "4.1.0-*",
+        "System.Text.Encoding.Extensions": "4.0.11-*"
+      }
+    }
+  },
+  "compilationOptions": {
+    "allowUnsafe": true,
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  }
+}

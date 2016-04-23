@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core data protection abstractions.\r\nCommonly used types:\r\nMicrosoft.AspNetCore.DataProtection.IDataProtectionProvider\r\nMicrosoft.AspNetCore.DataProtection.IDataProtector",
+  "tags": [
+    "aspnetcore",
+    "dataprotection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/dataprotection"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.DataProtection.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "dependencies": {
+        "System.ComponentModel": "4.0.1-*",
+        "System.Diagnostics.Debug": "4.0.11-*"
+      }
+    }
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  }
+}

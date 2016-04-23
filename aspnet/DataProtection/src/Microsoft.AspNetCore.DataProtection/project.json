@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core logic to protect and unprotect data, similar to DPAPI.",
+  "tags": [
+    "aspnetcore",
+    "dataprotection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/dataprotection"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Cryptography.Internal": "1.0.0-*",
+    "Microsoft.AspNetCore.DataProtection.Abstractions": "1.0.0-*",
+    "Microsoft.AspNetCore.DataProtection.Sources": {
+      "type": "build",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Options": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": {
+          "type": "build"
+        },
+        "System.Security": "",
+        "System.Xml": "",
+        "System.Xml.Linq": ""
+      }
+    },
+    "netstandard1.3": {
+      "dependencies": {
+        "Microsoft.Win32.Registry": "4.0.0-*",
+        "System.Security.Cryptography.X509Certificates": "4.1.0-*",
+        "System.Security.Claims": "4.0.1-*",
+        "System.Security.Principal.Windows": "4.0.0-*",
+        "System.Xml.XDocument": "4.0.11-*"
+      }
+    }
+  },
+  "compilationOptions": {
+    "allowUnsafe": true,
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  }
+}
