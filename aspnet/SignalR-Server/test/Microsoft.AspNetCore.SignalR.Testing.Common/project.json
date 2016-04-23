@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "keyFile": "../../tools/Key.snk"
+  },
+  "shared": "*.cs",
+  "dependencies": {
+    "System.Runtime": "4.1.0-*"
+  },
+  "frameworks": {
+    "netstandard1.0": {
+      "imports": [
+        "dotnet5.1"
+      ]
+    }
+  }
+}

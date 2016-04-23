@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "Microsoft.AspNetCore.SignalR.Messaging": "0.1.0-*",
+    "Microsoft.AspNetCore.SignalR.Testing.Common": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection": "1.0.0-*",
+    "xunit": "2.1.0"
+  },
+  "compilationOptions": {
+    "allowUnsafe": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "frameworks": {
+    "netstandardapp1.5": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
+      "dependencies": {
+        "dotnet-test-xunit": "1.0.0-*",
+        "moq.netcore": "4.4.0-beta8"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Threading.Tasks": ""
+      },
+      "dependencies": {
+        "Moq": "4.2.1312.1622"
+      }
+    }
+  }
+}

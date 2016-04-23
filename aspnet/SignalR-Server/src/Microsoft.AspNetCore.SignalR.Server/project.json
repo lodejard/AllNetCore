@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0-*",
+  "description": "Core server components for ASP.NET SignalR.",
+  "dependencies": {
+    "Microsoft.AspNetCore.SignalR.Sources": {
+      "version": "0.1.0-*",
+      "type": "build"
+    },
+    "Microsoft.AspNetCore.SignalR.Messaging": "0.1.0-*",
+    "Microsoft.AspNetCore.DataProtection": "1.0.0-*",
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
+    "Microsoft.AspNetCore.Http.Extensions": "1.0.0-*",
+    "Microsoft.Extensions.DependencyModel": "1.0.0-*",
+    "Newtonsoft.Json": "8.0.2"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "allowUnsafe": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "resource": "Scripts/**/*.*",
+  "frameworks": {
+    "net451": {},
+    "netstandard1.5": {
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1-*"
+      },
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}
