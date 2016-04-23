@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0-*",
+  "description": "File provider shared source code for Microsoft.Extensions.FileProviders.",
+  "tags": [
+    "files",
+    "filesystem"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/filesystem"
+  },
+  "shared": "**/*.cs",
+  "frameworks": {
+    "netstandard1.0": {
+      "dependencies": {
+        "System.Linq": "4.1.0-*"
+      }
+    }
+  }
+}

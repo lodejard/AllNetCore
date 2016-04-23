@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "File system globbing to find files matching a specified pattern.",
+  "tags": [
+    "files",
+    "filesystem",
+    "glob",
+    "globbing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/filesystem"
+  },
+  "dependencies": {
+    "Microsoft.Extensions.HashCodeCombiner.Sources": {
+      "version": "1.0.0-*",
+      "type": "build"
+    }
+  },
+  "frameworks": {
+    "net451": {
+      "dependencies": {}
+    },
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Collections": "4.0.11-*",
+        "System.IO.FileSystem": "4.0.1-*",
+        "System.Linq": "4.1.0-*",
+        "System.Resources.ResourceManager": "4.0.1-*",
+        "System.Runtime.Extensions": "4.1.0-*"
+      }
+    }
+  }
+}
