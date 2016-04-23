@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "description": "User secrets configuration provider implementation for Microsoft.Extensions.Configuration.",
+  "tags": [
+    "configuration",
+    "secrets",
+    "usersecrets"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/usersecrets"
+  },
+  "dependencies": {
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}
