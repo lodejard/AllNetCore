@@ -1,0 +1,47 @@
+﻿{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-*",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*",
+    "Microsoft.AspNetCore.Server.WebListener": "0.1.0-*",
+    "Microsoft.AspNetCore.WebUtilities": "1.0.0-*",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-*",
+    "Microsoft.Net.Http.Headers": "1.0.0-*"
+  },
+  "compile": [
+    "../ServerComparison.TestSites/Startup*.cs"
+  ],
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "content": [
+    "web.config"
+  ],
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": "1.0.0-*"
+      }
+    }
+  },
+  "tools": {
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
+      "version": "1.0.0-*",
+      "imports": "portable-net45+wp80+win8+wpa81+dnxcore50"
+    }
+  },
+  "scripts": {
+    "postpublish": "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"
+  },
+  "runtimes": {
+    "win7-x64": { },
+    "win7-x86": { },
+    "osx.10.10-x64": { },
+    "ubuntu.14.04-x64": { }
+  }
+}

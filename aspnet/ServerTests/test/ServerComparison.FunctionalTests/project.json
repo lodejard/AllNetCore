@@ -1,0 +1,26 @@
+{
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+  "testRunner": "xunit",
+  "dependencies": {
+    "Microsoft.AspNetCore.Server.Testing": "1.0.0-*",
+    "Microsoft.Extensions.Logging": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-*",
+    "Microsoft.Net.Http.Headers": "1.0.0-*"
+  },
+
+  "content": [
+    "Http.config",
+    "nginx.conf",
+    "NtlmAuthentication.config"
+  ],
+
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": ""
+      }
+    }
+  }
+}
