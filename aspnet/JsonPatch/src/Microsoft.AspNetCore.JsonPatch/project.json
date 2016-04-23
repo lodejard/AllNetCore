@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core support for JSON PATCH.",
+  "tags": [
+    "aspnetcore",
+    "json",
+    "jsonpatch"
+  ],
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/jsonpatch"
+  },
+  "dependencies": {
+    "Newtonsoft.Json": "8.0.3"
+  },
+  "frameworks": {
+    "netstandard1.1": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-*",
+        "System.Collections.Concurrent": "4.0.12-*",
+        "System.ComponentModel.TypeConverter": "4.0.1-*",
+        "System.Diagnostics.Debug": "4.0.11-*",
+        "System.Globalization": "4.0.11-*",
+        "System.Linq": "4.1.0-*",
+        "System.Reflection.Extensions": "4.0.1-*",
+        "System.Resources.ResourceManager": "4.0.1-*",
+        "System.Runtime.Extensions": "4.1.0-*",
+        "System.Runtime.Serialization.Primitives": "4.1.1-*",
+        "System.Text.Encoding.Extensions": "4.0.11-*"
+      },
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}
