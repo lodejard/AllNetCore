@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "ManagedEsent": "1.9.2.0"
+  },
+  "frameworks": {
+    "net46": { }
+  },
+  "runtimes": {
+    "win7": { },
+    "win7-anycpu": { }
+  }
+}
