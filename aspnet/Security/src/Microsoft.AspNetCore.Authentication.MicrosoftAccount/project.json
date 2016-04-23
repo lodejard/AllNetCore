@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core middleware that enables an application to support the Microsoft Account authentication workflow.",
+  "tags": [
+    "aspnetcore",
+    "authentication",
+    "security"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/security"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Authentication.OAuth": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

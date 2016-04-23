@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0-*",
+  "description": "ASP.NET Core cookie policy classes to control the behavior of cookies.",
+  "tags": [
+    "aspnetcore"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet/security"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "nowarn": [
+      "CS1591"
+    ],
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Http": "1.0.0-*",
+    "Microsoft.Extensions.Options": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {},
+    "netstandard1.3": {}
+  }
+}
