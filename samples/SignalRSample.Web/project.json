@@ -14,18 +14,30 @@
   },
   "frameworks": {
     "net451": {},
-    "netstandardapp1.5": {
-      "imports": [
-        "dnxcore50"
-      ],
+    "netcoreapp1.0": {
       "dependencies": {
-        "NETStandard.Library": "1.5.0-*",
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        },
         "System.Runtime.Serialization.Primitives": "4.1.1-*"
-      }
+      },
+      "imports": [
+        "portable-dnxcore50+net45+win8+wp8+wpa81"
+      ]
     }
   },
   "content": [
     "web.config",
     "wwwroot"
-  ]
+  ],
+  "tools": {
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
+      "version": "1.0.0-*",
+      "imports": "portable-net45+wp80+win8+wpa81+dnxcore50"
+    }
+  },
+  "scripts": {
+    "postpublish": "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"
+  }
 }
