@@ -30,7 +30,6 @@ namespace SignalRSample.Web
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseDefaultHostingConfiguration(args)
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
