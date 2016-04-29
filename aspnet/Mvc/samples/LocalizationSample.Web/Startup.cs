@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -43,7 +44,7 @@ namespace LocalizationSample.Web
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseDefaultHostingConfiguration(args)
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseKestrel()
                 .UseStartup<Startup>()

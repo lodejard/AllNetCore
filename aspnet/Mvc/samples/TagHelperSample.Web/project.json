@@ -13,6 +13,18 @@
     "Microsoft.AspNetCore.StaticFiles": "1.0.0-*",
     "Microsoft.Extensions.Logging.Console": "1.0.0-*"
   },
+  "tools": {
+    "dotnet-razor-tooling": {
+      "version": "1.0.0-*",
+      "imports": [
+        "net45"
+      ]
+    },
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
+      "version": "1.0.0-*",
+      "imports": "portable-net45+wp80+win8+wpa81+dnxcore50"
+    }
+  },
   "frameworks": {
     "net451": { },
     "netcoreapp1.0": {
@@ -33,12 +45,6 @@
     "wwwroot",
     "web.config"
   ],
-  "tools": {
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
-      "version": "1.0.0-*",
-      "imports": "portable-net45+wp80+win8+wpa81+dnxcore50"
-    }
-  },
   "scripts": {
     "postpublish": "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"
   }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using ControllersFromServicesClassLibrary;
@@ -62,7 +63,7 @@ namespace ControllersFromServicesWebSite
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseDefaultHostingConfiguration(args)
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .UseKestrel()
                 .UseIISIntegration()
