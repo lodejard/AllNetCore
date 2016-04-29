@@ -141,19 +141,43 @@ namespace Microsoft.EntityFrameworkCore.Internal
         }
 
         /// <summary>
-        /// Lazy original value tracking cannot be turned on for entity type '{entityType}'. Entities that do not implement both INotifyPropertyChanging and INotifyPropertyChanged require original values to be stored eagerly in order to correct detect changes made to entities.
+        /// The entity type '{entityType}' is configured to use the '{changeTrackingStrategy}' change tracking strategy but does not implement the required '{notificationInterface}' interface.
         /// </summary>
-        public static string EagerOriginalValuesRequired([CanBeNull] object entityType)
+        public static string ChangeTrackingInterfaceMissing([CanBeNull] object entityType, [CanBeNull] object changeTrackingStrategy, [CanBeNull] object notificationInterface)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("EagerOriginalValuesRequired", "entityType"), entityType);
+            return string.Format(CultureInfo.CurrentCulture, GetString("ChangeTrackingInterfaceMissing", "entityType", "changeTrackingStrategy", "notificationInterface"), entityType, changeTrackingStrategy, notificationInterface);
         }
 
         /// <summary>
-        /// The original value for property '{property}' of entity type '{entityType}' cannot be accessed because it is not being tracked. Original values are not recorded for most properties of entities that utilize the INotifyPropertyChanging interface. To access all original values set 'UseEagerSnapshots' to true on the EntityType during model building.
+        /// The collection type being used for navigation property '{navigation}' on entity type '{entityType}' does not implement 'INotifyCollectionChanged'. Any entity type configured to use the '{changeTrackingStrategy}' change tracking strategy must use collections that implement 'INotifyCollectionChanged'. Consider using 'ObservableCollection&lt;T&gt;' for this.
+        /// </summary>
+        public static string NonNotifyingCollection([CanBeNull] object navigation, [CanBeNull] object entityType, [CanBeNull] object changeTrackingStrategy)
+        {
+            return string.Format(CultureInfo.CurrentCulture, GetString("NonNotifyingCollection", "navigation", "entityType", "changeTrackingStrategy"), navigation, entityType, changeTrackingStrategy);
+        }
+
+        /// <summary>
+        /// 'ObservableCollection&lt;T&gt;.Clear()' is not supported because it uses the 'INotifyCollectionChanged' 'Reset' operation, which does not supply the items removed. Either use multiple calls to 'Remove' or use a notifying collection that supports 'Clear', such as 'Microsoft.EntityFrameworkCore.ChangeTracking.ObservableCollectionWithClear&lt;T&gt;'.
+        /// </summary>
+        public static string ResetNotSupported
+        {
+            get { return GetString("ResetNotSupported"); }
+        }
+
+        /// <summary>
+        /// The original value for property '{property}' of entity type '{entityType}' cannot be accessed because it is not being tracked. Original values are not recorded for most properties of entities when the 'ChangingAndChangedNotifications' strategy is used. To access all original values use a different change tracking strategy such as 'ChangingAndChangedNotificationsWithOriginalValues'.
         /// </summary>
         public static string OriginalValueNotTracked([CanBeNull] object property, [CanBeNull] object entityType)
         {
             return string.Format(CultureInfo.CurrentCulture, GetString("OriginalValueNotTracked", "property", "entityType"), property, entityType);
+        }
+
+        /// <summary>
+        /// Cannot change ObservableCollectionWithClear during a CollectionChanged event.
+        /// </summary>
+        public static string ObservableCollectionReentrancy
+        {
+            get { return GetString("ObservableCollectionReentrancy"); }
         }
 
         /// <summary>
@@ -973,6 +997,14 @@ namespace Microsoft.EntityFrameworkCore.Internal
         }
 
         /// <summary>
+        /// The extension method ‘{method}’ is being used with a custom implementation of ‘{interfaceType}’. Use of custom implementations of the Entity Framework metadata interfaces is not supported. Consider deriving from ‘{concreteType}’ instead. Please contact the Entity Framework team if you have a compelling case for a custom implementation of the metadata interfaces so that we can consider ways to achieve this.
+        /// </summary>
+        public static string CustomMetadata([CanBeNull] object method, [CanBeNull] object interfaceType, [CanBeNull] object concreteType)
+        {
+            return string.Format(CultureInfo.CurrentCulture, GetString("CustomMetadata", "method", "interfaceType", "concreteType"), method, interfaceType, concreteType);
+        }
+
+        /// <summary>
         /// Unhandled operation: MemberInitExpression binding is not a MemberAssignment
         /// </summary>
         public static string InvalidMemberInitBinding
@@ -1146,6 +1178,30 @@ namespace Microsoft.EntityFrameworkCore.Internal
         public static string TempValue([CanBeNull] object property, [CanBeNull] object entityType)
         {
             return string.Format(CultureInfo.CurrentCulture, GetString("TempValue", "property", "entityType"), property, entityType);
+        }
+
+        /// <summary>
+        /// The database generated a null value for non-nullable property '{property}' of entity type '{entityType}'. Ensure value generation configuration in the database matches the configuration in the model.
+        /// </summary>
+        public static string DatabaseGeneratedNull([CanBeNull] object property, [CanBeNull] object entityType)
+        {
+            return string.Format(CultureInfo.CurrentCulture, GetString("DatabaseGeneratedNull", "property", "entityType"), property, entityType);
+        }
+
+        /// <summary>
+        /// Sequence contains more than one element
+        /// </summary>
+        public static string MoreThanOneElement
+        {
+            get { return GetString("MoreThanOneElement"); }
+        }
+
+        /// <summary>
+        /// Sequence contains no elements
+        /// </summary>
+        public static string NoElements
+        {
+            get { return GetString("NoElements"); }
         }
 
         private static string GetString(string name, params string[] formatterNames)

@@ -213,26 +213,6 @@ namespace Microsoft.EntityFrameworkCore.Tests
             }
         }
 
-        [Fact]
-        public void Entry_methods_delegate_to_underlying_state_manager()
-        {
-            var entity = new Random();
-            var stateManagerMock = new Mock<IStateManager>();
-            var entry = CreateInternalEntryMock().Object;
-            stateManagerMock.Setup(m => m.GetOrCreateEntry(entity)).Returns(entry);
-
-            var services = new ServiceCollection()
-                .AddScoped(_ => stateManagerMock.Object);
-
-            var serviceProvider = TestHelpers.Instance.CreateServiceProvider(services);
-
-            using (var context = new EarlyLearningCenter(serviceProvider))
-            {
-                Assert.Same(entry, context.Entry(entity).GetInfrastructure());
-                Assert.Same(entry, context.Entry((object)entity).GetInfrastructure());
-            }
-        }
-
         private class FakeStateManager : IStateManager
         {
             public IEnumerable<InternalEntityEntry> InternalEntries { get; set; }
@@ -4497,8 +4477,8 @@ namespace Microsoft.EntityFrameworkCore.Tests
         public void Throws_when_adding_two_contexts_using_non_generic_options()
         {
             var appServiceProivder = new ServiceCollection()
-                .AddDbContext<NonGenericOptions1>(b => b.UseInMemoryDatabase())
                 .AddDbContext<NonGenericOptions2>(b => b.UseInMemoryDatabase())
+                .AddDbContext<NonGenericOptions1>(b => b.UseInMemoryDatabase())
                 .BuildServiceProvider();
 
             using (var serviceScope = appServiceProivder
@@ -4529,6 +4509,33 @@ namespace Microsoft.EntityFrameworkCore.Tests
                 : base(options)
             {
             }
+        }
+
+        [Fact]
+        public void AddDbContext_adds_options_for_all_types()
+        {
+            var services = new ServiceCollection()
+                .AddSingleton<DbContextOptions>(_ => new DbContextOptions<NonGenericOptions1>())
+                .AddDbContext<NonGenericOptions1>()
+                .AddDbContext<NonGenericOptions2>()
+                .BuildServiceProvider();
+
+            Assert.Equal(3, services.GetServices<DbContextOptions>().Count());
+            Assert.Equal(2, services.GetServices<DbContextOptions>()
+                            .Select(o => o.ContextType)
+                            .Distinct()
+                            .Count());
+        }
+
+        [Fact]
+        public void Last_DbContextOptions_in_serviceCollection_selected()
+        {
+            var services = new ServiceCollection()
+                .AddDbContext<NonGenericOptions1>()
+                .AddDbContext<NonGenericOptions2>()
+                .BuildServiceProvider();
+
+            Assert.Equal(typeof(NonGenericOptions2), services.GetService<DbContextOptions>().ContextType);
         }
 
         [Fact]
@@ -4857,10 +4864,10 @@ namespace Microsoft.EntityFrameworkCore.Tests
 
         private static Mock<InternalEntityEntry> CreateInternalEntryMock()
         {
-            var entityTypeMock = new Mock<IEntityType>();
-            entityTypeMock.Setup(e => e.GetProperties()).Returns(new IProperty[0]);
+            var entityTypeMock = new Mock<EntityType>("Entity", new Model(), ConfigurationSource.Explicit);
+            entityTypeMock.Setup(e => e.GetProperties()).Returns(new Property[0]);
 
-            entityTypeMock.As<IPropertyCountsAccessor>().Setup(e => e.Counts).Returns(new PropertyCounts(0, 0, 0, 0, 0, 0));
+            entityTypeMock.Setup(e => e.Counts).Returns(new PropertyCounts(0, 0, 0, 0, 0, 0));
 
             var internalEntryMock = new Mock<InternalEntityEntry>(
                 Mock.Of<IStateManager>(), entityTypeMock.Object);
@@ -4982,6 +4989,100 @@ namespace Microsoft.EntityFrameworkCore.Tests
                 {
                     Disposed = true;
                 }
+            }
+        }
+
+        [Fact]
+        public void Adding_entities_with_shadow_keys_should_not_throw()
+        {
+            using (var context = new NullShadowKeyContext())
+            {
+                var assembly = new TestAssembly { Name = "Assembly1" };
+                var testClass = new TestClass { Assembly = assembly, Name = "Class1" };
+                var test = context.Tests.Add(new Test { Class = testClass, Name = "Test1" }).Entity;
+
+                context.SaveChanges();
+
+                ValidateGraph(context, assembly, testClass, test);
+            }
+
+            using (var context = new NullShadowKeyContext())
+            {
+                var test = context.Tests.Single();
+                var assembly = context.Assemblies.Single();
+                var testClass = context.Classes.Single();
+
+                ValidateGraph(context, assembly, testClass, test);
+            }
+        }
+
+        private static void ValidateGraph(NullShadowKeyContext context, TestAssembly assembly, TestClass testClass, Test test)
+        {
+            Assert.Equal(EntityState.Unchanged, context.Entry(assembly).State);
+            Assert.Equal("Assembly1", assembly.Name);
+            Assert.Same(testClass, test.Class);
+
+            Assert.Equal(EntityState.Unchanged, context.Entry(testClass).State);
+            Assert.Equal("Class1", testClass.Name);
+            Assert.Equal("Assembly1", context.Entry(testClass).Property("AssemblyName").CurrentValue);
+            Assert.Same(test, testClass.Tests.Single());
+            Assert.Same(assembly, testClass.Assembly);
+
+            Assert.Equal(EntityState.Unchanged, context.Entry(test).State);
+            Assert.Equal("Test1", test.Name);
+            Assert.Equal("Assembly1", context.Entry(test).Property("AssemblyName").CurrentValue);
+            Assert.Equal("Class1", context.Entry(test).Property("ClassName").CurrentValue);
+            Assert.Same(testClass, assembly.Classes.Single());
+        }
+
+        private class TestAssembly
+        {
+            [System.ComponentModel.DataAnnotations.Key]
+            public string Name { get; set; }
+            public ICollection<TestClass> Classes { get; } = new List<TestClass>();
+        }
+
+        private class TestClass
+        {
+            public TestAssembly Assembly { get; set; }
+            public string Name { get; set; }
+            public ICollection<Test> Tests { get; } = new List<Test>();
+        }
+
+        private class Test
+        {
+            public TestClass Class { get; set; }
+            public string Name { get; set; }
+        }
+
+        private class NullShadowKeyContext : DbContext
+        {
+            public DbSet<TestAssembly> Assemblies { get; set; }
+            public DbSet<TestClass> Classes { get; set; }
+            public DbSet<Test> Tests { get; set; }
+
+            protected internal override void OnConfiguring(DbContextOptionsBuilder options)
+                => options.UseInMemoryDatabase();
+
+            protected internal override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<TestClass>(
+                    x =>
+                    {
+                        x.Property<string>("AssemblyName");
+                        x.HasKey("AssemblyName", nameof(TestClass.Name));
+                        x.HasOne(c => c.Assembly).WithMany(a => a.Classes)
+                            .HasForeignKey("AssemblyName");
+                    });
+
+                modelBuilder.Entity<Test>(
+                    x =>
+                    {
+                        x.Property<string>("AssemblyName");
+                        x.HasKey("AssemblyName", "ClassName", nameof(Test.Name));
+                        x.HasOne(t => t.Class).WithMany(c => c.Tests)
+                            .HasForeignKey("AssemblyName", "ClassName");
+                    });
             }
         }
     }

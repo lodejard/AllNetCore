@@ -758,7 +758,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
 
             using (var context = CreateContext())
             {
-                Assert.Throws<NotImplementedException>(() =>
+                Assert.Throws<InvalidOperationException>(() =>
                     context.Set<Customer>()
                         .Where(c => c.City == city.Throw().InstanceFieldValue)
                         .ToList());
@@ -1042,7 +1042,7 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 entryCount: 5);
         }
 
-        // [ConditionalFact] issue #3208
+        [ConditionalFact]
         public virtual void Where_equals_on_null_nullable_int_types()
         {
             int? nullableIntPrm = null;
@@ -2963,6 +2963,37 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         //        }
 
         [ConditionalFact]
+        public virtual void GroupBy_join_default_if_empty_anonymous()
+        {
+            AssertQuery<Order, OrderDetail>((os, ods) =>
+                (from order in os
+                 join orderDetail in ods on order.OrderID equals orderDetail.OrderID into orderJoin
+                 from orderDetail in orderJoin.DefaultIfEmpty()
+                 group new
+                 {
+                     orderDetail.ProductID,
+                     orderDetail.Quantity,
+                     orderDetail.UnitPrice
+                 } by new
+                 {
+                     order.OrderID,
+                     order.OrderDate
+                 })
+                    .Where(x => x.Key.OrderID == 10248),
+                asserter: (l2oResults, efResults) =>
+                    {
+                        var l2oGroup = l2oResults.Cast<IGrouping<dynamic, dynamic>>().Single();
+                        var efGroup = efResults.Cast<IGrouping<dynamic, dynamic>>().Single();
+
+                        Assert.Equal(l2oGroup.Key, efGroup.Key);
+
+                        Assert.Equal(
+                            l2oGroup.OrderBy(element => element.ProductID),
+                            efGroup.OrderBy(element => element.ProductID));
+                    });
+        }
+
+        [ConditionalFact]
         public virtual void GroupBy_SelectMany()
         {
             AssertQuery<Customer>(
@@ -3465,13 +3496,13 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [ConditionalFact]
         public virtual void OrderBy_Count_with_predicate_client_eval_mixed()
         {
-            AssertQuery<Order>(os => os.OrderBy(o => o.OrderID).Count(o => ClientEvalPredicateStateless()));
+            AssertQuery<Order>(os => os.OrderBy(o => o.OrderID).Count(o => ClientEvalPredicate(o)));
         }
 
         [ConditionalFact]
         public virtual void OrderBy_Where_Count_with_predicate_client_eval()
         {
-            AssertQuery<Order>(os => os.OrderBy(o => ClientEvalSelectorStateless()).Where(o => ClientEvalPredicateStateless()).Count(o => ClientEvalPredicate(o)));
+            AssertQuery<Order>(os => os.OrderBy(o => ClientEvalSelectorStateless()).Where(o => ClientEvalPredicate(o)).Count(o => ClientEvalPredicate(o)));
         }
 
         [ConditionalFact]
@@ -3480,7 +3511,8 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             AssertQuery<Order>(os => os.OrderBy(o => o.OrderID).Where(o => ClientEvalPredicate(o)).Count(o => o.CustomerID != "ALFKI"));
         }
 
-        [ConditionalFact]
+        //TODO: The function translated to SQL and due to being integer represent the column number
+        //[ConditionalFact]
         public virtual void OrderBy_client_Take()
         {
             AssertQuery<Employee>(es => es.OrderBy(o => ClientEvalSelectorStateless()).Take(10), entryCount: 9);
@@ -5130,6 +5162,90 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                     .ToList();
 
                 Assert.Equal(19, query.Count);
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void DateTime_parse_is_funcletized()
+        {
+            AssertQuery<Order>(
+                os => os.Where(o => o.OrderDate > DateTime.Parse("1/1/1998 12:00:00 PM")),
+                entryCount: 267);
+        }
+
+        [ConditionalFact]
+        public virtual void Random_next_is_not_funcletized_1()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.Orders
+                    .Where(o => o.OrderID > new Random().Next())
+                    .ToList();
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void Random_next_is_not_funcletized_2()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.Orders
+                    .Where(o => o.OrderID > new Random().Next(5))
+                    .ToList();
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void Random_next_is_not_funcletized_3()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.Orders
+                    .Where(o => o.OrderID > new Random().Next(0, 10))
+                    .ToList();
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void Random_next_is_not_funcletized_4()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.Orders
+                    .Where(o => o.OrderID > new Random(15).Next())
+                    .ToList();
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void Random_next_is_not_funcletized_5()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.Orders
+                    .Where(o => o.OrderID > new Random(15).Next(5))
+                    .ToList();
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void Random_next_is_not_funcletized_6()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.Orders
+                    .Where(o => o.OrderID > new Random(15).Next(0, 10))
+                    .ToList();
+            }
+        }
+
+        [ConditionalFact]
+        public virtual void Environment_newline_is_funcletized()
+        {
+            using (var context = CreateContext())
+            {
+                AssertQuery<Customer>(
+                    cs => cs.Where(c => c.CustomerID.Contains(Environment.NewLine)));
             }
         }
 
