@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Server;
+using System;
 
 namespace ServerComparison.TestSites
 {
@@ -10,15 +12,21 @@ namespace ServerComparison.TestSites
     {
         public static void Main(string[] args)
         {
+            var config = new ConfigurationBuilder()
+                .AddCommandLine(args)
+                .Build();
+
             var builder = new WebHostBuilder()
-                .UseDefaultHostingConfiguration(args)
+                .UseConfiguration(config)
                 .UseIISIntegration()
                 .UseStartup("ServerComparison.TestSites");
 
             // Switch beteween Kestrel and WebListener for different tests. Default to Kestrel for normal app execution.
             if (string.Equals(builder.GetSetting("server"), "Microsoft.AspNetCore.Server.WebListener", System.StringComparison.Ordinal))
             {
-                if (string.Equals(builder.GetSetting("environment"), "NtlmAuthentication", System.StringComparison.Ordinal))
+                if (string.Equals(builder.GetSetting("environment") ??
+                    Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                    "NtlmAuthentication", System.StringComparison.Ordinal))
                 {
                     // Set up NTLM authentication for WebListener as follows.
                     // For IIS and IISExpress use inetmgr to setup NTLM authentication on the application or

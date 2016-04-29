@@ -5,6 +5,7 @@
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*",
     "Microsoft.AspNetCore.Server.WebListener": "0.1.0-*",
     "Microsoft.AspNetCore.WebUtilities": "1.0.0-*",
+    "Microsoft.Extensions.Configuration.CommandLine": "1.0.0-*",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
     "Microsoft.Extensions.Logging.Console": "1.0.0-*",
     "Microsoft.Net.Http.Headers": "1.0.0-*"
@@ -42,6 +43,8 @@
     "win7-x64": { },
     "win7-x86": { },
     "osx.10.10-x64": { },
-    "ubuntu.14.04-x64": { }
+    "osx.10.11-x64": { },
+    "ubuntu.14.04-x64": { },
+    "ubuntu.15.04-x64": { }
   }
 }
