@@ -54,24 +54,30 @@ namespace Microsoft.Extensions.CodeGeneration.Templating.Test
         private ICompilationService GetCompilationService()
         {
             ProjectContext context = CreateProjectContext(null);
-            var appEnvironment = new ApplicationEnvironment("", context.ProjectDirectory);
-            ICodeGenAssemblyLoadContext loader = new DefaultAssemblyLoadContext(null, null, null);
-            IApplicationEnvironment _environment;
+            var applicationInfo = new ApplicationInfo("", context.ProjectDirectory);
+            ICodeGenAssemblyLoadContext loader = new DefaultAssemblyLoadContext();
+            IApplicationInfo _applicationInfo;
+
 #if RELEASE 
-            _environment = new ApplicationEnvironment("ModelTypesLocatorTestClassLibrary", Path.GetDirectoryName(@"..\TestApps\ModelTypesLocatorTestClassLibrary"), "Release");
+            _applicationInfo = new ApplicationInfo("ModelTypesLocatorTestClassLibrary", Directory.GetCurrentDirectory(), "Release");
 #else
-            _environment = new ApplicationEnvironment("ModelTypesLocatorTestClassLibrary", Path.GetDirectoryName(@"..\TestApps\ModelTypesLocatorTestClassLibrary"), "Debug");
+            _applicationInfo = new ApplicationInfo("ModelTypesLocatorTestClassLibrary", Directory.GetCurrentDirectory(), "Debug");
 #endif
 
-            ILibraryExporter libExporter = new LibraryExporter(context, _environment);
+            ILibraryExporter libExporter = new LibraryExporter(context, _applicationInfo);
 
-            return new RoslynCompilationService(appEnvironment, loader, libExporter);
+            return new RoslynCompilationService(applicationInfo, loader, libExporter);
         }
 
         private static ProjectContext CreateProjectContext(string projectPath)
         {
+#if NET451
+            projectPath = projectPath ?? Path.Combine("..", "..", "..", "..");
+            var framework = NuGet.Frameworks.FrameworkConstants.CommonFrameworks.Net451.GetShortFolderName();
+#else
             projectPath = projectPath ?? Directory.GetCurrentDirectory();
-
+            var framework = NuGet.Frameworks.FrameworkConstants.CommonFrameworks.NetCoreApp10.GetShortFolderName();
+#endif
             if (!projectPath.EndsWith(Microsoft.DotNet.ProjectModel.Project.FileName))
             {
                 projectPath = Path.Combine(projectPath, Microsoft.DotNet.ProjectModel.Project.FileName);
@@ -81,8 +87,7 @@ namespace Microsoft.Extensions.CodeGeneration.Templating.Test
             {
                 throw new InvalidOperationException($"{projectPath} does not exist.");
             }
-
-            return ProjectContext.CreateContextForEachFramework(projectPath).FirstOrDefault();
+            return ProjectContext.CreateContextForEachFramework(projectPath).FirstOrDefault(c => c.TargetFramework.GetShortFolderName() == framework);
         }
     }
 

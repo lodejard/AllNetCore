@@ -8,7 +8,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +23,7 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
     public class EntityFrameworkServices : IEntityFrameworkService
     {
         private readonly IDbContextEditorServices _dbContextEditorServices;
-        private readonly IApplicationEnvironment _environment;
+        private readonly IApplicationInfo _applicationInfo;
         private readonly ILibraryManager _libraryManager;
         private readonly ILibraryExporter _libraryExporter;
         private readonly ICodeGenAssemblyLoadContext _loader;
@@ -32,7 +31,6 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
         private readonly IPackageInstaller _packageInstaller;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
-        private static int _counter = 1;
         private const string EFSqlServerPackageName = "Microsoft.EntityFrameworkCore.SqlServer";
         private const string EFSqlServerPackageVersion = "7.0.0-*";
         private readonly Workspace _workspace;
@@ -40,7 +38,7 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
         public EntityFrameworkServices(
             ILibraryManager libraryManager,
             ILibraryExporter libraryExporter,
-            IApplicationEnvironment environment,
+            IApplicationInfo applicationInfo,
             ICodeGenAssemblyLoadContext loader,
             IModelTypesLocator modelTypesLocator,
             IDbContextEditorServices dbContextEditorServices,
@@ -59,9 +57,9 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
                 throw new ArgumentNullException(nameof(libraryExporter));
             }
 
-            if (environment == null)
+            if (applicationInfo == null)
             {
-                throw new ArgumentNullException(nameof(environment));
+                throw new ArgumentNullException(nameof(applicationInfo));
             }
 
             if (loader == null)
@@ -101,7 +99,7 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
 
             _libraryManager = libraryManager;
             _libraryExporter = libraryExporter;
-            _environment = environment;
+            _applicationInfo = applicationInfo;
             _loader = loader;
             _modelTypesLocator = modelTypesLocator;
             _dbContextEditorServices = dbContextEditorServices;
@@ -220,7 +218,7 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
                 PersistSyntaxTree(dbContextSyntaxTree);
                 if (state == ContextProcessingStatus.ContextAdded || state == ContextProcessingStatus.ContextAddedButRequiresConfig)
                 {
-                    _logger.LogMessage("Added DbContext : " + dbContextSyntaxTree.FilePath.Substring(_environment.ApplicationBasePath.Length));
+                    _logger.LogMessage("Added DbContext : " + dbContextSyntaxTree.FilePath.Substring(_applicationInfo.ApplicationBasePath.Length));
 
                     if (state != ContextProcessingStatus.ContextAddedButRequiresConfig)
                     {
@@ -245,14 +243,19 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
             out Type dbContextType, 
             out Type modelType)
         {
-            //TODO: @prbhosal Figure out how to lookup the correct project here.             
             var projectCompilation = _workspace.CurrentSolution.Projects
-                //.Where(project => project.Name == _environment.ApplicationName)
-                .FirstOrDefault()
+                .First(project => project.AssemblyName == _applicationInfo.ApplicationName)
                 .GetCompilationAsync().Result;
-            var newAssemblyName = projectCompilation.AssemblyName + _counter++;
-
-            var newCompilation = compilationModificationFunc(projectCompilation).WithAssemblyName(newAssemblyName);
+            // Need these #ifdefs as coreclr needs the assembly name to be different to be loaded from stream. 
+            // On NET451 if the assembly name is different, MVC fails to load the assembly as it is not found on disk. 
+#if NET451
+            var newAssemblyName = projectCompilation.AssemblyName;
+#else
+            var newAssemblyName = Path.GetRandomFileName();
+#endif
+            var newCompilation = compilationModificationFunc(projectCompilation)
+                .WithAssemblyName(newAssemblyName)
+                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
             var result = CommonUtilities.GetAssemblyFromCompilation(_loader, newCompilation);
 
@@ -278,7 +281,7 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
 
         private string GetPathForNewContext(string contextShortTypeName)
         {
-            var appBasePath = _environment.ApplicationBasePath;
+            var appBasePath = _applicationInfo.ApplicationBasePath;
             var outputPath = Path.Combine(
                 appBasePath,
                 "Models",
@@ -365,7 +368,7 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
                 {
                     ex = ex.InnerException;
                 }
-                _logger.LogMessage("There was an error creating the DbContext instance to get the model." + ex.Message, LogMessageLevel.Error);
+                _logger.LogMessage($"There was an error creating the DbContext instance to get the model. {ex.Message}", LogMessageLevel.Error);
                 throw ex;
             }
 
@@ -400,10 +403,9 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
         {
             try {
                 var builder = new WebHostBuilder();
-                //TODO: Review 
-                builder.UseServer("Microsoft.AspNetCore.Server.WebListener")
+                builder.UseKestrel()
                         .UseContentRoot(Directory.GetCurrentDirectory());
-                        
+
                 if (startupType != null)
                 {
                     var reflectedStartupType = dbContextType.GetTypeInfo().Assembly.GetType(startupType.FullName);
@@ -417,7 +419,11 @@ namespace Microsoft.Extensions.CodeGeneration.EntityFrameworkCore
             }
             catch(Exception ex)
             {
-                _logger.LogMessage(ex.Message);
+                while (ex != null)
+                {
+                    _logger.LogMessage($"{ex.Message} StackTrace:{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}");
+                    ex = ex.InnerException;
+                }
                 return null;
             }
         }

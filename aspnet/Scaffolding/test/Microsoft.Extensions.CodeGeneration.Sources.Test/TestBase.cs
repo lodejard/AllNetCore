@@ -7,25 +7,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.DotNet.ProjectModel;
 using Microsoft.Extensions.CodeGeneration.DotNet;
+using NuGet.Frameworks;
 
 namespace Microsoft.Extensions.CodeGeneration.Sources.Test
 {
     public class TestBase
     {
+#if NET451
+        NuGetFramework framework = FrameworkConstants.CommonFrameworks.Net451;
+#else
+        NuGetFramework framework = FrameworkConstants.CommonFrameworks.NetStandard15;
+#endif
         protected ProjectContext _projectContext;
         protected string _projectPath;
-        protected IApplicationEnvironment _environment;
+        protected IApplicationInfo _applicationInfo;
         
         public TestBase(string projectPath)
         {
             _projectPath = projectPath;
-            //TODO : how to decide which framework to use? 
-            _projectContext = ProjectContext.CreateContextForEachFramework(_projectPath).First();
+
+            _projectContext = new ProjectContextBuilder().WithProjectDirectory(_projectPath).WithTargetFramework(framework).Build();
+
             
-#if RELEASE 
-            _environment = new ApplicationEnvironment("ModelTypesLocatorTestClassLibrary", _projectPath, "Release");
+#if RELEASE
+            _applicationInfo = new ApplicationInfo("ModelTypesLocatorTestClassLibrary", _projectPath, "Release");
 #else
-            _environment = new ApplicationEnvironment("ModelTypesLocatorTestClassLibrary", _projectPath, "Debug");
+            _applicationInfo = new ApplicationInfo("ModelTypesLocatorTestClassLibrary", _projectPath, "Debug");
 #endif
         }
     }
