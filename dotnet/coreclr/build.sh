@@ -151,8 +151,8 @@ build_coreclr()
         __versionSourceFile=$__IntermediatesDir/version.cpp
         if [ $__SkipGenerateVersion == 0 ]; then
             "$__ProjectRoot/init-tools.sh" > "$__ProjectRoot/init-tools.log"
-            echo "Running: \"$__ProjectRoot/Tools/corerun\" \"$__ProjectRoot/Tools/MSBuild.exe\" \"$__ProjectRoot/build.proj\" /t:GenerateVersionSourceFile /p:NativeVersionSourceFile=$__versionSourceFile /p:GenerateVersionSourceFile=true /v:minimal $__OfficialBuildIdArg"
-            "$__ProjectRoot/Tools/corerun" "$__ProjectRoot/Tools/MSBuild.exe" "$__ProjectRoot/build.proj" /t:GenerateVersionSourceFile /p:NativeVersionSourceFile=$__versionSourceFile /p:GenerateVersionSourceFile=true /v:minimal $__OfficialBuildIdArg
+            echo "Running: \"$__ProjectRoot/Tools/corerun\" \"$__ProjectRoot/Tools/MSBuild.exe\" \"$__ProjectRoot/build.proj\" /v:minimal /t:GenerateVersionSourceFile /p:NativeVersionSourceFile=$__versionSourceFile /p:GenerateVersionSourceFile=true /v:minimal $__OfficialBuildIdArg"
+            "$__ProjectRoot/Tools/corerun" "$__ProjectRoot/Tools/MSBuild.exe" "$__ProjectRoot/build.proj" /v:minimal /t:GenerateVersionSourceFile /p:NativeVersionSourceFile=$__versionSourceFile /p:GenerateVersionSourceFile=true /v:minimal $__OfficialBuildIdArg
         else
             __versionSourceLine="static char sccsid[] __attribute__((used)) = \"@(#)No version information produced\";"
             echo $__versionSourceLine > $__versionSourceFile
@@ -216,6 +216,9 @@ isMSBuildOnNETCoreSupported()
             if [ "$__DistroName" == "ubuntu" ]; then
                 __OSVersion=$(lsb_release -rs)
                 if [ "$__OSVersion" == "14.04" ]; then
+                    __isMSBuildOnNETCoreSupported=1
+                elif [ "$(cat /etc/*-release | grep -cim1 14.04)" -eq 1 ]; then
+                    # Linux Mint based on Ubuntu 14.04
                     __isMSBuildOnNETCoreSupported=1
                 fi
             elif [ "$__DistroName" == "rhel" ]; then
