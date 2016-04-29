@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using Microsoft.AspNet.Hosting;
 using Microsoft.AspNetCore.Hosting.Builder;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -133,8 +132,7 @@ namespace Microsoft.AspNetCore.Hosting
         {
             _options = new WebHostOptions(_config);
 
-            var defaultPlatformServices = PlatformServices.Default;
-            var appEnvironment = defaultPlatformServices.Application;
+            var appEnvironment = PlatformServices.Default.Application;
             var contentRootPath = ResolveContentRootPath(_options.ContentRootPath, appEnvironment.ApplicationBasePath);
             var applicationName = _options.ApplicationName ?? appEnvironment.ApplicationName;
 
@@ -173,9 +171,6 @@ namespace Microsoft.AspNetCore.Hosting
 
             // Ensure object pooling is available everywhere.
             services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-
-            services.AddSingleton(defaultPlatformServices.Application);
-            services.AddSingleton(defaultPlatformServices.Runtime);
 
             if (!string.IsNullOrEmpty(_options.ServerAssembly))
             {
