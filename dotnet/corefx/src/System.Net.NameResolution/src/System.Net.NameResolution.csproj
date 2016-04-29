@@ -13,8 +13,6 @@
     <ResourcesSourceOutputDirectory Condition="'$(TargetGroup)' == 'net46'">None</ResourcesSourceOutputDirectory>
     <EnableWinRT Condition="'$(TargetGroup)' == 'netcore50'">true</EnableWinRT>
     <PackageTargetFramework Condition="'$(PackageTargetFramework)' == ''">netstandard1.3</PackageTargetFramework>
-    <PackageTargetRuntime Condition="'$(TargetsWindows)' == 'true' and '$(TargetGroup)' != 'net46'">win7</PackageTargetRuntime>
-    <PackageTargetRuntime Condition="'$(TargetsUnix)' == 'true' and '$(TargetGroup)' != 'net46'">unix</PackageTargetRuntime>
     <NuGetTargetMoniker Condition="'$(TargetGroup)' == ''">.NETStandard,Version=v1.3</NuGetTargetMoniker>
   </PropertyGroup>
   <PropertyGroup Condition="'$(EnableWinRT)' != 'true'">
@@ -92,8 +90,11 @@
     <Compile Include="$(CommonPath)\System\Net\Internals\IPAddressExtensions.cs">
       <Link>Common\System\Net\Internals\IPAddressExtensions.cs</Link>
     </Compile>
-    <Compile Include="$(CommonPath)\System\Net\Internals\SocketException.Windows.cs">
-      <Link>Common\System\Net\Internals\SocketException.Windows.cs</Link>
+    <Compile Include="$(CommonPath)\System\Net\Internals\SocketExceptionFactory.cs">
+      <Link>Common\System\Net\Internals\SocketExceptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="$(CommonPath)\System\Net\Internals\SocketExceptionFactory.Windows.cs">
+      <Link>Common\System\Net\Internals\SocketExceptionFactory.Windows.cs</Link>
     </Compile>
     <Compile Include="$(CommonPath)\System\Net\SocketProtocolSupportPal.Windows.cs">
       <Link>Common\System\Net\SocketProtocolSupportPal.Windows</Link>
@@ -174,8 +175,11 @@
     <Compile Include="$(CommonPath)\System\Net\SocketProtocolSupportPal.Unix.cs">
       <Link>Common\System\Net\SocketProtocolSupportPal.Unix</Link>
     </Compile>
-    <Compile Include="$(CommonPath)\System\Net\Internals\SocketException.Unix.cs">
-      <Link>Common\System\Net\Internals\SocketException.Unix.cs</Link>
+    <Compile Include="$(CommonPath)\System\Net\Internals\SocketExceptionFactory.cs">
+      <Link>Common\System\Net\Internals\SocketExceptionFactory.cs</Link>
+    </Compile>
+    <Compile Include="$(CommonPath)\System\Net\Internals\SocketExceptionFactory.Unix.cs">
+      <Link>Common\System\Net\Internals\SocketExceptionFactory.Unix.cs</Link>
     </Compile>
     <Compile Include="$(CommonPath)\Interop\Interop.CheckedAccess.cs">
       <Link>Common\System\Net\Internals\Interop.CheckedAccess.cs</Link>
