@@ -18,8 +18,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Server.Kestrel.Filter;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -125,9 +123,18 @@ namespace SocialSample
             {
                 ConsumerKey = Configuration["twitter:consumerkey"],
                 ConsumerSecret = Configuration["twitter:consumersecret"],
+                // http://stackoverflow.com/questions/22627083/can-we-get-email-id-from-twitter-oauth-api/32852370#32852370
+                // http://stackoverflow.com/questions/36330675/get-users-email-from-twitter-api-for-external-login-authentication-asp-net-mvc?lq=1
+                RetrieveUserDetails = true,
                 SaveTokens = true,
                 Events = new TwitterEvents()
                 {
+                    OnCreatingTicket = ctx =>
+                    {
+                        var profilePic = ctx.User.Value<string>("profile_image_url");
+                        ctx.Principal.Identities.First().AddClaim(new Claim("urn:twitter:profilepicture", profilePic, ClaimTypes.Uri, ctx.Options.ClaimsIssuer));
+                        return Task.FromResult(0);
+                    },
                     OnRemoteFailure = ctx =>
                     {
                         ctx.Response.Redirect("/error?FailureMessage=" + UrlEncoder.Default.Encode(ctx.Failure.Message));
@@ -139,7 +146,7 @@ namespace SocialSample
 
             /* Azure AD app model v2 has restrictions that prevent the use of plain HTTP for redirect URLs.
                Therefore, to authenticate through microsoft accounts, tryout the sample using the following URL:
-               https://localhost:54541/
+               https://localhost:44318/
             */
             // See config.json
             // https://apps.dev.microsoft.com/
@@ -230,6 +237,14 @@ namespace SocialSample
                             context.Identity.AddClaim(new Claim(
                                 "urn:github:name", name,
                                 ClaimValueTypes.String, context.Options.ClaimsIssuer));
+                        }
+
+                        var email = user.Value<string>("email");
+                        if (!string.IsNullOrEmpty(email))
+                        {
+                            context.Identity.AddClaim(new Claim(
+                                ClaimTypes.Email, email,
+                                ClaimValueTypes.Email, context.Options.ClaimsIssuer));
                         }
 
                         var link = user.Value<string>("url");
@@ -332,7 +347,6 @@ namespace SocialSample
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseDefaultHostingConfiguration(args)
                 .UseKestrel(options =>
                 {
                     //Configure SSL
